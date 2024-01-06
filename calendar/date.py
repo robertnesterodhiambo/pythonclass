@@ -32,3 +32,9 @@ for tz in pytz.all_timezones:
 
 leo_pacific.strftime('%B, %d ,%Y')
 
+# manipualtinbg imported dates 
+# note strftime for fromatting   and strptime for parsing 
+dt_parse = datetime.datetime.strptime('January 06, 2024','%B  %d, %Y')
+print(dt_parse)
+
+
