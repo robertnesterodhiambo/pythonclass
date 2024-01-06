@@ -18,3 +18,17 @@ print(datetime.time(7,2,3,21))
 #datetime.datetime(Y, M, D, h,, m, s , ms)
 hrdelta = datetime.timedelta(hours = 20)
 print(datetime.datetime.now() + hrdelta)
+
+#timezones    here we get timezones into date time
+import pytz
+leo = datetime.datetime.now(tz = pytz.UTC) 
+print(leo) 
+leo_pacific = leo.astimezone(pytz.timezone('US/Pacific'))
+print(leo_pacific) 
+pytz.all_timezones # get all time zones
+
+for tz in pytz.all_timezones:
+    print(tz)
+
+leo_pacific.strftime('%B, %d ,%Y')
+
