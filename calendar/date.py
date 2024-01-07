@@ -37,4 +37,7 @@ leo_pacific.strftime('%B, %d ,%Y')
 dt_parse = datetime.datetime.strptime('January 06, 2024','%B  %d, %Y')
 print(dt_parse)
 
+# use maya to manipulate dates 
+
+
 
