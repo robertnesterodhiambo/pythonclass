@@ -18,3 +18,4 @@ Encountering dynamic content posed an interesting challenge. Learning to interac
 Throughout this journey, I embraced the importance of ethical scraping practices. Understanding the legal and ethical considerations, respecting websites' terms of service, and incorporating appropriate delays in scraping processes became integral aspects of my approach.
 
 In conclusion, my exploration of web scraping with Chromium and Firefox has been a dynamic and enlightening adventure. The insights gained from these browsers, combined with hands-on experience, have equipped me with a solid foundation for navigating the intricate landscape of web scraping. As I continue to refine my skills, I look forward to uncovering more advanced techniques and contributing to ethical and responsible web scraping practices.
+    
