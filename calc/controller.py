@@ -1,46 +1,24 @@
-from model import CalculatorModel
-from view import CalculatorView
+from model import TodoModel
+from view import TodoView
+import tkinter as tk
 
-class CalculatorController:
+class TodoController:
     def __init__(self):
-        # Initialize the model and view
-        self.model = CalculatorModel()
-        self.view = CalculatorView(self)
+        self.model = TodoModel()
+        self.view = TodoView(tk.Tk(), self)
+        self.view.mainloop()
 
-    def add(self):
-        # Get the number from the input field
-        num = float(self.view.num_entry.get())
-        # Call the add method of the model
-        self.model.add(num)
-        # Update the result label
-        self.update_result_label()
+    def add_task(self, task):
+        self.model.add_task(task)
 
-    def subtract(self):
-        # Get the number from the input field
-        num = float(self.view.num_entry.get())
-        # Call the subtract method of the model
-        self.model.subtract(num)
-        # Update the result label
-        self.update_result_label()
+    def remove_task(self, task):
+        self.model.remove_task(task)
 
-    def multiply(self):
-        # Get the number from the input field
-        num = float(self.view.num_entry.get())
-        # Call the multiply method of the model
-        self.model.multiply(num)
-        # Update the result label
-        self.update_result_label()
+    def get_tasks(self):
+        return self.model.get_tasks()
 
-    def divide(self):
-        # Get the number from the input field
-        num = float(self.view.num_entry.get())
-        # Call the divide method of the model
-        self.model.divide(num)
-        # Update the result label
-        self.update_result_label()
+def main():
+    controller = TodoController()
 
-    def update_result_label(self):
-        # Get the current result from the model
-        result = self.model.get_result()
-        # Update the result label in the view
-        self.view.result_label.config(text=f"Result: {result}")
+if __name__ == "__main__":
+    main()

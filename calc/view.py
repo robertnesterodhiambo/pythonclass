@@ -1,33 +1,31 @@
 import tkinter as tk
 
-class CalculatorView:
-    def __init__(self, controller):
-        # Initialize the view with the controller
+class TodoView(tk.Frame):
+    def __init__(self, master, controller):
+        super().__init__(master)
+        self.master = master
         self.controller = controller
-        # Create the main window
-        self.root = tk.Tk()
-        self.root.title("Calculator")
+        self.master.title("Todo List")
 
-        # Create an entry widget for input
-        self.num_entry = tk.Entry(self.root)
-        self.num_entry.pack()
+        self.task_entry = tk.Entry(self.master)
+        self.task_entry.pack()
 
-        # Create buttons for basic operations
-        self.add_button = tk.Button(self.root, text="+", command=self.controller.add)
+        self.add_button = tk.Button(self.master, text="Add Task", command=self.add_task)
         self.add_button.pack()
 
-        self.subtract_button = tk.Button(self.root, text="-", command=self.controller.subtract)
-        self.subtract_button.pack()
+        self.task_listbox = tk.Listbox(self.master)
+        self.task_listbox.pack()
 
-        self.multiply_button = tk.Button(self.root, text="*", command=self.controller.multiply)
-        self.multiply_button.pack()
+        self.refresh_tasks()
 
-        self.divide_button = tk.Button(self.root, text="/", command=self.controller.divide)
-        self.divide_button.pack()
+    def add_task(self):
+        task = self.task_entry.get()
+        if task:
+            self.controller.add_task(task)
+            self.refresh_tasks()
 
-        # Create a label to display the result
-        self.result_label = tk.Label(self.root, text="Result:")
-        self.result_label.pack()
-
-        # Start the main event loop
-        self.root.mainloop()
+    def refresh_tasks(self):
+        self.task_listbox.delete(0, tk.END)
+        tasks = self.controller.get_tasks()
+        for task in tasks:
+            self.task_listbox.insert(tk.END, task)
