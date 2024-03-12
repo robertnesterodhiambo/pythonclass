@@ -1,6 +1,6 @@
 # Python Learning Journey Readme
 
-Welcome to my Python learning journey! This readme file provides an overview of the steps I've taken in my Python learning adventure, highlighting key milestones and projects completed along the way.
+Welcome to my Python learning journey!  This readme file provides an overview of the steps I've taken in my Python learning adventure, highlighting key milestones and projects completed along the way.
 
 ## Steps Completed
 
