@@ -10876,9 +10876,9 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>2024-03-20 11:25:52.267756: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<pre>2024-03-20 18:48:44.278006: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-03-20 11:25:56.410352: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2024-03-20 18:48:47.382730: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
 /usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version &gt;=1.17.3 and &lt;1.25.0 is required for this version of SciPy (detected version 1.26.4
   warnings.warn(f"A NumPy version &gt;={np_minversion} and &lt;{np_maxversion}"
 </pre>
@@ -10897,12 +10897,12 @@ Found 1279 images belonging to 4 classes.
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>/home/oem/.local/lib/python3.10/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
   super().__init__(**kwargs)
-2024-03-20 11:26:01.736797: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
-2024-03-20 11:26:01.737689: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2251] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+2024-03-20 18:48:50.169334: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2024-03-20 18:48:50.170867: W tensorflow/core/common_runtime/gpu/gpu_device.cc:2251] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
 Skipping registering GPU devices...
-2024-03-20 11:26:01.843295: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
-2024-03-20 11:26:01.945494: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
-2024-03-20 11:26:02.797052: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
+2024-03-20 18:48:50.216501: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
+2024-03-20 18:48:50.265149: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
+2024-03-20 18:48:50.280587: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
 </pre>
 </div>
 </div>
@@ -10916,35 +10916,35 @@ Skipping registering GPU devices...
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>2024-03-20 11:26:05.832820: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
+<pre>2024-03-20 18:48:51.090902: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
 /home/oem/.local/lib/python3.10/site-packages/keras/src/trainers/data_adapters/py_dataset_adapter.py:122: UserWarning: Your `PyDataset` class should call `super().__init__(**kwargs)` in its constructor. `**kwargs` can include `workers`, `use_multiprocessing`, `max_queue_size`. Do not pass these arguments to `fit()`, as they will be ignored.
   self._warn_if_super_not_called()
-2024-03-20 11:26:11.865014: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
+2024-03-20 18:48:52.500819: W external/local_tsl/tsl/framework/cpu_allocator_impl.cc:83] Allocation of 56229888 exceeds 10% of free system memory.
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre><span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">49s</span> 256ms/step - accuracy: 0.4285 - loss: 18.9361 - val_accuracy: 0.5262 - val_loss: 4.3823
+<pre><span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">40s</span> 238ms/step - accuracy: 0.4622 - loss: 17.6065 - val_accuracy: 0.5238 - val_loss: 5.8924
 Epoch 2/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">75s</span> 251ms/step - accuracy: 0.5899 - loss: 2.4801 - val_accuracy: 0.5551 - val_loss: 2.6830
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">39s</span> 236ms/step - accuracy: 0.5636 - loss: 3.6881 - val_accuracy: 0.5066 - val_loss: 2.9875
 Epoch 3/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">39s</span> 243ms/step - accuracy: 0.6011 - loss: 1.9743 - val_accuracy: 0.5457 - val_loss: 2.7805
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">37s</span> 231ms/step - accuracy: 0.6273 - loss: 2.2970 - val_accuracy: 0.5387 - val_loss: 1.8211
 Epoch 4/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">38s</span> 232ms/step - accuracy: 0.7366 - loss: 0.8425 - val_accuracy: 0.5043 - val_loss: 4.5283
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">38s</span> 233ms/step - accuracy: 0.7315 - loss: 0.9737 - val_accuracy: 0.5090 - val_loss: 5.5562
 Epoch 5/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">42s</span> 239ms/step - accuracy: 0.6890 - loss: 1.2284 - val_accuracy: 0.5457 - val_loss: 3.3841
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">37s</span> 231ms/step - accuracy: 0.7577 - loss: 0.9645 - val_accuracy: 0.5270 - val_loss: 3.9780
 Epoch 6/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">39s</span> 243ms/step - accuracy: 0.7736 - loss: 0.7222 - val_accuracy: 0.5457 - val_loss: 3.4950
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">40s</span> 227ms/step - accuracy: 0.7805 - loss: 0.7076 - val_accuracy: 0.5848 - val_loss: 2.3209
 Epoch 7/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">40s</span> 245ms/step - accuracy: 0.8606 - loss: 0.3622 - val_accuracy: 0.5770 - val_loss: 1.9597
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">38s</span> 237ms/step - accuracy: 0.8226 - loss: 0.4894 - val_accuracy: 0.5684 - val_loss: 2.2796
 Epoch 8/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">41s</span> 253ms/step - accuracy: 0.8217 - loss: 0.5310 - val_accuracy: 0.5590 - val_loss: 3.3237
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">38s</span> 236ms/step - accuracy: 0.8863 - loss: 0.3057 - val_accuracy: 0.5622 - val_loss: 3.1954
 Epoch 9/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">40s</span> 250ms/step - accuracy: 0.8243 - loss: 0.5236 - val_accuracy: 0.5661 - val_loss: 2.2388
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">39s</span> 238ms/step - accuracy: 0.7108 - loss: 2.1564 - val_accuracy: 0.5747 - val_loss: 1.8515
 Epoch 10/10
-<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">39s</span> 239ms/step - accuracy: 0.8603 - loss: 0.4317 - val_accuracy: 0.5754 - val_loss: 2.6827
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">38s</span> 237ms/step - accuracy: 0.8529 - loss: 0.3900 - val_accuracy: 0.5410 - val_loss: 2.7189
 Epoch 1/10
 </pre>
 </div>
@@ -10960,8 +10960,77 @@ Epoch 1/10
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre><span class="ansi-bold"> 82/161</span> <span class="ansi-green-fg">━━━━━━━━━━</span><span class="ansi-white-fg">━━━━━━━━━━</span> <span class="ansi-bold">2:25</span> 2s/step - accuracy: 0.4627 - loss: 1.1955</pre>
+<pre><span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">288s</span> 2s/step - accuracy: 0.4750 - loss: 1.1415 - val_accuracy: 0.5332 - val_loss: 0.9847
+Epoch 2/10
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">286s</span> 2s/step - accuracy: 0.6172 - loss: 0.8100 - val_accuracy: 0.6044 - val_loss: 0.9122
+Epoch 3/10
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">286s</span> 2s/step - accuracy: 0.8417 - loss: 0.3859 - val_accuracy: 0.6341 - val_loss: 1.0562
+Epoch 4/10
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">298s</span> 2s/step - accuracy: 0.9409 - loss: 0.1623 - val_accuracy: 0.5786 - val_loss: 1.5565
+Epoch 5/10
+<span class="ansi-bold">161/161</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">345s</span> 2s/step - accuracy: 0.9821 - loss: 0.0545 - val_accuracy: 0.6263 - val_loss: 2.2599
+Epoch 6/10
+<span class="ansi-bold"> 66/161</span> <span class="ansi-green-fg">━━━━━━━━</span><span class="ansi-white-fg">━━━━━━━━━━━━</span> <span class="ansi-bold">2:50</span> 2s/step - accuracy: 0.9954 - loss: 0.0193</pre>
 </div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Plotting training and validation accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_simple</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'accuracy'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Simple NN Training Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_simple</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'val_accuracy'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Simple NN Validation Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_cnn</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'accuracy'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'CNN Training Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_cnn</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'val_accuracy'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'CNN Validation Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Training and Validation Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Epoch'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Accuracy'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Plotting training and validation loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_simple</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Simple NN Training Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_simple</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'val_loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Simple NN Validation Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_cnn</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'CNN Training Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history_cnn</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">'val_loss'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'CNN Validation Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Training and Validation Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Epoch'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Comparing the number of parameters</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of parameters - Simple NN:"</span><span class="p">,</span> <span class="n">model_simple</span><span class="o">.</span><span class="n">count_params</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Number of parameters - CNN:"</span><span class="p">,</span> <span class="n">model_cnn</span><span class="o">.</span><span class="n">count_params</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="1.-Model-Architecture:">1. Model Architecture:<a class="anchor-link" href="#1.-Model-Architecture:">¶</a></h3><p>The simple neural network comprises only fully connected layers (Dense layers) and lacks convolutional or pooling layers. On the other hand, the convolutional neural network (CNN) incorporates convolutional layers followed by max-pooling layers. CNNs are well-suited for image classification tasks as they can effectively capture spatial hierarchies of features from images.</p>
+<h3 id="2.-Training-and-Validation-Accuracy/Loss:">2. Training and Validation Accuracy/Loss:<a class="anchor-link" href="#2.-Training-and-Validation-Accuracy/Loss:">¶</a></h3><p>In terms of training and validation accuracy/loss, the CNN is expected to outperform the simple neural network. This expectation arises from the CNN's ability to learn hierarchical features, which often leads to better generalization. Therefore, one would anticipate observing higher validation accuracy and lower validation loss for the CNN compared to the simple neural network over the epochs.</p>
+<h3 id="3.-Number-of-Parameters:">3. Number of Parameters:<a class="anchor-link" href="#3.-Number-of-Parameters:">¶</a></h3><p>CNNs typically have more parameters compared to simple neural networks due to the presence of convolutional layers. As expected, the CNN is anticipated to have a higher number of trainable parameters compared to the simple neural network. This increased parameter count reflects the complexity of the CNN architecture, which allows it to learn intricate patterns in the data.</p>
+<h3 id="4.-Computational-Complexity:">4. Computational Complexity:<a class="anchor-link" href="#4.-Computational-Complexity:">¶</a></h3><p>Considering computational complexity, CNNs are generally more computationally intensive, especially during training and inference. This heightened computational demand stems from the convolutional operations performed across multiple layers. Therefore, one would expect the CNN to require more computational resources compared to the simple neural network.</p>
+<h3 id="5.-Performance-on-Test-Data:">5. Performance on Test Data:<a class="anchor-link" href="#5.-Performance-on-Test-Data:">¶</a></h3><p>Finally, evaluating the performance of both models on the test dataset is crucial to assess their generalization ability. While the CNN is expected to perform better due to its ability to capture hierarchical features, it is essential to validate this expectation through empirical testing. Comparing the test accuracy and other relevant metrics will provide insights into how well each model generalizes to unseen data.</p>
 </div>
 </div>
 </div>
