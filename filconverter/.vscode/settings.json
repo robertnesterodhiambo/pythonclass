@@ -1,0 +1,4 @@
+{
+    "ros.distro": "foxy",
+    "java.debug.settings.onBuildFailureProceed": true
+}
