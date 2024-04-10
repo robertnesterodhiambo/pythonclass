@@ -1,11 +1,13 @@
 import os
+from docx import Document as DocxDocument
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-from pdf2docx import Converter
-from docx import Document
-from PyPDF2 import PdfFileReader, PdfFileWriter
-import magic
-from docx2pdf import convert as convert_to_pdf
+import shutil
+from pdf2image import convert_from_path
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Image
+import PyPDF2
+
 
 app = Flask(__name__)
 
@@ -14,10 +16,9 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'pptx', 'xlsx', 'jpg', 'png'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def convert_to_capital(text):
     # Capitalize only the first two letters of every word in text content
@@ -30,83 +31,64 @@ def convert_to_capital(text):
             converted_words.append(word.upper())
     return ' '.join(converted_words)
 
-
 def process_txt_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
-
+    
     converted_content = convert_to_capital(content)
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(converted_content)
 
-
 def process_docx_file(filepath):
-    doc = Document(filepath)
+    doc = DocxDocument(filepath)
 
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
             run.text = convert_to_capital(run.text)
 
-    doc.save(filepath)
+    # Save the processed document
+    filename = secure_filename(os.path.basename(filepath))
+    new_filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    doc.save(new_filepath)
 
-
-def is_valid_pdf(filepath):
-    # Check if the file is a valid PDF
-    try:
-        mime = magic.Magic(mime=True)
-        file_mime_type = mime.from_file(filepath)
-        return file_mime_type == 'application/pdf'
-    except magic.MagicException:
-        return False
-
+    # Copy all related files (like images) to the new location
+    original_dir = os.path.dirname(filepath)
+    new_dir = os.path.dirname(new_filepath)
+    for rel_item in os.listdir(original_dir):
+        rel_item_path = os.path.join(original_dir, rel_item)
+        if os.path.isfile(rel_item_path) and rel_item != filename:
+            shutil.copy(rel_item_path, new_dir)
 
 def process_pdf_file(filepath):
-    # Check if the file extension indicates it's a PDF and if it's a valid PDF
-    if filepath.lower().endswith('.pdf') and is_valid_pdf(filepath):
-        try:
-            # Convert PDF to DOCX
-            docx_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx')
-            cv = Converter(filepath)
-            cv.convert(docx_filepath, start=0, end=None)
-            cv.close()
+    # Convert each page of the PDF to images
+    images = convert_from_path(filepath)
 
-            # Capitalize text in DOCX
-            process_docx_file(docx_filepath)
+    # Create a new PDF
+    filename = secure_filename(os.path.basename(filepath))
+    new_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'converted_' + filename)
+    doc = SimpleDocTemplate(new_filepath, pagesize=letter)
 
-            # Convert DOCX back to PDF
-            pdf_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'converted_' + secure_filename(os.path.basename(filepath)))
-            convert_to_pdf(docx_filepath, pdf_filepath)
+    # Insert images into the PDF
+    elements = []
+    for image in images:
+        elements.append(Image(image, width=letter[0], height=letter[1]))
 
-            # Remove temporary DOCX file
-            os.remove(docx_filepath)
+    doc.build(elements)
 
-            return pdf_filepath
-        except Exception as e:
-            return f"Error processing PDF file: {str(e)}"
-
-    # Attempt to convert the corresponding DOCX file to PDF regardless of any errors
-    temp_docx_file = os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx')
-    converted_pdf_filepath = temp_docx_file.replace('.docx', '.pdf')
-    try:
-        # Convert DOCX to PDF
-        convert_to_pdf(temp_docx_file, converted_pdf_filepath)
-        return converted_pdf_filepath
-    except Exception as ex:
-        return f"Error converting DOCX to PDF: {str(ex)}"
-
+    return new_filepath
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             return render_template('index.html', message='No file part')
-
+        
         file = request.files['file']
-
+        
         if file.filename == '':
             return render_template('index.html', message='No selected file')
-
+        
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -120,25 +102,21 @@ def upload_file():
                         process_docx_file(filepath)
                     elif filename.endswith('.pdf'):
                         new_filepath = process_pdf_file(filepath)
-                        if new_filepath and not new_filepath.startswith("Error"):
-                            return render_template('index.html', message='File converted successfully. <a href="' + new_filepath + '">Download converted file</a>')
-                        else:
-                            return render_template('index.html', message=new_filepath)
+                        return render_template('index.html', message='File converted successfully. <a href="' + new_filepath + '">Download converted file</a>')
                     else:
                         return render_template('index.html', message='File format not supported')
-
+                    
                     return render_template('index.html', message='File converted successfully')
-
+                
                 except Exception as e:
                     return render_template('index.html', message=f'Error processing file: {str(e)}')
-
+                
             else:
                 return render_template('index.html', message='File not found')
         else:
             return render_template('index.html', message='Invalid file format')
 
     return render_template('index.html', message='')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
