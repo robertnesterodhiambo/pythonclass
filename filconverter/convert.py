@@ -1,17 +1,16 @@
 import os
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
+from PyPDF2 import PdfReader
 from pdf2docx import Converter
 from docx import Document
-from PyPDF2 import PdfFileReader, PdfFileWriter
-import magic
+from docx.shared import Pt
 from docx2pdf import convert as convert_to_pdf
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = os.path.expanduser('~/github/pythonclass/filconverter/uploads')
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'pptx', 'xlsx', 'jpg', 'png'}
-
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -47,53 +46,9 @@ def process_docx_file(filepath):
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
             run.text = convert_to_capital(run.text)
+            run.font.size = Pt(12)  # Adjust font size if needed
 
     doc.save(filepath)
-
-
-def is_valid_pdf(filepath):
-    # Check if the file is a valid PDF
-    try:
-        mime = magic.Magic(mime=True)
-        file_mime_type = mime.from_file(filepath)
-        return file_mime_type == 'application/pdf'
-    except magic.MagicException:
-        return False
-
-
-def process_pdf_file(filepath):
-    # Check if the file extension indicates it's a PDF and if it's a valid PDF
-    if filepath.lower().endswith('.pdf') and is_valid_pdf(filepath):
-        try:
-            # Convert PDF to DOCX
-            docx_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx')
-            cv = Converter(filepath)
-            cv.convert(docx_filepath, start=0, end=None)
-            cv.close()
-
-            # Capitalize text in DOCX
-            process_docx_file(docx_filepath)
-
-            # Convert DOCX back to PDF
-            pdf_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'converted_' + secure_filename(os.path.basename(filepath)))
-            convert_to_pdf(docx_filepath, pdf_filepath)
-
-            # Remove temporary DOCX file
-            os.remove(docx_filepath)
-
-            return pdf_filepath
-        except Exception as e:
-            return f"Error processing PDF file: {str(e)}"
-
-    # Attempt to convert the corresponding DOCX file to PDF regardless of any errors
-    temp_docx_file = os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx')
-    converted_pdf_filepath = temp_docx_file.replace('.docx', '.pdf')
-    try:
-        # Convert DOCX to PDF
-        convert_to_pdf(temp_docx_file, converted_pdf_filepath)
-        return converted_pdf_filepath
-    except Exception as ex:
-        return f"Error converting DOCX to PDF: {str(ex)}"
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -114,20 +69,34 @@ def upload_file():
 
             if os.path.exists(filepath):
                 try:
-                    if filename.endswith('.txt'):
-                        process_txt_file(filepath)
+                    if filename.endswith('.pdf'):
+                        # Convert PDF to DOCX
+                        docx_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx')
+                        cv = Converter(filepath)
+                        cv.convert(docx_filepath, start=0, end=None)
+                        cv.close()
+
+                        # Capitalize text in DOCX
+                        process_docx_file(docx_filepath)
+
+                        # Convert DOCX back to PDF
+                        new_pdf_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'converted_' + secure_filename(os.path.basename(filepath)).replace(".pdf", "_capitalized.pdf"))
+                        convert_to_pdf(docx_filepath, new_pdf_filepath)
+
+                        # Remove temporary DOCX file
+                        os.remove(docx_filepath)
+
+                        return render_template('index.html', message='File converted successfully. <a href="' + new_pdf_filepath + '">Download converted file</a>')
                     elif filename.endswith('.docx'):
+                        # Capitalize text in DOCX
                         process_docx_file(filepath)
-                    elif filename.endswith('.pdf'):
-                        new_filepath = process_pdf_file(filepath)
-                        if new_filepath and not new_filepath.startswith("Error"):
-                            return render_template('index.html', message='File converted successfully. <a href="' + new_filepath + '">Download converted file</a>')
-                        else:
-                            return render_template('index.html', message=new_filepath)
+                        return render_template('index.html', message='File converted successfully.')
+                    elif filename.endswith('.txt'):
+                        # Capitalize text in TXT
+                        process_txt_file(filepath)
+                        return render_template('index.html', message='File converted successfully.')
                     else:
                         return render_template('index.html', message='File format not supported')
-
-                    return render_template('index.html', message='File converted successfully')
 
                 except Exception as e:
                     return render_template('index.html', message=f'Error processing file: {str(e)}')
