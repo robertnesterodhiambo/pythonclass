@@ -13,6 +13,7 @@ BRICK_GAP = 5  # Space between bricks
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 10
 BALL_RADIUS = 10
+MAX_LIVES = 3
 
 # Colors
 WHITE = (255, 255, 255)
@@ -54,6 +55,11 @@ class Ball:
     def bounce(self):
         self.velocity[1] = -self.velocity[1]
 
+    def reset(self):
+        self.rect.x = SCREEN_WIDTH // 2 - BALL_RADIUS
+        self.rect.y = SCREEN_HEIGHT // 2 - BALL_RADIUS
+        self.velocity = [random.choice([-5, 5]), -5]
+
 # Brick class
 class Brick:
     def __init__(self, x, y):
@@ -63,6 +69,8 @@ class Brick:
 paddle = Paddle()
 ball = Ball()
 bricks = []
+lives = MAX_LIVES
+
 for y in range(0, SCREEN_HEIGHT // 3, BRICK_HEIGHT + BRICK_GAP):
     for x in range(0, SCREEN_WIDTH, BRICK_WIDTH + BRICK_GAP):
         bricks.append(Brick(x, y))
@@ -95,7 +103,11 @@ while running:
 
     # Check if ball hits the bottom
     if ball.rect.bottom >= SCREEN_HEIGHT:
-        running = False
+        lives -= 1
+        if lives > 0:
+            ball.reset()
+        else:
+            running = False
 
     # Drawing
     screen.fill(BLACK)
@@ -103,6 +115,11 @@ while running:
     pygame.draw.ellipse(screen, WHITE, ball.rect)
     for brick in bricks:
         pygame.draw.rect(screen, RED, brick.rect)
+    
+    # Display lives
+    font = pygame.font.SysFont(None, 36)
+    text = font.render(f'Lives: {lives}', True, WHITE)
+    screen.blit(text, (10, 10))
 
     pygame.display.flip()
     pygame.time.delay(30)
