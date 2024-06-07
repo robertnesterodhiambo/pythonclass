@@ -9,6 +9,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BRICK_WIDTH = 60
 BRICK_HEIGHT = 20
+BRICK_GAP = 5  # Space between bricks
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 10
 BALL_RADIUS = 10
@@ -61,7 +62,10 @@ class Brick:
 # Game setup
 paddle = Paddle()
 ball = Ball()
-bricks = [Brick(x, y) for x in range(0, SCREEN_WIDTH, BRICK_WIDTH) for y in range(0, SCREEN_HEIGHT // 3, BRICK_HEIGHT)]
+bricks = []
+for y in range(0, SCREEN_HEIGHT // 3, BRICK_HEIGHT + BRICK_GAP):
+    for x in range(0, SCREEN_WIDTH, BRICK_WIDTH + BRICK_GAP):
+        bricks.append(Brick(x, y))
 
 # Game loop
 running = True
