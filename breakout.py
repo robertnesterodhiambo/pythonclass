@@ -14,6 +14,7 @@ PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 10
 BALL_RADIUS = 10
 MAX_LIVES = 3
+START_BRICK_ROWS = 1  # Start with one row of bricks
 
 # Colors
 WHITE = (255, 255, 255)
@@ -65,15 +66,23 @@ class Brick:
     def __init__(self, x, y):
         self.rect = pygame.Rect((x, y), (BRICK_WIDTH, BRICK_HEIGHT))
 
+# Create bricks for a given level
+def create_bricks(level):
+    bricks = []
+    rows = START_BRICK_ROWS + level - 1
+    for y in range(rows):
+        for x in range((SCREEN_WIDTH - (BRICK_WIDTH + BRICK_GAP) * rows) // 2, 
+                       (SCREEN_WIDTH + (BRICK_WIDTH + BRICK_GAP) * rows) // 2, 
+                       BRICK_WIDTH + BRICK_GAP):
+            bricks.append(Brick(x, y * (BRICK_HEIGHT + BRICK_GAP)))
+    return bricks
+
 # Game setup
 paddle = Paddle()
 ball = Ball()
-bricks = []
+level = 1
 lives = MAX_LIVES
-
-for y in range(0, SCREEN_HEIGHT // 3, BRICK_HEIGHT + BRICK_GAP):
-    for x in range(0, SCREEN_WIDTH, BRICK_WIDTH + BRICK_GAP):
-        bricks.append(Brick(x, y))
+bricks = create_bricks(level)
 
 # Game loop
 running = True
@@ -109,6 +118,12 @@ while running:
         else:
             running = False
 
+    # Check if all bricks are removed
+    if not bricks:
+        level += 1
+        bricks = create_bricks(level)
+        ball.reset()
+
     # Drawing
     screen.fill(BLACK)
     pygame.draw.rect(screen, BLUE, paddle.rect)
@@ -116,10 +131,12 @@ while running:
     for brick in bricks:
         pygame.draw.rect(screen, RED, brick.rect)
     
-    # Display lives
+    # Display lives and level
     font = pygame.font.SysFont(None, 36)
-    text = font.render(f'Lives: {lives}', True, WHITE)
-    screen.blit(text, (10, 10))
+    lives_text = font.render(f'Lives: {lives}', True, WHITE)
+    level_text = font.render(f'Level: {level}', True, WHITE)
+    screen.blit(lives_text, (10, 10))
+    screen.blit(level_text, (10, 50))
 
     pygame.display.flip()
     pygame.time.delay(30)
