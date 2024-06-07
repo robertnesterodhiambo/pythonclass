@@ -13,7 +13,6 @@ BRICK_GAP = 5  # Space between bricks
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 10
 BALL_RADIUS = 10
-MAX_BRICKS_PER_ROW = 10  # Maximum number of bricks in the top row
 
 # Colors
 WHITE = (255, 255, 255)
@@ -64,15 +63,8 @@ class Brick:
 paddle = Paddle()
 ball = Ball()
 bricks = []
-rows = min(MAX_BRICKS_PER_ROW, SCREEN_HEIGHT // (BRICK_HEIGHT + BRICK_GAP))
-
-for row in range(rows):
-    num_bricks = MAX_BRICKS_PER_ROW - row
-    total_bricks_width = num_bricks * BRICK_WIDTH + (num_bricks - 1) * BRICK_GAP
-    start_x = (SCREEN_WIDTH - total_bricks_width) // 2
-    y = row * (BRICK_HEIGHT + BRICK_GAP)
-    for brick in range(num_bricks):
-        x = start_x + brick * (BRICK_WIDTH + BRICK_GAP)
+for y in range(0, SCREEN_HEIGHT // 3, BRICK_HEIGHT + BRICK_GAP):
+    for x in range(0, SCREEN_WIDTH, BRICK_WIDTH + BRICK_GAP):
         bricks.append(Brick(x, y))
 
 # Game loop
