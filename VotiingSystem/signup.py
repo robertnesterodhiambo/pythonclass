@@ -1,8 +1,8 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 import sqlite3
+import subprocess
 
 def adjust_window_size(event):
     content_frame.place(relwidth=0.95, relheight=0.95, relx=0.5, rely=0.5, anchor='center')
@@ -51,28 +51,12 @@ def submit_form():
 
     conn.close()
 
-def login():
-    # Get login credentials
-    id_number = entries['ID Number'].get()
-    password = entries['Password'].get()
+def open_login_and_close_signup():
+    # Close the current signup window
+    root.destroy()
 
-    # Connect to SQLite database
-    conn = sqlite3.connect('voting.db')
-    cursor = conn.cursor()
-
-    # Check if the user exists
-    cursor.execute('''
-    SELECT * FROM citizen WHERE id_number=? AND password=?
-    ''', (id_number, password))
-    row = cursor.fetchone()
-
-    # Close the connection
-    conn.close()
-
-    if row:
-        messagebox.showinfo("Success", "Login successful!")
-    else:
-        messagebox.showerror("Error", "Invalid ID number or password!")
+    # Open the login.py script
+    subprocess.Popen(['python', 'login.py'])
 
 root = tk.Tk()
 root.title("Beautiful Responsive Form")
@@ -119,7 +103,7 @@ submit_button = ttk.Button(content_frame, text="Submit", command=submit_form)
 submit_button.grid(row=len(fields), column=0, pady=20)
 
 # Add a login button
-login_button = ttk.Button(content_frame, text="Login", command=login)
+login_button = ttk.Button(content_frame, text="Login", command=open_login_and_close_signup)
 login_button.grid(row=len(fields), column=1, pady=20)
 
 # Configure grid to make the content_frame responsive
