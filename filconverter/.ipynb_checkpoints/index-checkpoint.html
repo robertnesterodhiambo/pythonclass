@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+</head>
+<body>
+    <h2>Upload a file</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt,.pdf,.docx,.pptx,.xlsx,.jpg,.png">
+        <input type="submit" value="Upload">
+    </form>
+    <p>{{ message }}</p>
+</body>
+</html>
