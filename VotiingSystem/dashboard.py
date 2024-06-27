@@ -36,12 +36,13 @@ def fetch_wards(constituency_name):
     wards = cursor.fetchall()
     return [ward[0] for ward in wards]
 
-def submit_aspirant_details(citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward):
+def submit_aspirant_details(user_id, citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward):
     cursor.execute('''
     INSERT INTO aspirant (citizen_id, first_name, last_name, aspirant_position, age, gender, province, county, constituency, ward)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward))
     conn.commit()
+
 
 def open_apply_popup(user_id):
     popup = tk.Toplevel()
@@ -67,9 +68,10 @@ def open_apply_popup(user_id):
     age_entry = ttk.Entry(popup)
     age_entry.pack(pady=5, fill=tk.X, padx=20)
     
-    ttk.Label(popup, text="Gender:", background='#f0f8ff', foreground='#4b0082').pack(pady=5)
-    gender_entry = ttk.Entry(popup)
-    gender_entry.pack(pady=5, fill=tk.X, padx=20)
+    ttk.Label(popup, text="Gender:", background='#f0f8ff').pack(pady=5)
+    gender_var = tk.StringVar()
+    gender_combobox = ttk.Combobox(popup, textvariable=gender_var, values=["Male", "Female"])
+    gender_combobox.pack(pady=5, fill=tk.X, padx=20)
     
     # Province dropdown
     ttk.Label(popup, text="Province:", background='#f0f8ff', foreground='#4b0082').pack(pady=5)
@@ -96,33 +98,28 @@ def open_apply_popup(user_id):
         counties = fetch_counties(selected_province)
         county_combobox['values'] = counties
         county_combobox.config(state='readonly')
-        county_combobox.set('')
         constituency_combobox.set('')
         ward_combobox.set('')
-        constituency_combobox.config(state='disabled')
-        ward_combobox.config(state='disabled')
     
     def update_constituencies(event):
         selected_county = county_combobox.get()
         constituencies = fetch_constituencies(selected_county)
         constituency_combobox['values'] = constituencies
         constituency_combobox.config(state='readonly')
-        constituency_combobox.set('')
         ward_combobox.set('')
-        ward_combobox.config(state='disabled')
     
     def update_wards(event):
         selected_constituency = constituency_combobox.get()
         wards = fetch_wards(selected_constituency)
         ward_combobox['values'] = wards
         ward_combobox.config(state='readonly')
-        ward_combobox.set('')
     
     province_combobox.bind('<<ComboboxSelected>>', update_counties)
     county_combobox.bind('<<ComboboxSelected>>', update_constituencies)
     constituency_combobox.bind('<<ComboboxSelected>>', update_wards)
     
     def submit():
+        citizen_id = user_id  # For simplicity, using user_id as citizen_id
         first_name = first_name_entry.get()
         last_name = last_name_entry.get()
         position = position_entry.get()
@@ -133,7 +130,7 @@ def open_apply_popup(user_id):
         constituency = constituency_combobox.get()
         ward = ward_combobox.get()
         
-        submit_aspirant_details(user_id, first_name, last_name, position, age, gender, province, county, constituency, ward)
+        submit_aspirant_details(user_id, citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward)
         popup.destroy()
 
     submit_button = ttk.Button(popup, text="Submit", command=submit)
@@ -146,17 +143,12 @@ def open_dashboard(user_id):
     dashboard_window.title("Dashboard")
     dashboard_window.geometry("500x400")
     
-    # Configure window to expand and fill available space
     dashboard_window.grid_rowconfigure(0, weight=1)
     dashboard_window.grid_columnconfigure(0, weight=1)
     
     content_frame = ttk.Frame(dashboard_window, padding="10", style='Dashboard.TFrame')
     content_frame.grid(row=0, column=0, sticky="nsew")
     content_frame.rowconfigure(2, weight=1)
-    
-    # Configure frame to expand and fill available space
-    content_frame.grid_rowconfigure(0, weight=1)
-    content_frame.grid_columnconfigure(0, weight=1)
     
     style = ttk.Style()
     style.configure('Dashboard.TFrame', background='#f0f8ff')
@@ -171,11 +163,10 @@ def open_dashboard(user_id):
     
     apply_button = ttk.Button(content_frame, text="Aspirant Application", command=lambda: open_apply_popup(user_id))
     apply_button.grid(row=2, column=0, pady=20, sticky="s")
-
+    
     dashboard_window.mainloop()
 
-# Test the open_dashboard function
-open_dashboard(1)
-
-# Don't forget to close the database connection
-conn.close()
+if __name__ == "__main__":
+    import sys
+    user_id = sys.argv[1]
+    open_dashboard(user_id)
