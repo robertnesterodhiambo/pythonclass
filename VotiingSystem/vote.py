@@ -21,6 +21,14 @@ def open_vote_panel(user_id):
 
     province, county, constituency, ward = user_details
 
+    # Check if the user has already voted
+    cursor.execute("SELECT * FROM votes WHERE id_number=?", (user_id,))
+    if cursor.fetchone() is not None:
+        error_message = "You have already voted"
+        messagebox.showinfo("Info", error_message)
+        conn.close()
+        return
+
     def fetch_aspirants(position, location_column=None, location_value=None):
         if location_column:
             cursor.execute(f"SELECT first_name || ' ' || last_name FROM aspirant WHERE aspirant_position=? AND {location_column}=?", (position, location_value))
@@ -49,6 +57,7 @@ def open_vote_panel(user_id):
         'Member of County Assembly (MCA)'
     ]
     
+    comboboxes = {}
     for position in positions:
         ttk.Label(vote_panel, text=f"{position}:", background='#f0f8ff', foreground='#4b0082').pack(pady=5)
         
@@ -65,15 +74,30 @@ def open_vote_panel(user_id):
 
         combobox = ttk.Combobox(vote_panel, values=candidates)
         combobox.pack(pady=5)
+        comboboxes[position] = combobox
     
     def submit_votes():
-        votes = {position: combobox.get() for position, combobox in zip(positions, vote_panel.winfo_children()[-len(positions)*2::2])}
-        print(f"Votes for user {user_id}: {votes}")
-        # Here you can add code to handle the vote submission (e.g., save to a database)
-        messagebox.showinfo("Success", "Your votes have been submitted successfully!")
-        vote_panel.destroy()
+        votes = {position: combobox.get() for position, combobox in comboboxes.items()}
+        if any(not vote for vote in votes.values()):
+            messagebox.showerror("Error", "Please select a candidate for each position.")
+            return
+        
+        try:
+            conn = sqlite3.connect('voting.db')
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO votes (id_number, president_vote, governor_vote, senator_vote, women_rep_vote, mp_vote, mca_vote, province, county, constituency, ward)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (user_id, votes['President'], votes['Governor'], votes['Senator'], votes['Women Rep'], votes['Member of Parliament (MP)'], votes['Member of County Assembly (MCA)'], province, county, constituency, ward))
+            
+            conn.commit()
+            messagebox.showinfo("Success", "Your votes have been submitted successfully!")
+            vote_panel.destroy()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+        finally:
+            conn.close()
     
     ttk.Button(vote_panel, text="Submit Votes", command=submit_votes).pack(pady=20)
     
-    conn.close()
     vote_panel.mainloop()
