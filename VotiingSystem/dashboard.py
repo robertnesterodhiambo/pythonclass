@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import sqlite3
+from vote import open_vote_panel
 
 # Connect to SQLite database
 conn = sqlite3.connect('voting.db')
@@ -146,7 +147,7 @@ def open_apply_popup(user_id):
     submit_button.pack(pady=20)
     
     popup.mainloop()
-    
+
 def open_dashboard(user_id):
     dashboard_window = tk.Tk()
     dashboard_window.title("Dashboard")
@@ -173,12 +174,16 @@ def open_dashboard(user_id):
     apply_button = ttk.Button(content_frame, text="Aspirant Application", command=lambda: open_apply_popup(user_id))
     apply_button.grid(row=2, column=0, pady=20, sticky="s")
     
+    # Adding Vote button
+    vote_button = ttk.Button(content_frame, text="Vote", command=lambda: vote(user_id))
+    vote_button.grid(row=3, column=0, pady=20, sticky="s")
+    
     dashboard_window.mainloop()
+
+
+def vote(user_id):
+    open_vote_panel(user_id) 
 
 if __name__ == "__main__":
     import sys
-    user_id = sys.argv[1] if len(sys.argv) > 1 else '1'  # Default user_id for testing
-    open_dashboard(user_id)
-
-# Close the database connection when the script ends
-conn.close()
+    open_dashboard(sys.argv[1])
