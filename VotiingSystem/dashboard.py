@@ -36,13 +36,19 @@ def fetch_wards(constituency_name):
     wards = cursor.fetchall()
     return [ward[0] for ward in wards]
 
+# Function to fetch all positions from the database
+def fetch_positions():
+    cursor.execute("SELECT position_name FROM positions")
+    positions = cursor.fetchall()
+    return [position[0] for position in positions]
+
+# Function to submit aspirant details to the database
 def submit_aspirant_details(user_id, citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward):
     cursor.execute('''
     INSERT INTO aspirant (citizen_id, first_name, last_name, aspirant_position, age, gender, province, county, constituency, ward)
     VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (citizen_id, first_name, last_name, position, age, gender, province, county, constituency, ward))
     conn.commit()
-
 
 def open_apply_popup(user_id):
     popup = tk.Toplevel()
@@ -61,8 +67,8 @@ def open_apply_popup(user_id):
     last_name_entry.pack(pady=5, fill=tk.X, padx=20)
     
     ttk.Label(popup, text="Position:", background='#f0f8ff', foreground='#4b0082').pack(pady=5)
-    position_entry = ttk.Entry(popup)
-    position_entry.pack(pady=5, fill=tk.X, padx=20)
+    position_combobox = ttk.Combobox(popup, values=fetch_positions())
+    position_combobox.pack(pady=5, fill=tk.X, padx=20)
     
     ttk.Label(popup, text="Age:", background='#f0f8ff', foreground='#4b0082').pack(pady=5)
     age_entry = ttk.Entry(popup)
@@ -98,6 +104,7 @@ def open_apply_popup(user_id):
         counties = fetch_counties(selected_province)
         county_combobox['values'] = counties
         county_combobox.config(state='readonly')
+        county_combobox.set('')
         constituency_combobox.set('')
         ward_combobox.set('')
     
@@ -106,6 +113,7 @@ def open_apply_popup(user_id):
         constituencies = fetch_constituencies(selected_county)
         constituency_combobox['values'] = constituencies
         constituency_combobox.config(state='readonly')
+        constituency_combobox.set('')
         ward_combobox.set('')
     
     def update_wards(event):
@@ -113,6 +121,7 @@ def open_apply_popup(user_id):
         wards = fetch_wards(selected_constituency)
         ward_combobox['values'] = wards
         ward_combobox.config(state='readonly')
+        ward_combobox.set('')
     
     province_combobox.bind('<<ComboboxSelected>>', update_counties)
     county_combobox.bind('<<ComboboxSelected>>', update_constituencies)
@@ -122,9 +131,9 @@ def open_apply_popup(user_id):
         citizen_id = user_id  # For simplicity, using user_id as citizen_id
         first_name = first_name_entry.get()
         last_name = last_name_entry.get()
-        position = position_entry.get()
+        position = position_combobox.get()
         age = int(age_entry.get())
-        gender = gender_entry.get()
+        gender = gender_var.get()
         province = province_combobox.get()
         county = county_combobox.get()
         constituency = constituency_combobox.get()
@@ -168,5 +177,8 @@ def open_dashboard(user_id):
 
 if __name__ == "__main__":
     import sys
-    user_id = sys.argv[1]
+    user_id = sys.argv[1] if len(sys.argv) > 1 else '1'  # Default user_id for testing
     open_dashboard(user_id)
+
+# Close the database connection when the script ends
+conn.close()
