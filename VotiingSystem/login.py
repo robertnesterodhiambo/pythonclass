@@ -33,8 +33,8 @@ def open_signup():
     signup_window.title("Signup")
     signup_window.geometry("300x200")
 
-    # Add signup UI elements here
-    # Example: ttk.Label(signup_window, text="Signup Form").pack()
+    # Run the signup.py script
+    subprocess.Popen(['python', 'signup.py'])
 
 def open_dashboard(user_id):
     # Close the current login window
