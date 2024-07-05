@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import sqlite3
 from vote import open_vote_panel
+import subprocess  # For running external scripts
 
 # Connect to SQLite database
 conn = sqlite3.connect('voting.db')
@@ -174,15 +175,20 @@ def open_dashboard(user_id):
     apply_button = ttk.Button(content_frame, text="Aspirant Application", command=lambda: open_apply_popup(user_id))
     apply_button.grid(row=2, column=0, pady=20, sticky="s")
     
-    # Adding Vote button
     vote_button = ttk.Button(content_frame, text="Vote", command=lambda: vote(user_id))
     vote_button.grid(row=3, column=0, pady=20, sticky="s")
     
+    # Results button
+    def run_results_script():
+        subprocess.Popen(["python", "results.py"])  # Replace with correct path if needed
+    
+    results_button = ttk.Button(content_frame, text="Results", command=run_results_script)
+    results_button.grid(row=4, column=0, pady=20, sticky="s")
+    
     dashboard_window.mainloop()
 
-
 def vote(user_id):
-    open_vote_panel(user_id) 
+    open_vote_panel(user_id)
 
 if __name__ == "__main__":
     import sys
