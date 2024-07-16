@@ -1,0 +1,18 @@
+# Declaring and initializing variables
+first_name = "John"
+last_name = "Doe"
+age = 25
+
+# Writing to the screen (printing)
+print("Welcome, " + first_name + " " + last_name + "!")
+print("You are " + str(age) + " years old.")
+
+# Declaring and initializing more variables
+num1 = 10
+num2 = 20
+
+# Using variables to perform a calculation
+sum_result = num1 + num2
+
+# Writing the result to the screen
+print("The sum of " + str(num1) + " and " + str(num2) + " is: " + str(sum_result))
