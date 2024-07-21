@@ -16,3 +16,4 @@ This repository serves not only as a testament to my journey but also as a valua
 ![Python Class Journey](https://miro.medium.com/v2/resize:fit:1400/1*ycIMlwgwicqlO6PcFRA-Iw.png)
 
 [GitHub Repository](https://github.com/robertnesterodhiambo/pythonclass.git)
+today is Sunday the day is slow but i must write a code
