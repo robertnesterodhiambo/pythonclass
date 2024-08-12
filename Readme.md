@@ -1,4 +1,4 @@
-#	Title: Mastering Python: A Journey of Code Proficiency
+t#	Title: Mastering Python: A Journey of Code Proficiency
 
 ##	Description:
 Welcome to a comprehensive repository documenting my voyage through the realm of Python programming. From humble beginnings to proficient mastery, this journey chronicles the evolution of my coding skills, guided by curiosity, practice, and a relentless pursuit of excellence.
