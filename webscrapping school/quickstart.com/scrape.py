@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 import time
 
 # Set the options for headless mode (optional)
@@ -49,12 +50,19 @@ for address in range(5000, 5006):
             EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'results')]"))  # Replace with the actual results container element
         )
         
-        # Wait for a moment to ensure results are fully loaded
-        time.sleep(3)
+        # Select the option with value 50 from the select element with ID 'radius'
+        radius_select = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "radius"))
+        )
+        select = Select(radius_select)
+        select.select_by_value("50")
+        
+        # Wait for 5 seconds
+        time.sleep(5)
         
         # Print confirmation for each search
         print(f"Searched for address: {address}")
-        
+
     except Exception as e:
         print(f"An error occurred: {e}")
 
