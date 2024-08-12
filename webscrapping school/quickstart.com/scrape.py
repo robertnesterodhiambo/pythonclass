@@ -22,6 +22,9 @@ driver = webdriver.Firefox(service=service, options=options)
 # The URL to be loaded
 url = "https://www.agedcarequickstart.com.au/"
 
+# Initialize a list to hold all links
+all_links = []
+
 # Loop through the addresses from 5000 to 5005
 for address in range(5000, 5006):
     # Load the default URL before each search
@@ -57,8 +60,30 @@ for address in range(5000, 5006):
         select = Select(radius_select)
         select.select_by_value("50")
         
-        # Wait for 5 seconds
+        # Wait for the page to update
         time.sleep(5)
+        
+        # Scroll to the bottom of the page to load all content
+        last_height = driver.execute_script("return document.body.scrollHeight")
+        while True:
+            # Scroll down to the bottom
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            
+            # Wait for new content to load
+            time.sleep(3)
+            
+            # Check new height and compare with last height
+            new_height = driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+        
+        # Collect all links with the class 'fo-black text-decoration-none'
+        anchors = driver.find_elements(By.CSS_SELECTOR, "div.col.mb-4 a.fo-black.text-decoration-none")
+        for anchor in anchors:
+            href = anchor.get_attribute("href")
+            if href:
+                all_links.append(href)
         
         # Print confirmation for each search
         print(f"Searched for address: {address}")
@@ -68,3 +93,8 @@ for address in range(5000, 5006):
 
 # Close the browser
 driver.quit()
+
+# Print all collected links
+print("Collected links:")
+for link in all_links:
+    print(link)
