@@ -14,7 +14,8 @@ options = Options()
 # options.add_argument('--headless')
 
 # Specify the path to GeckoDriver
-service = Service(executable_path='./geckodriver')
+service = Service(executable_path='/home/dragon/Git/pythonclass/webscrapping school/quickstart.com/geckodriver')
+
 
 # Initialize the WebDriver with the specified options and service
 driver = webdriver.Firefox(service=service, options=options)
