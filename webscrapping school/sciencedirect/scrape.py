@@ -1,19 +1,19 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 # Set up options to specify the WebDriver location
 options = Options()
 options.headless = False  # Set to True if you want to run in headless mode (without GUI)
 
 # Define the path to the WebDriver in the same directory as this script
-webdriver_path = './geckodriver'  # Adjust according to your OS (e.g., './geckodriver.exe' for Windows)
+webdriver_path = './chromedriver'  # For Linux, './chromedriver' should work
 
 # Create a WebDriver service
 service = Service(executable_path=webdriver_path)
 
-# Initialize the Firefox WebDriver with the specified service
-driver = webdriver.Firefox(service=service, options=options)
+# Initialize the Chrome WebDriver with the specified service
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open the desired URL
 url = "https://www.sciencedirect.com/search?qs=%22additive%20manufacturing%22&affiliations=Germany"
