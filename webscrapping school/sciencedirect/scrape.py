@@ -12,6 +12,10 @@ df = pd.read_excel(file_path)
 service = Service(executable_path="./geckodriver")  # Assuming geckodriver is in the same folder
 driver = webdriver.Firefox(service=service)
 
+# Lists to store the data
+authors = []
+affiliations = []
+
 try:
     # Open the first 5 links from the 'Link' column
     for i, link in enumerate(df['Link'].head(5)):
@@ -26,9 +30,42 @@ try:
         
         # Click each button
         for button in buttons:
+            author_text = button.text  # Store the text on the button as the author
             button.click()
-            time.sleep(1)  # Pause to allow any action from the button click to complete
+            time.sleep(2)  # Pause to allow the side panel to open
             
+            # Locate the side panel content
+            try:
+                side_panel_content = driver.find_element(By.CLASS_NAME, "side-panel-content")
+                
+                # Locate the div with class="affiliation" within the side panel
+                affiliation_div = side_panel_content.find_element(By.CLASS_NAME, "affiliation")
+                affiliation_text = affiliation_div.text  # Collect the text as the affiliation
+                
+                # Store the author and affiliation
+                authors.append(author_text)
+                affiliations.append(affiliation_text)
+            
+            except Exception as e:
+                print(f"Error locating affiliation or side panel content: {e}")
+                authors.append(author_text)
+                affiliations.append("N/A")  # Store "N/A" if affiliation is not found
+            
+            # Close the side panel (optional: depending on the website's structure, this step might be needed)
+            # You can add code to close the panel if necessary
+
 finally:
     # Close the browser after opening the links
     driver.quit()
+
+# Combine the collected data into a DataFrame
+output_df = pd.DataFrame({
+    'Author': authors,
+    'Affiliation': affiliations
+})
+
+# Save the output to an Excel file or CSV
+output_file_path = "collected_data.xlsx"
+output_df.to_excel(output_file_path, index=False)
+
+print(f"Data collected and saved to {output_file_path}")
