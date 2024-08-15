@@ -15,6 +15,7 @@ driver = webdriver.Firefox(service=service)
 # Lists to store the data
 authors = []
 affiliations = []
+links = []
 
 try:
     # Open the first 5 links from the 'Link' column
@@ -42,12 +43,14 @@ try:
                 affiliation_div = side_panel_content.find_element(By.CLASS_NAME, "affiliation")
                 affiliation_text = affiliation_div.text  # Collect the text as the affiliation
                 
-                # Store the author and affiliation
+                # Store the link, author, and affiliation
+                links.append(link)
                 authors.append(author_text)
                 affiliations.append(affiliation_text)
             
             except Exception as e:
                 print(f"Error locating affiliation or side panel content: {e}")
+                links.append(link)
                 authors.append(author_text)
                 affiliations.append("N/A")  # Store "N/A" if affiliation is not found
             
@@ -60,6 +63,7 @@ finally:
 
 # Combine the collected data into a DataFrame
 output_df = pd.DataFrame({
+    'Link': links,
     'Author': authors,
     'Affiliation': affiliations
 })
