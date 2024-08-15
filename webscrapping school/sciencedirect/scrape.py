@@ -18,25 +18,26 @@ affiliations = []
 links = []
 
 try:
-    # Open the first 5 links from the 'Link' column
-    for i, link in enumerate(df['Link'].head(5)):
-        driver.get(link)
-        time.sleep(3)  # Pause for 3 seconds to let the page load
-        
-        # Locate the div with id="author-group"
-        author_group_div = driver.find_element(By.ID, "author-group")
-        
-        # Find all buttons within the div with the specified classes
-        buttons = author_group_div.find_elements(By.CSS_SELECTOR, ".button-link.button-link-secondary.button-link-underline")
-        
-        # Click each button
-        for button in buttons:
-            author_text = button.text  # Store the text on the button as the author
-            button.click()
-            time.sleep(2)  # Pause to allow the side panel to open
+    # Iterate through all links in the 'Link' column
+    for i, link in enumerate(df['Link']):
+        try:
+            driver.get(link)
+            print(f"Opening link {i + 1}")  # Print the current link number
+            time.sleep(5)  # Pause for 5 seconds to let the page load fully
+
+            # Locate the div with id="author-group"
+            author_group_div = driver.find_element(By.ID, "author-group")
+
+            # Find all buttons within the div with the specified classes
+            buttons = author_group_div.find_elements(By.CSS_SELECTOR, ".button-link.button-link-secondary.button-link-underline")
             
-            # Locate the side panel content
-            try:
+            # Click each button
+            for button in buttons:
+                author_text = button.text  # Store the text on the button as the author
+                button.click()
+                time.sleep(3)  # Pause to allow the side panel to open
+                
+                # Locate the side panel content
                 side_panel_content = driver.find_element(By.CLASS_NAME, "side-panel-content")
                 
                 # Locate the div with class="affiliation" within the side panel
@@ -47,18 +48,15 @@ try:
                 links.append(link)
                 authors.append(author_text)
                 affiliations.append(affiliation_text)
-            
-            except Exception as e:
-                print(f"Error locating affiliation or side panel content: {e}")
-                links.append(link)
-                authors.append(author_text)
-                affiliations.append("N/A")  # Store "N/A" if affiliation is not found
-            
-            # Close the side panel (optional: depending on the website's structure, this step might be needed)
-            # You can add code to close the panel if necessary
 
+        except Exception as e:
+            print(f"Error processing link {i + 1}: {e}")
+            links.append(link)
+            authors.append("N/A")
+            affiliations.append("N/A")
+        
 finally:
-    # Close the browser after opening the links
+    # Close the browser after completing the process
     driver.quit()
 
 # Combine the collected data into a DataFrame
