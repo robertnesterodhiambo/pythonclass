@@ -16,7 +16,7 @@ service = Service(executable_path=webdriver_path)
 driver = webdriver.Chrome(service=service, options=options)
 
 # Open the desired URL
-url = "https://www.sciencedirect.com/search?qs=%22additive%20manufacturing%22&affiliations=Germany"
+url = "https://www.sciencedirect.com/"
 driver.get(url)
 
 # Add any additional operations you want to perform here
