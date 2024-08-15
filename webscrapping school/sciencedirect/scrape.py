@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import time
 
 # Set up options for Firefox WebDriver
@@ -18,20 +19,16 @@ service = Service(executable_path=geckodriver_path)
 driver = webdriver.Firefox(service=service, options=options)
 
 # Open the desired URL
-url = "https://www.sciencedirect.com/"
+url = "https://www.sciencedirect.com/science/article/pii/S0010938X24005286"
 driver.get(url)
 
-# Locate the input field by ID and enter the search term
-search_input = driver.find_element(By.ID, "qs")
-search_input.send_keys('"additive manufacturing"')  # Enter the search term with quotes
 
-# Locate and click the search button
-search_button = driver.find_element(By.CSS_SELECTOR, ".button.button-primary.button-icon-left")
-search_button.click()
+
+# Wait for manual interaction
+print("Please manually handle the cookies consent and any popups.")
+time.sleep(60)  # Keeps the browser open for 60 seconds for manual interaction
 
 # Add any additional operations you want to perform here
 
-# Close the browser after some delay (optional)
-time.sleep(10)  # Keeps the browser open for 10 seconds
-
+# Close the browser
 driver.quit()
