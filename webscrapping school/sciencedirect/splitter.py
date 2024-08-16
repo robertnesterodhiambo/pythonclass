@@ -7,6 +7,10 @@ df = pd.read_excel(file_path)
 # Split the 'Affiliation' column by commas
 split_columns = df['Affiliation'].str.split(',', expand=True)
 
+# Rename the split columns to 'Affiliation_1', 'Affiliation_2', ..., 'Affiliation_n'
+num_splits = split_columns.shape[1]  # Number of new columns created
+split_columns.columns = [f'Affiliation_{i+1}' for i in range(num_splits)]
+
 # Concatenate the original DataFrame with the new split columns
 df_split = pd.concat([df, split_columns], axis=1)
 
