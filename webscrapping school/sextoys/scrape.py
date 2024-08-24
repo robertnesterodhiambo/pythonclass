@@ -25,6 +25,17 @@ options.headless = False  # Set to True if you don't need a visible browser wind
 service = Service(executable_path=geckodriver_path)
 driver = webdriver.Firefox(service=service, options=options)
 
+# Function to scroll to the bottom of the page
+def scroll_to_bottom():
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)  # Wait for new content to load
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
+
 # Initialize a list to store the results
 results = []
 
@@ -33,7 +44,10 @@ for index, row in df.iterrows():
     link = row['link']
     print(f"Opening link: {link}")
     driver.get(link)
-    time.sleep(5)  # Wait for 5 seconds to ensure the page loads completely
+    time.sleep(5)  # Wait for the page to load completely
+
+    # Scroll to the bottom of the page to load more results
+    scroll_to_bottom()
     
     # Find all articles with the specified class
     try:
