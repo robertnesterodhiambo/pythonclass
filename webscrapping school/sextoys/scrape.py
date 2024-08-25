@@ -61,7 +61,7 @@ def go_to_next_page():
         return False
 
 # Function to process each link
-def process_link(link):
+def process_link(link, file_handle):
     results = []
     driver.get(link)
     time.sleep(5)  # Wait for the page to load completely
@@ -112,22 +112,11 @@ def process_link(link):
             print(f"Error processing page {page_number} of {link}: {e}")
             results.append({'link': link, 'page_number': page_number, 'product_title': "Error", 'product_link': "Error"})
         
-        # Save results to Excel file after processing each page
+        # Save results to CSV file after processing each page
         if results:
-            # Convert results to DataFrame
             results_df = pd.DataFrame(results)
-            # Check if the file already exists
-            if os.path.exists(output_file_path):
-                # Load existing data
-                existing_df = pd.read_excel(output_file_path)
-                # Append new data to the existing data
-                updated_df = pd.concat([existing_df, results_df], ignore_index=True)
-                # Save updated data to Excel
-                updated_df.to_excel(output_file_path, index=False)
-            else:
-                # Save new data to Excel
-                results_df.to_excel(output_file_path, index=False)
-
+            results_df.to_csv(file_handle, index=False, mode='a', header=file_handle.tell() == 0)
+        
         # Check if there is a next page and go to it
         if not go_to_next_page():
             break
@@ -135,14 +124,19 @@ def process_link(link):
         page_number += 1
 
 # Path to save the results
-output_file_path = 'product_titles_and_links_with_pages.xlsx'
+output_file_path = 'product_titles_and_links_with_pages.csv'
 
-# Iterate over each link and process it
-for index, row in df.iterrows():
-    link = row['link']
-    print(f"Starting processing for link: {link}")
-    process_link(link)
-    print(f"Finished processing for link: {link}")
+# Open file in append mode
+with open(output_file_path, mode='w', newline='', encoding='utf-8') as file_handle:
+    # Write header
+    file_handle.write('link,page_number,product_title,product_link\n')
+    
+    # Iterate over each link and process it
+    for index, row in df.iterrows():
+        link = row['link']
+        print(f"Starting processing for link: {link}")
+        process_link(link, file_handle)
+        print(f"Finished processing for link: {link}")
 
 # Close the WebDriver
 driver.quit()
