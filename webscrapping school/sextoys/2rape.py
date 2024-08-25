@@ -9,16 +9,24 @@ from selenium.webdriver.support import expected_conditions as EC
 file_path = 'product_titles_and_links_with_pages.csv'
 data = pd.read_csv(file_path)
 
-# Create a new column for the product names
-data['productname2'] = ''
-
 # Set up the Firefox WebDriver
 service = Service('./geckodriver')  # Make sure the geckodriver is in the same folder
 driver = webdriver.Firefox(service=service)
 
-# Loop through the first 5 links and extract the product name
-for index, link in enumerate(data['product_link']):
-    driver.get(link)
+# Loop through the links and extract the product name
+for index, row in data.iterrows():
+    # Skip rows where 'productname2' is already filled
+    if pd.notna(row['productname2']) and row['productname2'].strip() != '':
+        print(f"Skipping link {row['product_link']} as 'productname2' is already filled.")
+        continue
+
+    try:
+        driver.get(row['product_link'])
+    except Exception as e:
+        print(f"Failed to load link {row['product_link']}: {e}")
+        data.at[index, 'productname2'] = 'URL Load Error'
+        data.to_csv(file_path, index=False)
+        continue
 
     try:
         # Explicitly wait for the h1 tag with the specific class to be present in the DOM
@@ -29,13 +37,13 @@ for index, link in enumerate(data['product_link']):
         data.at[index, 'productname2'] = product_name
         print(f"Product Name Extracted: {product_name}")
     except Exception as e:
-        print(f"Error occurred for link {link}: {e}")
+        print(f"Error occurred for link {row['product_link']}: {e}")
         data.at[index, 'productname2'] = 'Error'
-        print(f"Saved as Error for link: {link}")
+        print(f"Saved as Error for link: {row['product_link']}")
 
     # Save the CSV after each iteration to avoid data loss
     data.to_csv(file_path, index=False)
-    print(f"Data saved for link: {link}")
+    print(f"Data saved for link: {row['product_link']}")
 
 # Close the browser
 driver.quit()
