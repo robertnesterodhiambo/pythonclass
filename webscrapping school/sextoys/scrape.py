@@ -4,6 +4,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 import time
+import os
 
 # Path to the geckodriver executable
 geckodriver_path = './geckodriver'
@@ -15,9 +16,6 @@ df = pd.read_excel(file_path)
 # Ensure the 'link' column exists in the DataFrame
 if 'link' not in df.columns:
     raise ValueError("The DataFrame does not contain a 'link' column.")
-
-# Select only the first 2 rows
-df = df.head(2)
 
 # Set up Firefox WebDriver
 options = Options()
@@ -39,24 +37,32 @@ def scroll_to_bottom():
 # Function to navigate to the next page
 def go_to_next_page():
     try:
-        next_button = driver.find_element(By.CSS_SELECTOR, 'a[rel="next"].next.js-search-link')
-        if next_button:
-            next_button.click()
-            time.sleep(5)  # Wait for the new page to load
-            return True
-        else:
-            return False
+        # Wait until the "next" button with rel="next" is present
+        wait_time = 10  # seconds
+        start_time = time.time()
+        while True:
+            try:
+                next_button = driver.find_element(By.CSS_SELECTOR, 'a[rel="next"].next.js-search-link')
+                # Scroll the element into view
+                driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+                time.sleep(1)  # Wait for the scroll to take effect
+                
+                # Use JavaScript to click the button
+                driver.execute_script("arguments[0].click();", next_button)
+                time.sleep(5)  # Wait for the new page to load
+                return True
+            except Exception as e:
+                if time.time() - start_time > wait_time:
+                    print(f"Timeout or error navigating to next page: {e}")
+                    return False
+                time.sleep(1)  # Wait before retrying
     except Exception as e:
         print(f"Error navigating to next page: {e}")
         return False
 
-# Initialize a list to store the results
-results = []
-
-# Open each link from the DataFrame
-for index, row in df.iterrows():
-    link = row['link']
-    print(f"Opening link: {link}")
+# Function to process each link
+def process_link(link):
+    results = []
     driver.get(link)
     time.sleep(5)  # Wait for the page to load completely
 
@@ -99,17 +105,39 @@ for index, row in df.iterrows():
             print(f"Error processing page {page_number} of {link}: {e}")
             results.append({'link': link, 'page_number': page_number, 'product_title': "Error", 'product_link': "Error"})
         
+        # Save results to Excel file after processing each page
+        if results:
+            # Convert results to DataFrame
+            results_df = pd.DataFrame(results)
+            # Check if the file already exists
+            if os.path.exists(output_file_path):
+                # Load existing data
+                existing_df = pd.read_excel(output_file_path)
+                # Append new data to the existing data
+                updated_df = pd.concat([existing_df, results_df], ignore_index=True)
+                # Save updated data to Excel
+                updated_df.to_excel(output_file_path, index=False)
+            else:
+                # Save new data to Excel
+                results_df.to_excel(output_file_path, index=False)
+
         # Check if there is a next page and go to it
         if not go_to_next_page():
             break
         
         page_number += 1
 
+# Path to save the results
+output_file_path = 'product_titles_and_links_with_pages.xlsx'
+
+# Iterate over each link and process it
+for index, row in df.iterrows():
+    link = row['link']
+    print(f"Starting processing for link: {link}")
+    process_link(link)
+    print(f"Finished processing for link: {link}")
+
 # Close the WebDriver
 driver.quit()
 
-# Convert results to a DataFrame and save to Excel
-results_df = pd.DataFrame(results)
-results_df.to_excel('product_titles_and_links_with_pages.xlsx', index=False)
-
-print("Finished extracting product titles, links, and page numbers.")
+print("Finished extracting product titles, links, and page numbers from all links.")
