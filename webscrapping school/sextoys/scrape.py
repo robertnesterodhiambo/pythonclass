@@ -79,8 +79,12 @@ def process_link(link):
             article_elements = driver.find_elements(By.CSS_SELECTOR, 'article.product-miniature.js-product-miniature')
             
             if article_elements:
-                for article in article_elements:
+                for _ in range(len(article_elements)):  # Iterate over a copy of the list to handle stale elements
                     try:
+                        # Re-fetch articles list
+                        article_elements = driver.find_elements(By.CSS_SELECTOR, 'article.product-miniature.js-product-miniature')
+                        article = article_elements[_]
+                        
                         # Find the <h2> tag within the current article
                         h2_element = article.find_element(By.CSS_SELECTOR, 'h2.h3.product-title')
                         
@@ -95,6 +99,9 @@ def process_link(link):
                         results.append({'link': link, 'page_number': page_number, 'product_title': product_title, 'product_link': product_link})
                         
                     except Exception as e:
+                        if "stale element" in str(e).lower():
+                            print(f"Stale element exception: {e}")
+                            continue
                         print(f"Error extracting data from article in {link} on page {page_number}: {e}")
                         results.append({'link': link, 'page_number': page_number, 'product_title': "Not Found", 'product_link': "Not Found"})
             else:
