@@ -17,7 +17,7 @@ service = Service('./geckodriver')  # Make sure the geckodriver is in the same f
 driver = webdriver.Firefox(service=service)
 
 # Loop through the first 5 links and extract the product name
-for index, link in enumerate(data['product_link'].head()):
+for index, link in enumerate(data['product_link']):
     driver.get(link)
 
     try:
