@@ -1,0 +1,41 @@
+% Define the parameters (replace with actual values)
+n = 0.5;       % Example value for n
+beta = 0.2;    % Example value for beta
+tau = 1;       % Example value for tau
+theta = 1;     % Example value for theta
+epsilon_so = 1; % Example value for epsilon_so
+k_o = 1;       % Example value for k_o
+DeltaP = 1;    % Example value for Delta P
+mu = 1;        % Example value for mu
+Rm = 1;        % Example value for Rm
+
+% Define the time interval and step
+t_start = 0;         % start time
+t_end = 720*60;      % end time in seconds (720 minutes)
+dt = 300;            % time step in seconds
+
+% Initialize variables
+t_values = t_start:dt:t_end;  % time values
+J_values = zeros(size(t_values));  % initialize J values
+
+for i = 1:length(t_values)
+    t = t_values(i);
+    
+    % Calculate DeltaPc using the second equation
+    DeltaPc = DeltaP - mu * Rm * J_values(max(i-1,1));
+    
+    % Calculate J using the first equation
+    J = 1 + DeltaPc * tau * exp(DeltaP * theta) * (1-n-beta-1) * ...
+        2 * mu * (1-n-beta) * k_o * tau * exp(DeltaP * theta) * ...
+        (epsilon_so - t * dt) * (1 + DeltaPc * tau * exp(DeltaP * theta) * (1-n-beta-1)) * dt;
+    
+    J_values(i) = J;  % store the J value
+end
+
+% Plot J vs. t
+figure;
+plot(t_values/60, J_values, 'LineWidth', 2);  % t_values/60 to convert to minutes
+xlabel('Time (minutes)');
+ylabel('J');
+title('J vs. Time');
+grid on;
