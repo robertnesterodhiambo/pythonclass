@@ -45,10 +45,11 @@ product_list = product_list_container.find_element(By.CLASS_NAME, 'product_list.
 # Find all li elements with class 'ajax_block_product col-6 mb-2 mb-md-0 col-lg-3'
 product_items = product_list.find_elements(By.CLASS_NAME, 'ajax_block_product.col-6.mb-2.mb-md-0.col-lg-3')
 
-# Initialize an empty list to store the product links
+# Initialize lists to store the product names and links
+product_names = []
 product_links = []
 
-# Iterate through each product item and extract the link
+# Iterate through each product item and extract the link and name
 for product_item in product_items:
     try:
         # Wait for the anchor tag to be present
@@ -56,17 +57,21 @@ for product_item in product_items:
             EC.presence_of_element_located((By.CLASS_NAME, 'product_link'))
         )
         product_links.append(anchor.get_attribute('href'))
-    except:
-        print("Failed to retrieve the link for an item.")
+        
+        # Extract the product name
+        product_name_span = product_item.find_element(By.CLASS_NAME, 'product_name.d-block')
+        product_names.append(product_name_span.text)
+    except Exception as e:
+        print(f"Failed to retrieve details for an item: {e}")
 
-# Store the collected links in a DataFrame
-product_df = pd.DataFrame({'product link': product_links})
+# Store the collected links and names in a DataFrame
+product_df = pd.DataFrame({'product name': product_names, 'product link': product_links})
 
 # Display the DataFrame (or you can save it to a CSV file)
 print(product_df)
 
 # Optionally, save to a CSV file
-product_df.to_csv('product_links.csv', index=False)
+product_df.to_csv('product_details.csv', index=False)
 
 # Close the browser
 driver.quit()
