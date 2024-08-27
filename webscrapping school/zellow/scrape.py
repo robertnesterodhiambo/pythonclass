@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 # Set the base URL
@@ -28,13 +29,22 @@ try:
     # Simulate pressing the 'Enter' key to search
     input_field.send_keys(Keys.RETURN)
 
-    # Wait for the search results to load (you may need to adjust this)
-    WebDriverWait(driver, 20).until(
+    # Wait for the "Press & Hold" CAPTCHA to appear
+    press_hold_p = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.XPATH, "//p[text()='Press & Hold']"))
+    )
+
+    # Assuming the CAPTCHA button is the next sibling of the <p> tag
+    press_hold_button = press_hold_p.find_element(By.XPATH, "./following-sibling::button")
+
+    # Simulate the click and hold action
+    action = ActionChains(driver)
+    action.click_and_hold(press_hold_button).perform()
+
+    # Wait until the CAPTCHA is resolved and search results are displayed
+    WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.CLASS_NAME, "search-results"))  # Adjust this to match a real element on the results page
     )
-    
-    # Wait for 1 minute (60 seconds) to solve CAPTCHA if needed
-    time.sleep(60)
 
 finally:
     # Close the browser after use
