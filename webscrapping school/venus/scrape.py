@@ -4,6 +4,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 # Load the CSV file into a DataFrame
 df = pd.read_csv('data.csv')
@@ -17,6 +18,22 @@ driver = webdriver.Firefox(service=service)
 
 # Open the first link in the browser
 driver.get(first_link)
+
+# Scroll to the bottom of the page to load all content
+last_height = driver.execute_script("return document.body.scrollHeight")
+
+while True:
+    # Scroll down to the bottom
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    
+    # Wait for the page to load
+    time.sleep(2)  # Adjust the sleep time as necessary
+
+    # Calculate new scroll height and compare with last scroll height
+    new_height = driver.execute_script("return document.body.scrollHeight")
+    if new_height == last_height:
+        break
+    last_height = new_height
 
 # Wait until the product list container is available
 wait = WebDriverWait(driver, 10)
