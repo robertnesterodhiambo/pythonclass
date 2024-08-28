@@ -10,19 +10,22 @@ import time
 # Load the dataset
 df = pd.read_csv('all_product_details.csv')
 
-# Add a new column for the product names
-df['product_name'] = ''
-
 # Set up the Firefox WebDriver with options
 options = Options()
-options.add_argument("--headless")  # Run in headless mode if you don't want the browser to open visibly
+#options.add_argument("--headless")  # Run in headless mode if you don't want the browser to open visibly
 service = Service('./geckodriver')  # Ensure the geckodriver is in the same folder as this script
 
 # Initialize the WebDriver
 driver = webdriver.Firefox(service=service, options=options)
 
-# Iterate over the first 5 product links, extract the product name, and store it
-for i, link in enumerate(df['product link'].head(5)):
+# Iterate over the first 5 product links
+for i, row in df.iterrows():
+    # Skip rows where 'product_name' is already filled
+    if pd.notna(row['product_name']):
+        print(f"Skipping row {i} as it is already filled.")
+        continue
+    
+    link = row['product link']
     driver.get(link)
     
     try:
@@ -39,12 +42,14 @@ for i, link in enumerate(df['product link'].head(5)):
         # Extract the text and store it in the DataFrame
         df.at[i, 'product_name'] = h1_element.text
         print(f"Collected product name: {h1_element.text}")
+        
     except Exception as e:
         print(f"Failed to extract product name from {link}: {e}")
         df.at[i, 'product_name'] = 'N/A'
+    
+    # Save the DataFrame after each processed link
+    df.to_csv('all_product_details.csv', index=False)
+    print(f"Data saved after processing row {i}.")
 
 # Close the WebDriver
 driver.quit()
-
-# Save the updated DataFrame back to the CSV file
-df.to_csv('all_product_details.csv', index=False)
