@@ -3,6 +3,7 @@ first_name = "John"
 last_name = "Doe"
 age = 25
 
+
 # Writing to the screen (printing)
 print("Welcome, " + first_name + " " + last_name + "!")
 print("You are " + str(age) + " years old.")
