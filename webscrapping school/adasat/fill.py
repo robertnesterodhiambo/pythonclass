@@ -38,8 +38,20 @@ for link in links:
         driver.get(link)
         print(f"Opened: {link}")
 
-        # Wait for the product detail box to load
+        # Scroll to the bottom of the page to ensure all content is loaded
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)  # Wait for the page to load after scrolling
+
+        # Wait for the full description to load and extract its text
         wait = WebDriverWait(driver, 20)  # Maximum wait time of 20 seconds
+
+        col_md_12 = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'col-md-12')))
+        info_div = col_md_12.find_element(By.CLASS_NAME, 'info')
+        full_description = info_div.text
+        full_descriptions.append(full_description)
+        print(f"Full Description: {full_description}")
+
+        # Wait for the product detail box to load
         product_detail_box = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'product-detail-box')))
 
         # Extract the product category
@@ -71,12 +83,21 @@ for link in links:
         image_and_anchor_links_list.append(all_links_str)
         print(f"Image & Anchor Links: {all_links_str}")
 
-        # Extract the full description text from the 'col-md-12' div > 'info' div
-        col_md_12 = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'col-md-12')))
-        info_div = col_md_12.find_element(By.CLASS_NAME, 'info')
-        full_description = info_div.text
-        full_descriptions.append(full_description)
-        print(f"Full Description: {full_description}")
+        # Wait for the button to appear dynamically and click it when found
+        try:
+            select_power_button = wait.until(
+                EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'btn') and text()='SELECT POWER']"))
+            )
+            select_power_button.click()
+            print("Clicked 'SELECT POWER' button")
+        except:
+            print("'SELECT POWER' button not found dynamically. Trying other elements...")
+            buttons = driver.find_elements(By.CLASS_NAME, "btn")
+            for button in buttons:
+                if button.text.strip() == "SELECT POWER":
+                    button.click()
+                    print("Clicked 'SELECT POWER' button dynamically")
+                    break
 
     except Exception as e:
         print(f"An error occurred while processing {link}: {e}")

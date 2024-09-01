@@ -12,6 +12,6 @@ it has many brands and types as well, there are colored lenses, perscription and
 - Left eye power (Sample: -0.50, -0.75, -1.00, -1.25, -1.50, -1.75, -10.00, -10.50,)
 - Right eye power (Sample: -0.50, -0.75, -1.00, -1.25, -1.50, -1.75, -10.00, -10.50,)
 - SKU if available
-- Full Description
+- Full Description----
 - Regular price-----
 - Sale Price------
