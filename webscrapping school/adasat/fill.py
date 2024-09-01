@@ -54,10 +54,15 @@ for link in links:
 
     except Exception as e:
         print(f"An error occurred while processing {link}: {e}")
+        product_categories.append(None)  # Add None if there is an error
 
     finally:
         # Close the WebDriver after processing
         driver.quit()
 
-# Print the collected product categories
-print("Collected Product Categories:", product_categories)
+# Add the collected product categories to the DataFrame
+df['Product Category'] = pd.Series(product_categories)
+
+# Save the updated DataFrame to a new CSV file
+df.to_csv('completed_data.csv', index=False)
+print("DataFrame has been saved to completed_data.csv")
