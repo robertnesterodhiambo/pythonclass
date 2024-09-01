@@ -1,0 +1,17 @@
+I have a project and require a web scraping data extraction, the extracted data will be products related to eyes (contact lense, etc...) so you should have information about contact lense and power of them.
+
+This is the link where we need to extract the products information:
+https://adasat.online/kw-en/product-list&types=&brand=&color=&collections=&replacement_list_id=&star_list_id=&sortby=4
+
+it has many brands and types as well, there are colored lenses, perscription and beauty lenses and many brands under them, for perscription lenses it's realy important to get the list of power for each eye (right eye, left eye) seperated by comma, also image url need to be extracted and all of product details like:
+- Product title
+- Category
+- Thumbnail
+- Image/s of product
+- Tags
+- Left eye power (Sample: -0.50, -0.75, -1.00, -1.25, -1.50, -1.75, -10.00, -10.50,)
+- Right eye power (Sample: -0.50, -0.75, -1.00, -1.25, -1.50, -1.75, -10.00, -10.50,)
+- SKU if available
+- Full Description
+- Regular price
+- Sale Price
