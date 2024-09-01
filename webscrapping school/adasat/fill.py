@@ -18,9 +18,10 @@ geckodriver_path = './geckodriver'
 # Define wait time in seconds
 wait_time = 5  # Time to wait between opening browsers
 
-# Initialize lists to store the product categories and image links
+# Initialize lists to store the product categories, image & anchor links, and full descriptions
 product_categories = []
-image_links_list = []
+image_and_anchor_links_list = []
+full_descriptions = []
 
 # Open each link in a new Firefox driver instance
 for link in links:
@@ -53,26 +54,44 @@ for link in links:
         product_categories.append(product_category)
         print(f"Product Category: {product_category}")
 
-        # Extract all image links inside 'slick-list draggable'
+        # Extract all image links and anchor links inside 'slick-list draggable'
         slick_list = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'slick-list.draggable')))
+        
+        # Extract image URLs from <img> tags within 'slick-list draggable'
         images = slick_list.find_elements(By.TAG_NAME, 'img')
         image_links = [img.get_attribute('src') for img in images]
-        image_links_str = ', '.join(image_links)  # Join all image URLs into a single string
-        image_links_list.append(image_links_str)
-        print(f"Image Links: {image_links_str}")
+
+        # Extract links from <a> tags inside 'slick-list draggable'
+        anchors = slick_list.find_elements(By.TAG_NAME, 'a')
+        anchor_links = [anchor.get_attribute('href') for anchor in anchors if anchor.get_attribute('href') != 'javascript:void(0)']
+
+        # Combine image and anchor links into one list
+        all_links = image_links + anchor_links
+        all_links_str = ', '.join(all_links)  # Join all URLs into a single string
+        image_and_anchor_links_list.append(all_links_str)
+        print(f"Image & Anchor Links: {all_links_str}")
+
+        # Extract the full description text from the 'col-md-12' div > 'info' div
+        col_md_12 = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'col-md-12')))
+        info_div = col_md_12.find_element(By.CLASS_NAME, 'info')
+        full_description = info_div.text
+        full_descriptions.append(full_description)
+        print(f"Full Description: {full_description}")
 
     except Exception as e:
         print(f"An error occurred while processing {link}: {e}")
         product_categories.append(None)  # Add None if there is an error
-        image_links_list.append(None)    # Add None if there is an error
+        image_and_anchor_links_list.append(None)  # Add None if there is an error
+        full_descriptions.append(None)  # Add None if there is an error
 
     finally:
         # Close the WebDriver after processing
         driver.quit()
 
-# Add the collected product categories and image links to the DataFrame
+# Add the collected data to the DataFrame
 df['Product Category'] = pd.Series(product_categories)
-df['Image Links'] = pd.Series(image_links_list)
+df['Image & Anchor Links'] = pd.Series(image_and_anchor_links_list)
+df['Full Description'] = pd.Series(full_descriptions)
 
 # Save the updated DataFrame to a new CSV file
 df.to_csv('completed_data.csv', index=False)
