@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 df = pd.read_csv('completed_data.csv')
 
 # Extract the first five links from the 'Product Link' column
-links = df['Product Link'].head(100).tolist()
+links = df['Product Link'].tolist()
 
 # Path to geckodriver in the same folder
 geckodriver_path = './geckodriver'
