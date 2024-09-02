@@ -24,7 +24,7 @@ image_and_anchor_links_list = []
 full_descriptions = []
 
 # Open each link in a new Firefox driver instance
-for link in links:
+for i, link in enumerate(links):
     # Set up the Firefox WebDriver
     service = Service(geckodriver_path)
     options = webdriver.FirefoxOptions()
@@ -55,13 +55,7 @@ for link in links:
         product_detail_box = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'product-detail-box')))
 
         # Extract the product category
-        row = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'row')))
-        col = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'col-xs-12.col-sm-12.col-md-6')))
-        product_details = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'product-details')))
-        product_top_box = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'product-top-box')))
         brand_category = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'brand-category')))
-
-        # Extract the text from the <p> tag
         product_category = brand_category.text
         product_categories.append(product_category)
         print(f"Product Category: {product_category}")
@@ -83,22 +77,6 @@ for link in links:
         image_and_anchor_links_list.append(all_links_str)
         print(f"Image & Anchor Links: {all_links_str}")
 
-        # Wait for the button to appear dynamically and click it when found
-        try:
-            select_power_button = wait.until(
-                EC.presence_of_element_located((By.XPATH, "//button[contains(@class, 'btn') and text()='SELECT POWER']"))
-            )
-            select_power_button.click()
-            print("Clicked 'SELECT POWER' button")
-        except:
-            print("'SELECT POWER' button not found dynamically. Trying other elements...")
-            buttons = driver.find_elements(By.CLASS_NAME, "btn")
-            for button in buttons:
-                if button.text.strip() == "SELECT POWER":
-                    button.click()
-                    print("Clicked 'SELECT POWER' button dynamically")
-                    break
-
     except Exception as e:
         print(f"An error occurred while processing {link}: {e}")
         product_categories.append(None)  # Add None if there is an error
@@ -109,11 +87,13 @@ for link in links:
         # Close the WebDriver after processing
         driver.quit()
 
-# Add the collected data to the DataFrame
-df['Product Category'] = pd.Series(product_categories)
-df['Image & Anchor Links'] = pd.Series(image_and_anchor_links_list)
-df['Full Description'] = pd.Series(full_descriptions)
+    # Update the DataFrame with the new data
+    df.loc[i, 'Product Category'] = product_categories[-1] if i < len(product_categories) else None
+    df.loc[i, 'Image & Anchor Links'] = image_and_anchor_links_list[-1] if i < len(image_and_anchor_links_list) else None
+    df.loc[i, 'Full Description'] = full_descriptions[-1] if i < len(full_descriptions) else None
 
-# Save the updated DataFrame to a new CSV file
-df.to_csv('completed_data.csv', index=False)
-print("DataFrame has been saved to completed_data.csv")
+    # Save the updated DataFrame to a CSV file after each link
+    df.to_csv('completed_data.csv', index=False)
+    print(f"DataFrame saved to completed_data.csv after processing link {i + 1}")
+
+print("All links have been processed and saved.")
