@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 df = pd.read_csv('completed_data.csv')
 
 # Extract the first five links from the 'Product Link' column
-links = df['Product Link'].head(10).tolist()
+links = df['Product Link'].head(100).tolist()
 
 # Path to geckodriver in the same folder
 geckodriver_path = './geckodriver'
@@ -28,6 +28,7 @@ for i, link in enumerate(links):
     # Set up the Firefox WebDriver
     service = Service(geckodriver_path)
     options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')  
     options.add_argument('--start-maximized')
 
     # Initialize the WebDriver
