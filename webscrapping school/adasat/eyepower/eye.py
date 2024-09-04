@@ -24,7 +24,7 @@ for count, link in enumerate(product_links, start=1):
         # Setup a new Firefox WebDriver for each link
         service = Service(gecko_path)
         options = webdriver.FirefoxOptions()
-        #options.add_argument('--headless')  # Run in headless mode if you don't want to open the browser window
+        # options.add_argument('--headless')  # Run in headless mode if you don't want to open the browser window
         driver = webdriver.Firefox(service=service, options=options)
         
         # Open the link
@@ -64,8 +64,13 @@ for count, link in enumerate(product_links, start=1):
 # Convert new data to DataFrame
 new_df = pd.DataFrame(new_data)
 
-# Append new data to the existing DataFrame
-df = df.merge(new_df, on='Product Link', how='left')
+# Ensure the original DataFrame has 'Product Link' for merging
+if 'Product Link' in df.columns:
+    # Append new data to the existing DataFrame
+    df = pd.merge(df, new_df, on='Product Link', how='left')
+else:
+    # If 'Product Link' column does not exist, concatenate new data to original DataFrame
+    df = pd.concat([df, new_df], ignore_index=True)
 
 # Write the updated DataFrame to a new CSV file
 df.to_csv('updated_completed_data.csv', index=False)
