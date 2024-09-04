@@ -18,6 +18,11 @@ gecko_path = os.path.join(os.getcwd(), 'geckodriver')
 # List to store new data
 new_data = []
 
+# Create a new CSV file to store the processed data
+output_csv = 'processed_data.csv'
+if os.path.exists(output_csv):
+    os.remove(output_csv)  # Remove the file if it exists
+
 # Loop through each link and open it in a new WebDriver instance
 for count, link in enumerate(product_links, start=1):
     try:
@@ -47,6 +52,13 @@ for count, link in enumerate(product_links, start=1):
         lefteyepower_text = lefteyepower_div.text
         righteyepower_text = righteyepower_div.text
         
+        # Print the processed information
+        print(f"Processed Link {count}:")
+        print(f"Product Link: {link}")
+        print(f"Left Eye Power: {lefteyepower_text}")
+        print(f"Right Eye Power: {righteyepower_text}")
+        print("-" * 40)
+        
         # Add the data to the list
         new_data.append({
             'Product Link': link,
@@ -54,6 +66,9 @@ for count, link in enumerate(product_links, start=1):
             'Right Eye Power': righteyepower_text
         })
         
+        # Save the processed data to the CSV file immediately
+        pd.DataFrame([new_data[-1]]).to_csv(output_csv, mode='a', header=not os.path.exists(output_csv), index=False)
+    
     except Exception as e:
         print(f"An error occurred while processing link {count}: {e}")
     
@@ -61,16 +76,6 @@ for count, link in enumerate(product_links, start=1):
         # Ensure the browser is closed even if there's an error
         driver.quit()
 
-# Convert new data to DataFrame
-new_df = pd.DataFrame(new_data)
-
-# Ensure the original DataFrame has 'Product Link' for merging
-if 'Product Link' in df.columns:
-    # Append new data to the existing DataFrame
-    df = pd.merge(df, new_df, on='Product Link', how='left')
-else:
-    # If 'Product Link' column does not exist, concatenate new data to original DataFrame
-    df = pd.concat([df, new_df], ignore_index=True)
-
-# Write the updated DataFrame to a new CSV file
+# Optionally, merge with the original DataFrame and save to a new file
+df = pd.merge(df, pd.DataFrame(new_data), on='Product Link', how='left')
 df.to_csv('updated_completed_data.csv', index=False)
