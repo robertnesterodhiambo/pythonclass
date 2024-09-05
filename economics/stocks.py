@@ -13,7 +13,7 @@ stock_data_list = []
 
 # Define the date range
 start_date = "2023-12-12"
-end_date = "2024-01-01"
+end_date = datetime.today()
 
 # Loop through each symbol and download the data
 for symbol in stock_list:
