@@ -14,7 +14,7 @@ stock_list = stock['Company'].unique()
 stock_data_list = []
 
 # Define the date range
-start_date = "2023-12-12"
+start_date = "2024-09-05"
 end_date = datetime.today()
 
 # Loop through each symbol and download the data
@@ -41,8 +41,11 @@ combined_df = pd.concat(stock_data_list, ignore_index=True)
 common_colnames = ["Date", "Open", "High", "Low", "Close", "Volume", "Adj Close", "Symbol"]
 combined_df.columns = common_colnames
 
+# Rename 'Adj Close' to 'AdjClose' only for insertion into SQLite
+df_for_sql = combined_df.rename(columns={"Adj Close": "AdjClose"})
+
 # Save the combined data to a CSV file
-combined_df.to_csv("sample.csv", index=False)
+df_for_sql.to_csv("sample.csv", index=False)
 
 # Path to SQLite file
 db_file = "stock_data.db"
@@ -59,10 +62,11 @@ cursor.execute("""
 """)
 table_exists = cursor.fetchone()
 
-# If table does not exist, create it
+# If table does not exist, create it with a primary key
 if not table_exists:
     cursor.execute("""
         CREATE TABLE Stocks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             Date TEXT,
             Open REAL,
             High REAL,
@@ -75,13 +79,18 @@ if not table_exists:
     """)
     print("Table 'Stocks' created.")
 else:
-    print("Table 'Stocks' already exists.")
+    # Empty the table if it exists
+    cursor.execute("DELETE FROM Stocks;")
+    print("Table 'Stocks' cleared.")
 
-# Rename 'Adj Close' to 'AdjClose' only for insertion into SQLite
-df_for_sql = combined_df.rename(columns={"Adj Close": "AdjClose"})
+# Define the chunk size for insertion
+chunk_size = 1000  # Adjust the chunk size based on your needs
 
-# Insert the data into the SQLite table
-df_for_sql.to_sql("Stocks", conn, if_exists='append', index=False)
+# Insert the data into the SQLite table in chunks
+for start in range(0, len(df_for_sql), chunk_size):
+    end = start + chunk_size
+    df_for_sql.iloc[start:end].to_sql("Stocks", conn, if_exists='append', index=False, method='multi')
+
 print("Data inserted into 'Stocks' table.")
 
 # Commit the changes and close the connection
