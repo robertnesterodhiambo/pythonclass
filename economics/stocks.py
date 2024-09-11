@@ -14,7 +14,7 @@ stock_list = stock['Company'].unique()
 stock_data_list = []
 
 # Define the date range
-start_date = "2023-12-12"
+start_date = "2018-12-31"
 end_date = datetime.today()
 
 # Loop through each symbol and download the data

@@ -81,3 +81,10 @@ This project is licensed under the MIT License.
 
 - [Selenium Documentation](https://selenium.dev/documentation/)
 - [GeckoDriver Documentation](https://firefox-source-docs.mozilla.org/testing/geckodriver/)
+
+
+## How to run this script
+
+Download  a gecko driver for the computer verion you own from [https://github.com/mozilla/geckodriver/releases]
+ run scrape.py after its done run fill.py then run datacleaner.py finally run category.py 
+ when done copy the lates created excel file into eye power  folder and run eye2.py then datacleaner.py
