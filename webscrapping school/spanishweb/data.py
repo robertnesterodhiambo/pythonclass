@@ -10,7 +10,7 @@ from selenium.common.exceptions import NoSuchElementException
 df = pd.read_csv('links.csv')
 
 # Get the first 5 links
-first_5_links = df['Link'].head(5)
+first_5_links = df['Link'].head(10)
 
 # Setup Chrome WebDriver
 service = Service('./chromedriver')  # Adjust the path if needed
@@ -21,11 +21,23 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.get('https://www.pesarourbinolavoro.it/curriculum-candidati_1.html')
 input("Please log in and press Enter here to continue...")
 
+# Load existing data from 'collected_data.csv' if it exists
+try:
+    collected_df = pd.read_csv('collected_data.csv')
+    existing_links = collected_df['Link'].tolist()
+except FileNotFoundError:
+    collected_df = pd.DataFrame()
+    existing_links = []
+
 # List to store the collected data
 collected_data = []
 
 # Step 2: Open each link and collect the 'Name', 'Residence', 'Email', and 'Phone'
 for link in first_5_links:
+    if link in existing_links:
+        print(f"Skipping {link}, already collected.")
+        continue
+    
     driver.get(link)
     
     try:
@@ -79,9 +91,15 @@ for link in first_5_links:
 driver.quit()
 
 # Convert collected data to a DataFrame
-collected_df = pd.DataFrame(collected_data)
+new_collected_df = pd.DataFrame(collected_data)
 
-# Write DataFrame to a CSV file
+# Append new data to the existing CSV file or create a new one
+if not collected_df.empty:
+    collected_df = pd.concat([collected_df, new_collected_df], ignore_index=True)
+else:
+    collected_df = new_collected_df
+
+# Write the updated DataFrame to a CSV file
 collected_df.to_csv('collected_data.csv', index=False)
 
 # Optionally print the DataFrame
