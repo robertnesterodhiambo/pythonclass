@@ -12,27 +12,7 @@ service = Service('./geckodriver')  # Ensure geckodriver is in the same folder a
 # Initialize the Firefox WebDriver
 driver = webdriver.Firefox(service=service)
 
-# Open the desired URL
-driver.get("https://www.pesarourbinolavoro.it/curriculum-candidati_1.html")
-
-# Wait for the "ACCEDI" button to be clickable and then click it
-try:
-    accedi_button = WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, "btn-warning"))
-    )
-    accedi_button.click()
-
-    # Wait for the modal to appear and allow user to log in manually
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "modal-body"))
-    )
-
-    # Wait for the user to complete the login manually
-    input("Please log in manually, then press Enter to reopen the page...")
-
-    # Reopen the same URL after login is complete
-    driver.get("https://www.pesarourbinolavoro.it/curriculum-candidati_1.html")
-
+def scrape_page():
     # Scroll to the bottom to load all content
     SCROLL_PAUSE_TIME = 2  # Time to wait between scrolls
     last_height = driver.execute_script("return document.body.scrollHeight")
@@ -73,17 +53,73 @@ try:
                 link = a_tag.get_attribute("href")
                 if link:
                     links.append(link)
+        return links
 
-        # Write the links to a CSV file
+def main():
+    base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_1.html"
+
+    # Open the desired URL
+    driver.get(base_url)
+
+    # Wait for the "ACCEDI" button to be clickable and then click it
+    try:
+        accedi_button = WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "btn-warning"))
+        )
+        accedi_button.click()
+
+        # Wait for the modal to appear and allow user to log in manually
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "modal-body"))
+        )
+
+        # Wait for the user to complete the login manually
+        input("Please log in manually, then press Enter to continue...")
+
+        # Reopen the base URL after login
+        driver.get(base_url)
+
+        all_links = []
+
+        while True:
+            # Scrape the current page
+            links = scrape_page()
+            all_links.extend(links)
+            print(f"Collected {len(links)} links from the current page.")
+
+            # Find the pagination element and the current active page
+            try:
+                pagination = driver.find_element(By.CLASS_NAME, "pagination.pull-right")
+                active_page = pagination.find_element(By.CLASS_NAME, "active")
+                
+                # Find the next page link
+                next_page = active_page.find_element(By.XPATH, "following-sibling::li[1]/a")
+                
+                if next_page:
+                    next_page.click()
+                    # Wait for the next page to load
+                    WebDriverWait(driver, 10).until(
+                        EC.staleness_of(active_page)
+                    )
+                else:
+                    break  # No more pages
+            except Exception as e:
+                print(f"An error occurred while finding the next page: {e}")
+                break  # Exit loop if no next page link is found
+
+        # Write all collected links to a CSV file
         with open('links.csv', mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["Link"])  # CSV header
-            for link in links:
+            for link in all_links:
                 writer.writerow([link])
 
-        print(f"Collected {len(links)} links. Links have been written to links.csv.")
+        print(f"Collected a total of {len(all_links)} links. Links have been written to links.csv.")
 
-finally:
-    # Close the driver after the task is completed
-    input("Press Enter to close the browser...")
-    driver.quit()
+    finally:
+        # Close the driver after the task is completed
+        input("Press Enter to close the browser...")
+        driver.quit()
+
+if __name__ == "__main__":
+    main()
