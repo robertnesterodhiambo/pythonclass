@@ -2,8 +2,9 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-import time
 
 # Load the CSV file into a DataFrame
 df = pd.read_csv('links.csv')
@@ -16,15 +17,23 @@ service = Service('./chromedriver')  # Adjust the path if needed
 options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(service=service, options=options)
 
+# Step 1: Open the login page and wait for manual login
+driver.get('https://www.pesarourbinolavoro.it/curriculum-candidati_1.html')
+input("Please log in and press Enter here to continue...")
+
 # List to store the collected data
 collected_data = []
 
-# Open each link and collect the 'Name' and 'Residence'
+# Step 2: Open each link and collect the 'Name', 'Residence', 'Email', and 'Phone'
 for link in first_5_links:
     driver.get(link)
-    time.sleep(3)  # Wait for the page to load
-
+    
     try:
+        # Wait for the page to load and for the div with class 'col-sm-7' to be present
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'col-sm-7'))
+        )
+        
         # Locate the first div with class 'col-sm-7'
         div = driver.find_element(By.CLASS_NAME, 'col-sm-7')
 
@@ -45,14 +54,28 @@ for link in first_5_links:
         else:
             residence = 'N/A'
 
+        # Locate the div with class 'col-sm-9' and extract the phone and email
+        div_contact = driver.find_element(By.CLASS_NAME, 'col-sm-9')
+
+        # Find the first two <p> tags for email and phone
+        contact_p_tags = div_contact.find_elements(By.TAG_NAME, 'p')
+        
+        if len(contact_p_tags) >= 2:
+            email = contact_p_tags[0].text
+            phone = contact_p_tags[1].text
+        else:
+            email = phone = 'N/A'
+
     except NoSuchElementException:
         name = 'N/A'
-        residence = 'N/A'  # In case the element is not found
+        residence = 'N/A'
+        email = 'N/A'
+        phone = 'N/A'
 
     # Append the collected data to the list
-    collected_data.append({'Link': link, 'Name': name, 'Residence': residence})
+    collected_data.append({'Link': link, 'Name': name, 'Residence': residence, 'Email': email, 'Phone': phone})
 
-# Close the driver when done
+# Step 3: Close the driver when done
 driver.quit()
 
 # Convert collected data to a DataFrame and display it
