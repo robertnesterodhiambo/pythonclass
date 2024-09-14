@@ -55,6 +55,13 @@ def scrape_page():
                     links.append(link)
         return links
 
+def save_links_to_csv(links):
+    # Write all collected links to a CSV file
+    with open('links.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        for link in links:
+            writer.writerow([link])
+
 def main():
     base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_1.html"
 
@@ -79,13 +86,19 @@ def main():
         # Reopen the base URL after login
         driver.get(base_url)
 
-        all_links = []
+        # Write CSV header only once
+        with open('links.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Link"])  # CSV header
 
         while True:
             # Scrape the current page
             links = scrape_page()
-            all_links.extend(links)
             print(f"Collected {len(links)} links from the current page.")
+            
+            # Save the links to a CSV file
+            if links:  # Ensure there are links to save
+                save_links_to_csv(links)
 
             # Find the pagination element and the current active page
             try:
@@ -107,14 +120,7 @@ def main():
                 print(f"An error occurred while finding the next page: {e}")
                 break  # Exit loop if no next page link is found
 
-        # Write all collected links to a CSV file
-        with open('links.csv', mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(["Link"])  # CSV header
-            for link in all_links:
-                writer.writerow([link])
-
-        print(f"Collected a total of {len(all_links)} links. Links have been written to links.csv.")
+        print("All pages have been processed.")
 
     finally:
         # Close the driver after the task is completed
