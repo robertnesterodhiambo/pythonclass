@@ -78,6 +78,11 @@ for link in first_5_links:
 # Step 3: Close the driver when done
 driver.quit()
 
-# Convert collected data to a DataFrame and display it
+# Convert collected data to a DataFrame
 collected_df = pd.DataFrame(collected_data)
+
+# Write DataFrame to a CSV file
+collected_df.to_csv('collected_data.csv', index=False)
+
+# Optionally print the DataFrame
 print(collected_df)
