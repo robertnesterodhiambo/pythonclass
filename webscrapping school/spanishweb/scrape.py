@@ -20,13 +20,20 @@ try:
     )
     accedi_button.click()
 
-    # Wait for any modal or login section to appear
+    # Wait for the modal to appear and allow user to log in manually
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "modalLogin"))  # Adjust this to the correct locator of the modal
+        EC.presence_of_element_located((By.CLASS_NAME, "modal-body"))
     )
 
-    # Add any additional actions you want to perform here
+    # Wait for the user to complete the login manually
+    input("Please log in manually, then press Enter to reopen the page...")
+
+    # Reopen the same URL after login is complete
+    driver.get("https://www.pesarourbinolavoro.it/curriculum-candidati_1.html")
+
+    # Add any additional actions here if needed after reopening the page
 
 finally:
-    # Close the driver after your task
+    # Close the driver after the task is completed
+    input("Press Enter to close the browser...")
     driver.quit()
