@@ -63,7 +63,7 @@ def save_links_to_csv(links):
             writer.writerow([link])
 
 def main():
-    base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_2064.html"
+    base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_1957.html"
 
 
     # Open the desired URL
