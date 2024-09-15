@@ -4,13 +4,14 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import os
 
 # Load the CSV file into a DataFrame
-df = pd.read_csv('links.csv')
+df = pd.read_csv('links2.csv')
 
 # Get the first 5 links
-first_5_links = df['Link'].head(10)
+first_5_links = df['Link']
 
 # Setup Chrome WebDriver
 service = Service('./chromedriver')  # Adjust the path if needed
@@ -22,10 +23,10 @@ driver.get('https://www.pesarourbinolavoro.it/curriculum-candidati_1.html')
 input("Please log in and press Enter here to continue...")
 
 # Load existing data from 'collected_data.csv' if it exists
-try:
+if os.path.exists('collected_data.csv'):
     collected_df = pd.read_csv('collected_data.csv')
     existing_links = collected_df['Link'].tolist()
-except FileNotFoundError:
+else:
     collected_df = pd.DataFrame()
     existing_links = []
 
@@ -37,10 +38,10 @@ for link in first_5_links:
     if link in existing_links:
         print(f"Skipping {link}, already collected.")
         continue
-    
-    driver.get(link)
-    
+
     try:
+        driver.get(link)
+        
         # Wait for the page to load and for the div with class 'col-sm-7' to be present
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'col-sm-7'))
@@ -76,31 +77,45 @@ for link in first_5_links:
             email = contact_p_tags[0].text
             phone = contact_p_tags[1].text
         else:
-            email = phone = 'N/A'
+            email = contact_p_tags[0].text
+            phone = 'N/A'
 
-    except NoSuchElementException:
-        name = 'N/A'
-        residence = 'N/A'
-        email = 'N/A'
-        phone = 'N/A'
+        # Collect the data
+        collected_entry = {'Link': link, 'Name': name, 'Residence': residence, 'Email': email, 'Phone': phone}
+        collected_data.append(collected_entry)
 
-    # Append the collected data to the list
-    collected_data.append({'Link': link, 'Name': name, 'Residence': residence, 'Email': email, 'Phone': phone})
+        # Convert collected data to a DataFrame
+        new_collected_df = pd.DataFrame([collected_entry])
+
+        # Append new data to the existing CSV file
+        if os.path.exists('collected_data.csv'):
+            new_collected_df.to_csv('collected_data.csv', mode='a', header=False, index=False)
+        else:
+            new_collected_df.to_csv('collected_data.csv', mode='w', header=True, index=False)
+
+        # Print the data saved for the current link
+        print(f"Data saved for link {link}:")
+        print(new_collected_df)
+
+    except (TimeoutException, NoSuchElementException) as e:
+        # Handle specific exceptions and continue with the next link
+        print(f"Error encountered for link {link}: {e}. Skipping to the next link.")
+        continue
 
 # Step 3: Close the driver when done
 driver.quit()
 
 # Convert collected data to a DataFrame
-new_collected_df = pd.DataFrame(collected_data)
+final_collected_df = pd.DataFrame(collected_data)
 
 # Append new data to the existing CSV file or create a new one
 if not collected_df.empty:
-    collected_df = pd.concat([collected_df, new_collected_df], ignore_index=True)
+    final_collected_df = pd.concat([collected_df, final_collected_df], ignore_index=True)
 else:
-    collected_df = new_collected_df
+    final_collected_df = final_collected_df
 
 # Write the updated DataFrame to a CSV file
-collected_df.to_csv('collected_data.csv', index=False)
+final_collected_df.to_csv('collected_data.csv', index=False)
 
 # Optionally print the DataFrame
-print(collected_df)
+print(final_collected_df)

@@ -63,7 +63,8 @@ def save_links_to_csv(links):
             writer.writerow([link])
 
 def main():
-    base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_797.html"
+    base_url = "https://www.pesarourbinolavoro.it/curriculum-candidati_2064.html"
+
 
     # Open the desired URL
     driver.get(base_url)
