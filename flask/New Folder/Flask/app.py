@@ -12,6 +12,11 @@ db = mysql.connector.connect(
     database="users_schema"
 )
 
+# Default route to load the 'create.html' form automatically
+@app.route('/')
+def home():
+    return redirect('/users/new')
+
 # Route to display all users (Read)
 @app.route('/users')
 def read_users():
@@ -32,10 +37,10 @@ def create_user():
     last_name = request.form['last_name']
     email = request.form['email']
     cursor = db.cursor()
-    sql = "INSERT INTO users_schema (first_name, last_name, email, created_at, updated_at) VALUES (%s, %s, %s, %s, %s)"
+    sql = "INSERT INTO users (first_name, last_name, email, created_at, updated_at) VALUES (%s, %s, %s, %s, %s)"
     cursor.execute(sql, (first_name, last_name, email, datetime.now(), datetime.now()))
     db.commit()
-    return redirect('/users')
+    return redirect('/users')  # Redirect to the users list after creating a new user
 
 if __name__ == '__main__':
     app.run(debug=True)
