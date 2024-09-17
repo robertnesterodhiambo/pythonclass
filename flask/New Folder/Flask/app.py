@@ -15,7 +15,7 @@ db = mysql.connector.connect(
 # Default route to load the 'create.html' form automatically
 @app.route('/')
 def home():
-    return redirect('/users/new')
+    return redirect('/users/new/')
 
 # Route to display all users (Read)
 @app.route('/users')
