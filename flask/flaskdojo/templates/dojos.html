@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New Dojo</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Dojo Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+
+        <h2 class="mt-5">All Dojos</h2>
+        <ul>
+            {% for dojo in dojos %}
+                <li><a href="{{ url_for('dojo_show', dojo_id=dojo[0]) }}">{{ dojo[1] }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('ninjas') }}">Add Ninja</a>
+    </div>
+</body>
+</html>

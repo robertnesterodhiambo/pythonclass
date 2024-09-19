@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Ninja</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a Ninja</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="dojo" class="form-label">Select Dojo</label>
+                <select name="dojo" class="form-select" required>
+                    {% for dojo in dojos %}
+                        <option value="{{ dojo[0] }}">{{ dojo[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="first_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="last_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" class="form-control" name="age" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Ninja</button>
+        </form>
+
+        <a href="{{ url_for('dojos') }}">Home</a>
+    </div>
+</body>
+</html>
