@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ dojo[1] }} Ninjas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <style>
+        /* General styling */
+        body {
+            background-color: #eef2f7;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            background-color: #fff;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        table thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table thead th {
+            padding: 15px;
+            text-align: center;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+
+        table tbody td {
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Home link styling */
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 50px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+        a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(108, 117, 125, 0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ dojo[1] }} Ninjas</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ninja in ninjas %}
+                    <tr>
+                        <td>{{ ninja[2] }}</td>
+                        <td>{{ ninja[3] }}</td>
+                        <td>{{ ninja[4] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('dojos') }}">Home</a>
+    </div>
+</body>
+</html>

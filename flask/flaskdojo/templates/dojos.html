@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Body background and container styling */
+        body {
+            background: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Input field styling with a slight 3D effect */
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            transition: box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            border-color: #007bff;
+        }
+
+        /* Button with hover effects and 3D shadow */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 50px;
+            padding: 10px 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 123, 255, 0.2);
+        }
+
+        /* All Dojos list styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        ul li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Links within the list */
+        ul li a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Add Ninja link */
+        a.btn-ninja {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 50px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        a.btn-ninja:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(40, 167, 69, 0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New Dojo</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="name" class="form-label">Dojo Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+
+        <h2 class="mt-5">All Dojos</h2>
+        <ul>
+            {% for dojo in dojos %}
+                <li><a href="{{ url_for('dojo_show', dojo_id=dojo[0]) }}">{{ dojo[1] }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('ninjas') }}" class="btn-ninja">Add Ninja</a>
+    </div>
+</body>
+</html>
