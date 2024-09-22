@@ -67,6 +67,7 @@
         }
 
         .form-container select, 
+        .form-container input, 
         .form-container button {
             padding: 8px 12px;
             margin: 0 5px;
@@ -76,6 +77,7 @@
         }
 
         .form-container select:focus, 
+        .form-container input:focus, 
         .form-container button:hover {
             border-color: #007bff;
             outline: none;
@@ -123,6 +125,12 @@
                 <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
                 {% endfor %}
             </select>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" id="start_date" value="{{ start_date }}">
+
+            <label for="end_date">End Date:</label>
+            <input type="date" name="end_date" id="end_date" value="{{ end_date }}">
 
             <label for="sort_order">Sort by Date:</label>
             <select name="sort_order" id="sort_order">

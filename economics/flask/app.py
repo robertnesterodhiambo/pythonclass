@@ -18,13 +18,14 @@ def index():
     limit = 20
     offset = (page - 1) * limit
     symbol_filter = request.form.get('symbol')
-    sort_order = request.form.get('sort_order', 'asc')  # Default to ascending
+    start_date = request.form.get('start_date')
+    end_date = request.form.get('end_date')
+    sort_order = request.form.get('sort_order', 'asc')
 
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # Fetch unique symbols for the dropdown
         cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
         unique_symbols = [row[0] for row in cursor.fetchall()]
 
@@ -33,6 +34,11 @@ def index():
         conditions = []
         if symbol_filter:
             conditions.append(f"Symbol = '{symbol_filter}'")
+        if start_date:
+            conditions.append(f"Date >= '{start_date}'")
+        if end_date:
+            conditions.append(f"Date <= '{end_date}'")
+
         if conditions:
             query += " WHERE " + " AND ".join(conditions)
 
@@ -41,11 +47,10 @@ def index():
 
         rows = cursor.fetchall()
 
-        # Get the total number of rows
         cursor.execute("SELECT COUNT(*) FROM Stocks")
         total_rows = cursor.fetchone()[0]
 
-        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter, sort_order=sort_order)
+        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter, sort_order=sort_order, start_date=start_date, end_date=end_date)
 
     except Exception as e:
         return f"Error: {e}"
