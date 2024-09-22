@@ -78,6 +78,18 @@
 </head>
 <body>
     <h1>Stocks Data</h1>
+
+    <form method="POST" action="/">
+        <label for="symbol">Filter by Symbol:</label>
+        <select name="symbol" id="symbol">
+            <option value="">All</option>
+            {% for symbol in unique_symbols %}
+            <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
     <table>
         <tr>
             <th>ID</th>
@@ -92,15 +104,15 @@
         </tr>
         {% for row in rows %}
         <tr>
-            <td>{{ row[0] }}</td> <!-- ID -->
-            <td>{{ row[1] }}</td> <!-- Date -->
-            <td>{{ row[2] }}</td> <!-- Open -->
-            <td>{{ row[3] }}</td> <!-- High -->
-            <td>{{ row[4] }}</td> <!-- Low -->
-            <td>{{ row[5] }}</td> <!-- Close -->
-            <td>{{ row[6] }}</td> <!-- Volume -->
-            <td>{{ row[7] }}</td> <!-- Adj Close -->
-            <td>{{ row[8] }}</td> <!-- Symbol -->
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
         </tr>
         {% endfor %}
     </table>

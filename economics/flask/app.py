@@ -12,25 +12,34 @@ def get_db_connection():
         port=3307
     )
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    page = request.args.get('page', 1, type=int)  # Get the current page number
+    page = request.args.get('page', 1, type=int)
     limit = 20
     offset = (page - 1) * limit
+    symbol_filter = request.form.get('symbol')  # Get the selected symbol from the form
 
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # Execute a query to fetch a limited number of rows
-        cursor.execute("SELECT * FROM Stocks LIMIT %s OFFSET %s", (limit, offset))
+        # Fetch unique symbols for the dropdown
+        cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
+        unique_symbols = [row[0] for row in cursor.fetchall()]
+
+        # Build the query with filtering
+        if symbol_filter:
+            cursor.execute("SELECT * FROM Stocks WHERE Symbol = %s LIMIT %s OFFSET %s", (symbol_filter, limit, offset))
+        else:
+            cursor.execute("SELECT * FROM Stocks LIMIT %s OFFSET %s", (limit, offset))
+
         rows = cursor.fetchall()
 
-        # Get the total number of rows in the Stocks table
+        # Get the total number of rows
         cursor.execute("SELECT COUNT(*) FROM Stocks")
         total_rows = cursor.fetchone()[0]
 
-        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit)
+        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter)
 
     except Exception as e:
         return f"Error: {e}"
