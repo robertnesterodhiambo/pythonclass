@@ -21,6 +21,8 @@ def index():
     start_date = request.form.get('start_date')
     end_date = request.form.get('end_date')
     sort_order = request.form.get('sort_order', 'asc')
+    y_column = request.form.get('y_column')
+    selected_stocks = request.form.getlist('selected_stocks')
 
     try:
         connection = get_db_connection()
@@ -47,10 +49,22 @@ def index():
 
         rows = cursor.fetchall()
 
+        # Fetch total rows for pagination
         cursor.execute("SELECT COUNT(*) FROM Stocks")
         total_rows = cursor.fetchone()[0]
 
-        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter, sort_order=sort_order, start_date=start_date, end_date=end_date)
+        # Fetch data for graphing
+        graph_data = {}
+        if y_column and selected_stocks:
+            for stock in selected_stocks:
+                graph_query = f"SELECT Date, {y_column} FROM Stocks WHERE Symbol = %s"
+                cursor.execute(graph_query, (stock,))
+                graph_data[stock] = cursor.fetchall()
+
+        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, 
+                               unique_symbols=unique_symbols, selected_symbol=symbol_filter, 
+                               sort_order=sort_order, start_date=start_date, end_date=end_date,
+                               y_column=y_column, graph_data=graph_data, selected_stocks=selected_stocks)
 
     except Exception as e:
         return f"Error: {e}"

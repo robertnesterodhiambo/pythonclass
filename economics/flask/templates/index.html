@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stocks Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,6 +16,10 @@
         h1 {
             text-align: center;
             color: #333;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
         }
 
         table {
@@ -52,47 +57,6 @@
             background-color: #f9f9f9;
         }
 
-        tr:nth-child(odd) {
-            background-color: #fff;
-        }
-
-        .form-container {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .form-container label {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .form-container select, 
-        .form-container input, 
-        .form-container button {
-            padding: 8px 12px;
-            margin: 0 5px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            transition: border-color 0.3s;
-        }
-
-        .form-container select:focus, 
-        .form-container input:focus, 
-        .form-container button:hover {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .form-container button {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-
         .pagination {
             text-align: center;
             margin: 20px 0;
@@ -111,6 +75,103 @@
         .pagination a:hover {
             background-color: #0056b3;
         }
+        button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+/* General form container */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Label styles */
+label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+}
+
+/* Input, select, and button styling */
+input[type="date"],
+select {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    margin-right: 10px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+/* Hover effect on input and select */
+input[type="date"]:hover,
+select:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Focus effect */
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Multi-select style */
+select[multiple] {
+    height: auto;
+    max-height: 150px;
+}
+
+/* Beautify filter and graph buttons */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
     </style>
 </head>
 <body>
@@ -125,22 +186,96 @@
                 <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
                 {% endfor %}
             </select>
-
+    
             <label for="start_date">Start Date:</label>
             <input type="date" name="start_date" id="start_date" value="{{ start_date }}">
-
+    
             <label for="end_date">End Date:</label>
             <input type="date" name="end_date" id="end_date" value="{{ end_date }}">
-
+    
             <label for="sort_order">Sort by Date:</label>
             <select name="sort_order" id="sort_order">
                 <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
                 <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
             </select>
-
+    
             <button type="submit">Filter</button>
         </form>
     </div>
+    
+    <div class="form-container">
+        <form method="POST" action="/">
+            <label for="y_column">Select Y-axis Column:</label>
+            <select name="y_column" id="y_column">
+                <option value="">Select Column</option>
+                <option value="Open" {% if y_column == 'Open' %}selected{% endif %}>Open</option>
+                <option value="High" {% if y_column == 'High' %}selected{% endif %}>High</option>
+                <option value="Low" {% if y_column == 'Low' %}selected{% endif %}>Low</option>
+                <option value="Close" {% if y_column == 'Close' %}selected{% endif %}>Close</option>
+                <option value="Volume" {% if y_column == 'Volume' %}selected{% endif %}>Volume</option>
+                <option value="Adj Close" {% if y_column == 'Adj Close' %}selected{% endif %}>Adj Close</option>
+            </select>
+    
+            <label for="selected_stocks">Select Stocks:</label>
+            <select name="selected_stocks" id="selected_stocks" multiple>
+                {% for symbol in unique_symbols %}
+                <option value="{{ symbol }}" {% if symbol in selected_stocks %}selected{% endif %}>{{ symbol }}</option>
+                {% endfor %}
+            </select>
+    
+            <button type="submit">Generate Graph</button>
+        </form>
+    </div>
+    
+
+    <canvas id="stockChart" width="400" height="200"></canvas>
+
+    <script>
+        const graphData = {{ graph_data | tojson }};
+        const ctx = document.getElementById('stockChart').getContext('2d');
+        const datasets = [];
+        let dates = [];
+
+        for (const stock in graphData) {
+            const stockData = graphData[stock];
+            if (stockData.length) {
+                dates = stockData.map(row => row[0]); // Extract dates from the first column
+                const values = stockData.map(row => row[1]); // Extract values based on selected y_column
+
+                datasets.push({
+                    label: stock,
+                    data: values,
+                    borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                    fill: false
+                });
+            }
+        }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '{{ y_column }}'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     <table>
         <tr>
