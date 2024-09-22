@@ -56,6 +56,41 @@
             background-color: #fff;
         }
 
+        .form-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .form-container label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .form-container select, 
+        .form-container button {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .form-container select:focus, 
+        .form-container button:hover {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
         .pagination {
             text-align: center;
             margin: 20px 0;
@@ -79,23 +114,25 @@
 <body>
     <h1>Stocks Data</h1>
 
-    <form method="POST" action="/">
-        <label for="symbol">Filter by Symbol:</label>
-        <select name="symbol" id="symbol">
-            <option value="">All</option>
-            {% for symbol in unique_symbols %}
-            <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
-            {% endfor %}
-        </select>
+    <div class="form-container">
+        <form method="POST" action="/">
+            <label for="symbol">Filter by Symbol:</label>
+            <select name="symbol" id="symbol">
+                <option value="">All</option>
+                {% for symbol in unique_symbols %}
+                <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
+                {% endfor %}
+            </select>
 
-        <label for="sort_order">Sort by Date:</label>
-        <select name="sort_order" id="sort_order">
-            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
-            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
-        </select>
+            <label for="sort_order">Sort by Date:</label>
+            <select name="sort_order" id="sort_order">
+                <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+                <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+            </select>
 
-        <button type="submit">Filter</button>
-    </form>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
 
     <table>
         <tr>
