@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            background-color: #fff;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stocks Data</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+            <th>Volume</th>
+            <th>Adj Close</th>
+            <th>Symbol</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row[0] }}</td> <!-- ID -->
+            <td>{{ row[1] }}</td> <!-- Date -->
+            <td>{{ row[2] }}</td> <!-- Open -->
+            <td>{{ row[3] }}</td> <!-- High -->
+            <td>{{ row[4] }}</td> <!-- Low -->
+            <td>{{ row[5] }}</td> <!-- Close -->
+            <td>{{ row[6] }}</td> <!-- Volume -->
+            <td>{{ row[7] }}</td> <!-- Adj Close -->
+            <td>{{ row[8] }}</td> <!-- Symbol -->
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="pagination">
+        {% if page > 1 %}
+        <a href="{{ url_for('previous_page', page=page) }}">Previous</a>
+        {% endif %}
+        {% if (page * limit) < total_rows %}
+        <a href="{{ url_for('next_page', page=page) }}">Next</a>
+        {% endif %}
+    </div>
+</body>
+</html>
