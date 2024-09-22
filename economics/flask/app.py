@@ -17,7 +17,8 @@ def index():
     page = request.args.get('page', 1, type=int)
     limit = 20
     offset = (page - 1) * limit
-    symbol_filter = request.form.get('symbol')  # Get the selected symbol from the form
+    symbol_filter = request.form.get('symbol')
+    sort_order = request.form.get('sort_order', 'asc')  # Default to ascending
 
     try:
         connection = get_db_connection()
@@ -27,11 +28,16 @@ def index():
         cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
         unique_symbols = [row[0] for row in cursor.fetchall()]
 
-        # Build the query with filtering
+        # Build the query with filtering and sorting
+        query = "SELECT * FROM Stocks"
+        conditions = []
         if symbol_filter:
-            cursor.execute("SELECT * FROM Stocks WHERE Symbol = %s LIMIT %s OFFSET %s", (symbol_filter, limit, offset))
-        else:
-            cursor.execute("SELECT * FROM Stocks LIMIT %s OFFSET %s", (limit, offset))
+            conditions.append(f"Symbol = '{symbol_filter}'")
+        if conditions:
+            query += " WHERE " + " AND ".join(conditions)
+
+        query += f" ORDER BY Date {'ASC' if sort_order == 'asc' else 'DESC'} LIMIT %s OFFSET %s"
+        cursor.execute(query, (limit, offset))
 
         rows = cursor.fetchall()
 
@@ -39,7 +45,7 @@ def index():
         cursor.execute("SELECT COUNT(*) FROM Stocks")
         total_rows = cursor.fetchone()[0]
 
-        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter)
+        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols, selected_symbol=symbol_filter, sort_order=sort_order)
 
     except Exception as e:
         return f"Error: {e}"
