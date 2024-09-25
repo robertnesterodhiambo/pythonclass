@@ -2,10 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px #3e8e41;
+        }
+
+        a:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px #3e8e41;
+            transform: translateY(-2px);
+        }
+
+        a:active {
+            box-shadow: 0 2px #3e8e41;
+            transform: translateY(2px);
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome, you are logged in!</h1>
-    <a href="/logout">Logout</a>
+    <div class="container">
+        <h1>Welcome, you are logged in!</h1>
+        <a href="/logout">Logout</a>
+    </div>
 </body>
 </html>
