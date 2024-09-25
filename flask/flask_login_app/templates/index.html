@@ -16,13 +16,17 @@
             height: 100vh;
         }
 
-        .container {
+        .forms-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-box {
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             padding: 30px;
-            width: 400px;
-            margin: 20px;
+            width: 350px;
         }
 
         h1 {
@@ -86,35 +90,39 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Register</h1>
-        <form action="/register" method="POST">
-            First Name: <input type="text" name="first_name" required><br>
-            Last Name: <input type="text" name="last_name" required><br>
-            Email: <input type="email" name="email" required><br>
-            Password: <input type="password" name="password" required><br>
-            Confirm Password: <input type="password" name="confirm_password" required><br>
-            <input type="submit" value="Register">
-        </form>
+    <div class="forms-container">
+        <div class="form-box">
+            <h1>Register</h1>
+            <form action="/register" method="POST">
+                First Name: <input type="text" name="first_name" required><br>
+                Last Name: <input type="text" name="last_name" required><br>
+                Email: <input type="email" name="email" required><br>
+                Password: <input type="password" name="password" required><br>
+                Confirm Password: <input type="password" name="confirm_password" required><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
 
-        <h1>Login</h1>
-        <form action="/login" method="POST">
-            Email: <input type="email" name="email" required><br>
-            Password: <input type="password" name="password" required><br>
-            <input type="submit" value="Login">
-        </form>
-
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="messages">
-                    <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
+        <div class="form-box">
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                Email: <input type="email" name="email" required><br>
+                Password: <input type="password" name="password" required><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
     </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="messages">
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
 </body>
 </html>
