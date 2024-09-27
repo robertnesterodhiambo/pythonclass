@@ -1,24 +1,39 @@
 from flask import Flask, render_template, request, redirect
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
+import sqlite3
+import os
 import datetime
 
 app = Flask(__name__)
 
-# Configure MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'your_mysql_username'
-app.config['MYSQL_PASSWORD'] = 'your_mysql_password'
-app.config['MYSQL_DB'] = 'your_database_name'
+# Database file name
+DATABASE = 'your_database_name.db'
 
-mysql = MySQL(app)
+# Function to create the database and users table if they do not exist
+def init_db():
+    if not os.path.exists(DATABASE):
+        with sqlite3.connect(DATABASE) as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                CREATE TABLE users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    first_name TEXT NOT NULL,
+                    last_name TEXT NOT NULL,
+                    email TEXT NOT NULL UNIQUE,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            print("Database and table created successfully.")
+    else:
+        print("Database already exists.")
 
 # Route to display all users
 @app.route('/users')
 def read_all_users():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM users')
-    users = cursor.fetchall()
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users')
+        users = cursor.fetchall()
     return render_template('read.html', users=users)
 
 # Route to render the form for creating a new user
@@ -31,14 +46,13 @@ def create_user():
         email = request.form['email']
         
         # Insert the new user into the database
-        cursor = mysql.connection.cursor()
-        cursor.execute('''
-            INSERT INTO users (first_name, last_name, email, created_at, updated_at) 
-            VALUES (%s, %s, %s, %s, %s)
-        ''', (first_name, last_name, email, datetime.datetime.now(), datetime.datetime.now()))
-        
-        mysql.connection.commit()
-        cursor.close()
+        with sqlite3.connect(DATABASE) as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO users (first_name, last_name, email, created_at, updated_at) 
+                VALUES (?, ?, ?, ?, ?)
+            ''', (first_name, last_name, email, datetime.datetime.now(), datetime.datetime.now()))
+            conn.commit()
         
         # Redirect to the read page
         return redirect('/users')
@@ -46,6 +60,9 @@ def create_user():
     # If GET request, render the form
     return render_template('create.html')
 
+# Initialize the database
+init_db()
+
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True, port= 5002)
+    app.run(debug=True, port=5002)
