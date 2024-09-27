@@ -63,6 +63,11 @@ def create_user():
 # Initialize the database
 init_db()
 
+# Start by loading all users upon running the application
+@app.route('/')
+def index():
+    return redirect('/users')
+
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5000)
