@@ -3,6 +3,7 @@
 import sqlite3
 import os
 from config.config import DATABASE
+from datetime import datetime
 
 def init_db():
     if not os.path.exists(DATABASE):
@@ -29,10 +30,11 @@ def get_all_users():
         return cursor.fetchall()
 
 def create_user(first_name, last_name, email):
+    current_time = datetime.now()  # Get the current date and time
     with sqlite3.connect(DATABASE) as conn:
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO users (first_name, last_name, email, created_at, updated_at) 
             VALUES (?, ?, ?, ?, ?)
-        ''', (first_name, last_name, email, None, None))
+        ''', (first_name, last_name, email, current_time, current_time))
         conn.commit()
