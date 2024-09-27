@@ -7,9 +7,9 @@ def get_db_connection():
     return pymysql.connect(
         host="74.63.247.122",
         database="Stocks",
-        user="root"#,
-       # password="stocks123"
-      #  port=3307
+        user="remote_user",
+        password="stocks123",
+        port=3307
     )
 
 @app.route('/', methods=['GET', 'POST'])
@@ -23,9 +23,6 @@ def index():
     sort_order = request.form.get('sort_order', 'asc')
     y_column = request.form.get('y_column')
     selected_stocks = request.form.getlist('selected_stocks')
-
-    connection = None
-    cursor = None  # Initialize cursor here
 
     try:
         connection = get_db_connection()
@@ -89,4 +86,4 @@ def previous_page():
     return index()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0',port = 5001)
