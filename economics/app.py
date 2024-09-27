@@ -9,7 +9,7 @@ def fetch_data():
         connection = pymysql.connect(
             host="74.63.247.122",  # Your remote database host
             database="Stocks",      # Your database name
-            user="remote_user",     # Your username
+            user="root",     # Your username
             password="stocks123" ,   # Your password
             port = 3307
         )
