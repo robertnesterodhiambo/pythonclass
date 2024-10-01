@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .messages {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .forms-container {
+            display: flex;
+            gap: 20px;
+        }
+        .form-box {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            width: 350px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px #3e8e41;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px #3e8e41;
+            transform: translateY(-2px);
+        }
+        input[type="submit"]:active {
+            box-shadow: 0 2px #3e8e41;
+            transform: translateY(2px);
+        }
+    </style>
+    <script>
+        // Function to validate registration form
+        function validateRegistrationForm() {
+            var firstName = document.forms["registerForm"]["first_name"].value;
+            var lastName = document.forms["registerForm"]["last_name"].value;
+            var email = document.forms["registerForm"]["email"].value;
+            var password = document.forms["registerForm"]["password"].value;
+            var confirmPassword = document.forms["registerForm"]["confirm_password"].value;
+
+            // Check if all fields are filled
+            if (firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === "") {
+                alert("Please fill in all the fields.");
+                return false;
+            }
+
+            // Validate email format
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Function to validate login form (basic check for empty fields)
+        function validateLoginForm() {
+            var email = document.forms["loginForm"]["email"].value;
+            var password = document.forms["loginForm"]["password"].value;
+
+            // Check if all fields are filled
+            if (email === "" || password === "") {
+                alert("Please fill in both email and password.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <!-- Error message at the top of the page -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="error {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="forms-container">
+        <div class="form-box">
+            <h1>Register</h1>
+            <form name="registerForm" action="/register" method="POST" onsubmit="return validateRegistrationForm()">
+                First Name: <input type="text" name="first_name" required><br>
+                Last Name: <input type="text" name="last_name" required><br>
+                Email: <input type="email" name="email" required><br>
+                Password: <input type="password" name="password" required><br>
+                Confirm Password: <input type="password" name="confirm_password" required><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+
+        <div class="form-box">
+            <h1>Login</h1>
+            <form name="loginForm" action="/login" method="POST" onsubmit="return validateLoginForm()">
+                Email: <input type="email" name="email" required><br>
+                Password: <input type="password" name="password" required><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
