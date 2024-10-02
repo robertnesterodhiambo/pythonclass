@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
-import re
 import time
 import os
 
@@ -32,7 +31,7 @@ if 'Links' in df.columns:
     else:
         # Set up Firefox WebDriver options
         options = Options()
-        options.add_argument("--headless")  # Run in headless mode (optional)
+        # options.add_argument("--headless")  # Run in headless mode (optional)
 
         # Create a new instance of the Firefox driver
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
@@ -47,25 +46,46 @@ if 'Links' in df.columns:
                 driver.get(link)
                 time.sleep(5)  # Wait for the page to load
 
-                # Extract page source
-                page_source = driver.page_source
-                
-                # Find all email addresses using a regex
-                emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', page_source)
+                # Scroll to the bottom of the page
+                last_height = driver.execute_script("return document.body.scrollHeight")
 
-                # Create a row of data for each email found
-                for email in emails:
+                while True:
+                    # Scroll down to the bottom
+                    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                    # Wait for new content to load
+                    time.sleep(3)  # Adjust time as necessary
+
+                    # Calculate new scroll height and compare with last height
+                    new_height = driver.execute_script("return document.body.scrollHeight")
+                    if new_height == last_height:
+                        break  # Exit the loop if no new content has loaded
+                    last_height = new_height
+
+                # Find all spans with the class 'data'
+                email_elements = driver.find_elements("css selector", "span.data a")
+
+                # Extract email addresses from the found elements
+                unique_emails = set()
+                for element in email_elements:
+                    email = element.get_attribute('href').replace('mailto:', '')  # Remove 'mailto:' from href
+                    unique_emails.add(email)
+
+                # Create a row of data for each unique email found
+                for email in unique_emails:
                     row_data = {
                         'Link': link,
                         'Email': email,  # Each email gets its own row
                     }
-                    
+
                     # Append original data from the first row to the row_data dictionary
                     for col in df.columns:
                         if col != 'Links':  # Exclude the 'Links' column to avoid duplicates
                             row_data[col] = df[col].iloc[0]  # Use the first row's data
 
                     emails_data.append(row_data)
+
+                # Log the number of emails collected
+                print(f"Collected {len(unique_emails)} unique emails from {link}.")
 
                 # Create a new DataFrame from the collected data
                 emails_df = pd.DataFrame(emails_data)
