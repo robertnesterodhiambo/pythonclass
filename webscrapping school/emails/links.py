@@ -67,18 +67,24 @@ if 'Links' in df.columns:
 
                     emails_data.append(row_data)
 
+                # Create a new DataFrame from the collected data
+                emails_df = pd.DataFrame(emails_data)
+
+                # Append the new data to the existing emails DataFrame
+                all_emails_df = pd.concat([existing_emails_df, emails_df], ignore_index=True)
+
+                # Save the combined data back to the CSV file
+                all_emails_df.to_csv('collected_emails.csv', index=False)
+                
+                # Print confirmation message
+                print(f"Collected emails and data saved for {link}. Moving on to the next link...\n")
+
+                # Clear the emails_data list for the next link
+                emails_data.clear()
+
         finally:
             # Close the driver after opening the links
             driver.quit()
 
-        # Create a new DataFrame from the collected data
-        emails_df = pd.DataFrame(emails_data)
-
-        # Append the new data to the existing emails DataFrame
-        all_emails_df = pd.concat([existing_emails_df, emails_df], ignore_index=True)
-
-        # Save the combined data back to the CSV file
-        all_emails_df.to_csv('collected_emails.csv', index=False)
-        print("Collected emails and data saved to 'collected_emails.csv'.")
 else:
     print("The 'Links' column is not found in the CSV file.")
