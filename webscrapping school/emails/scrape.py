@@ -3,6 +3,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 import time  # Import the time module to add a delay
 from selenium.webdriver.common.by import By  # Import By for locating elements
+from selenium.webdriver.common.action_chains import ActionChains  # Import ActionChains for scrolling
 
 # Set options for Firefox
 options = Options()
@@ -20,8 +21,14 @@ driver = webdriver.Firefox(service=service, options=options)
 url = 'https://ted.europa.eu/en/search/result?notice-type=can-standard%2Ccan-social%2Ccan-desg%2Ccan-tran&place-of-performance=DEU&search-scope=ACTIVE'
 driver.get(url)
 
-# Wait for the page to load
+# Wait for the page to load (you can adjust the sleep time as needed)
 time.sleep(5)
+
+# Scroll to the bottom of the page
+driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+# Wait for additional content to load after scrolling
+time.sleep(5)  # Adjust this wait time based on how long it takes to load more content
 
 # Locate all <a> tags with the specified class
 links_elements = driver.find_elements(By.CSS_SELECTOR, 'a.css-q5fadx.ed8fupw0')
