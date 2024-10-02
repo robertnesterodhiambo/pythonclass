@@ -36,9 +36,6 @@ if 'Links' in df.columns:
         # Create a new instance of the Firefox driver
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
 
-        # Initialize a list to store email data
-        emails_data = []
-
         try:
             # Open each link in the list
             for link in links_to_open:
@@ -64,14 +61,14 @@ if 'Links' in df.columns:
                 # Find all spans with the class 'data'
                 email_elements = driver.find_elements("css selector", "span.data a")
 
+                # Initialize a list to store email data for this link
+                emails_data = []
+
                 # Extract email addresses from the found elements
-                unique_emails = set()
                 for element in email_elements:
                     email = element.get_attribute('href').replace('mailto:', '')  # Remove 'mailto:' from href
-                    unique_emails.add(email)
 
-                # Create a row of data for each unique email found
-                for email in unique_emails:
+                    # Create a row of data for each email found
                     row_data = {
                         'Link': link,
                         'Email': email,  # Each email gets its own row
@@ -82,25 +79,22 @@ if 'Links' in df.columns:
                         if col != 'Links':  # Exclude the 'Links' column to avoid duplicates
                             row_data[col] = df[col].iloc[0]  # Use the first row's data
 
-                    emails_data.append(row_data)
+                    emails_data.append(row_data)  # Append row data directly without checking for duplicates
 
                 # Log the number of emails collected
-                print(f"Collected {len(unique_emails)} unique emails from {link}.")
+                print(f"Collected {len(email_elements)} emails from {link}.")
 
-                # Create a new DataFrame from the collected data
+                # Create a new DataFrame from the collected data for this link
                 emails_df = pd.DataFrame(emails_data)
 
                 # Append the new data to the existing emails DataFrame
-                all_emails_df = pd.concat([existing_emails_df, emails_df], ignore_index=True)
+                existing_emails_df = pd.concat([existing_emails_df, emails_df], ignore_index=True)
 
                 # Save the combined data back to the CSV file
-                all_emails_df.to_csv('collected_emails.csv', index=False)
+                existing_emails_df.to_csv('collected_emails.csv', index=False)
                 
                 # Print confirmation message
                 print(f"Collected emails and data saved for {link}. Moving on to the next link...\n")
-
-                # Clear the emails_data list for the next link
-                emails_data.clear()
 
         finally:
             # Close the driver after opening the links
