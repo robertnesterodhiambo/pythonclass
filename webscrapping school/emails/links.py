@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
+import re
 import time
 
 # Load the CSV file into a DataFrame
@@ -15,20 +16,50 @@ if 'Links' in df.columns:
 
     # Set up Firefox WebDriver options
     options = Options()
-    #options.add_argument("--headless")  # Run in headless mode (optional)
+    options.add_argument("--headless")  # Run in headless mode (optional)
 
     # Create a new instance of the Firefox driver
     driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
+
+    # Initialize a list to store email data
+    emails_data = []
 
     try:
         # Open each link in the list
         for link in links_to_open:
             print(f"Opening: {link}")
             driver.get(link)
-            time.sleep(5)  # Wait for 5 seconds to let the page load (adjust as needed)
+            time.sleep(5)  # Wait for the page to load
+
+            # Extract page source
+            page_source = driver.page_source
+            
+            # Find all email addresses using a regex
+            emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', page_source)
+
+            # Create a row of data for each email found
+            for email in emails:
+                row_data = {
+                    'Link': link,
+                    'Email': email,  # Each email gets its own row
+                }
+                
+                # Append original data from the first row to the row_data dictionary
+                for col in df.columns:
+                    if col != 'Links':  # Exclude the 'Links' column to avoid duplicates
+                        row_data[col] = df[col].iloc[0]  # Use the first row's data
+
+                emails_data.append(row_data)
 
     finally:
         # Close the driver after opening the links
         driver.quit()
+
+    # Create a new DataFrame from the collected data
+    emails_df = pd.DataFrame(emails_data)
+
+    # Save the collected emails and data to a new CSV file
+    emails_df.to_csv('collected_emails.csv', index=False)
+    print("Collected emails and data saved to 'collected_emails.csv'.")
 else:
     print("The 'Links' column is not found in the CSV file.")
