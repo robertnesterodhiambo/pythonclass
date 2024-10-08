@@ -8,6 +8,14 @@ wemailweb_df = pd.read_csv('wemailweb.csv')
 merged_df = pd.merge(wemailweb_df, asn_descriptions_df[['website', 'asn_description']], 
                      left_on='websites', right_on='website', how='left')
 
+# Drop the 'websites' column after merging
+merged_df = merged_df.drop(columns=['websites'])
+
 # Display the first few rows of the merged DataFrame to confirm
-print("Merged DataFrame:")
+print("Merged DataFrame (with 'websites' dropped):")
 print(merged_df.head())
+
+# Save the merged DataFrame to a CSV file
+merged_df.to_csv('merged.csv', index=False)
+
+print("Merged DataFrame saved to 'merged.csv'.")
