@@ -31,7 +31,7 @@ if 'Links' in df.columns:
     else:
         # Set up Firefox WebDriver options
         options = Options()
-        # options.add_argument("--headless")  # Run in headless mode (optional)
+        options.add_argument("--headless")  # Run in headless mode (optional)
 
         # Create a new instance of the Firefox driver
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
