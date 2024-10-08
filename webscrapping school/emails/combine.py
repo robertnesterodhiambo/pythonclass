@@ -15,6 +15,8 @@ merged_df = merged_df.drop(columns=['websites'])
 print("Merged DataFrame (with 'websites' dropped):")
 print(merged_df.head())
 
+merged_df = merged_df.dropna()
+
 # Save the merged DataFrame to a CSV file
 merged_df.to_csv('merged.csv', index=False)
 
