@@ -24,10 +24,14 @@ def index():
     y_column = request.form.get('y_column')
     selected_stocks = request.form.getlist('selected_stocks')
 
+    connection = None
+    cursor = None  # Initialize cursor to None
+
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
 
+        # Fetch unique symbols for dropdown filter
         cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
         unique_symbols = [row[0] for row in cursor.fetchall()]
 
@@ -86,4 +90,4 @@ def previous_page():
     return index()
 
 if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0',port = 5001)
+    app.run(debug=True, host='0.0.0.0', port=5001)

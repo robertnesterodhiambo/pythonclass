@@ -1,77 +1,40 @@
-import pandas as pd
 import requests
-import csv
-import time
-from datetime import datetime, timedelta
 
-# API Key
-API_KEY = 'ee36978344fe4a29be824bf2906e2903'
+API_KEY = '8efwA6BX5pDsYWdGS5o5PuNe1vItTAGB'
+year = 2024
+month = 1  # January
 
-# Path to your CSV file
-csv_path = '/home/dragon/GIT/Data/sample.csv'
+# URL for the NYT Archive API
+url = f'https://api.nytimes.com/svc/archive/v1/{year}/{month}.json'
+params = {
+    'api-key': API_KEY
+}
 
-# Read the CSV file to get the data
-df = pd.read_csv(csv_path)
+# Send a request to the NYT API
+response = requests.get(url, params=params)
+data = response.json()
 
-# Get the top 50 symbols based on the highest 'Adj Close' values
-top_symbols = df.nlargest(50, 'Adj Close')['Symbol'].unique()
+if response.status_code == 200:
+    articles = data['response']['docs']
+    stock_articles = []
 
-# Parameters for the API request
-from_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
-url = 'https://newsapi.org/v2/everything'
-
-# Define the CSV file name for all articles
-output_csv_file = f'top_50_stock_news_{datetime.now().strftime("%Y%m%d")}.csv'
-
-# Open the CSV file for writing
-with open(output_csv_file, mode='w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
+    # Filter articles that mention "stocks" in the headline or snippet
+    for article in articles:
+        headline = article['headline']['main'].lower()
+        snippet = article.get('snippet', '').lower()  # Some articles may not have a snippet
+        
+        if 'stocks' in headline or 'stocks' in snippet:
+            stock_articles.append(article)
     
-    # Write the header
-    writer.writerow(['Stock Symbol', 'Published At', 'Source', 'Headline', 'URL', 'Content'])
-
-    # Fetch news for each of the top 50 stock symbols
-    for stock in top_symbols:
-        # Set up the parameters for the GET request
-        params = {
-            'q': stock,               # Search query for news about the stock
-            'from': from_date,       # Start date for articles
-            'sortBy': 'publishedAt',  # Sort articles by publication date
-            'language': 'en',
-            'apiKey': API_KEY         # Your API key
-        }
-
-        # Send the GET request to the API
-        response = requests.get(url, params=params)
-
-        # Log the response status and content for debugging
-        print(f"Fetching news for {stock}: Status Code {response.status_code}")
-
-        # Check if the request was successful
-        if response.status_code == 200:
-            # Parse the response JSON
-            data = response.json()
-            
-            # Check if any articles were returned
-            if data['totalResults'] > 0:
-                # Write each article's details along with the stock symbol
-                for article in data['articles']:
-                    writer.writerow([
-                        stock,                     # Stock Symbol
-                        article['publishedAt'],    # Published date
-                        article['source']['name'],  # Source of the news
-                        article['title'],           # Headline
-                        article['url'],             # URL to the full article
-                        article.get('content', '')   # Content (if available)
-                    ])
-                
-                print(f"News articles for {stock} successfully added to {output_csv_file}.")
-            else:
-                print(f"No articles found for {stock}.")
-        else:
-            print(f"Failed to fetch news for {stock}: {response.status_code}, {response.text}")
-
-        # Add a delay to avoid hitting API rate limits
-        time.sleep(1)  # Wait for 1 second before the next request
-
-print(f"All stock news saved to {output_csv_file}.")
+    # Print filtered articles
+    if stock_articles:
+        for article in stock_articles:
+            print(f"Title: {article['headline']['main']}")
+            print(f"Published Date: {article['pub_date']}")
+            print(f"URL: {article['web_url']}")
+            print(f"Snippet: {article.get('snippet', 'No snippet available')}")
+            print()
+    else:
+        print("No articles about stocks found for this period.")
+else:
+    print(f"Error: {response.status_code}")
