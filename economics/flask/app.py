@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pymysql
 
 app = Flask(__name__)
 
+# Database connection function
 def get_db_connection():
     return pymysql.connect(
         host="74.63.247.122",
@@ -12,6 +13,7 @@ def get_db_connection():
         port=3307
     )
 
+# Route to display the table and form
 @app.route('/', methods=['GET', 'POST'])
 def index():
     page = request.args.get('page', 1, type=int)
@@ -21,64 +23,62 @@ def index():
     start_date = request.form.get('start_date')
     end_date = request.form.get('end_date')
     sort_order = request.form.get('sort_order', 'asc')
-    y_column = request.form.get('y_column')
-    selected_stocks = request.form.getlist('selected_stocks')
 
-    connection = None
-    cursor = None  # Initialize cursor to None
+    connection = get_db_connection()
+    cursor = connection.cursor()
 
-    try:
-        connection = get_db_connection()
-        cursor = connection.cursor()
+    # Fetch unique symbols for dropdown filter
+    cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
+    unique_symbols = [row[0] for row in cursor.fetchall()]
 
-        # Fetch unique symbols for dropdown filter
-        cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
-        unique_symbols = [row[0] for row in cursor.fetchall()]
+    # Build and execute query for table data
+    query = "SELECT * FROM Stocks"
+    conditions = []
+    if symbol_filter:
+        conditions.append(f"Symbol = '{symbol_filter}'")
+    if start_date:
+        conditions.append(f"Date >= '{start_date}'")
+    if end_date:
+        conditions.append(f"Date <= '{end_date}'")
 
-        # Build the query with filtering and sorting
-        query = "SELECT * FROM Stocks"
-        conditions = []
-        if symbol_filter:
-            conditions.append(f"Symbol = '{symbol_filter}'")
-        if start_date:
-            conditions.append(f"Date >= '{start_date}'")
-        if end_date:
-            conditions.append(f"Date <= '{end_date}'")
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
 
-        if conditions:
-            query += " WHERE " + " AND ".join(conditions)
+    query += f" ORDER BY Date {'ASC' if sort_order == 'asc' else 'DESC'} LIMIT %s OFFSET %s"
+    cursor.execute(query, (limit, offset))
+    rows = cursor.fetchall()
 
-        query += f" ORDER BY Date {'ASC' if sort_order == 'asc' else 'DESC'} LIMIT %s OFFSET %s"
-        cursor.execute(query, (limit, offset))
+    # Fetch total rows for pagination
+    cursor.execute("SELECT COUNT(*) FROM Stocks")
+    total_rows = cursor.fetchone()[0]
 
-        rows = cursor.fetchall()
+    cursor.close()
+    connection.close()
 
-        # Fetch total rows for pagination
-        cursor.execute("SELECT COUNT(*) FROM Stocks")
-        total_rows = cursor.fetchone()[0]
+    return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols)
 
-        # Fetch data for graphing
-        graph_data = {}
-        if y_column and selected_stocks:
-            for stock in selected_stocks:
-                graph_query = f"SELECT Date, {y_column} FROM Stocks WHERE Symbol = %s"
-                cursor.execute(graph_query, (stock,))
-                graph_data[stock] = cursor.fetchall()
+# New route to fetch graph data via AJAX
+@app.route('/get-graph-data', methods=['POST'])
+def get_graph_data():
+    selected_stocks = request.json.get('selected_stocks')
+    y_column = request.json.get('y_column')
 
-        return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, 
-                               unique_symbols=unique_symbols, selected_symbol=symbol_filter, 
-                               sort_order=sort_order, start_date=start_date, end_date=end_date,
-                               y_column=y_column, graph_data=graph_data, selected_stocks=selected_stocks)
+    connection = get_db_connection()
+    cursor = connection.cursor()
 
-    except Exception as e:
-        return f"Error: {e}"
+    graph_data = {}
+    if y_column and selected_stocks:
+        for stock in selected_stocks:
+            graph_query = f"SELECT Date, {y_column} FROM Stocks WHERE Symbol = %s"
+            cursor.execute(graph_query, (stock,))
+            graph_data[stock] = cursor.fetchall()
 
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
+    cursor.close()
+    connection.close()
 
+    return jsonify(graph_data)
+
+# Pagination routes
 @app.route('/next')
 def next_page():
     page = request.args.get('page', 1, type=int) + 1
