@@ -161,6 +161,8 @@
     <canvas id="stockChart" width="400" height="200"></canvas>
 
     <script>
+        let stockChart = null;  // To hold the chart instance
+
         // Handle the graph form submission via AJAX
         document.getElementById('graphForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form from submitting the traditional way
@@ -215,7 +217,13 @@
                 }
             }
 
-            new Chart(ctx, {
+            // If a chart already exists, destroy it before creating a new one
+            if (stockChart !== null) {
+                stockChart.destroy();
+            }
+
+            // Create a new chart
+            stockChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: dates,
