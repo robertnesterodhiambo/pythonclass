@@ -108,29 +108,34 @@
 
     <!-- Form to filter the table data -->
     <div class="form-container">
-        <form method="POST" action="/">
+        <form id="filterForm">
             <label for="symbol">Filter by Symbol:</label>
             <select name="symbol" id="symbol">
                 <option value="">All</option>
                 {% for symbol in unique_symbols %}
-                <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
+                <option value="{{ symbol }}">{{ symbol }}</option>
                 {% endfor %}
             </select>
     
             <label for="start_date">Start Date:</label>
-            <input type="date" name="start_date" id="start_date" value="{{ start_date }}">
+            <input type="date" name="start_date" id="start_date">
     
             <label for="end_date">End Date:</label>
-            <input type="date" name="end_date" id="end_date" value="{{ end_date }}">
+            <input type="date" name="end_date" id="end_date">
     
             <label for="sort_order">Sort by Date:</label>
             <select name="sort_order" id="sort_order">
-                <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
-                <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
             </select>
     
             <button type="submit">Filter</button>
         </form>
+    </div>
+
+    <!-- Table for displaying the stock data -->
+    <div id="tableContainer">
+        <!-- The table will be loaded dynamically here -->
     </div>
 
     <!-- Form to select graph data -->
@@ -248,43 +253,71 @@
                 }
             });
         }
+
+        // Function to submit the table filter form via AJAX and update the table
+        document.getElementById('filterForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const symbol = formData.get('symbol');
+            const startDate = formData.get('start_date');
+            const endDate = formData.get('end_date');
+            const sortOrder = formData.get('sort_order');
+
+            // Send an AJAX request to fetch the filtered table data
+            fetch('/filter-table', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    symbol: symbol,
+                    start_date: startDate,
+                    end_date: endDate,
+                    sort_order: sortOrder
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the table with the received HTML
+                document.getElementById('tableContainer').innerHTML = data.table_html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Function to load table data with pagination
+        function loadTableData(page) {
+            const formData = new FormData(document.getElementById('filterForm'));
+            const symbol = formData.get('symbol');
+            const startDate = formData.get('start_date');
+            const endDate = formData.get('end_date');
+            const sortOrder = formData.get('sort_order');
+
+            // Send an AJAX request to fetch the table data for the selected page
+            fetch('/filter-table', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    symbol: symbol,
+                    start_date: startDate,
+                    end_date: endDate,
+                    sort_order: sortOrder,
+                    page: page
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the table with the received HTML
+                document.getElementById('tableContainer').innerHTML = data.table_html;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
     </script>
-
-    <!-- Table for displaying the stock data -->
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Open</th>
-            <th>High</th>
-            <th>Low</th>
-            <th>Close</th>
-            <th>Volume</th>
-            <th>Adj Close</th>
-            <th>Symbol</th>
-        </tr>
-        {% for row in rows %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
-            <td>{{ row[8] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <div class="pagination">
-        {% if page > 1 %}
-        <a href="{{ url_for('previous_page', page=page) }}">Previous</a>
-        {% endif %}
-        {% if (page * limit) < total_rows %}
-        <a href="{{ url_for('next_page', page=page) }}">Next</a>
-        {% endif %}
-    </div>
 </body>
 </html>

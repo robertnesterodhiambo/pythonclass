@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, render_template_string
 import pymysql
 
 app = Flask(__name__)
@@ -13,23 +13,34 @@ def get_db_connection():
         port=3307
     )
 
-# Route to display the table and form
+# Route to render the main page
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page = request.args.get('page', 1, type=int)
-    limit = 20
-    offset = (page - 1) * limit
-    symbol_filter = request.form.get('symbol')
-    start_date = request.form.get('start_date')
-    end_date = request.form.get('end_date')
-    sort_order = request.form.get('sort_order', 'asc')
-
     connection = get_db_connection()
     cursor = connection.cursor()
 
     # Fetch unique symbols for dropdown filter
     cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
     unique_symbols = [row[0] for row in cursor.fetchall()]
+
+    cursor.close()
+    connection.close()
+
+    return render_template('index.html', unique_symbols=unique_symbols)
+
+# Route to handle the table update via AJAX
+@app.route('/filter-table', methods=['POST'])
+def filter_table():
+    page = request.json.get('page', 1)
+    limit = 20
+    offset = (page - 1) * limit
+    symbol_filter = request.json.get('symbol')
+    start_date = request.json.get('start_date')
+    end_date = request.json.get('end_date')
+    sort_order = request.json.get('sort_order', 'asc')
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
 
     # Build and execute query for table data
     query = "SELECT * FROM Stocks"
@@ -55,7 +66,45 @@ def index():
     cursor.close()
     connection.close()
 
-    return render_template('index.html', rows=rows, page=page, total_rows=total_rows, limit=limit, unique_symbols=unique_symbols)
+    # Render table rows as HTML
+    table_html = render_template_string("""
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+                <th>Volume</th>
+                <th>Adj Close</th>
+                <th>Symbol</th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td>{{ row[8] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="#" onclick="loadTableData({{ page - 1 }})">Previous</a>
+            {% endif %}
+            {% if (page * limit) < total_rows %}
+            <a href="#" onclick="loadTableData({{ page + 1 }})">Next</a>
+            {% endif %}
+        </div>
+    """, rows=rows, page=page, limit=limit, total_rows=total_rows)
+
+    return jsonify({'table_html': table_html})
 
 # New route to fetch graph data via AJAX
 @app.route('/get-graph-data', methods=['POST'])
@@ -77,17 +126,6 @@ def get_graph_data():
     connection.close()
 
     return jsonify(graph_data)
-
-# Pagination routes
-@app.route('/next')
-def next_page():
-    page = request.args.get('page', 1, type=int) + 1
-    return index()
-
-@app.route('/previous')
-def previous_page():
-    page = request.args.get('page', 1, type=int) - 1
-    return index()
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5001)
