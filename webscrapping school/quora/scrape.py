@@ -3,6 +3,8 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
 # Load the CSV file (output.csv)
@@ -28,8 +30,31 @@ for link in links:
     driver.get(modified_link)  # Open the modified link
     print(f"Opened: {modified_link}")  # Print the modified link
     
-    # Sleep to allow time to view the page (you can adjust this time)
-    sleep(5)
+    # Scroll to the bottom of the page dynamically
+    last_height = driver.execute_script("return document.body.scrollHeight")  # Get initial height
+
+    while True:
+        # Scroll down to the bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        
+        # Wait for the presence of the div with class 'q-box'
+        try:
+            # Wait dynamically until the 'q-box' element appears
+            element = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, 'q-box'))
+            )
+            print("q-box element appeared, moving to the next page...")
+            break  # Exit the loop when the element appears
+        except:
+            # If no element appears within the wait time, continue scrolling
+            print("q-box not found yet, scrolling again...")
+
+        # Calculate new scroll height and compare with last height
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:  # If no new height, break the loop
+            print("Reached the bottom of the page without finding q-box")
+            break
+        last_height = new_height  # Update last height
 
 # Close the browser after processing
 driver.quit()
