@@ -24,8 +24,9 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # Loop through the first 5 links
 for link in links:
-    driver.get(link)  # Open the link
-    print(f"Opened: {link}")
+    modified_link = link + '/log'  # Append /log to the link
+    driver.get(modified_link)  # Open the modified link
+    print(f"Opened: {modified_link}")  # Print the modified link
     
     # Sleep to allow time to view the page (you can adjust this time)
     sleep(5)
