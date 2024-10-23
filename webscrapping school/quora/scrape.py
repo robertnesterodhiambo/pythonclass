@@ -14,7 +14,7 @@ file_path = 'output.csv'
 data = pd.read_csv(file_path)
 
 # Extract the first 5 rows from the "Link" column
-links = data['Link'].head(5)
+links = data['Link']
 
 # Set up Chrome WebDriver
 chrome_driver_path = os.path.join(os.getcwd(), 'chromedriver')  # Assuming chromedriver is in the same folder
@@ -30,6 +30,9 @@ print("Opened Quora. Please log in...")
 
 # Step 2: Wait for the user to log in manually
 input("Press Enter after logging in...")  # Wait for user confirmation after logging in
+
+# List to store the collected data
+collected_data = []
 
 # Step 3: Loop through the first 5 links from the CSV file
 for link in links:
@@ -69,9 +72,38 @@ for link in links:
                 print("Reached the bottom of the page, no more content to load")
                 break
             last_height = new_height  # Update last height
-            
+
+        # Step 4: Look for the text "User name edited by" inside q-box elements
+        q_boxes = driver.find_elements(By.CLASS_NAME, 'q-box')  # Collect all q-box elements
+        
+        found_text = False
+        for box in q_boxes:
+            # Check if 'User name edited by' is in the q-box text
+            if 'User name edited by' in box.text:
+                collected_data.append({
+                    'Link': modified_link, 
+                    'Text': box.text,
+                    'profile_conf': 'changed'
+                })  # Collect the text with the link and status
+                found_text = True
+                break  # Once found, break the loop
+        
+        # If no q-box contained the text, add a 'not changed' entry
+        if not found_text:
+            collected_data.append({
+                'Link': modified_link,
+                'Text': 'not changed',
+                'profile_conf': 'not changed'
+            })
+
     except Exception as e:
         print(f"An error occurred: {e}")
+
+# Step 5: Save the collected data to a CSV file
+output_file = 'collected_data.csv'
+df = pd.DataFrame(collected_data)  # Convert the list to a DataFrame
+df.to_csv(output_file, index=False)  # Save the DataFrame to a CSV file
+print(f"Data saved to {output_file}")
 
 # Close the browser after processing
 driver.quit()
