@@ -31,8 +31,11 @@ print("Opened Quora. Please log in...")
 # Step 2: Wait for the user to log in manually
 input("Press Enter after logging in...")  # Wait for user confirmation after logging in
 
-# List to store the collected data
-collected_data = []
+# File to save collected data incrementally
+output_file = 'collected_data.csv'
+
+# Create an empty DataFrame to store the results
+collected_data = pd.DataFrame(columns=['Link', 'Text', 'profile_conf'])
 
 # Step 3: Loop through the first 5 links from the CSV file
 for link in links:
@@ -80,30 +83,25 @@ for link in links:
         for box in q_boxes:
             # Check if 'User name edited by' is in the q-box text
             if 'User name edited by' in box.text:
-                collected_data.append({
-                    'Link': modified_link, 
-                    'Text': box.text,
-                    'profile_conf': 'changed'
-                })  # Collect the text with the link and status
+                # Append the text and status to the DataFrame
+                row = pd.DataFrame({'Link': [modified_link], 'Text': [box.text], 'profile_conf': ['changed']})
+                collected_data = pd.concat([collected_data, row], ignore_index=True)
                 found_text = True
                 break  # Once found, break the loop
         
         # If no q-box contained the text, add a 'not changed' entry
         if not found_text:
-            collected_data.append({
-                'Link': modified_link,
-                'Text': 'not changed',
-                'profile_conf': 'not changed'
-            })
+            row = pd.DataFrame({'Link': [modified_link], 'Text': ['not changed'], 'profile_conf': ['not changed']})
+            collected_data = pd.concat([collected_data, row], ignore_index=True)
+
+        # Save the collected data after each link is processed
+        collected_data.to_csv(output_file, index=False)
+        print(f"Data saved after processing {modified_link}")
 
     except Exception as e:
         print(f"An error occurred: {e}")
-
-# Step 5: Save the collected data to a CSV file
-output_file = 'collected_data.csv'
-df = pd.DataFrame(collected_data)  # Convert the list to a DataFrame
-df.to_csv(output_file, index=False)  # Save the DataFrame to a CSV file
-print(f"Data saved to {output_file}")
+        # Even if there's an error, save the current collected data
+        collected_data.to_csv(output_file, index=False)
 
 # Close the browser after processing
 driver.quit()
