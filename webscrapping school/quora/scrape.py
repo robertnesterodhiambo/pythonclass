@@ -62,49 +62,45 @@ for idx, link in enumerate(links_to_process, start=1):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'q-box'))
         )
-        print("First q-box element found, starting infinite scroll...")
-        
-        # Start scrolling to load more content
-        last_height = driver.execute_script("return document.body.scrollHeight")  # Get initial height
+        print("First q-box element found, starting limited scroll...")
 
-        while True:
+        # Scroll down twice only
+        scroll_count = 0
+        found_text = False  # Track whether relevant text is found
+
+        while scroll_count < 2:
             # Scroll down to the bottom of the page
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             
             # Wait for new content to load
             sleep(2)
             
-            # Check for more 'q-box' elements being loaded
-            try:
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.CLASS_NAME, 'q-box'))
-                )
-                print("More q-box elements loaded...")
-            except:
-                print("No new q-box elements found after scroll...")
+            # Re-locate q-box elements after scrolling
+            q_boxes = driver.find_elements(By.CLASS_NAME, 'q-box')
+            if not q_boxes:
+                print("No q-box elements found after scroll...")
+                break  # Break if no elements found
             
-            # Calculate new scroll height and compare with last height
-            new_height = driver.execute_script("return document.body.scrollHeight")
-            if new_height == last_height:  # If no new height, break the loop
-                print("Reached the bottom of the page, no more content to load")
-                break
-            last_height = new_height  # Update last height
+            # Check for the specific text in the q-box elements
+            for box in q_boxes:
+                # Check if 'User name edited by' is in the q-box text
+                if 'User name edited by' in box.text:
+                    # Append the text and status to the DataFrame
+                    row = pd.DataFrame({'Link': [modified_link], 'Text': [box.text], 'profile_conf': ['changed']})
+                    collected_data = pd.concat([collected_data, row], ignore_index=True)
+                    found_text = True
+                    break  # Once found, break the loop
 
-        # Step 4: Look for the text "User name edited by" inside q-box elements
-        q_boxes = driver.find_elements(By.CLASS_NAME, 'q-box')  # Collect all q-box elements
-        
-        found_text = False
-        for box in q_boxes:
-            # Check if 'User name edited by' is in the q-box text
-            if 'User name edited by' in box.text:
-                # Append the text and status to the DataFrame
-                row = pd.DataFrame({'Link': [modified_link], 'Text': [box.text], 'profile_conf': ['changed']})
-                collected_data = pd.concat([collected_data, row], ignore_index=True)
-                found_text = True
-                break  # Once found, break the loop
-        
-        # If no q-box contained the text, add a 'not changed' entry
+            scroll_count += 1
+
+            # If text is found, break out of the scroll loop
+            if found_text:
+                print("Found relevant text after scrolling!")
+                break
+
+        # If no relevant text found, add a 'not changed' entry
         if not found_text:
+            print("Relevant text not found after scrolling twice.")
             row = pd.DataFrame({'Link': [modified_link], 'Text': ['not changed'], 'profile_conf': ['not changed']})
             collected_data = pd.concat([collected_data, row], ignore_index=True)
 
