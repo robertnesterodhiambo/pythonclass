@@ -13,8 +13,28 @@ file_path = 'output.csv'
 # Load the data
 data = pd.read_csv(file_path)
 
-# Extract the first 5 rows from the "Link" column
-links = data['Link']
+# File to save collected data incrementally
+output_file = 'collected_data.csv'
+
+# Check if the collected_data.csv exists
+if os.path.exists(output_file):
+    # Load the existing collected data to avoid re-processing already processed links
+    collected_data = pd.read_csv(output_file)
+    processed_links = collected_data['Link'].tolist()  # List of already processed links
+else:
+    # If no existing file, start fresh
+    collected_data = pd.DataFrame(columns=['Link', 'Text', 'profile_conf'])
+    processed_links = []
+
+# Filter out links that have already been processed
+links_to_process = [link for link in data['Link'] if link not in processed_links]
+
+# Print skipped links
+skipped_links = [link for link in data['Link'] if link in processed_links]
+if skipped_links:
+    print(f"Skipped links (already processed): {len(skipped_links)}")
+    for skipped in skipped_links:
+        print(f"Skipped: {skipped}")
 
 # Set up Chrome WebDriver
 chrome_driver_path = os.path.join(os.getcwd(), 'chromedriver')  # Assuming chromedriver is in the same folder
@@ -31,18 +51,12 @@ print("Opened Quora. Please log in...")
 # Step 2: Wait for the user to log in manually
 input("Press Enter after logging in...")  # Wait for user confirmation after logging in
 
-# File to save collected data incrementally
-output_file = 'collected_data.csv'
-
-# Create an empty DataFrame to store the results
-collected_data = pd.DataFrame(columns=['Link', 'Text', 'profile_conf'])
-
-# Step 3: Loop through the first 5 links from the CSV file
-for link in links:
+# Step 3: Loop through the links that haven't been processed yet
+for idx, link in enumerate(links_to_process, start=1):
     modified_link = link + '/log'  # Append /log to the link
     try:
         driver.get(modified_link)  # Open the modified link
-        print(f"Opened: {modified_link}")  # Print the modified link
+        print(f"Link {idx} opened: {modified_link}")  # Print the modified link with link number
         
         # Wait for the first 'q-box' to appear
         WebDriverWait(driver, 10).until(
@@ -99,9 +113,12 @@ for link in links:
         print(f"Data saved after processing {modified_link}")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred with {modified_link}: {e}")
         # Even if there's an error, save the current collected data
         collected_data.to_csv(output_file, index=False)
 
 # Close the browser after processing
 driver.quit()
+
+# Print the total number of links processed
+print(f"Total links processed: {len(links_to_process)}")
