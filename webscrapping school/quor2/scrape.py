@@ -11,6 +11,11 @@ links = df['edit_link'].head(5)
 # Initialize the WebDriver (adjust the path to your WebDriver as needed)
 driver = webdriver.Chrome()  # Ensure ChromeDriver is in your PATH
 
+# Open Quora and wait for login
+driver.get("https://www.quora.com/")
+print("Please log in to Quora. Once you're logged in, press Enter to continue...")
+input()  # Wait for user confirmation after login
+
 # Function to scroll down the page a given number of times
 def scroll_down(driver, num_scrolls=3):
     last_scroll_position = driver.execute_script("return window.pageYOffset;")  # Get the current scroll position
