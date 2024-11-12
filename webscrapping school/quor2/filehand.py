@@ -1,7 +1,12 @@
 import pandas as pd
 
-# Load the data
-df = pd.read_csv('collected_data.csv')
+# Set pandas display options to show all rows and columns
+    # Auto-adjust width
+pd.set_option('display.max_colwidth', None) # Display full content in each column
+
+# Load the data from both CSV files
+df1 = pd.read_csv('collected_data.csv')     # Main DataFrame with 'Text' and 'Link' columns
+df2 = pd.read_csv('output_updated.csv')     # Secondary DataFrame with 'edit_link' column
 
 # Function to extract the third line after "User name edited by"
 def extract_third_line(text):
@@ -18,8 +23,14 @@ def extract_third_line(text):
                 return ""  # Return an empty string if not enough lines after
     return ""  # Return an empty string if "User name edited by" is not found
 
-# Apply the function to the 'Text' column and store the result in a new column called 'old_name'
-df['old_name'] = df['Text'].apply(extract_third_line)
+# Apply the function to the 'Text' column in df1 and create a new column 'old_name'
+df1['old_name'] = df1['Text'].apply(extract_third_line)
 
-# Display the modified DataFrame
-print(df)
+# Perform an inner join on 'Link' and 'edit_link' columns
+merged_df = pd.merge(df1, df2, left_on='Link', right_on='edit_link', how='inner')
+
+# Save the merged DataFrame to a new CSV file
+merged_df.to_csv('merged_output.csv', index=False)
+
+# Display confirmation message
+print("Merged DataFrame saved to 'merged_output.csv'")
