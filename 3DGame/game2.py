@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 # Initialize pygame
 pygame.init()
@@ -7,12 +8,12 @@ pygame.init()
 # Set display dimensions
 WIDTH, HEIGHT = 800, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("3D Pong")
+pygame.display.set_caption("Enhanced 3D Pong")
 
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255, 0, 0)
+GRAY = (169, 169, 169)
 
 # Define paddles and ball
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
@@ -37,12 +38,37 @@ ball = pygame.Rect(WIDTH // 2 - BALL_RADIUS, HEIGHT // 2 - BALL_RADIUS, BALL_RAD
 ball_dx = BALL_SPEED_X * random.choice((1, -1))
 ball_dy = BALL_SPEED_Y * random.choice((1, -1))
 
-# Draw the game screen
+# Draw the game screen with perspective effects
 def draw_window():
     WIN.fill(BLACK)
-    pygame.draw.rect(WIN, WHITE, player_paddle)
-    pygame.draw.rect(WIN, WHITE, ai_paddle)
-    pygame.draw.ellipse(WIN, WHITE, ball)
+
+    # Simulating perspective by adjusting size based on the ball's X position (Z-axis depth effect)
+    ball_distance_factor = (WIDTH // 2 - abs(WIDTH // 2 - ball.centerx)) / (WIDTH // 2)  # Simulating Z-axis
+
+    # Simulated perspective effect for player paddle (it gets smaller with distance)
+    player_paddle_width = PADDLE_WIDTH * (ball.centerx / WIDTH)
+    player_paddle_height = PADDLE_HEIGHT * (ball.centerx / WIDTH)
+
+    # Simulated perspective effect for AI paddle
+    ai_paddle_width = PADDLE_WIDTH * (ball.centerx / WIDTH)
+    ai_paddle_height = PADDLE_HEIGHT * (ball.centerx / WIDTH)
+
+    # Draw the paddles with perspective effect
+    pygame.draw.rect(WIN, WHITE, pygame.Rect(player_paddle.x, player_paddle.y, player_paddle_width, player_paddle_height))
+    pygame.draw.rect(WIN, WHITE, pygame.Rect(ai_paddle.x, ai_paddle.y, ai_paddle_width, ai_paddle_height))
+
+    # Ball size effect based on distance from the center
+    ball_size_factor = (WIDTH // 2 - abs(WIDTH // 2 - ball.centerx)) / (WIDTH // 2)  # Simulate 3D ball size
+    ball_scaled_width = BALL_RADIUS * 2 * ball_size_factor
+    ball_scaled_height = BALL_RADIUS * 2 * ball_size_factor
+
+    # Ball shading effect to simulate lighting based on distance
+    ball_shade_factor = 1 - ball_distance_factor  # Darker when further away
+    ball_color = (int(WHITE[0] * ball_shade_factor), int(WHITE[1] * ball_shade_factor), int(WHITE[2] * ball_shade_factor))
+    
+    # Draw the ball with shading
+    pygame.draw.ellipse(WIN, ball_color, pygame.Rect(ball.x, ball.y, ball_scaled_width, ball_scaled_height))
+
     pygame.display.update()
 
 # Move the AI paddle to follow the ball (basic AI)
@@ -59,14 +85,12 @@ def check_collision():
     # Player paddle collision
     if player_paddle.colliderect(ball):
         ball_dx = -ball_dx
-        # Add slight angle variation based on where the ball hits the paddle
-        ball_dy += random.randint(-5, 5)
+        ball_dy += random.randint(-5, 5)  # Add slight angle variation based on paddle hit
 
     # AI paddle collision
     if ai_paddle.colliderect(ball):
         ball_dx = -ball_dx
-        # Add slight angle variation based on where the ball hits the paddle
-        ball_dy += random.randint(-5, 5)
+        ball_dy += random.randint(-5, 5)  # Add slight angle variation based on paddle hit
 
     # Ball bouncing off top and bottom walls
     if ball.top <= 0 or ball.bottom >= HEIGHT:
