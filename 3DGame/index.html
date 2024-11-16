@@ -3,123 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game</title>
+  <title>3D Snake Game</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-    }
-    canvas {
-      border: 1px solid black;
-    }
+    body { margin: 0; overflow: hidden; }
+    canvas { display: block; }
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="600" height="600"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
+    let scene, camera, renderer, snake, food, score, gameSpeed, direction, segmentSize;
+    
+    // Basic 3D game setup
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-    const gridSize = 20;
-    const canvasSize = 600;
-    let snake = [{ x: 280, y: 300 }];
-    let direction = 'RIGHT';
-    let food = { x: 100, y: 100 };
-    let score = 0;
+    // Constants
+    const gridSize = 3; // Smaller segment size
+    const initialLength = 5;
+    const speed = 150; // Game update speed
+    const canvasSize = 50; // 3D world size (play area limits)
 
-    const gameSpeed = 100; // Lower the number to slow the game down, higher to speed it up
+    // Boundary constraints (keep the snake within this range)
+    const minBound = -canvasSize / 2;
+    const maxBound = canvasSize / 2;
 
-    // Key Press Event to Control Snake Direction
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-      if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-      if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-      if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-    });
+    // Variables
+    snake = [];
+    score = 0;
+    direction = new THREE.Vector3(1, 0, 0); // Snake starts moving along X axis
+    segmentSize = new THREE.Vector3(gridSize, gridSize, gridSize);
 
-    // Function to Draw the Snake
-    function drawSnake() {
-      snake.forEach(segment => {
-        ctx.fillStyle = 'green';
-        ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
-      });
+    // Create Snake
+    function createSnake() {
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const geometry = new THREE.BoxGeometry(gridSize, gridSize, gridSize);
+
+      for (let i = 0; i < initialLength; i++) {
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.set(i * gridSize, 0, 0); // Snake starts along the X axis
+        snake.push(cube);
+        scene.add(cube);
+      }
     }
 
-    // Function to Draw the Food
-    function drawFood() {
-      ctx.fillStyle = 'red';
-      ctx.fillRect(food.x, food.y, gridSize, gridSize);
+    // Create Food
+    function createFood() {
+      const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      const geometry = new THREE.BoxGeometry(gridSize, gridSize, gridSize);
+      food = new THREE.Mesh(geometry, material);
+      food.position.set(
+        Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize - canvasSize / 2,
+        Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize - canvasSize / 2,
+        Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize - canvasSize / 2
+      );
+      scene.add(food);
     }
 
-    // Function to Move the Snake
+    // Handle Snake Movement
     function moveSnake() {
-      const head = { ...snake[0] };
-
-      if (direction === 'UP') head.y -= gridSize;
-      if (direction === 'DOWN') head.y += gridSize;
-      if (direction === 'LEFT') head.x -= gridSize;
-      if (direction === 'RIGHT') head.x += gridSize;
-
-      snake.unshift(head);
-      if (head.x === food.x && head.y === food.y) {
-        score++;
-        spawnFood();
-      } else {
-        snake.pop();
+      // Move the snake's body
+      for (let i = snake.length - 1; i > 0; i--) {
+        snake[i].position.copy(snake[i - 1].position);
       }
-    }
 
-    // Function to Spawn New Food
-    function spawnFood() {
-      food.x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-      food.y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-    }
-
-    // Function to Check for Collisions
-    function checkCollisions() {
+      // Move the snake's head
       const head = snake[0];
-      // Check for wall collision
-      if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
-        return true;
-      }
-      // Check for self collision
-      for (let i = 1; i < snake.length; i++) {
-        if (head.x === snake[i].x && head.y === snake[i].y) {
-          return true;
-        }
-      }
-      return false;
-    }
+      const newHead = new THREE.Mesh(head.geometry, head.material);
+      newHead.position.copy(head.position);
+      newHead.position.add(direction);
 
-    // Function to Draw the Game Over Screen
-    function drawGameOver() {
-      ctx.fillStyle = 'black';
-      ctx.font = '30px Arial';
-      ctx.fillText('Game Over!', 200, 250);
-      ctx.fillText('Score: ' + score, 240, 300);
-    }
-
-    // Main Game Loop
-    function gameLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      moveSnake();
-      if (checkCollisions()) {
-        drawGameOver();
+      // Check for out-of-bounds movement
+      if (newHead.position.x < minBound || newHead.position.x >= maxBound ||
+          newHead.position.y < minBound || newHead.position.y >= maxBound ||
+          newHead.position.z < minBound || newHead.position.z >= maxBound) {
+        gameOver();
         return;
       }
 
-      drawSnake();
-      drawFood();
+      // Check for collision with food
+      if (newHead.position.equals(food.position)) {
+        score++;
+        createFood(); // Create new food
+        snake.push(newHead); // Add a new segment to the snake
+      } else {
+        snake.pop(); // Remove the tail if no food eaten
+      }
+
+      // Add the new head
+      snake.unshift(newHead);
+      scene.add(newHead);
+
+      // Check for wall or self collision
+      if (snake.slice(1).some(segment => segment.position.equals(newHead.position))) {
+        gameOver();
+      }
     }
 
-    // Start the Game with setInterval
-    setInterval(gameLoop, gameSpeed); // The interval controls the speed of the game
+    // Game Over Logic
+    function gameOver() {
+      alert("Game Over! Score: " + score);
+      snake.forEach(segment => scene.remove(segment));
+      snake = [];
+      createSnake(); // Restart game
+      score = 0;
+      createFood();
+    }
+
+    // Key Press Event to Control Snake Direction
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') direction.set(0, 1, 0);
+      if (e.key === 'ArrowDown') direction.set(0, -1, 0);
+      if (e.key === 'ArrowLeft') direction.set(-1, 0, 0);
+      if (e.key === 'ArrowRight') direction.set(1, 0, 0);
+      if (e.key === 'w') direction.set(0, 0, 1); // Moving Up in Z
+      if (e.key === 's') direction.set(0, 0, -1); // Moving Down in Z
+    });
+
+    // Render Loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      moveSnake();
+
+      // Update Camera to follow the snake's movement
+      camera.position.x = snake[0].position.x;
+      camera.position.y = snake[0].position.y + 20;
+      camera.position.z = snake[0].position.z + 30;
+      camera.lookAt(snake[0].position);
+
+      renderer.render(scene, camera);
+    }
+
+    // Initialize the Game
+    function init() {
+      createSnake();
+      createFood();
+      animate();
+    }
+
+    init();
   </script>
 </body>
 </html>
