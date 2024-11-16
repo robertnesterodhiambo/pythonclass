@@ -1,0 +1,107 @@
+
+
+### Step 1: Load Required Libraries
+
+```{r}
+# Install required packages
+#install.packages("e1071")     # For SVM
+#install.packages("caret")     # For model evaluation
+#install.packages("ggplot2")   # For visualization (optional)
+```
+
+Load the libraries:
+```{r}
+library(e1071)
+library(caret)
+library(ggplot2)
+```
+
+### Step 2: Load and Explore the Dataset
+The Iris dataset is built into R, so you can load it directly:
+```{r}
+# Load dataset
+data(iris)
+
+# Inspect the data
+head(iris)
+summary(iris)
+str(iris)
+```
+
+### Step 3: Data Preprocessing
+Split the data into training and testing sets:
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data (70% training, 30% testing)
+trainIndex <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+trainData <- iris[trainIndex, ]
+testData <- iris[-trainIndex, ]
+```
+
+### Step 4: Train an SVM Model
+Train an SVM model on the training dataset:
+```{r}
+# Train the SVM model
+svm_model <- svm(Species ~ ., data = trainData, kernel = "radial")
+
+# View the model summary
+summary(svm_model)
+```
+
+### Step 5: Make Predictions
+Use the trained model to predict on the test dataset:
+```{r}
+# Make predictions
+predictions <- predict(svm_model, testData)
+
+# View predictions
+table(predictions, testData$Species)
+```
+
+### Step 6: Evaluate the Model
+Calculate the accuracy and visualize the results:
+```{r}
+# Confusion matrix
+confusionMatrix(predictions, testData$Species)
+
+# Plot SVM results (optional visualization for 2D projection)
+plot(svm_model, iris, Sepal.Length ~ Sepal.Width)
+```
+
+### Step 7: Hyperparameter Tuning (Optional)
+Use cross-validation to find the best hyperparameters for the SVM model:
+```{r}
+# Tune SVM parameters
+tune_result <- tune.svm(Species ~ ., data = trainData,
+                        kernel = "radial",
+                        cost = 2^(-1:2),
+                        gamma = 2^(-1:1))
+
+# View the best model
+summary(tune_result)
+
+# Retrain the best model
+best_model <- tune_result$best.model
+```
+
+### Step 8: Evaluate the Tuned Model
+Test the performance of the tuned model:
+```{r}
+# Predictions using the best model
+tuned_predictions <- predict(best_model, testData)
+
+# Confusion matrix
+confusionMatrix(tuned_predictions, testData$Species)
+```
+
+### Step 9: Visualize Results (Optional)
+Visualize the decision boundaries for better understanding:
+```{r}
+# Visualization with ggplot2
+ggplot(data = iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal()
+```
+
