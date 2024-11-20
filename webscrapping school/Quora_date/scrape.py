@@ -14,11 +14,20 @@ edit_links = df['edit_link'].head(5)
 service = Service('./chromedriver')  # Adjust path if needed
 driver = webdriver.Chrome(service=service)
 
-# Open each link in the browser
 try:
+    # Step 1: Open Quora for login
+    print("Opening Quora for login...")
+    driver.get('https://www.quora.com/')
+    
+    # Wait for the user to log in
+    input("Press Enter after logging in to Quora...")
+    
+    # Step 2: Open each link from the CSV
     for link in edit_links:
         print(f"Opening: {link}")
         driver.get(link)
         time.sleep(3)  # Pause to let the page load, adjust as needed
+
 finally:
-    driver.quit()  # Close the browser after processing
+    # Close the browser after processing
+    driver.quit()
