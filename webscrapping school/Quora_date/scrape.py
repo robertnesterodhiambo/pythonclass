@@ -14,6 +14,15 @@ edit_links = df['edit_link'].head(5)
 service = Service('./chromedriver')  # Adjust path if needed
 driver = webdriver.Chrome(service=service)
 
+def scroll_page(driver, times=5):
+    """
+    Scroll to the bottom of the page a specified number of times.
+    """
+    for i in range(times):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        print(f"Scrolled {i+1} time(s).")
+        time.sleep(2)  # Wait for the page to load new content, adjust if needed
+
 try:
     # Step 1: Open Quora for login
     print("Opening Quora for login...")
@@ -22,12 +31,15 @@ try:
     # Wait for the user to log in
     input("Press Enter after logging in to Quora...")
     
-    # Step 2: Open each link from the CSV
+    # Step 2: Open each link from the CSV and scroll
     for link in edit_links:
         print(f"Opening: {link}")
         driver.get(link)
-        time.sleep(3)  # Pause to let the page load, adjust as needed
-
+        
+        # Scroll the page 5 times
+        scroll_page(driver, times=5)
+        print(f"Finished scrolling {link}")
+        
 finally:
     # Close the browser after processing
     driver.quit()
