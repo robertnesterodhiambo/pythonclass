@@ -23,6 +23,16 @@ def scroll_page(driver, times=5):
         print(f"Scrolled {i+1} time(s).")
         time.sleep(2)  # Wait for the page to load new content, adjust if needed
 
+def extract_user_edited_text(driver):
+    """
+    Extract and print text from divs with class 'q-box' containing the phrase 'User name edited by'.
+    """
+    divs = driver.find_elements(By.CLASS_NAME, "q-box")
+    for div in divs:
+        text = div.text
+        if "User name edited by" in text:
+            print(f"Found: {text}")
+
 try:
     # Step 1: Open Quora for login
     print("Opening Quora for login...")
@@ -31,14 +41,17 @@ try:
     # Wait for the user to log in
     input("Press Enter after logging in to Quora...")
     
-    # Step 2: Open each link from the CSV and scroll
+    # Step 2: Open each link from the CSV, scroll, and extract data
     for link in edit_links:
         print(f"Opening: {link}")
         driver.get(link)
         
         # Scroll the page 5 times
         scroll_page(driver, times=5)
-        print(f"Finished scrolling {link}")
+        
+        # Extract and print relevant text
+        extract_user_edited_text(driver)
+        print(f"Finished processing {link}")
         
 finally:
     # Close the browser after processing
