@@ -3,8 +3,8 @@ import pymysql.cursors
 def connectToMySQL(db_name):
     return pymysql.connect(
         host='localhost',
-        user='root',  # Replace with your MySQL username
-        password='',  # Replace with your MySQL password
+        user='root',
+        password='1234',  # Your MariaDB root password
         database=db_name,
         cursorclass=pymysql.cursors.DictCursor
     )

@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Create Account</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="/login" method="POST">
+    <h1>Create Account</h1>
+    <form action="/register" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required>
         
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" required>
         
-        <button type="submit">Login</button>
+        <button type="submit">Create Account</button>
     </form>
 
-    <!-- Display any error messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
             <p class="{{ category }}">{{ message }}</p>
         {% endfor %}
     {% endwith %}
-
-    <!-- Create Account Button -->
-    <br>
-    <a href="/register"><button>Create Account</button></a>
-
 </body>
 </html>
