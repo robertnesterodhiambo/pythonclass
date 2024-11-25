@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+</head>
+<body>
+    <h1>Edit Recipe</h1>
+    <form action="/recipes/update/{{ recipe.id }}" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="{{ recipe.name }}" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" required>{{ recipe.description }}</textarea><br><br>
+
+        <label for="instructions">Instructions:</label><br>
+        <textarea id="instructions" name="instructions" rows="6" required>{{ recipe.instructions }}</textarea><br><br>
+
+        <label for="date_cooked">Date Cooked:</label><br>
+        <input type="date" id="date_cooked" name="date_cooked" value="{{ recipe.date_cooked }}" required><br><br>
+
+        <label>Under 30 Minutes:</label><br>
+        <label><input type="radio" name="under_30_minutes" value="yes" {% if recipe.under_30_minutes %}checked{% endif %}> Yes</label>
+        <label><input type="radio" name="under_30_minutes" value="no" {% if not recipe.under_30_minutes %}checked{% endif %}> No</label><br><br>
+
+        <button type="submit">Update Recipe</button>
+    </form>
+    <br>
+    <a href="/recipes">Back to Dashboard</a>
+</body>
+</html>
