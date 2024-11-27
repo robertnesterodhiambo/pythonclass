@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details</title>
+</head>
+<body>
+    <h1>{{ recipe.name }}</h1>
+    <p><strong>Description:</strong> {{ recipe.description }}</p>
+    <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+    <p><strong>Date Cooked:</strong> {{ recipe.date_cooked }}</p>
+    <p><strong>Under 30 Minutes:</strong> {{ 'Yes' if recipe.under_30_minutes else 'No' }}</p>
+    <br>
+    <a href="/recipes">Back to Dashboard</a>
+    {% if recipe.user_id == session['user_id'] %}
+        <br><a href="/recipes/edit/{{ recipe.id }}">Edit Recipe</a>
+    {% endif %}
+</body>
+</html>
