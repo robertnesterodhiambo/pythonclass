@@ -94,6 +94,9 @@ ul li {
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 4px;
+    word-wrap: break-word;  /* Allow word wrapping to prevent overflow */
+    word-break: break-word; /* Ensure long words break onto a new line if necessary */
+    overflow-wrap: break-word; /* Ensures proper word wrapping for long text */
 }
 
 ul li.success {
@@ -119,6 +122,9 @@ ul li {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    overflow-wrap: break-word; /* Prevent text from overflowing */
+    word-wrap: break-word; /* Word wrap applied */
+    word-break: break-word; /* Prevent text overflow and allow wrapping of long words */
 }
 
 ul li h3 {
