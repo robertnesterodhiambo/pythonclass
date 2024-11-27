@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add Recipe</h2>
+<form method="POST" action="{{ url_for('create') }}">
+    <!-- CSRF Token for Flask-WTF (if using) -->
+    {{ form.hidden_tag() }}
+
+    <label for="name">Recipe Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="instructions">Instructions:</label>
+    <textarea id="instructions" name="instructions" required></textarea>
+
+    <label for="date_cooked">Date Cooked:</label>
+    <input type="date" id="date_cooked" name="date_cooked" required>
+
+    <label>
+        <input type="checkbox" name="under_30_minutes"> Under 30 Minutes
+    </label>
+
+    <button type="submit">Add Recipe</button>
+</form>
+{% endblock %}
