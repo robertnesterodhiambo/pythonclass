@@ -20,6 +20,14 @@ def load_user(user_id):
         return User(*user_data)
     return None
 
+# Root route to redirect to signup page
+@auth.route('/')
+def index():
+    """
+    Redirects to the signup page when visiting the root URL.
+    """
+    return redirect(url_for('auth.signup'))  # Redirect to the signup page
+
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
     """
@@ -45,8 +53,11 @@ def signup():
                 VALUES (%s, %s, %s, %s)
             """, (first_name, last_name, email, hashed_password))
             mysql.connection.commit()
-            flash('Account created successfully! Please log in.', 'success')
-            return redirect(url_for('auth.login'))
+            # After successful signup, log the user in and redirect to the dashboard
+            user = User.find_by_email(email)  # Get the newly created user from the database
+            login_user(user)
+            flash(f"Welcome, {first_name}! You have successfully signed up.", 'success')
+            return redirect(url_for('auth.dashboard'))  # Redirect to the dashboard or another welcome page
         except Exception as e:
             flash(f'An error occurred: {str(e)}', 'danger')
             return redirect(url_for('auth.signup'))
@@ -125,5 +136,4 @@ def add_recipe():
         except Exception as e:
             flash(f'An error occurred: {str(e)}', 'danger')
             return redirect(url_for('auth.add_recipe'))
-
     return render_template('add_recipe.html')
