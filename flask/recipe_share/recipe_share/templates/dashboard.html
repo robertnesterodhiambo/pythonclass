@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome, {{ user.first_name }} {{ user.last_name }}!</h1>
+<p>This is your dashboard. Below are your recipes:</p>
+
+<a href="{{ url_for('auth.add_recipe') }}">Add a New Recipe</a>
+
+{% if recipes %}
+    <ul>
+        {% for recipe in recipes %}
+            <li>
+                <strong>{{ recipe[1] }}</strong> - Cooked on: {{ recipe[3] }}
+                <p>{{ recipe[2] }}</p>
+                <p><em>Under 30 Minutes: {{ 'Yes' if recipe[4] else 'No' }}</em></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven't added any recipes yet.</p>
+{% endif %}
+
+<a href="{{ url_for('auth.logout') }}">Logout</a>
+{% endblock %}

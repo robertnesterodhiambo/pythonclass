@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from models.user import User, bcrypt, mysql
 
 # Initialize Flask-Login's LoginManager
@@ -92,4 +92,38 @@ def dashboard():
     """
     Route for the user dashboard (protected).
     """
-    return render_template('logout.html')  # Replace this with an actual dashboard template
+    cursor = mysql.connection.cursor()
+    cursor.execute(
+        "SELECT id, name, description, date_cooked, under_30_minutes FROM recipes WHERE user_id = %s",
+        (current_user.id,)
+    )
+    recipes = cursor.fetchall()  # Fetch all recipes for the logged-in user
+    return render_template('dashboard.html', user=current_user, recipes=recipes)
+
+@auth.route('/add_recipe', methods=['GET', 'POST'])
+@login_required
+def add_recipe():
+    """
+    Route for adding a new recipe.
+    """
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        instructions = request.form['instructions']
+        date_cooked = request.form['date_cooked']
+        under_30_minutes = 'under_30_minutes' in request.form
+
+        try:
+            cursor = mysql.connection.cursor()
+            cursor.execute("""
+                INSERT INTO recipes (user_id, name, description, instructions, date_cooked, under_30_minutes)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (current_user.id, name, description, instructions, date_cooked, under_30_minutes))
+            mysql.connection.commit()
+            flash('Recipe added successfully!', 'success')
+            return redirect(url_for('auth.dashboard'))
+        except Exception as e:
+            flash(f'An error occurred: {str(e)}', 'danger')
+            return redirect(url_for('auth.add_recipe'))
+
+    return render_template('add_recipe.html')
