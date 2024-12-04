@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div>Sasquatch Websighting</div>
+        <a href="/signup">Sign Up</a>
+    </nav>
+    <div class="container">
+        <h1>Login</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+        <form action="/login" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <footer>
+        © 2024 Sasquatch Websighting. All Rights Reserved.
+    </footer>
+</body>
+</html>

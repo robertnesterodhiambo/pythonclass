@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report New Sighting</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div>Sasquatch Websighting</div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container">
+        <h1>Report a New Sighting</h1>
+        <form action="/sightings/new" method="POST">
+            <label for="location">Location:</label>
+            <input type="text" name="location" id="location" required>
+            
+            <label for="date_of_sighting">Date of Sighting:</label>
+            <input type="date" name="date_of_sighting" id="date_of_sighting" required>
+            
+            <label for="number_of_sasquatches">Number of Sasquatches:</label>
+            <input type="number" name="number_of_sasquatches" id="number_of_sasquatches" required>
+            
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="4" required></textarea>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <footer>
+        © 2024 Sasquatch Websighting. All Rights Reserved.
+    </footer>
+</body>
+</html>

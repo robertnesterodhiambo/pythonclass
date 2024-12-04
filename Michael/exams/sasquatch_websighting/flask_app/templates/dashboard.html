@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div>Sasquatch Websighting</div>
+        <a href="/sightings/new">Report Sighting</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container">
+        <h1>Welcome to the Dashboard</h1>
+        {% for sighting in sightings %}
+            <div class="sighting-card">
+                <h3>{{ sighting.location }}</h3>
+                <p><strong>Date:</strong> {{ sighting.date_of_sighting }}</p>
+                <p><strong>Number of Sasquatches:</strong> {{ sighting.number_of_sasquatches }}</p>
+                <p><strong>Description:</strong> {{ sighting.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <footer>
+        © 2024 Sasquatch Websighting. All Rights Reserved.
+    </footer>
+</body>
+</html>
