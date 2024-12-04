@@ -63,3 +63,16 @@ def delete_sighting(id):
     db.session.commit()
     flash('Sighting deleted successfully!', 'success')
     return redirect('/dashboard')
+
+@app.route('/logout')
+def logout():
+    # Clear the session to log the user out
+    session.clear()
+    flash("You have been logged out successfully.", "success")
+    # Render the login.html page instead of redirecting
+    return render_template('login.html')
+
+@app.route('/')
+def home():
+    # Render the login page by default
+    return render_template('login.html')
