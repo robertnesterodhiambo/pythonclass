@@ -20,6 +20,12 @@
                 <p><strong>Date:</strong> {{ sighting.date_of_sighting }}</p>
                 <p><strong>Number of Sasquatches:</strong> {{ sighting.number_of_sasquatches }}</p>
                 <p><strong>Description:</strong> {{ sighting.description }}</p>
+                <div>
+                    <a href="/sightings/edit/{{ sighting.id }}" class="button edit">Edit</a>
+                    <form action="/sightings/delete/{{ sighting.id }}" method="POST" style="display: inline;">
+                        <button type="submit" class="button delete">Delete</button>
+                    </form>
+                </div>
             </div>
         {% endfor %}
     </div>

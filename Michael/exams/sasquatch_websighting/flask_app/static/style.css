@@ -113,3 +113,37 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+/* Button styles for Edit and Delete */
+.button {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.button.edit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.button.edit:hover {
+    background-color: #0056b3;
+}
+
+.button.delete {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.button.delete:hover {
+    background-color: #bd2130;
+}
+
+form button {
+    display: inline-block;
+    margin: 0;
+}
