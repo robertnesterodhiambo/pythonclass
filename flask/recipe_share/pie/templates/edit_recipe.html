@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Edit Recipe</h1>
+<form method="POST">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ recipe[1] }}" required>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{{ recipe[2] }}</textarea>
+    </div>
+    <div>
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" name="instructions" required>{{ recipe[3] }}</textarea>
+    </div>
+    <div>
+        <label for="date_cooked">Date Cooked:</label>
+        <input type="date" id="date_cooked" name="date_cooked" value="{{ recipe[4].strftime('%Y-%m-%d') }}">
+    </div>
+    <div>
+        <label for="under_30_minutes">Under 30 Minutes:</label>
+        <input type="checkbox" id="under_30_minutes" name="under_30_minutes" {% if recipe[5] %} checked {% endif %}>
+    </div>
+    <button type="submit">Update Recipe</button>
+</form>
+{% endblock %}
