@@ -13,13 +13,13 @@
         <a href="/logout">Logout</a>
     </nav>
     <div class="container">
-        <h1>Welcome to the Dashboard</h1>
+        <h1>Welcome to the Tree Mapper</h1>
         {% for sighting in sightings %}
             <div class="sighting-card">
-                <h3>{{ sighting.location }}</h3>
-                <p><strong>Date:</strong> {{ sighting.date_of_sighting }}</p>
-                <p><strong>Number of Sasquatches:</strong> {{ sighting.number_of_sasquatches }}</p>
-                <p><strong>Description:</strong> {{ sighting.description }}</p>
+                <h3><p>Location: </p> {{ sighting.location }}</h3>
+                <p><strong>Date Found:</strong> {{ sighting.date_of_sighting }}</p>
+                <p><strong>Zip Code:</strong> {{ sighting.number_of_sasquatches }}</p>
+                <p><strong>Notes:</strong> {{ sighting.description }}</p>
                 <div>
                     <a href="/sightings/edit/{{ sighting.id }}" class="button edit">Edit</a>
                     <form action="/sightings/delete/{{ sighting.id }}" method="POST" style="display: inline;">
@@ -30,7 +30,7 @@
         {% endfor %}
     </div>
     <footer>
-        © 2024 Sasquatch Websighting. All Rights Reserved.
+        © 2024 Tree Mapper. All Rights Reserved.
     </footer>
 </body>
 </html>
