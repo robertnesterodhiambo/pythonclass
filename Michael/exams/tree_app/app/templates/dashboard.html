@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title></head>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+<body>
+<h2>Welcome {{ session['user_name'] }}</h2>
+
+<h3>Add New Tree</h3>
+<form method="POST">
+    Tree Name: <input type="text" name="name" required><br>
+    Species: <input type="text" name="species" required><br>
+    Date Found: <input type="date" name="date_found" required><br>
+    Note: <textarea name="note"></textarea><br>
+    Location Found: <input type="text" name="location_found" required><br>
+    <button type="submit">Add Tree</button>
+</form>
+
+<h3>All Trees</h3>
+<ul>
+{% for tree in trees %}
+    <li>
+        <b>{{ tree['name'] }}</b> ({{ tree['species'] }}) - Found by {{ tree['firstname'] }} {{ tree['lastname'] }}<br>
+        Date Found: {{ tree['date_found'] }} | Location: {{ tree['location_found'] }}<br>
+        Note: {{ tree['note'] }}<br>
+        {% if session['user_id'] == tree['user_id'] %}
+        <a href="{{ url_for('tree.edit_tree', tree_id=tree['id']) }}">Edit</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<a href="{{ url_for('auth.login') }}">Logout</a>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+</body>
+</html>
