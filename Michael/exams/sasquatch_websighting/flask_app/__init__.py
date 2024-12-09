@@ -1,15 +1,23 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+import pymysql.cursors
 
+# Initialize the app here
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
 
-# Configure MariaDB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1234@localhost/sasquatch_websighting'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Raw SQL connection function
+def get_db_connection():
+    connection = pymysql.connect(
+        host='localhost',
+        user='root',
+        password='1234',
+        database='sasquatch_websighting',
+        cursorclass=pymysql.cursors.DictCursor
+    )
+    return connection
 
-db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
+# Now, only import controllers here, AFTER app is initialized
 from flask_app.controllers import users, sightings

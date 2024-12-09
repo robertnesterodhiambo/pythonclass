@@ -1,78 +1,47 @@
-from flask import request, redirect, render_template, session, flash
-from flask_app import app, db
-from flask_app.models.user import User
-from flask_app.models.sighting import Sighting 
+from flask_app import get_db_connection
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-        
-        if password != confirm_password:
-            flash("Passwords do not match!", "error")
-            return redirect('/signup')
+class Sighting:
+    @staticmethod
+    def create_sighting(location, date_of_sighting, number_of_sasquatches, description, user_id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO sightings (location, date_of_sighting, number_of_sasquatches, description, user_id) "
+                       "VALUES (%s, %s, %s, %s, %s)", 
+                       (location, date_of_sighting, number_of_sasquatches, description, user_id))
+        connection.commit()
+        connection.close()
 
-        hashed_password = User.hash_password(password)
-        new_user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        
-        flash("Account created successfully!", "success")
-        return redirect('/login')
+    @staticmethod
+    def get_all_sightings():
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM sightings")
+        sightings = cursor.fetchall()
+        connection.close()
+        return sightings
 
-    return render_template('signup.html')
+    @staticmethod
+    def get_sighting_by_id(sighting_id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM sightings WHERE id = %s", (sighting_id,))
+        sighting = cursor.fetchone()
+        connection.close()
+        return sighting
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+    @staticmethod
+    def update_sighting(id, location, date_of_sighting, number_of_sasquatches, description):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("UPDATE sightings SET location = %s, date_of_sighting = %s, number_of_sasquatches = %s, description = %s WHERE id = %s", 
+                       (location, date_of_sighting, number_of_sasquatches, description, id))
+        connection.commit()
+        connection.close()
 
-        user = User.query.filter_by(email=email).first()
-        if user and User.verify_password(user.password, password):
-            session['user_id'] = user.id
-            flash("Login successful!", "success")
-            return redirect('/dashboard')
-        
-        flash("Invalid email or password", "error")
-        return redirect('/login')
-
-    return render_template('login.html')
-
-@app.route('/sightings/edit/<int:id>', methods=['GET', 'POST'])
-def edit_sighting(id):
-    sighting = Sighting.query.get_or_404(id)
-    if request.method == 'POST':
-        sighting.location = request.form['location']
-        sighting.date_of_sighting = request.form['date_of_sighting']
-        sighting.number_of_sasquatches = request.form['number_of_sasquatches']
-        sighting.description = request.form['description']
-        db.session.commit()
-        flash('Sighting updated successfully!', 'success')
-        return redirect('/dashboard')
-    return render_template('edit_sighting.html', sighting=sighting)
-
-@app.route('/sightings/delete/<int:id>', methods=['POST'])
-def delete_sighting(id):
-    sighting = Sighting.query.get_or_404(id)
-    db.session.delete(sighting)
-    db.session.commit()
-    flash('Sighting deleted successfully!', 'success')
-    return redirect('/dashboard')
-
-@app.route('/logout')
-def logout():
-    # Clear the session to log the user out
-    session.clear()
-    flash("You have been logged out successfully.", "success")
-    # Render the login.html page instead of redirecting
-    return render_template('login.html')
-
-@app.route('/')
-def home():
-    # Render the login page by default
-    return render_template('login.html')
+    @staticmethod
+    def delete_sighting(id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM sightings WHERE id = %s", (id,))
+        connection.commit()
+        connection.close()

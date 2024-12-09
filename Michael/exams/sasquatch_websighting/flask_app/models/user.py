@@ -1,19 +1,26 @@
-from flask_app import db, bcrypt
+from flask_app import get_db_connection, bcrypt
 
-class User(db.Model):
-    __tablename__ = 'users'
+class User:
+    @staticmethod
+    def create_user(first_name, last_name, email, password):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        cursor.execute("INSERT INTO users (first_name, last_name, email, password) VALUES (%s, %s, %s, %s)", 
+                       (first_name, last_name, email, hashed_password))
+        connection.commit()
+        connection.close()
 
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.now())
+    @staticmethod
+    def get_user_by_email(email):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        connection.close()
+        return user
 
-    @classmethod
-    def hash_password(cls, password):
-        return bcrypt.generate_password_hash(password).decode('utf-8')
-
-    @classmethod
-    def verify_password(cls, hashed_password, password):
+    @staticmethod
+    def verify_password(hashed_password, password):
         return bcrypt.check_password_hash(hashed_password, password)

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Welcome to Your Tree Dashboard</h2>
+    <a href="{{ url_for('tree.add_tree') }}" class="btn btn-primary">Add New Tree</a>
+    
+    <h3>All Trees</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Location</th>
+                <th>Date Found</th>
+                <th>Zipcode</th>
+                <th>Notes</th>
+                <th>Added By</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tree in trees %}
+                <tr>
+                    <td>{{ tree[1] }}</td>
+                    <td>{{ tree[2] }}</td>
+                    <td>{{ tree[3] }}</td>
+                    <td>{{ tree[4] }}</td>
+                    <td>{{ tree[5] }}</td>
+                    <td>{{ tree[6] }} {{ tree[7] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,14 +1,47 @@
-from flask_app import db
+from flask_app import get_db_connection
 
-class Sighting(db.Model):
-    __tablename__ = 'sightings'
+class Sighting:
+    @staticmethod
+    def create_sighting(location, date_of_sighting, number_of_sasquatches, description, user_id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO sightings (location, date_of_sighting, number_of_sasquatches, description, user_id) "
+                       "VALUES (%s, %s, %s, %s, %s)", 
+                       (location, date_of_sighting, number_of_sasquatches, description, user_id))
+        connection.commit()
+        connection.close()
 
-    id = db.Column(db.Integer, primary_key=True)
-    location = db.Column(db.String(100), nullable=False)
-    date_of_sighting = db.Column(db.Date, nullable=False)
-    number_of_sasquatches = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.now())
+    @staticmethod
+    def get_all_sightings():
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM sightings")
+        sightings = cursor.fetchall()
+        connection.close()
+        return sightings
 
-    user = db.relationship('User', backref='sightings')
+    @staticmethod
+    def get_sighting_by_id(sighting_id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM sightings WHERE id = %s", (sighting_id,))
+        sighting = cursor.fetchone()
+        connection.close()
+        return sighting
+
+    @staticmethod
+    def update_sighting(id, location, date_of_sighting, number_of_sasquatches, description):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("UPDATE sightings SET location = %s, date_of_sighting = %s, number_of_sasquatches = %s, description = %s WHERE id = %s", 
+                       (location, date_of_sighting, number_of_sasquatches, description, id))
+        connection.commit()
+        connection.close()
+
+    @staticmethod
+    def delete_sighting(id):
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM sightings WHERE id = %s", (id,))
+        connection.commit()
+        connection.close()
