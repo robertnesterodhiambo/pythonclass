@@ -1,7 +1,4 @@
 from flask_app import get_db_connection
-from flask_app import app  # Ensure you're importing app correctly after initialization
-from flask import request, redirect, render_template, session, flash
-from flask_app.models.sighting import Sighting
 
 class Sighting:
     @staticmethod
