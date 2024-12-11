@@ -40,6 +40,15 @@ filtered_df = df[
 st.subheader("Filtered Data")
 st.write(filtered_df)
 
+# Summary Report
+st.subheader("Summary Report")
+st.write(f"Total Skyscrapers: {filtered_df.shape[0]}")
+st.write(f"Tallest Skyscraper: {filtered_df.loc[filtered_df['height'].idxmax(), 'name']} ({filtered_df['height'].max()} meters)")
+st.write(f"Oldest Skyscraper Completed: {filtered_df['completed.year'].min()}")
+st.write(f"Most Recent Skyscraper Completed: {filtered_df['completed.year'].max()}")
+st.write(f"Average Height of Skyscrapers: {filtered_df['height'].mean():.2f} meters")
+st.write(f"Total Floors Above Ground: {filtered_df['floors above'].sum()}")
+
 # Visualizations
 st.subheader("Visualizations")
 
@@ -83,6 +92,21 @@ st.markdown("### Trend of Completed Skyscrapers")
 completion_trend = filtered_df.groupby('completed.year').size().reset_index(name='count')
 time_series_chart = px.line(completion_trend, x='completed.year', y='count', title="Completion Trend")
 st.plotly_chart(time_series_chart, use_container_width=True)
+
+# Scatter Plot: Height vs Floors
+st.markdown("### Height vs Floors")
+scatter_plot = px.scatter(filtered_df, x='floors above', y='height', color='material',
+                          size='height', hover_name='name',
+                          title="Height vs Floors", labels={'floors above': 'Floors Above', 'height': 'Height (meters)'}
+)
+st.plotly_chart(scatter_plot, use_container_width=True)
+
+# Box Plot: Heights by Material
+st.markdown("### Heights by Material")
+box_plot = px.box(filtered_df, x='material', y='height', color='material',
+                  title="Heights by Material", labels={'height': 'Height (meters)', 'material': 'Material'}
+)
+st.plotly_chart(box_plot, use_container_width=True)
 
 st.markdown("### Explore Further")
 st.markdown("Use the filters in the sidebar to refine the data and visualizations!")
