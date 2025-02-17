@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import yfinance as yf
-import sqlite3
+import pymysql
 from datetime import datetime
 
 # Load the CSV data
@@ -44,49 +44,84 @@ combined_df.columns = common_colnames
 # Save the combined data to a CSV file
 combined_df.to_csv("sample.csv", index=False)
 
-# Path to SQLite file
-db_file = "stock_data.db"
+# MySQL connection details
+def get_db_connection():
+    return pymysql.connect(
+        host="localhost",  # Local MySQL server
+        database="Stocks",  # The database name
+        user="root",  # MySQL username
+        password="1234",  # MySQL password
+        port=3306  # Default MySQL port
+    )
 
-# If SQLite file doesn't exist, this line creates it automatically
-conn = sqlite3.connect(db_file)
+# Function to insert data into MySQL in chunks
+def insert_data_in_chunks(csv_file, chunk_size=1000):
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
 
-# Create a cursor object to interact with the database
-cursor = conn.cursor()
+        # Check if the 'Stocks' table exists
+        cursor.execute("""
+            SHOW TABLES LIKE 'Stocks';
+        """)
+        table_exists = cursor.fetchone()
 
-# Check if the table 'Stocks' exists
-cursor.execute("""
-    SELECT name FROM sqlite_master WHERE type='table' AND name='Stocks';
-""")
-table_exists = cursor.fetchone()
+        # If table does not exist, create it
+        if not table_exists:
+            cursor.execute("""
+                CREATE TABLE Stocks (
+                    Date DATE,
+                    Open FLOAT,
+                    High FLOAT,
+                    Low FLOAT,
+                    Close FLOAT,
+                    Volume INT,
+                    AdjClose FLOAT,
+                    Symbol VARCHAR(10)
+                );
+            """)
+            print("Table 'Stocks' created.")
+        else:
+            print("Table 'Stocks' already exists.")
 
-# If table does not exist, create it
-if not table_exists:
-    cursor.execute("""
-        CREATE TABLE Stocks (
-            Date TEXT,
-            Open REAL,
-            High REAL,
-            Low REAL,
-            Close REAL,
-            Volume INTEGER,
-            AdjClose REAL,
-            Symbol TEXT
-        );
-    """)
-    print("Table 'Stocks' created.")
-else:
-    print("Table 'Stocks' already exists.")
+        # Read the CSV in chunks and insert data
+        for chunk in pd.read_csv(csv_file, chunksize=chunk_size):
+            # Rename 'Adj Close' to 'AdjClose' only for insertion into MySQL
+            chunk.rename(columns={"Adj Close": "AdjClose"}, inplace=True)
 
-# Rename 'Adj Close' to 'AdjClose' only for insertion into SQLite
-df_for_sql = combined_df.rename(columns={"Adj Close": "AdjClose"})
+            # Insert each row in the chunk
+            for _, row in chunk.iterrows():
+                cursor.execute("""
+                    INSERT INTO Stocks (Date, Open, High, Low, Close, Volume, AdjClose, Symbol)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """, (
+                    row['Date'],
+                    row['Open'],
+                    row['High'],
+                    row['Low'],
+                    row['Close'],
+                    row['Volume'],
+                    row['AdjClose'],
+                    row['Symbol']
+                ))
 
-# Insert the data into the SQLite table
-df_for_sql.to_sql("Stocks", conn, if_exists='append', index=False)
-print("Data inserted into 'Stocks' table.")
+            # Commit after each chunk
+            connection.commit()
+            print(f"Inserted {len(chunk)} rows into the 'Stocks' table.")
 
-# Commit the changes and close the connection
-conn.commit()
-conn.close()
+    except Exception as e:
+        print(f"Error: {e}")
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+# Insert the data from the CSV file in chunks
+insert_data_in_chunks("sample.csv", chunk_size=1000)
 
 # Print the first few rows of the combined DataFrame
 print(combined_df.head())
