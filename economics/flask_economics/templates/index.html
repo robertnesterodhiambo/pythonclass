@@ -4,77 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Data</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #4CAF50;
+            color: white;
         }
         .pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+            margin: 20px;
         }
         .pagination a {
+            margin: 5px;
             text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+            color: #333;
         }
-        .pagination button {
-            padding: 10px 15px;
-            background-color: #007bff;
+        .pagination a.active {
+            background-color: #4CAF50;
             color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .pagination button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
         }
         .filter-form {
             margin-bottom: 20px;
-            text-align: center;
         }
-        .filter-form select, .filter-form button {
-            padding: 8px;
-            margin: 5px;
-        }
-        canvas {
-            max-width: 800px;
-            margin: 20px auto;
-            display: block;
+        .chart-container {
+            width: 1000px;
+            height: 500px;
+            margin: auto;
         }
     </style>
 </head>
 <body>
+
     <h1>Stock Data</h1>
 
     <!-- Filter Form -->
-    <form method="GET" class="filter-form">
+    <form method="GET" action="/">
         <label for="symbol">Filter by Symbol:</label>
         <select name="symbol" id="symbol">
             <option value="">All</option>
             {% for symbol in symbols %}
-                <option value="{{ symbol }}" {% if selected_symbol == symbol %}selected{% endif %}>{{ symbol }}</option>
+                <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
             {% endfor %}
         </select>
         <button type="submit">Filter</button>
     </form>
 
+    <!-- Stock Table -->
     <table>
         <thead>
             <tr>
-                {% for col in columns %}
-                    <th>{{ col }}</th>
+                {% for column in columns %}
+                    <th>{{ column }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -89,26 +87,20 @@
         </tbody>
     </table>
 
+    <!-- Pagination -->
     <div class="pagination">
         {% if page > 1 %}
-            <a href="{{ url_for('index', page=page-1, symbol=selected_symbol) }}">
-                <button>Previous Page</button>
-            </a>
-        {% else %}
-            <button disabled>Previous Page</button>
+            <a href="?page=1{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}">First</a>
+            <a href="?page={{ page - 1 }}{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}">Previous</a>
         {% endif %}
-
         <span>Page {{ page }} of {{ total_pages }}</span>
-
         {% if page < total_pages %}
-            <a href="{{ url_for('index', page=page+1, symbol=selected_symbol) }}">
-                <button>Next Page</button>
-            </a>
-        {% else %}
-            <button disabled>Next Page</button>
+            <a href="?page={{ page + 1 }}{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}">Next</a>
+            <a href="?page={{ total_pages }}{% if selected_symbol %}&symbol={{ selected_symbol }}{% endif %}">Last</a>
         {% endif %}
     </div>
 
+    <!-- Chart Section -->
     <h2>Stock Chart</h2>
     <div class="filter-form">
         <label for="chartSymbol">Symbol:</label>
@@ -130,14 +122,31 @@
         <button onclick="updateChart()">Load Chart</button>
     </div>
 
-    <canvas id="stockChart"></canvas>
+    <div class="chart-container">
+        <canvas id="stockChart"></canvas>
+    </div>
 
     <script>
         var ctx = document.getElementById('stockChart').getContext('2d');
         var stockChart = new Chart(ctx, {
             type: 'line',
-            data: { labels: [], datasets: [{ label: '', data: [], borderColor: 'blue', fill: false }] },
-            options: { responsive: true, scales: { x: { title: { display: true, text: 'Date' } }, y: { title: { display: true, text: 'Value' } } } }
+            data: { 
+                labels: [], 
+                datasets: [{ 
+                    label: '', 
+                    data: [], 
+                    borderColor: 'blue', 
+                    fill: false 
+                }] 
+            },
+            options: { 
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { 
+                    x: { title: { display: true, text: 'Date' } }, 
+                    y: { title: { display: true, text: 'Value' } } 
+                } 
+            }
         });
 
         function updateChart() {
@@ -154,5 +163,6 @@
             });
         }
     </script>
+
 </body>
 </html>
