@@ -20,7 +20,7 @@
     </form>
     
     <!-- Stock Data Table -->
-    <table class="table stock-table">
+    <table class="table table-striped stock-table">
         <thead>
             <tr>
                 {% for column in columns %}
@@ -43,19 +43,14 @@
         </tbody>
     </table>
     
-    <!-- Pagination (Next Button Only) -->
+    <!-- Pagination -->
     <nav>
         <ul class="pagination">
-            {% if page > 1 %}
-                <li class="page-item">
-                    <a class="page-link" href="/?page={{ page - 1 }}&symbol={{ selected_symbol }}">Previous</a>
+            {% for p in range(1, total_pages + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="/?page={{ p }}&symbol={{ selected_symbol }}">{{ p }}</a>
                 </li>
-            {% endif %}
-            {% if page < total_pages %}
-                <li class="page-item">
-                    <a class="page-link" href="/?page={{ page + 1 }}&symbol={{ selected_symbol }}">Next</a>
-                </li>
-            {% endif %}
+            {% endfor %}
         </ul>
     </nav>
 
@@ -147,17 +142,10 @@
         background-color: #e0a800;
     }
 
-    /* Full-bordered Table */
     .stock-table {
         background-color: white;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    .stock-table th, .stock-table td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: center;
+        border-radius: 5px;
+        overflow: hidden;
     }
 
     .table th {
@@ -165,27 +153,9 @@
         color: white;
     }
 
-    /* Pagination (Next & Previous Button) */
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .pagination .page-item {
-        margin: 0 5px;
-    }
-
-    .pagination .page-link {
-        padding: 8px 12px;
-        border-radius: 5px;
-        text-decoration: none;
+    .pagination .page-item.active .page-link {
         background-color: #007bff;
-        color: white;
-    }
-
-    .pagination .page-link:hover {
-        background-color: #0056b3;
+        border-color: #007bff;
     }
 
     .chart-container {
