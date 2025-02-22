@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         table {
             width: 100%;
@@ -45,6 +47,11 @@
         .filter-form select, .filter-form button {
             padding: 8px;
             margin: 5px;
+        }
+        canvas {
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
         }
     </style>
 </head>
@@ -101,5 +108,51 @@
             <button disabled>Next Page</button>
         {% endif %}
     </div>
+
+    <h2>Stock Chart</h2>
+    <div class="filter-form">
+        <label for="chartSymbol">Symbol:</label>
+        <select id="chartSymbol">
+            {% for symbol in symbols %}
+                <option value="{{ symbol }}">{{ symbol }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="chartColumn">Column:</label>
+        <select id="chartColumn">
+            <option value="Open">Open</option>
+            <option value="High">High</option>
+            <option value="Low">Low</option>
+            <option value="Close">Close</option>
+            <option value="Volume">Volume</option>
+        </select>
+
+        <button onclick="updateChart()">Load Chart</button>
+    </div>
+
+    <canvas id="stockChart"></canvas>
+
+    <script>
+        var ctx = document.getElementById('stockChart').getContext('2d');
+        var stockChart = new Chart(ctx, {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: '', data: [], borderColor: 'blue', fill: false }] },
+            options: { responsive: true, scales: { x: { title: { display: true, text: 'Date' } }, y: { title: { display: true, text: 'Value' } } } }
+        });
+
+        function updateChart() {
+            var symbol = document.getElementById('chartSymbol').value;
+            var column = document.getElementById('chartColumn').value;
+
+            $.getJSON(`/plot?symbol=${symbol}&column=${column}`, function(data) {
+                stockChart.data.labels = data.dates;
+                stockChart.data.datasets[0].label = `${symbol} - ${column}`;
+                stockChart.data.datasets[0].data = data.values;
+                stockChart.update();
+            }).fail(function() {
+                alert('Error loading data');
+            });
+        }
+    </script>
 </body>
 </html>
