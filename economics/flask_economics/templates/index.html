@@ -38,10 +38,31 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+        .filter-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .filter-form select, .filter-form button {
+            padding: 8px;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Stock Data</h1>
+
+    <!-- Filter Form -->
+    <form method="GET" class="filter-form">
+        <label for="symbol">Filter by Symbol:</label>
+        <select name="symbol" id="symbol">
+            <option value="">All</option>
+            {% for symbol in symbols %}
+                <option value="{{ symbol }}" {% if selected_symbol == symbol %}selected{% endif %}>{{ symbol }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
     <table>
         <thead>
             <tr>
@@ -63,7 +84,7 @@
 
     <div class="pagination">
         {% if page > 1 %}
-            <a href="{{ url_for('index', page=page-1) }}">
+            <a href="{{ url_for('index', page=page-1, symbol=selected_symbol) }}">
                 <button>Previous Page</button>
             </a>
         {% else %}
@@ -73,7 +94,7 @@
         <span>Page {{ page }} of {{ total_pages }}</span>
 
         {% if page < total_pages %}
-            <a href="{{ url_for('index', page=page+1) }}">
+            <a href="{{ url_for('index', page=page+1, symbol=selected_symbol) }}">
                 <button>Next Page</button>
             </a>
         {% else %}
