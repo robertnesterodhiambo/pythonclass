@@ -66,27 +66,30 @@
             </tbody>
         </table>
 
-        <!-- Stock Prediction Form -->
-        <h2 class="text-center">Stock Prediction</h2>
-        <form id="predictForm" class="predict-form">
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <label for="predictSymbol">Symbol:</label>
-                    <select id="predictSymbol" class="form-control">
-                        {% for symbol in symbols %}
-                            <option value="{{ symbol }}">{{ symbol }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-warning mt-4">Predict</button>
-                </div>
-            </div>
-        </form>
-        <div id="predictionResult" class="text-center text-success font-weight-bold"></div>
-
-        <!-- Stock Chart -->
+        <!-- Stock Chart Selection -->
         <h2 class="text-center">Stock Chart</h2>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="chartSymbol">Symbol:</label>
+                <select id="chartSymbol" class="form-control">
+                    {% for symbol in symbols %}
+                        <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="chartColumn">Column:</label>
+                <select id="chartColumn" class="form-control">
+                    <option value="Open">Open</option>
+                    <option value="High">High</option>
+                    <option value="Low">Low</option>
+                    <option value="Close">Close</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button id="plotChart" class="btn btn-primary mt-4">Plot</button>
+            </div>
+        </div>
         <div class="chart-container">
             <canvas id="stockChart"></canvas>
         </div>
@@ -94,22 +97,7 @@
 
     <script>
         $(document).ready(function() {
-            // Handle stock prediction form submission
-            $('#predictForm').on('submit', function(e) {
-                e.preventDefault();
-                var symbol = $('#predictSymbol').val();
-                $.getJSON(`/predict?symbol=${symbol}`, function(data) {
-                    if (data.predicted_price) {
-                        $('#predictionResult').text(`Predicted Price for ${symbol}: $${data.predicted_price.toFixed(2)}`);
-                    } else {
-                        $('#predictionResult').text(data.error).addClass('text-danger');
-                    }
-                }).fail(function() {
-                    $('#predictionResult').text('Error making prediction').addClass('text-danger');
-                });
-            });
-
-            // Handle predict button clicks in the table
+            // Prediction Feature
             $('.predict-btn').on('click', function() {
                 var symbol = $(this).data('symbol');
                 var button = $(this);
@@ -122,6 +110,26 @@
                     }
                 }).fail(function() {
                     resultSpan.text('Error').addClass('text-danger');
+                });
+            });
+
+            // Charting Feature
+            var stockChart = new Chart(document.getElementById("stockChart"), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: '', data: [], borderColor: 'blue', fill: false }] },
+                options: { responsive: true, scales: { x: { display: true }, y: { display: true } } }
+            });
+
+            $('#plotChart').on('click', function() {
+                var symbol = $('#chartSymbol').val();
+                var column = $('#chartColumn').val();
+                $.getJSON(`/get_stock_data?symbol=${symbol}&column=${column}`, function(data) {
+                    stockChart.data.labels = data.dates;
+                    stockChart.data.datasets[0].label = `${symbol} - ${column}`;
+                    stockChart.data.datasets[0].data = data.values;
+                    stockChart.update();
+                }).fail(function() {
+                    alert('Error fetching stock data');
                 });
             });
         });

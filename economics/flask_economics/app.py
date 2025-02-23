@@ -38,6 +38,38 @@ def index():
     
     return render_template('index.html', symbols=symbols, stock_data=stock_data)
 
+
+@app.route('/get_stock_data')
+def get_stock_data():
+    symbol = request.args.get('symbol')
+    column = request.args.get('column')
+
+    if not symbol or not column:
+        return jsonify({'error': 'Symbol and column are required'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    valid_columns = {"Open", "High", "Low", "Close"}
+    if column not in valid_columns:
+        return jsonify({'error': 'Invalid column'}), 400
+
+    cursor.execute(f"SELECT Date, {column} FROM Stocks WHERE Symbol = %s ORDER BY Date ASC", (symbol,))
+    data = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    if not data:
+        return jsonify({'error': 'No data found'}), 400
+
+    # Convert Date to string safely
+    dates = [str(row[0]) for row in data]  # Ensuring dates are strings
+    values = [row[1] for row in data]
+
+    return jsonify({'dates': dates, 'values': values})
+
+
 @app.route('/predict')
 def predict():
     symbol = request.args.get('symbol')
