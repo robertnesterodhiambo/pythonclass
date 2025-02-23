@@ -29,14 +29,34 @@ def index():
     cursor.execute("SELECT DISTINCT Symbol FROM Stocks")
     symbols = [row[0] for row in cursor.fetchall()]
     
-    # Fetch stock data (latest 10 entries for simplicity)
-    cursor.execute("SELECT Symbol, Open, High, Low, Close FROM Stocks ORDER BY Date DESC LIMIT 10")
+    # Pagination logic
+    page = request.args.get('page', 1, type=int)
+    per_page = 10  # Number of records per page
+    offset = (page - 1) * per_page
+
+    # Fetch paginated stock data
+    cursor.execute(
+        "SELECT Symbol, Open, High, Low, Close, Date FROM Stocks ORDER BY Date DESC LIMIT %s OFFSET %s",
+        (per_page, offset)
+    )
     stock_data = cursor.fetchall()
     
+    # Count total number of records
+    cursor.execute("SELECT COUNT(*) FROM Stocks")
+    total_records = cursor.fetchone()[0]
+    total_pages = (total_records + per_page - 1) // per_page  # Calculate total pages
+
     cursor.close()
     conn.close()
-    
-    return render_template('index.html', symbols=symbols, stock_data=stock_data)
+
+    return render_template(
+        'index.html',
+        symbols=symbols,
+        stock_data=stock_data,
+        page=page,
+        total_pages=total_pages
+    )
+
 
 
 @app.route('/get_stock_data')
