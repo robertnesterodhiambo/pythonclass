@@ -25,7 +25,7 @@
         }
         .chart-container {
             height: 500px;
-            width: 500px%;
+            width: 100%;
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -36,69 +36,61 @@
 <body>
     <div class="container mt-4">
         <h2 class="text-center">Stock Data</h2>
+        
+        <!-- Symbol Filter -->
+        <div class="mb-3">
+            <label for="symbolFilter">Filter by Symbol:</label>
+            <select id="symbolFilter" class="form-control" onchange="filterBySymbol()">
+                <option value="">All Symbols</option>
+                {% for symbol in symbols %}
+                <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
        <!-- Stock Data Table -->
-<table class="table stock-table">
-    <thead>
-        <tr>
-            <th>Symbol</th>
-            <th>Open</th>
-            <th>High</th>
-            <th>Low</th>
-            <th>Close</th>
-            <th>Predict</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in stock_data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            
-            <td>
-                <button class="btn btn-success btn-sm predict-btn" data-symbol="{{ row[0] }}">Predict</button>
-                <span class="predicted-price text-muted"></span>
-            </td>
-            <td>{{row[5]}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+       <table class="table stock-table">
+           <thead>
+               <tr>
+                   <th>Symbol</th>
+                   <th>Open</th>
+                   <th>High</th>
+                   <th>Low</th>
+                   <th>Close</th>
+                   <th>Predict</th>
+                   <th>Date</th>
+               </tr>
+           </thead>
+           <tbody>
+               {% for row in stock_data %}
+               <tr>
+                   <td>{{ row[0] }}</td>
+                   <td>{{ row[1] }}</td>
+                   <td>{{ row[2] }}</td>
+                   <td>{{ row[3] }}</td>
+                   <td>{{ row[4] }}</td>
+                   <td>
+                       <button class="btn btn-success btn-sm predict-btn" data-symbol="{{ row[0] }}">Predict</button>
+                       <span class="predicted-price text-muted"></span>
+                   </td>
+                   <td>{{ row[5] }}</td>
+               </tr>
+               {% endfor %}
+           </tbody>
+       </table>
 
-<!-- Pagination Controls -->
-<div class="pagination">
-    {% if page > 1 %}
-        <a href="{{ url_for('index', page=page-1) }}" class="btn btn-primary">Previous</a>
-    {% endif %}
+       <!-- Pagination Controls -->
+       <div class="pagination">
+           {% if page > 1 %}
+               <a href="{{ url_for('index', page=page-1, symbol=selected_symbol) }}" class="btn btn-primary">Previous</a>
+           {% endif %}
 
-    <span class="mx-2">Page {{ page }} of {{ total_pages }}</span>
+           <span class="mx-2">Page {{ page }} of {{ total_pages }}</span>
 
-    {% if page < total_pages %}
-        <a href="{{ url_for('index', page=page+1) }}" class="btn btn-primary">Next</a>
-    {% endif %}
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".predict-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                let symbol = this.getAttribute("data-symbol");
-                let priceSpan = this.nextElementSibling;
-                
-                fetch(`/predict?symbol=${symbol}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        priceSpan.textContent = `Predicted: $${data.prediction}`;
-                    })
-                    .catch(error => console.error("Error:", error));
-            });
-        });
-    });
-</script>
+           {% if page < total_pages %}
+               <a href="{{ url_for('index', page=page+1, symbol=selected_symbol) }}" class="btn btn-primary">Next</a>
+           {% endif %}
+       </div>
 
         <!-- Stock Chart Selection -->
         <h2 class="text-center">Stock Chart</h2>
@@ -130,6 +122,11 @@
     </div>
 
     <script>
+        function filterBySymbol() {
+            let selectedSymbol = document.getElementById("symbolFilter").value;
+            window.location.href = `/?symbol=${selectedSymbol}`;
+        }
+
         $(document).ready(function() {
             // Prediction Feature
             $('.predict-btn').on('click', function() {
