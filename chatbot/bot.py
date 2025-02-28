@@ -41,17 +41,27 @@ def find_relevant_text(question, text, chunk_size=400):
             best_score = score
             best_chunk = chunk
 
-    return best_chunk[:chunk_size]  # Ensure the final chunk is within the token limit
+    return best_chunk[:chunk_size]  # Keep within token limit
 
 def ask_question(question):
-    """Finds the most relevant chunk and asks a question based on it."""
+    """Finds the most relevant chunk and asks a question using logical reasoning."""
     relevant_text = find_relevant_text(question, pdf_text, chunk_size=400)
 
     if not relevant_text:
         return "I couldn't find relevant information in the document."
 
-    prompt = f"Using the following information from a document, answer the question:\n\n{relevant_text}\n\nQuestion: {question}\nAnswer:"
-    response = llm(prompt, max_tokens=100)  # Keep max_tokens low to stay within limits
+    # 🔥 Chain-of-Thought Prompt for Logical Reasoning
+    prompt = f"""You are an AI assistant capable of logical reasoning. 
+    Based on the following document, think step by step and provide a well-reasoned answer.
+
+    Document:
+    {relevant_text}
+
+    Question: {question}
+    
+    Answer (explain step-by-step before concluding):"""
+
+    response = llm(prompt, max_tokens=200)  # Allow space for reasoning
     return response["choices"][0]["text"].strip()
 
 # Interactive Q&A
