@@ -26,17 +26,19 @@ def load_llama(model_path):
     return Llama(model_path=model_path)
 
 # 4. Answer Questions Based on PDF Content (Limits context length)
-def answer_question(vector_db, llm, question, max_context_tokens=400):
+def answer_question(vector_db, llm, question, max_context_tokens=300):
     similar_docs = vector_db.similarity_search(question, k=3)  # Retrieve top 3 relevant pages
     
     # Combine retrieved documents and truncate to avoid exceeding LLaMA's context window
     context = "\n".join([doc.page_content for doc in similar_docs])
-    context = " ".join(context.split()[:max_context_tokens])  # Truncate to max 400 tokens
+    context = " ".join(context.split()[:max_context_tokens])  # Truncate to max 300 tokens
 
-    prompt = f"Answer the question based on the context:\n\n{context}\n\nQ: {question}\nA:"
+    prompt = f"Answer the question based on the context and you are a very helpful AI chat assistant customer care:\n\n{context}\n\nQ: {question}\nA:"
 
-    response = llm(prompt, max_tokens=100)  # Limit response to 100 tokens
+    # Reduce max_tokens to ensure it fits within the model's 512-token context window
+    response = llm(prompt, max_tokens=100, stop=["Q:", "\n\n"])  # Adding stop sequences
     return response['choices'][0]['text']
+
 
 # ========== MAIN EXECUTION ==========
 if __name__ == "__main__":
