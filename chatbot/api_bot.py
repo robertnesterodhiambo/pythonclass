@@ -1,6 +1,6 @@
 import os
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.embeddings import HuggingFaceEmbeddings  # Local alternative to OpenAI
+from langchain_community.embeddings import HuggingFaceEmbeddings  # Local embeddings
 from langchain_community.vectorstores import Chroma
 from llama_cpp import Llama
 
@@ -25,13 +25,17 @@ def create_vector_db(documents):
 def load_llama(model_path):
     return Llama(model_path=model_path)
 
-# 4. Answer Questions Based on PDF Content
-def answer_question(vector_db, llm, question):
+# 4. Answer Questions Based on PDF Content (Limits context length)
+def answer_question(vector_db, llm, question, max_context_tokens=400):
     similar_docs = vector_db.similarity_search(question, k=3)  # Retrieve top 3 relevant pages
-    context = "\n".join([doc.page_content for doc in similar_docs])
     
+    # Combine retrieved documents and truncate to avoid exceeding LLaMA's context window
+    context = "\n".join([doc.page_content for doc in similar_docs])
+    context = " ".join(context.split()[:max_context_tokens])  # Truncate to max 400 tokens
+
     prompt = f"Answer the question based on the context:\n\n{context}\n\nQ: {question}\nA:"
-    response = llm(prompt)
+
+    response = llm(prompt, max_tokens=100)  # Limit response to 100 tokens
     return response['choices'][0]['text']
 
 # ========== MAIN EXECUTION ==========
