@@ -1,0 +1,212 @@
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Stock Data</h2>
+
+    <!-- Filter Form -->
+    <form method="get" action="/" class="filter-form">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <select name="symbol" class="form-control">
+                    <option value="">All Symbols</option>
+                    {% for symbol in symbols %}
+                        <option value="{{ symbol }}" {% if selected_symbol == symbol %}selected{% endif %}>{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Stock Data Table -->
+    <table class="table table-striped stock-table">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+                <th>Predict</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in stock_data %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+                <td>
+                    <a href="/predict?symbol={{ row[-1] }}" class="btn btn-success btn-sm">Predict</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination">
+            {% for p in range(1, total_pages + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="/?page={{ p }}&symbol={{ selected_symbol }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <!-- Stock Prediction Form -->
+    <h2 class="text-center">Stock Prediction</h2>
+    <form method="post" action="/predict" class="predict-form">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="predictSymbol">Symbol:</label>
+                <select name="symbol" id="predictSymbol" class="form-control">
+                    {% for symbol in symbols %}
+                        <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-warning mt-4">Predict</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Stock Chart -->
+    <h2 class="text-center">Stock Chart</h2>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="chartSymbol">Symbol:</label>
+            <select id="chartSymbol" class="form-control">
+                {% for symbol in symbols %}
+                    <option value="{{ symbol }}">{{ symbol }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="chartColumn">Column:</label>
+            <select id="chartColumn" class="form-control">
+                <option value="Open">Open</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+                <option value="Close">Close</option>
+                <option value="Volume">Volume</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button onclick="updateChart()" class="btn btn-primary mt-4">Load Chart</button>
+        </div>
+    </div>
+    <div class="chart-container">
+        <canvas id="stockChart"></canvas>
+    </div>
+</div>
+
+<!-- Embedded CSS -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn {
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .stock-table {
+        background-color: white;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 400px;
+        width: 100%;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('stockChart').getContext('2d');
+    var stockChart = new Chart(ctx, {
+        type: 'line',
+        data: { 
+            labels: [], 
+            datasets: [{ 
+                label: '', 
+                data: [], 
+                borderColor: 'blue', 
+                fill: false 
+            }] 
+        },
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { 
+                x: { title: { display: true, text: 'Date' } }, 
+                y: { title: { display: true, text: 'Value' } } 
+            } 
+        }
+    });
+
+    function updateChart() {
+        var symbol = document.getElementById('chartSymbol').value;
+        var column = document.getElementById('chartColumn').value;
+
+        $.getJSON(`/plot?symbol=${symbol}&column=${column}`, function(data) {
+            stockChart.data.labels = data.dates;
+            stockChart.data.datasets[0].label = `${symbol} - ${column}`;
+            stockChart.data.datasets[0].data = data.values;
+            stockChart.update();
+        }).fail(function() {
+            alert('Error loading data');
+        });
+    }
+</script>
+{% endblock %}
