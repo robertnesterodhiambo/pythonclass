@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 def get_db_connection():
     return pymysql.connect(
-        host="74.63.247.122",
-        database="Stocks",
-        user="remote_user",
-        password="stocks123",
-        port=3307
+        host="localhost",  # Changed to localhost for local MySQL
+        database="Stocks",  # Assuming the database name is the same
+        user="root",  # Use root user
+        password="1234",  # Updated password
+        port=3306  # Default MySQL port (3306)
     )
 
 @app.route('/', methods=['GET', 'POST'])
