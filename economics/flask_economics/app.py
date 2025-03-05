@@ -33,15 +33,25 @@ def index():
     per_page = 10
     offset = (page - 1) * per_page
 
-    # Symbol filter
+    # Filters
     selected_symbol = request.args.get('symbol', '')
+    start_date = request.args.get('start_date', '')
+    end_date = request.args.get('end_date', '')
 
-    query = "SELECT Symbol, Open, High, Low, Close, Date FROM Stocks"
+    query = "SELECT Symbol, Open, High, Low, Close, Date FROM Stocks WHERE 1=1"
     params = []
     
     if selected_symbol:
-        query += " WHERE Symbol = %s"
+        query += " AND Symbol = %s"
         params.append(selected_symbol)
+    
+    if start_date:
+        query += " AND Date >= %s"
+        params.append(start_date)
+    
+    if end_date:
+        query += " AND Date <= %s"
+        params.append(end_date)
 
     query += " ORDER BY Date DESC LIMIT %s OFFSET %s"
     params.extend([per_page, offset])
@@ -50,12 +60,20 @@ def index():
     stock_data = cursor.fetchall()
 
     # Get total count for pagination
-    count_query = "SELECT COUNT(*) FROM Stocks"
+    count_query = "SELECT COUNT(*) FROM Stocks WHERE 1=1"
     count_params = []
     
     if selected_symbol:
-        count_query += " WHERE Symbol = %s"
+        count_query += " AND Symbol = %s"
         count_params.append(selected_symbol)
+    
+    if start_date:
+        count_query += " AND Date >= %s"
+        count_params.append(start_date)
+    
+    if end_date:
+        count_query += " AND Date <= %s"
+        count_params.append(end_date)
 
     cursor.execute(count_query, count_params)
     total_records = cursor.fetchone()[0]
@@ -70,37 +88,10 @@ def index():
         stock_data=stock_data,
         page=page,
         total_pages=total_pages,
-        selected_symbol=selected_symbol
+        selected_symbol=selected_symbol,
+        start_date=start_date,
+        end_date=end_date
     )
-
-@app.route('/get_stock_data')
-def get_stock_data():
-    symbol = request.args.get('symbol')
-    column = request.args.get('column', 'Close')
-
-    if not symbol:
-        return jsonify({'error': 'Symbol is required'}), 400
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    valid_columns = {"Open", "High", "Low", "Close"}
-    if column not in valid_columns:
-        return jsonify({'error': 'Invalid column'}), 400
-
-    cursor.execute(f"SELECT Date, {column} FROM Stocks WHERE Symbol = %s ORDER BY Date ASC", (symbol,))
-    data = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    if not data:
-        return jsonify({'error': 'No data found'}), 400
-
-    dates = [str(row[0]) for row in data]
-    values = [row[1] for row in data]
-
-    return jsonify({'dates': dates, 'values': values})
 
 @app.route('/predict')
 def predict():
@@ -133,7 +124,7 @@ def predict():
     scaled_prediction = model.predict(next_day)
     predicted_price = scaler.inverse_transform(scaled_prediction)[0][0]
 
-    return jsonify({'symbol': symbol, 'predicted_price': round(predicted_price, 2)})
+    return jsonify({'predicted_price': round(predicted_price, 2), 'symbol': symbol})
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

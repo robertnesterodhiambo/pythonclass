@@ -5,7 +5,9 @@ import pymysql
 from datetime import datetime
 
 # Load the CSV data
-stock = pd.read_csv("~/GIT/Data/stock_details_5_years.csv")
+#stock = pd.read_csv("~/GIT/Data/stock_details_5_years.csv")
+
+stock = pd.read_csv("/home/dragon/.cache/kagglehub/datasets/iveeaten3223times/massive-yahoo-finance-dataset/versions/2/stock_details_5_years.csv")
 
 # Get the unique company symbols
 stock_list = stock['Company'].unique()
