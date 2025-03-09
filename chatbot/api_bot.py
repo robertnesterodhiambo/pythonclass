@@ -42,8 +42,8 @@ def answer_question(vector_db, llm, question, max_context_tokens=300):
 
 # ========== MAIN EXECUTION ==========
 if __name__ == "__main__":
-    pdf_folder = "/home/dragon/Bob/pythonclass/chatbot/pdfs"  # Change this to your actual folder path
-    model_path = "/home/dragon/Downloads/llama-2-7b.Q2_K.gguf"  # Change this to your LLaMA model path
+    pdf_folder = "/home/dragon/GIT/pythonclass/chatbot/pdfs"  # Change this to your actual folder path
+    model_path = "/home/dragon/Downloads/llama-2-7b-chat.Q2_K.gguf"  # Change this to your LLaMA model path
     
     print("Loading PDFs...")
     documents = load_pdfs_from_folder(pdf_folder)
