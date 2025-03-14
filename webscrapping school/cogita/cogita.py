@@ -18,20 +18,50 @@ try:
     response_json = response.json()
     print("Response JSON:", response_json)  # Debugging
 
-    # Check if access token is in the response
     if "accessToken" in response_json:
         access_token = response_json["accessToken"]
         bearer_token = f"Bearer {access_token}"
 
-        print("\nAccess Token:")
-        print(access_token)
+        print("\nAccess Token:", access_token)
+        
+        # Define headers with Bearer token
+        headers = {
+            "Authorization": bearer_token,
+            "Content-Type": "application/json"
+        }
 
-        print("\nBearer Token:")
-        print(bearer_token)
+        # Fetch product data
+        product_response = requests.get(f"{QOGITA_API_URL}/products", headers=headers)
 
-        # Retrieve active cart ID if available
-        cart_qid = response_json.get("user", {}).get("activeCartQid", "No cart found")
-        print("\nCart ID:", cart_qid)
+        if product_response.status_code == 200:
+            products = product_response.json()
+
+            # Extract and print required details
+            for product in products.get("items", []):
+                supplier = product.get("supplier", "N/A")
+                gtin = product.get("gtin", "N/A")
+                name = product.get("name", "N/A")
+                category = product.get("category", "N/A")
+                brand = product.get("brand", "N/A")
+                price = product.get("price", {}).get("eur", "N/A")  # Assuming price is under 'eur'
+                unit = product.get("unit", "N/A")
+                inventory = product.get("inventory", "N/A")
+                product_link = product.get("url", "N/A")
+
+                print(f"\nSupplier: {supplier}")
+                print(f"GTIN: {gtin}")
+                print(f"Name: {name}")
+                print(f"Category: {category}")
+                print(f"Brand: {brand}")
+                print(f"€ Price inc. shipping: {price}")
+                print(f"Unit: {unit}")
+                print(f"Inventory: {inventory}")
+                print(f"Product Link: {product_link}")
+                print("-" * 50)
+
+        else:
+            print("Failed to fetch products:", product_response.text)
+
     else:
         print("Failed to retrieve access token:", response_json)
 
