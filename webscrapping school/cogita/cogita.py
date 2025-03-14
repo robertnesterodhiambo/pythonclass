@@ -1,69 +1,64 @@
 import requests
+import pandas as pd
 
-# Base URL for Qogita's API
+# Base API URL
 QOGITA_API_URL = "https://api.qogita.com"
 
-# Login details for user
-QOGITA_EMAIL = "jacek.budner@gmail.com"
-QOGITA_PASSWORD = "JB100noga!"
+# Headers with authentication token (Replace <token> with your actual token)
+headers = {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNjBkMDk3Zi1iZTgxLTQ3YzMtYWZiNS1mMzUzNDA0ZWNlNTEiLCJleHAiOjE3NDE5NzgxNjIsImlhdCI6MTc0MTk3Nzg2MiwiYXVkIjoicW9naXRhOmF1dGg6YWNjZXNzIiwiaXNzIjoicW9naXRhIn0.E8aGxJoc4O9sARiDSSolxKm0RQrmudaU7Djp4BvaR6I",
+    "Content-Type": "application/json"
+}
 
-# Send authentication request
-response = requests.post(
-    url=f"{QOGITA_API_URL}/auth/login/",
-    json={"email": QOGITA_EMAIL, "password": QOGITA_PASSWORD}
-)
+# Step 1: Fetch Available Categories
+categories_url = f"{QOGITA_API_URL}/categories"
+categories_response = requests.get(url=categories_url, headers=headers)
 
-# Attempt to parse the response
-try:
-    response_json = response.json()
-    print("Response JSON:", response_json)  # Debugging
+if categories_response.status_code == 200:
+    categories = categories_response.json()
+    print("\nAvailable Categories:", categories)
+else:
+    print(f"\nFailed to fetch categories (Status {categories_response.status_code}): {categories_response.text}")
 
-    if "accessToken" in response_json:
-        access_token = response_json["accessToken"]
-        bearer_token = f"Bearer {access_token}"
+# Step 2: Search Query Without Category Name
+search_url = (f"{QOGITA_API_URL}/variants/search/?"
+              f"&query=perfume+100ml"  # Free text query
+              f"&has_deals=true"  # Hot deals only
+              f"&brand_name=Paco Rabanne"  # Filter by brand
+              f"&brand_name=Calvin Klein"
+              f"&stock_availability=in_stock"  # In-stock products
+              f"&page=1"
+              f"&size=10")  # Limit results
 
-        print("\nAccess Token:", access_token)
-        
-        # Define headers with Bearer token
-        headers = {
-            "Authorization": bearer_token,
-            "Content-Type": "application/json"
-        }
+# Step 3: Request to fetch products
+response = requests.get(url=search_url, headers=headers)
 
-        # Fetch product data
-        product_response = requests.get(f"{QOGITA_API_URL}/products", headers=headers)
+# Step 4: Check if request was successful
+if response.status_code == 200:
+    data = response.json()  # Convert to JSON
+    products = data.get("results", [])
 
-        if product_response.status_code == 200:
-            products = product_response.json()
+    # Extract required details
+    product_list = []
+    for product in products:
+        product_list.append({
+            "Supplier": product.get("supplier", "N/A"),
+            "GTIN": product.get("gtin", "N/A"),
+            "Name": product.get("name", "N/A"),
+            "Category": product.get("category_name", "N/A"),
+            "Brand": product.get("brand_name", "N/A"),
+            "€ Price inc. shipping": product.get("price", "N/A"),
+            "Unit": product.get("unit", "N/A"),
+            "Inventory": product.get("inventory", "N/A"),
+            "Product Link": product.get("imageUrl", "N/A")  # Assuming this is the product link
+        })
 
-            # Extract and print required details
-            for product in products.get("items", []):
-                supplier = product.get("supplier", "N/A")
-                gtin = product.get("gtin", "N/A")
-                name = product.get("name", "N/A")
-                category = product.get("category", "N/A")
-                brand = product.get("brand", "N/A")
-                price = product.get("price", {}).get("eur", "N/A")  # Assuming price is under 'eur'
-                unit = product.get("unit", "N/A")
-                inventory = product.get("inventory", "N/A")
-                product_link = product.get("url", "N/A")
+    # Convert to Pandas DataFrame
+    df = pd.DataFrame(product_list)
 
-                print(f"\nSupplier: {supplier}")
-                print(f"GTIN: {gtin}")
-                print(f"Name: {name}")
-                print(f"Category: {category}")
-                print(f"Brand: {brand}")
-                print(f"€ Price inc. shipping: {price}")
-                print(f"Unit: {unit}")
-                print(f"Inventory: {inventory}")
-                print(f"Product Link: {product_link}")
-                print("-" * 50)
+    # Print DataFrame
+    print("\nProduct Data:")
+    print(df)
 
-        else:
-            print("Failed to fetch products:", product_response.text)
-
-    else:
-        print("Failed to retrieve access token:", response_json)
-
-except requests.exceptions.JSONDecodeError:
-    print("Error: Unable to parse JSON response. Raw response:", response.text)
+else:
+    print(f"\nFailed to fetch products (Status {response.status_code}): {response.text}")
