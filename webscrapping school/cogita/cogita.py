@@ -62,3 +62,6 @@ if response.status_code == 200:
 
 else:
     print(f"\nFailed to fetch products (Status {response.status_code}): {response.text}")
+
+print(data)
+df.to_csv("sample.csv")
