@@ -20,7 +20,28 @@ if categories_response.status_code == 200:
 else:
     print(f"\nFailed to fetch categories (Status {categories_response.status_code}): {categories_response.text}")
 
-# Step 2: Search Query Without Category Name
+# Step 2: Fetch Brands to Map Brand IDs to Names
+brands_url = f"{QOGITA_API_URL}/brands/"
+brands_response = requests.get(brands_url, headers=headers)
+
+brand_mapping = {}  # Dictionary to store brand ID -> brand name mapping
+if brands_response.status_code == 200:
+    brands_data = brands_response.json()
+    
+    # Check if response is a dictionary and contains a list of brands under a key
+    if isinstance(brands_data, dict):
+        brands_list = brands_data.get("results", [])  # Adjust key based on API response
+    elif isinstance(brands_data, list):
+        brands_list = brands_data  # If API directly returns a list
+
+    # Populate brand mapping
+    for brand in brands_list:
+        if isinstance(brand, dict):  # Ensure each item is a dictionary
+            brand_mapping[brand.get("id", "N/A")] = brand.get("name", "N/A")
+else:
+    print(f"\nFailed to fetch brands (Status {brands_response.status_code}): {brands_response.text}")
+
+# Step 3: Search Query Without Category Name
 search_url = (f"{QOGITA_API_URL}/variants/search/?"
               f"&query=perfume+100ml"  # Free text query
               f"&has_deals=true"  # Hot deals only
@@ -30,10 +51,10 @@ search_url = (f"{QOGITA_API_URL}/variants/search/?"
               f"&page=1"
               f"&size=10")  # Limit results
 
-# Step 3: Request to fetch products
+# Step 4: Request to fetch products
 response = requests.get(url=search_url, headers=headers)
 
-# Step 4: Check if request was successful
+# Step 5: Check if request was successful
 if response.status_code == 200:
     data = response.json()  # Convert to JSON
     products = data.get("results", [])
@@ -46,7 +67,7 @@ if response.status_code == 200:
             "GTIN": product.get("gtin", "N/A"),
             "Name": product.get("name", "N/A"),
             "Category": product.get("category_name", "N/A"),
-            "Brand": product.get("brand_name", "N/A"),
+            "Brand": brand_mapping.get(str(product.get("brand_id", "N/A")), "N/A"),  # Ensure brand_id is a string
             "€ Price inc. shipping": product.get("price", "N/A"),
             "Unit": product.get("unit", "N/A"),
             "Inventory": product.get("inventory", "N/A"),
@@ -63,5 +84,4 @@ if response.status_code == 200:
 else:
     print(f"\nFailed to fetch products (Status {response.status_code}): {response.text}")
 
-print(data)
 df.to_csv("sample.csv")
