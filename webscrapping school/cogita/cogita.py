@@ -51,8 +51,9 @@ else:
 # Step 3: Search Query Without Category Name
 search_url = (f"{QOGITA_API_URL}/variants/search/?"
               f"&has_deals=true"
+              f"&has_deals=false"
               f"&stock_availability=in_stock"
-              f"&size=100")
+              f"&size=100000")
 
 # Step 4: Request to fetch products
 response = requests.get(url=search_url, headers=headers)
@@ -91,6 +92,11 @@ else:
 # Save results to CSV
 df.to_csv("sample.csv", index=False)
 print("response")
-print(response.text)
+
+response = requests.get(url=search_url, headers=headers).json()
+
+for variant in response.get("results", []):
+    print(f"{variant['gtin']} | {variant['name']} | {variant['price']} | {variant['imageUrl']}")
+
 
 
