@@ -14,15 +14,22 @@ for page in doc:
 # Define phone number pattern for (XXX) XXX-XXXX format
 phone_pattern = re.compile(r"\(\d{3}\) \d{3}-\d{4}")
 
-# Define the exact unwanted text block to remove (without quotation marks)
-unwanted_text = """Note: This Mount Sinai Health Partners (MSHP) Provider Directory displays the specialties under which MSHP providers have elected to 
+# Define unwanted text blocks (exactly as they appear in the file)
+unwanted_texts = [
+    """Note: This Mount Sinai Health Partners (MSHP) Provider Directory displays the specialties under which MSHP providers have elected to 
 participate, elected to participate, as well as the health plans with which these providers participate via their Agreements with MSHP.
 This Provider Directory also includes the service locations that MSHP has on file as participating sites within its network. Please use
 this Provider Search tool to identify providers, their practice locations and their plan participation as dictated by their MSHP 
-Agreements."""
+Agreements.""",
+    
+    """Provider Zip Code Search
+Zip Code: 10001
+Distance: Less than 20 miles"""
+]
 
-# Remove unwanted text from the extracted content
-text = text.replace(unwanted_text, "")
+# Remove unwanted text blocks from the extracted content
+for unwanted in unwanted_texts:
+    text = text.replace(unwanted, "")
 
 # Process text line by line
 lines = text.split("\n")
