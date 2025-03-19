@@ -1,25 +1,30 @@
 import csv
 import re
 
-def extract_full_names(file_path, output_csv):
+def extract_names_and_divisions(file_path, output_csv):
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             content = file.read()
 
-        # Split sections based on 3 or more newlines
-        sections = re.split(r"\n{3,}", content.strip())
+        # Split text into chunks based on multiple blank lines (4 or more spaces/newlines)
+        sections = re.split(r"(?:\n\s*){4,}", content.strip())
 
-        # Extract the first line from each section as the full name
-        full_names = [section.strip().split("\n")[0] for section in sections if section.strip()]
+        # Extract full names (first line) and divisions (second line)
+        extracted_data = []
+        for section in sections:
+            lines = section.strip().split("\n")
+            if len(lines) >= 2:
+                full_name = lines[0].strip()
+                division = lines[1].strip()
+                extracted_data.append([full_name, division])
 
-        # Write names to CSV
+        # Save to CSV
         with open(output_csv, "w", newline="", encoding="utf-8") as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(["Full Name"])  # Header
-            for name in full_names:
-                writer.writerow([name])
+            writer.writerow(["Full Name", "Division"])  # CSV headers
+            writer.writerows(extracted_data)
 
-        print(f"Full names successfully saved to {output_csv}")
+        print(f"Full names and divisions successfully saved to {output_csv}")
 
     except FileNotFoundError:
         print("Error: File not found.")
@@ -28,7 +33,7 @@ def extract_full_names(file_path, output_csv):
 
 # File paths
 input_file = "formatted_text.txt"
-output_csv = "full_names.csv"
+output_csv = "full_names_divisions.csv"
 
 # Run the function
-extract_full_names(input_file, output_csv)
+extract_names_and_divisions(input_file, output_csv)
