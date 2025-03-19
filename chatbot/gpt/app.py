@@ -1,11 +1,21 @@
 from flask import Flask, render_template, request
 import openai
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Get API key from environment variable
+api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize OpenAI client
-api_key = "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"  # Replace with your actual API key
 client = openai.OpenAI(api_key=api_key)
 
 app = Flask(__name__)
+
+# Store chat history in a list
+chat_history = []
 
 def ask_gpt(prompt):
     """Function to get a response from OpenAI's GPT model, with error handling."""
@@ -28,14 +38,18 @@ def ask_gpt(prompt):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    answer = None
+    global chat_history
     error = None
 
     if request.method == "POST":
         user_input = request.form["user_input"]
-        answer, error = ask_gpt(user_input)  # Get answer & error message
+        response, error = ask_gpt(user_input)
 
-    return render_template("index.html", answer=answer, error=error)
+        if response:
+            chat_history.append({"role": "user", "content": user_input})
+            chat_history.append({"role": "chatgpt", "content": response})
+
+    return render_template("index.html", messages=chat_history, error=error)
 
 if __name__ == "__main__":
     app.run(debug=True)
