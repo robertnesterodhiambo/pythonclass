@@ -20,6 +20,7 @@ def extract_data(file_path, output_csv):
             full_name = lines[0].strip()
             division = lines[1].strip()
             insurance_network = ""
+            phone_numbers = []
 
             # Combine all text from the 3rd line onwards
             if len(lines) > 2:
@@ -30,12 +31,18 @@ def extract_data(file_path, output_csv):
                 if match:
                     insurance_network = text_section[:match.start()].strip()  # Extract text before phone number
 
-            extracted_data.append([full_name, division, insurance_network])
+                    # Extract all phone numbers
+                    phone_numbers = re.findall(phone_pattern, text_section)
+
+            # Convert list of phone numbers into a single comma-separated string
+            phone_numbers_str = ", ".join(phone_numbers)
+
+            extracted_data.append([full_name, division, insurance_network, phone_numbers_str])
 
         # Save to CSV
         with open(output_csv, "w", newline="", encoding="utf-8") as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(["Full Name", "Division", "Insurance Network"])  # CSV headers
+            writer.writerow(["Full Name", "Division", "Insurance Network", "Phone Numbers"])  # CSV headers
             writer.writerows(extracted_data)
 
         print(f"Data successfully saved to {output_csv}")
