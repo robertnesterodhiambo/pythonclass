@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .stock-table th, .stock-table td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Stock Data</h2>
+        
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="symbolFilter">Filter by Symbol:</label>
+                <select id="symbolFilter" class="form-control" onchange="filterData()">
+                    <option value="">All Symbols</option>
+                    {% for symbol in symbols %}
+                    <option value="{{ symbol }}" {% if symbol == selected_symbol %}selected{% endif %}>{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" class="form-control" value="{{ start_date }}">
+            </div>
+            <div class="col-md-3">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" class="form-control" value="{{ end_date }}">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-primary w-100" onclick="filterData()">Apply Filters</button>
+            </div>
+        </div>
+
+        <table class="table stock-table">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Predict</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in stock_data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td class="close-price">{{ row[4] }}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm predict-btn" data-symbol="{{ row[0] }}">Predict</button>
+                        <span class="predicted-price text-muted"></span>
+                    </td>
+                    <td class="stock-date">{{ row[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page - 1 }}&symbol={{ selected_symbol }}&start_date={{ start_date }}&end_date={{ end_date }}">Previous</a>
+                </li>
+                {% endif %}
+                <li class="page-item disabled"><span class="page-link">Page {{ page }} of {{ total_pages }}</span></li>
+                {% if page < total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page + 1 }}&symbol={{ selected_symbol }}&start_date={{ start_date }}&end_date={{ end_date }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <h2 class="text-center">Stock Chart</h2>
+        <div class="chart-container">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function filterData() {
+            let selectedSymbol = document.getElementById("symbolFilter").value;
+            let startDate = document.getElementById("startDate").value;
+            let endDate = document.getElementById("endDate").value;
+            
+            let queryParams = [];
+            if (selectedSymbol) queryParams.push(`symbol=${selectedSymbol}`);
+            if (startDate) queryParams.push(`start_date=${startDate}`);
+            if (endDate) queryParams.push(`end_date=${endDate}`);
+            
+            window.location.href = `/StockApp/?${queryParams.join('&')}`;
+        }
+
+        $(document).ready(function() {
+            $(".predict-btn").on("click", function() {
+                var button = $(this);
+                var symbol = button.data("symbol");
+                var resultCell = button.closest("tr").find(".predicted-price");
+
+                resultCell.text("Predicting...");
+                
+                $.getJSON(`/StockApp/predict?symbol=${symbol}`, function(data) {
+                    if (data.predicted_price !== undefined) {
+                        resultCell.text(`$${data.predicted_price.toFixed(2)}`).addClass("text-success");
+                    } else {
+                        resultCell.text("Error").addClass("text-danger");
+                    }
+                }).fail(function(jqXHR) {
+                    console.error("Error:", jqXHR.responseText);
+                    resultCell.text("Error").addClass("text-danger");
+                });
+            });
+
+            let dates = [];
+            let closePrices = [];
+
+            $(".stock-table tbody tr").each(function() {
+                let date = $(this).find(".stock-date").text();
+                let closePrice = parseFloat($(this).find(".close-price").text());
+
+                if (!isNaN(closePrice)) {
+                    dates.push(date);
+                    closePrices.push(closePrice);
+                }
+            });
+
+            dates.reverse();
+            closePrices.reverse();
+
+            let ctx = document.getElementById("stockChart").getContext("2d");
+            let stockChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: "Closing Price ($)",
+                        data: closePrices,
+                        borderColor: "blue",
+                        backgroundColor: "rgba(0, 0, 255, 0.1)",
+                        borderWidth: 2,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { title: { display: true, text: "Date" } },
+                        y: { title: { display: true, text: "Price ($)" } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
