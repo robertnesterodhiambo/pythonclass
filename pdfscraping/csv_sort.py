@@ -6,8 +6,9 @@ df = pd.read_csv(file_path)
 
 # Updated regex to support initials as first names, middle names, and hyphenated last names
 df[['First Name', 'Middle Name', 'Last Name', 'Position']] = df['Full Name'].str.extract(
-    r'^([\w.]+)\s+((?:\w+\s+)+)?([\w-]+),\s*([\w.]+)?'
+    r'^([\w.-]+)\s+((?:[\w.-]+\s+)+)?([\w-]+),\s*([\w.]+)?'
 )
+
 
 # Fill missing values for Middle Name and Position
 df['Middle Name'] = df['Middle Name'].fillna("").str.strip()
