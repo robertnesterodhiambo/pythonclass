@@ -4,8 +4,10 @@ import pandas as pd
 file_path = "extracted_data.csv"
 df = pd.read_csv(file_path)
 
-# Use regex to extract First Name, Middle Name (if any), Last Name, and Position (any title)
-df[['First Name', 'Middle Name', 'Last Name', 'Position']] = df['Full Name'].str.extract(r'^(\w+)\s+(\w+\s+)?(\w+),\s*([\w.]+)?')
+# Use regex to extract First Name, Middle Name (if any), Last Name (including hyphenated), and Position (any title)
+df[['First Name', 'Middle Name', 'Last Name', 'Position']] = df['Full Name'].str.extract(
+    r'^(\w+)\s+((?:\w+\s+)+)?([\w-]+),\s*([\w.]+)?'
+)
 
 # Fill missing values for Middle Name and Position
 df['Middle Name'] = df['Middle Name'].fillna("").str.strip()
