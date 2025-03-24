@@ -26,7 +26,7 @@ with open(input_csv, newline='', encoding="utf-8") as file:
     for row in reader:
         if row:
             entries_to_check.append(row[0])  # Get the first column value
-        if len(entries_to_check) == 5:  # Only take the first 5
+        if len(entries_to_check) == 131279:  # Only take the first 5
             break
 
 # Find IDs that are missing in the processed file
@@ -37,96 +37,106 @@ if not missing_entries:
     print("✅ All first 5 equipment IDs have already been processed. No new searches needed.")
     exit()
 
-# Open output CSV file and append new results
-with open(output_csv, mode="a", newline="", encoding="utf-8") as file:
-    writer = csv.writer(file)
-
-    # If file was empty, write the header
-    if os.stat(output_csv).st_size == 0:
+# Ensure the CSV file has a header before appending
+if not os.path.exists(output_csv) or os.stat(output_csv).st_size == 0:
+    with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
         writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])
 
-    # Playwright script
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
-        page = browser.new_page()
+# Playwright script
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
+    page = browser.new_page()
 
-        # Open the target website
-        page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
+    # Open the target website
+    page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
 
-        for entry in missing_entries:
-            print(f"🔹 Checking: {entry}")
+    for entry in missing_entries:
+        print(f"🔹 Checking: {entry}")
 
-            attempts = 2  # Number of retry attempts
+        attempts = 2  # Number of retry attempts
 
-            while attempts > 0:
-                try:
-                    # Fill the text area
-                    page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
+        while attempts > 0:
+            try:
+                # Fill the text area
+                page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
 
-                    # Click the "Preview" button
-                    page.locator("input.btn_tex_basic", has_text="Preview").click()
+                # Click the "Preview" button
+                page.locator("input.btn_tex_basic", has_text="Preview").click()
 
-                    # Wait for the frame to load
-                    page.wait_for_timeout(3000)
+                # Wait for the frame to load
+                page.wait_for_timeout(3000)
 
-                    # Select the frame by ID (id="report")
-                    frame = page.frame("report")
+                # Select the frame by ID (id="report")
+                frame = page.frame("report")
 
-                    # Get the full page content using BeautifulSoup
-                    soup = BeautifulSoup(frame.content(), "html.parser")
+                # Get the full page content using BeautifulSoup
+                soup = BeautifulSoup(frame.content(), "html.parser")
 
-                    # Extract data using BeautifulSoup
-                    def get_text_by_class(class_names):
-                        """Finds the first available text from a list of class names."""
-                        for class_name in class_names:
-                            element = soup.find("td", class_=class_name)
-                            if element:
-                                return element.text.strip()
-                        return "Not Found"
+                # Extract data using BeautifulSoup
+                def get_text_by_class(class_names):
+                    """Finds the first available text from a list of class names."""
+                    for class_name in class_names:
+                        element = soup.find("td", class_=class_name)
+                        if element:
+                            return element.text.strip()
+                    return "Not Found"
 
-                    factory_name = get_text_by_class(["a115cl"])
-                    manufacture_date_model = get_text_by_class(["a123cl"])
-                    current_status = get_text_by_class(["a500"])
-                    move_date = get_text_by_class(["a504"])
+                factory_name = get_text_by_class(["a115cl"])
+                manufacture_date_model = get_text_by_class(["a123cl"])
+                current_status = get_text_by_class(["a500"])
+                move_date = get_text_by_class(["a504"])
 
-                    # Extract Location from multiple possible classes
-                    location = get_text_by_class(["a520", "a520cl r14"])
+                # Extract Location from multiple possible classes
+                location = get_text_by_class(["a520", "a520cl r14"])
 
-                    # Extract Lease Code from multiple possible classes
-                    lease_code = get_text_by_class(["a512", "a512c r14", "a512c"])
+                # Extract Lease Code from multiple possible classes
+                lease_code = get_text_by_class(["a512", "a512c r14", "a512c"])
 
-                    # Extract Customer Name from multiple possible classes
-                    customer_name = get_text_by_class(["a516", "a516c r14"])
+                # Extract Customer Name from multiple possible classes
+                customer_name = get_text_by_class(["a516", "a516c r14"])
 
-                    print(f"✅ Extracted: Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}, Lease Code: {lease_code}, Customer Name: {customer_name}")
+                # Prepare the extracted data
+                extracted_data = [entry, factory_name, manufacture_date_model, current_status, move_date, location, lease_code, customer_name]
 
-                    # Write to CSV immediately (prevents memory issues)
-                    writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location, lease_code, customer_name])
+                print(f"✅ Data saved: {extracted_data}")
 
-                    # Clear page content to free memory
-                    page.evaluate("document.body.innerHTML = ''")
+                # Save the extracted data immediately before moving to the next entry
+                with open(output_csv, mode="a", newline="", encoding="utf-8") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(extracted_data)
 
-                    break  # Exit loop on success
+                # Clear page content to free memory
+                page.evaluate("document.body.innerHTML = ''")
 
-                except Exception as e:
-                    print(f"❌ Error extracting data for {entry}: {e}")
+                break  # Exit loop on success
 
-                    attempts -= 1  # Reduce retry count
+            except Exception as e:
+                print(f"❌ Error extracting data for {entry}: {e}")
 
-                    if attempts > 0:
-                        print(f"🔄 Reloading page and retrying for {entry}...")
-                        page.reload()
-                        time.sleep(2)  # Small delay before retrying
-                    else:
-                        print(f"🚨 Final failure for {entry}, skipping...")
-                        writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
+                attempts -= 1  # Reduce retry count
 
-            # Go back to enter the next entry
-            page.go_back()
-            page.wait_for_load_state("networkidle")
+                if attempts > 0:
+                    print(f"🔄 Reloading page and retrying for {entry}...")
+                    page.reload()
+                    time.sleep(2)  # Small delay before retrying
+                else:
+                    print(f"🚨 Final failure for {entry}, skipping...")
+                    failed_data = [entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"]
+                    
+                    # Save failed attempt
+                    with open(output_csv, mode="a", newline="", encoding="utf-8") as file:
+                        writer = csv.writer(file)
+                        writer.writerow(failed_data)
+                    
+                    print(f"❌ Data saved: {failed_data}")
 
-            # Small delay to prevent CPU overload
-            time.sleep(1)
+        # Go back to enter the next entry
+        page.go_back()
+        page.wait_for_load_state("networkidle")
 
-        print(f"🎉 Data saved to {output_csv}")
-        browser.close()
+        # Small delay to prevent CPU overload
+        time.sleep(1)
+
+    print(f"🎉 Data saved to {output_csv}")
+    browser.close()
