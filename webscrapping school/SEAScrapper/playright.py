@@ -21,7 +21,7 @@ with open(input_csv, newline='', encoding="utf-8") as file:
 # Open output CSV file and write headers
 with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date"])  # Updated columns
+    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location"])  # Updated columns
 
     # Playwright script
     with sync_playwright() as p:
@@ -59,14 +59,17 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
                 # Extract Move Date from <td class="a504">
                 move_date = frame.locator("td.a504").first.inner_text(timeout=2000)
 
-                print(f"✅ Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}")
+                # Extract Location from <td class="a520">
+                location = frame.locator("td.a520").first.inner_text(timeout=2000)
+
+                print(f"✅ Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}")
 
                 # Write to CSV immediately (prevents memory issues)
-                writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date])
+                writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location])
 
             except Exception as e:
                 print(f"❌ Failed to extract data for {entry}: {e}")
-                writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
+                writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
 
             # Go back to enter the next entry
             page.go_back()
