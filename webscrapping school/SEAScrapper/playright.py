@@ -1,5 +1,6 @@
 import csv
 from playwright.sync_api import sync_playwright
+from bs4 import BeautifulSoup
 
 # Input and output file names
 input_csv = "combined_data.csv"
@@ -17,52 +18,62 @@ with open(input_csv, newline='', encoding='utf-8') as file:
         if len(entries) == 5:  # Process only the first 5 entries
             break
 
-# Open output CSV file for writing results
-with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
-    writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Current Status"])  # Updated column name
+# Playwright script
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
+    page = browser.new_page()
 
-    # Playwright script
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
-        page = browser.new_page()
+    # Open the target website
+    page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
 
-        # Open the target website
-        page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
+    extracted_data = []  # Store extracted factory names
 
-        for entry in entries:
-            print(f"🔹 Entering: {entry}")
+    for entry in entries:
+        print(f"🔹 Entering: {entry}")
 
-            # Fill the text area
-            page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
+        # Fill the text area
+        page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
 
-            # Click the "Preview" button
-            page.locator("input.btn_tex_basic", has_text="Preview").click()
+        # Click the "Preview" button
+        page.locator("input.btn_tex_basic", has_text="Preview").click()
 
-            # Wait for the frame to load
-            page.wait_for_timeout(3000)
+        # Wait for the frame to load
+        page.wait_for_timeout(3000)
 
-            # Select the frame by ID (id="report")
-            frame = page.frame("report")
+        # Select the frame by ID (id="report")
+        frame = page.frame("report")
 
-            try:
-                # Locate the table with class "a448" inside the frame
-                table = frame.locator("table.a448")
+        try:
+            # Extract all HTML inside the iframe
+            html_content = frame.locator("body").inner_html()
 
-                # Locate the 6th `<tr>` inside this specific table (index 5 because it starts at 0)
-                current_status = table.locator("tr[valign='top']").nth(5).inner_text()
-                print(f"✅ Current Status for {entry}: {current_status}")
+            # Use BeautifulSoup to parse the HTML
+            soup = BeautifulSoup(html_content, "html.parser")
 
-                # Save to CSV
-                writer.writerow([entry, current_status])
+            # Find the first <td> with class "a115cl"
+            factory_name_td = soup.find("td", class_="a115cl")
 
-            except Exception as e:
-                print(f"❌ Failed to get current status for {entry}: {e}")
-                writer.writerow([entry, "Failed to extract"])
+            # Extract text or mark as "Not Found"
+            factory_name = factory_name_td.get_text(strip=True) if factory_name_td else "Not Found"
 
-            # Go back to enter the next entry
-            page.go_back()
-            page.wait_for_load_state("networkidle")
+            print(f"✅ Factory Name for {entry}: {factory_name}")
 
-        print(f"🎉 Data saved to {output_csv}")
-        browser.close()
+            # Save to list
+            extracted_data.append([entry, factory_name])
+
+        except Exception as e:
+            print(f"❌ Failed to extract Factory Name for {entry}: {e}")
+            extracted_data.append([entry, "Failed to extract"])
+
+        # Go back to enter the next entry
+        page.go_back()
+        page.wait_for_load_state("networkidle")
+
+    # Save extracted structured data into CSV
+    with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Equipment ID", "Factory Name"])  # Updated column name
+        writer.writerows(extracted_data)
+
+    print(f"🎉 Data saved to {output_csv}")
+    browser.close()
