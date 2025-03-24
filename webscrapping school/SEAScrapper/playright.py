@@ -22,7 +22,7 @@ with open(input_csv, newline='', encoding="utf-8") as file:
 # Open output CSV file and write headers
 with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code"])  # Updated columns
+    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])  # Updated columns
 
     # Playwright script
     with sync_playwright() as p:
@@ -74,10 +74,13 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
                     # Extract Lease Code from multiple possible classes
                     lease_code = get_text_by_class(["a512", "a512c r14", "a512c"])
 
-                    print(f"✅ Extracted: Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}, Lease Code: {lease_code}")
+                    # Extract Customer Name from multiple possible classes
+                    customer_name = get_text_by_class(["a516", "a516c r14"])
+
+                    print(f"✅ Extracted: Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}, Lease Code: {lease_code}, Customer Name: {customer_name}")
 
                     # Write to CSV immediately (prevents memory issues)
-                    writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location, lease_code])
+                    writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location, lease_code, customer_name])
 
                     # Clear page content to free memory
                     page.evaluate("document.body.innerHTML = ''")
@@ -95,7 +98,7 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
                         time.sleep(2)  # Small delay before retrying
                     else:
                         print(f"🚨 Final failure for {entry}, skipping...")
-                        writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
+                        writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
 
             # Go back to enter the next entry
             page.go_back()
