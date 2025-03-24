@@ -1,28 +1,49 @@
 import csv
 import time
+import os
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 # Input and output file names
 input_csv = "combined_data.csv"
-output_csv = "combined_extracted.csv"  # Output file name
+output_csv = "combined_extracted.csv"
 
-# Load CSV file and get first 5 entries
-entries = []
+# Load already processed equipment IDs from output file
+processed_ids = set()
+if os.path.exists(output_csv):
+    with open(output_csv, newline='', encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip header
+        for row in reader:
+            if row:
+                processed_ids.add(row[0])  # Store processed Equipment IDs
 
+# Load only the first 5 entries from the input CSV
+entries_to_check = []
 with open(input_csv, newline='', encoding="utf-8") as file:
     reader = csv.reader(file)
     next(reader)  # Skip header if present
     for row in reader:
         if row:
-            entries.append(row[0])  # Get the first column value
-        if len(entries) == 5:  # Process only the first 5 entries
+            entries_to_check.append(row[0])  # Get the first column value
+        if len(entries_to_check) == 5:  # Only take the first 5
             break
 
-# Open output CSV file and write headers
-with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
+# Find IDs that are missing in the processed file
+missing_entries = [entry for entry in entries_to_check if entry not in processed_ids]
+
+# If all 5 entries are already processed, exit the script
+if not missing_entries:
+    print("✅ All first 5 equipment IDs have already been processed. No new searches needed.")
+    exit()
+
+# Open output CSV file and append new results
+with open(output_csv, mode="a", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])  # Updated columns
+
+    # If file was empty, write the header
+    if os.stat(output_csv).st_size == 0:
+        writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])
 
     # Playwright script
     with sync_playwright() as p:
@@ -32,8 +53,8 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
         # Open the target website
         page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
 
-        for entry in entries:
-            print(f"🔹 Entering: {entry}")
+        for entry in missing_entries:
+            print(f"🔹 Checking: {entry}")
 
             attempts = 2  # Number of retry attempts
 
