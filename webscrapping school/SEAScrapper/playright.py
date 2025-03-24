@@ -18,7 +18,7 @@ if os.path.exists(output_csv):
             if row:
                 processed_ids.add(row[0])  # Store processed Equipment IDs
 
-# Load only the first 5 entries from the input CSV
+# Load only the first 131,279 entries from the input CSV (as per your request)
 entries_to_check = []
 with open(input_csv, newline='', encoding="utf-8") as file:
     reader = csv.reader(file)
@@ -26,15 +26,15 @@ with open(input_csv, newline='', encoding="utf-8") as file:
     for row in reader:
         if row:
             entries_to_check.append(row[0])  # Get the first column value
-        if len(entries_to_check) == 131279:  # Only take the first 5
+        if len(entries_to_check) == 131279:  # Keep the original limit
             break
 
 # Find IDs that are missing in the processed file
 missing_entries = [entry for entry in entries_to_check if entry not in processed_ids]
 
-# If all 5 entries are already processed, exit the script
+# If all entries are already processed, exit the script
 if not missing_entries:
-    print("✅ All first 5 equipment IDs have already been processed. No new searches needed.")
+    print("✅ All first 131,279 equipment IDs have already been processed. No new searches needed.")
     exit()
 
 # Ensure the CSV file has a header before appending
@@ -43,13 +43,15 @@ if not os.path.exists(output_csv) or os.stat(output_csv).st_size == 0:
         writer = csv.writer(file)
         writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])
 
-# Playwright script
+# Start Playwright session
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
     page = browser.new_page()
 
     # Open the target website
     page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
+
+    search_count = 0  # Track number of searches
 
     for entry in missing_entries:
         print(f"🔹 Checking: {entry}")
@@ -65,7 +67,7 @@ with sync_playwright() as p:
                 page.locator("input.btn_tex_basic", has_text="Preview").click()
 
                 # Wait for the frame to load
-                page.wait_for_timeout(3000)
+                page.wait_for_load_state("load", timeout=60000)  # Avoids networkidle timeout issues
 
                 # Select the frame by ID (id="report")
                 frame = page.frame("report")
@@ -133,10 +135,21 @@ with sync_playwright() as p:
 
         # Go back to enter the next entry
         page.go_back()
-        page.wait_for_load_state("networkidle")
+        page.wait_for_load_state("load", timeout=60000)
 
         # Small delay to prevent CPU overload
         time.sleep(1)
+
+        # Increment search count
+        search_count += 1
+
+        # Restart Playwright every 20 searches to prevent crashes
+        if search_count % 20 == 0:
+            print("🔄 Restarting browser to prevent memory leaks...")
+            browser.close()
+            browser = p.chromium.launch(headless=False)
+            page = browser.new_page()
+            page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
 
     print(f"🎉 Data saved to {output_csv}")
     browser.close()
