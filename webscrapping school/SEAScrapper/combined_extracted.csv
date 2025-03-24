@@ -1,14 +1,14 @@
-Equipment ID,Factory Name,Manufacture Date & Model
-amfu200000,Failed to extract,Failed to extract
+Equipment ID,Factory Name,Manufacture Date & Model,Current Status
+amfu200000,Failed to extract,Failed to extract,Failed to extract
 amfu200001,"UNKNOWN, UNKNOWN
 AMFU200000 - AMFU200499","2006-APR-01
-"
+",DISPOSED
 amfu200002,"UNKNOWN, UNKNOWN
 AMFU200000 - AMFU200499","2006-APR-01
-"
+",DIRECT INTERCHANGE
 amfu200003,"UNKNOWN, UNKNOWN
 AMFU200000 - AMFU200499","2006-APR-01
-"
+",ON HIRE
 amfu200004,"UNKNOWN, UNKNOWN
 AMFU200000 - AMFU200499","2006-APR-01
-"
+",DISPOSED
