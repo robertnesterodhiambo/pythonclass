@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 
 # Input and output file names
 input_csv = "combined_data.csv"
-output_csv = "combined_extracted.csv"  # Updated output file name
+output_csv = "combined_extracted.csv"  # Output file name
 
 # Load CSV file and get first 5 entries
 entries = []
@@ -20,7 +20,7 @@ with open(input_csv, newline='', encoding='utf-8') as file:
 # Open output CSV file for writing results
 with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Container Specification"])  # Write header
+    writer.writerow(["Equipment ID", "Current Status"])  # Updated column name
 
     # Playwright script
     with sync_playwright() as p:
@@ -46,15 +46,18 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
             frame = page.frame("report")
 
             try:
-                # Locate the 7th `<tr>` inside the table (index 6 because it starts at 0)
-                container_spec = frame.locator("table tr[valign='top']").nth(5).inner_text()
-                print(f"✅ Container Specification for {entry}: {container_spec}")
+                # Locate the table with class "a448" inside the frame
+                table = frame.locator("table.a448")
+
+                # Locate the 6th `<tr>` inside this specific table (index 5 because it starts at 0)
+                current_status = table.locator("tr[valign='top']").nth(5).inner_text()
+                print(f"✅ Current Status for {entry}: {current_status}")
 
                 # Save to CSV
-                writer.writerow([entry, container_spec])
+                writer.writerow([entry, current_status])
 
             except Exception as e:
-                print(f"❌ Failed to get container specification for {entry}: {e}")
+                print(f"❌ Failed to get current status for {entry}: {e}")
                 writer.writerow([entry, "Failed to extract"])
 
             # Go back to enter the next entry
