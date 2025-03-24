@@ -50,20 +50,22 @@ with sync_playwright() as p:
             # Use BeautifulSoup to parse the HTML
             soup = BeautifulSoup(html_content, "html.parser")
 
-            # Find the first <td> with class "a115cl"
+            # Find the first <td> with class "a115cl" (Factory Name)
             factory_name_td = soup.find("td", class_="a115cl")
-
-            # Extract text or mark as "Not Found"
             factory_name = factory_name_td.get_text(strip=True) if factory_name_td else "Not Found"
 
-            print(f"✅ Factory Name for {entry}: {factory_name}")
+            # Find the first <td> with class "a123cl" (Manufacture Date & Model)
+            manufacture_td = soup.find("td", class_="a123cl")
+            manufacture_date_model = manufacture_td.get_text(strip=True) if manufacture_td else "Not Found"
+
+            print(f"✅ Data for {entry}: Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}")
 
             # Save to list
-            extracted_data.append([entry, factory_name])
+            extracted_data.append([entry, factory_name, manufacture_date_model])
 
         except Exception as e:
-            print(f"❌ Failed to extract Factory Name for {entry}: {e}")
-            extracted_data.append([entry, "Failed to extract"])
+            print(f"❌ Failed to extract data for {entry}: {e}")
+            extracted_data.append([entry, "Failed to extract", "Failed to extract"])
 
         # Go back to enter the next entry
         page.go_back()
@@ -72,7 +74,7 @@ with sync_playwright() as p:
     # Save extracted structured data into CSV
     with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
-        writer.writerow(["Equipment ID", "Factory Name"])  # Updated column name
+        writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model"])  # Updated column names
         writer.writerows(extracted_data)
 
     print(f"🎉 Data saved to {output_csv}")
