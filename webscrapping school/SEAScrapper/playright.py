@@ -1,5 +1,6 @@
 import csv
 import time
+from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
 # Input and output file names
@@ -21,7 +22,7 @@ with open(input_csv, newline='', encoding="utf-8") as file:
 # Open output CSV file and write headers
 with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location"])  # Updated columns
+    writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code"])  # Updated columns
 
     # Playwright script
     with sync_playwright() as p:
@@ -34,42 +35,67 @@ with open(output_csv, mode="w", newline="", encoding="utf-8") as file:
         for entry in entries:
             print(f"🔹 Entering: {entry}")
 
-            try:
-                # Fill the text area
-                page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
+            attempts = 2  # Number of retry attempts
 
-                # Click the "Preview" button
-                page.locator("input.btn_tex_basic", has_text="Preview").click()
+            while attempts > 0:
+                try:
+                    # Fill the text area
+                    page.fill("#ctl00_bodyContent_ucEqpIds_txtEqpId", entry)  
 
-                # Wait for the frame to load
-                page.wait_for_timeout(3000)
+                    # Click the "Preview" button
+                    page.locator("input.btn_tex_basic", has_text="Preview").click()
 
-                # Select the frame by ID (id="report")
-                frame = page.frame("report")
+                    # Wait for the frame to load
+                    page.wait_for_timeout(3000)
 
-                # Extract Factory Name from <td class="a115cl">
-                factory_name = frame.locator("td.a115cl").first.inner_text(timeout=2000)
+                    # Select the frame by ID (id="report")
+                    frame = page.frame("report")
 
-                # Extract Manufacture Date & Model from <td class="a123cl">
-                manufacture_date_model = frame.locator("td.a123cl").first.inner_text(timeout=2000)
+                    # Get the full page content using BeautifulSoup
+                    soup = BeautifulSoup(frame.content(), "html.parser")
 
-                # Extract Current Status from <td class="a500">
-                current_status = frame.locator("td.a500").first.inner_text(timeout=2000)
+                    # Extract data using BeautifulSoup
+                    def get_text_by_class(class_names):
+                        """Finds the first available text from a list of class names."""
+                        for class_name in class_names:
+                            element = soup.find("td", class_=class_name)
+                            if element:
+                                return element.text.strip()
+                        return "Not Found"
 
-                # Extract Move Date from <td class="a504">
-                move_date = frame.locator("td.a504").first.inner_text(timeout=2000)
+                    factory_name = get_text_by_class(["a115cl"])
+                    manufacture_date_model = get_text_by_class(["a123cl"])
+                    current_status = get_text_by_class(["a500"])
+                    move_date = get_text_by_class(["a504"])
 
-                # Extract Location from <td class="a520">
-                location = frame.locator("td.a520").first.inner_text(timeout=2000)
+                    # Extract Location from multiple possible classes
+                    location = get_text_by_class(["a520", "a520cl r14"])
 
-                print(f"✅ Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}")
+                    # Extract Lease Code from multiple possible classes
+                    lease_code = get_text_by_class(["a512", "a512c r14", "a512c"])
 
-                # Write to CSV immediately (prevents memory issues)
-                writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location])
+                    print(f"✅ Extracted: Factory Name: {factory_name}, Manufacture Date & Model: {manufacture_date_model}, Current Status: {current_status}, Move Date: {move_date}, Location: {location}, Lease Code: {lease_code}")
 
-            except Exception as e:
-                print(f"❌ Failed to extract data for {entry}: {e}")
-                writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
+                    # Write to CSV immediately (prevents memory issues)
+                    writer.writerow([entry, factory_name, manufacture_date_model, current_status, move_date, location, lease_code])
+
+                    # Clear page content to free memory
+                    page.evaluate("document.body.innerHTML = ''")
+
+                    break  # Exit loop on success
+
+                except Exception as e:
+                    print(f"❌ Error extracting data for {entry}: {e}")
+
+                    attempts -= 1  # Reduce retry count
+
+                    if attempts > 0:
+                        print(f"🔄 Reloading page and retrying for {entry}...")
+                        page.reload()
+                        time.sleep(2)  # Small delay before retrying
+                    else:
+                        print(f"🚨 Final failure for {entry}, skipping...")
+                        writer.writerow([entry, "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract", "Failed to extract"])
 
             # Go back to enter the next entry
             page.go_back()
