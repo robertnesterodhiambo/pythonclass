@@ -43,13 +43,29 @@ if not os.path.exists(output_csv) or os.stat(output_csv).st_size == 0:
         writer = csv.writer(file)
         writer.writerow(["Equipment ID", "Factory Name", "Manufacture Date & Model", "Current Status", "Move Date", "Location", "Lease Code", "Customer Name"])
 
+# Function to open website with retry mechanism
+def open_website_with_retry(page, max_retries=3):
+    """Tries to load the website up to max_retries times if it fails."""
+    retries = 0
+    while retries < max_retries:
+        try:
+            print(f"🌐 Loading website (Attempt {retries + 1}/{max_retries})...")
+            page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx", timeout=60000)
+            return True
+        except Exception as e:
+            print(f"❌ Failed to load website: {e}")
+            retries += 1
+            time.sleep(5)  # Wait before retrying
+    print("🚨 Final failure loading website, exiting...")
+    exit()  # Exit script if website never loads
+
 # Start Playwright session
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)  # Set headless=True for background execution
+    browser = p.chromium.launch(headless=True)  # Set headless=True for background execution
     page = browser.new_page()
 
     # Open the target website
-    page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
+    open_website_with_retry(page)
 
     search_count = 0  # Track number of searches
 
@@ -147,9 +163,9 @@ with sync_playwright() as p:
         if search_count % 20 == 0:
             print("🔄 Restarting browser to prevent memory leaks...")
             browser.close()
-            browser = p.chromium.launch(headless=False)
+            browser = p.chromium.launch(headless=True)
             page = browser.new_page()
-            page.goto("https://tex.textainer.com/Equipment/StatusAndSpecificationsInquiry.aspx")
+            open_website_with_retry(page)  # Ensure the website loads after restart
 
     print(f"🎉 Data saved to {output_csv}")
     browser.close()
