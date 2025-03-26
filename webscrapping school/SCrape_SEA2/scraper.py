@@ -30,29 +30,50 @@ def open_website():
                 # Click submit
                 submit_button.click()
                 
-                # Wait for the result page to load
+                # Wait for all required elements to load
                 page.wait_for_selector("#__view1-__clone1", timeout=90000)
                 page.wait_for_selector("#__view1-__clone3", timeout=90000)
                 page.wait_for_selector("#__view1-__clone5", timeout=90000)
-                
+                page.wait_for_selector("#__view1-__clone7", timeout=90000)
+                page.wait_for_selector("#__view1-__clone9", timeout=90000)
+                page.wait_for_selector("#__view1-__clone11", timeout=90000)
+                page.wait_for_selector("#__view3-__clone15", timeout=90000)
+                page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=90000)
+
                 # Extract data
                 unit_number = page.locator("#__view1-__clone1").text_content().strip()
                 unit_type = page.locator("#__view1-__clone3").text_content().strip()
                 lesse = page.locator("#__view1-__clone5").text_content().strip()
+                status = page.locator("#__view1-__clone7").text_content().strip()
+                city = page.locator("#__view1-__clone9").text_content().strip()
+                depot = page.locator("#__view1-__clone11").text_content().strip()
+                manuf_year_month = page.locator("#__view3-__clone15").text_content().strip()
+                manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip()
                 
                 # Print extracted data
-                print(f"Processed Entry: {value}, Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}")
+                print(f"Processed Entry: {value}")
+                print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
+                print(f"City: {city}, Depot: {depot}, Manuf. Year/Month: {manuf_year_month}, Manufacturer: {manufacturer}")
                 
                 # Store in the list
                 extracted_data.append({
                     "Input": value,
                     "Unit Number": unit_number,
                     "Unit Type": unit_type,
-                    "Lesse": lesse
+                    "Lesse": lesse,
+                    "Status": status,
+                    "City": city,
+                    "Depot": depot,
+                    "Manuf. Year/Month": manuf_year_month,
+                    "Manufacturer": manufacturer
                 })
 
-                # Go back to the input page
-                page.go_back()
+                # Navigate back to the input page using the back button
+                back_button = page.locator("#idBackButton")
+                if back_button.is_visible():
+                    back_button.click()
+                else:
+                    page.go_back()
                 
                 # Wait for the input field to reappear
                 page.wait_for_selector("#idTAUnitNo", timeout=90000)
