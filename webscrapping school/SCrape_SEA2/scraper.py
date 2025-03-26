@@ -33,19 +33,22 @@ def open_website():
                 # Wait for the result page to load
                 page.wait_for_selector("#__view1-__clone1", timeout=90000)
                 page.wait_for_selector("#__view1-__clone3", timeout=90000)
+                page.wait_for_selector("#__view1-__clone5", timeout=90000)
                 
                 # Extract data
                 unit_number = page.locator("#__view1-__clone1").text_content().strip()
                 unit_type = page.locator("#__view1-__clone3").text_content().strip()
+                lesse = page.locator("#__view1-__clone5").text_content().strip()
                 
                 # Print extracted data
-                print(f"Processed Entry: {value}, Unit Number: {unit_number}, Unit Type: {unit_type}")
+                print(f"Processed Entry: {value}, Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}")
                 
                 # Store in the list
                 extracted_data.append({
                     "Input": value,
                     "Unit Number": unit_number,
-                    "Unit Type": unit_type
+                    "Unit Type": unit_type,
+                    "Lesse": lesse
                 })
 
                 # Go back to the input page
