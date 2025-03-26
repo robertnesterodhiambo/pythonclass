@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import time
+import os
 
 def open_website():
     with sync_playwright() as p:
@@ -15,8 +16,9 @@ def open_website():
         # Import the CSV file
         df = pd.read_csv("sea_combined.csv")
         
-        # List to store extracted data
-        extracted_data = []
+        # Define output file
+        output_file = "extracted_unit_numbers.csv"
+        file_exists = os.path.exists(output_file)  # Check if file already exists
 
         text_area = page.locator("#idTAUnitNo")
         submit_button = page.locator("#idBtnUnitEnqSubmit")
@@ -42,13 +44,10 @@ def open_website():
 
                 # Scroll the table section upwards before extracting Manufacturer data
                 scrollable_div = page.locator("#idUnitStatusPanel-sapUiTableCnt")
-
-                # Use JavaScript to scroll up gradually to ensure proper visibility
-                for _ in range(5):  # Adjust scroll steps as needed
+                for _ in range(5):  
                     scrollable_div.evaluate("(el) => el.scrollBy(0, -50)")
-                    time.sleep(0.2)  # Small pause to let UI adjust
-                
-                # Ensure the first row is visible
+                    time.sleep(0.2)
+
                 page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=5000)
 
                 # Extract data
@@ -60,14 +59,14 @@ def open_website():
                 depot = page.locator("#__view1-__clone11").text_content().strip()
                 manuf_year_month = page.locator("#__view3-__clone15").text_content().strip()
                 manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip()
-                
+
                 # Print extracted data
                 print(f"Processed Entry: {value}")
                 print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
                 print(f"City: {city}, Depot: {depot}, Manuf. Year/Month: {manuf_year_month}, Manufacturer: {manufacturer}")
-                
-                # Store in the list
-                extracted_data.append({
+
+                # Create a DataFrame for the single entry
+                data_entry = pd.DataFrame([{
                     "Input": value,
                     "Unit Number": unit_number,
                     "Unit Type": unit_type,
@@ -77,7 +76,13 @@ def open_website():
                     "Depot": depot,
                     "Manuf. Year/Month": manuf_year_month,
                     "Manufacturer": manufacturer
-                })
+                }])
+
+                # Append data to CSV immediately
+                data_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
+                file_exists = True  # Ensure header is not written again
+
+                print(f"Data for {value} saved.")
 
                 # Navigate back to the input page using the back button
                 back_button = page.locator("#idBackButton")
@@ -93,13 +98,8 @@ def open_website():
             except Exception as e:
                 print(f"Error processing entry {value}: {e}")
         
-        # Convert extracted data into a DataFrame
-        result_df = pd.DataFrame(extracted_data)
-        
-        # Save to CSV
-        result_df.to_csv("extracted_unit_numbers.csv", index=False)
-        print("Data saved to extracted_unit_numbers.csv")
-        
+        print(f"All data saved to {output_file}")
+
         # Keep browser open for a few seconds before closing
         page.wait_for_timeout(5000)  # 5-second delay before closing
         
