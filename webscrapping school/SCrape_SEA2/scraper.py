@@ -40,6 +40,17 @@ def open_website():
                 page.wait_for_selector("#__view3-__clone15", timeout=90000)
                 page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=90000)
 
+                # Scroll the table section upwards before extracting Manufacturer data
+                scrollable_div = page.locator("#idUnitStatusPanel-sapUiTableCnt")
+
+                # Use JavaScript to scroll up gradually to ensure proper visibility
+                for _ in range(5):  # Adjust scroll steps as needed
+                    scrollable_div.evaluate("(el) => el.scrollBy(0, -50)")
+                    time.sleep(0.2)  # Small pause to let UI adjust
+                
+                # Ensure the first row is visible
+                page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=5000)
+
                 # Extract data
                 unit_number = page.locator("#__view1-__clone1").text_content().strip()
                 unit_type = page.locator("#__view1-__clone3").text_content().strip()
