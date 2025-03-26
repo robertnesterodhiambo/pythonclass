@@ -160,7 +160,7 @@ with sync_playwright() as p:
         search_count += 1
 
         # Restart Playwright every 20 searches to prevent crashes
-        if search_count % 20 == 0:
+        if search_count % 50 == 0:
             print("🔄 Restarting browser to prevent memory leaks...")
             browser.close()
             browser = p.chromium.launch(headless=True)
