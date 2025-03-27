@@ -15,6 +15,24 @@ def open_website():
             page.wait_for_selector("#idTAUnitNo", timeout=90000)
             print("✅ Page reloaded successfully")
 
+        def scroll_table():
+            """Scrolls the table up to reveal hidden content"""
+            page.wait_for_selector("#idUnitStatusPanel-vsb", timeout=15000)
+            page.evaluate("""
+                (async function() {
+                    let scrollDiv = document.querySelector("#idUnitStatusPanel-vsb");
+                    if (!scrollDiv) return;
+                    
+                    let lastScroll = -1;
+                    while (scrollDiv.scrollTop !== lastScroll) {
+                        lastScroll = scrollDiv.scrollTop;
+                        scrollDiv.scrollBy(0, -200);  // Scroll UP by 200 pixels
+                        await new Promise(r => setTimeout(r, 500)); // Wait for content to load
+                    }
+                })();
+            """)
+            page.wait_for_timeout(3000)
+
         # Load page initially
         load_page()
 
@@ -57,6 +75,9 @@ def open_website():
                 # Wait for results
                 page.wait_for_selector("#__view1-__clone1", timeout=90000)
                 time.sleep(5)  
+
+                # Perform scrolling to reveal hidden content
+                scroll_table()
 
                 # Check if "No Data Found" message appears
                 if page.locator("#noDataMessage").is_visible():
