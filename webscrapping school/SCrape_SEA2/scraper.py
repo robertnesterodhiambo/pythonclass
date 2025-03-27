@@ -5,104 +5,131 @@ import os
 
 def open_website():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set headless=True for silent execution
+        browser = p.chromium.launch(headless=False)  # Set to True for silent execution
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
-        
-        # Open the webpage and wait for the input field to load
-        page.goto(url, timeout=90000, wait_until="networkidle")
-        page.wait_for_selector("#idTAUnitNo", timeout=90000)
-        
-        # Import the CSV file
+
+        def load_page():
+            """Reopen the page and wait for it to fully load"""
+            page.goto(url, timeout=90000, wait_until="networkidle")
+            page.wait_for_selector("#idTAUnitNo", timeout=90000)
+            print("✅ Page reloaded successfully")
+
+        # Load page initially
+        load_page()
+
+        # Import the CSV file containing input values
         df = pd.read_csv("sea_combined.csv")
-        
+
         # Define output file
         output_file = "extracted_unit_numbers.csv"
-        file_exists = os.path.exists(output_file)  # Check if file already exists
+        file_exists = os.path.exists(output_file)
+
+        # Load existing data if file exists
+        if file_exists:
+            existing_data = pd.read_csv(output_file)
+            processed_values = set(existing_data["Input"].astype(str))
+        else:
+            processed_values = set()
 
         text_area = page.locator("#idTAUnitNo")
         submit_button = page.locator("#idBtnUnitEnqSubmit")
 
-        for value in df["sea_combined"].head(6):
+        new_entries_count = 0
+
+        for value in df["sea_combined"].astype(str):
+            if value in processed_values:
+                print(f"Skipping {value} (already processed)")
+                continue
+
+            if new_entries_count >= 5:
+                print("✅ Collected 5 new entries, stopping execution.")
+                break  
+
             try:
                 # Fill the input field
                 text_area.fill(str(value))
-                time.sleep(1)  # Small delay for stability
-                
+                time.sleep(1)
+
                 # Click submit
                 submit_button.click()
-                
-                # Wait for all required elements to load
+
+                # Wait for results
                 page.wait_for_selector("#__view1-__clone1", timeout=90000)
-                page.wait_for_selector("#__view1-__clone3", timeout=90000)
-                page.wait_for_selector("#__view1-__clone5", timeout=90000)
-                page.wait_for_selector("#__view1-__clone7", timeout=90000)
-                page.wait_for_selector("#__view1-__clone9", timeout=90000)
-                page.wait_for_selector("#__view1-__clone11", timeout=90000)
-                page.wait_for_selector("#__view3-__clone15", timeout=90000)
-                page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=90000)
+                time.sleep(5)  
 
-                # Scroll the table section upwards before extracting Manufacturer data
-                scrollable_div = page.locator("#idUnitStatusPanel-sapUiTableCnt")
-                for _ in range(5):  
-                    scrollable_div.evaluate("(el) => el.scrollBy(0, -50)")
-                    time.sleep(0.2)
+                # Check if "No Data Found" message appears
+                if page.locator("#noDataMessage").is_visible():
+                    print(f"⚠️ No data found for {value}. Saving as 'Not Found'.")
+                    data_entry = pd.DataFrame([{
+                        "Input": value,
+                        "Unit Number": "Not Found",
+                        "Unit Type": "Not Found",
+                        "Lesse": "Not Found",
+                        "Status": "Not Found",
+                        "City": "Not Found",
+                        "Depot": "Not Found",
+                        "Manuf. Year/Month": "Not Found",
+                        "Manufacturer": "Not Found"
+                    }])
+                else:
+                    # Extract data if found
+                    unit_number = page.locator("#__view1-__clone1").text_content().strip()
+                    unit_type = page.locator("#__view1-__clone3").text_content().strip()
+                    lesse = page.locator("#__view1-__clone5").text_content().strip()
+                    status = page.locator("#__view1-__clone7").text_content().strip()
+                    city = page.locator("#__view1-__clone9").text_content().strip()
+                    depot = page.locator("#__view1-__clone11").text_content().strip()
+                    manuf_year_month = page.locator("#__view3-__clone17").text_content().strip()
+                    manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip()
 
-                page.wait_for_selector("#idUnitStatusPanel-rows-row0-col1", timeout=5000)
+                    print(f"✅ Processed Entry: {value}")
+                    print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
 
-                # Extract data
-                unit_number = page.locator("#__view1-__clone1").text_content().strip()
-                unit_type = page.locator("#__view1-__clone3").text_content().strip()
-                lesse = page.locator("#__view1-__clone5").text_content().strip()
-                status = page.locator("#__view1-__clone7").text_content().strip()
-                city = page.locator("#__view1-__clone9").text_content().strip()
-                depot = page.locator("#__view1-__clone11").text_content().strip()
-                manuf_year_month = page.locator("#__view3-__clone15").text_content().strip()
-                manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip()
-
-                # Print extracted data
-                print(f"Processed Entry: {value}")
-                print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
-                print(f"City: {city}, Depot: {depot}, Manuf. Year/Month: {manuf_year_month}, Manufacturer: {manufacturer}")
-
-                # Create a DataFrame for the single entry
-                data_entry = pd.DataFrame([{
-                    "Input": value,
-                    "Unit Number": unit_number,
-                    "Unit Type": unit_type,
-                    "Lesse": lesse,
-                    "Status": status,
-                    "City": city,
-                    "Depot": depot,
-                    "Manuf. Year/Month": manuf_year_month,
-                    "Manufacturer": manufacturer
-                }])
+                    # Create a DataFrame for the entry
+                    data_entry = pd.DataFrame([{
+                        "Input": value,
+                        "Unit Number": unit_number,
+                        "Unit Type": unit_type,
+                        "Lesse": lesse,
+                        "Status": status,
+                        "City": city,
+                        "Depot": depot,
+                        "Manuf. Year/Month": manuf_year_month,
+                        "Manufacturer": manufacturer
+                    }])
 
                 # Append data to CSV immediately
                 data_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
-                file_exists = True  # Ensure header is not written again
+                file_exists = True  
 
-                print(f"Data for {value} saved.")
-
-                # Navigate back to the input page using the back button
-                back_button = page.locator("#idBackButton")
-                if back_button.is_visible():
-                    back_button.click()
-                else:
-                    page.go_back()
-                
-                # Wait for the input field to reappear
-                page.wait_for_selector("#idTAUnitNo", timeout=90000)
-                time.sleep(2)
+                print(f"✅ Data for {value} saved.")
+                new_entries_count += 1  
 
             except Exception as e:
-                print(f"Error processing entry {value}: {e}")
-        
-        print(f"All data saved to {output_file}")
+                print(f"⚠️ Timeout/Error processing entry {value}: {e}")
+                print("🚨 Saving as 'Timeout' and moving to next entry.")
 
-        # Keep browser open for a few seconds before closing
-        page.wait_for_timeout(5000)  # 5-second delay before closing
-        
+                # Save "Timeout" entry
+                timeout_entry = pd.DataFrame([{
+                    "Input": value,
+                    "Unit Number": "Timeout",
+                    "Unit Type": "Timeout",
+                    "Lesse": "Timeout",
+                    "Status": "Timeout",
+                    "City": "Timeout",
+                    "Depot": "Timeout",
+                    "Manuf. Year/Month": "Timeout",
+                    "Manufacturer": "Timeout"
+                }])
+                timeout_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
+                file_exists = True  
+
+            # Reopen the URL for the next entry
+            load_page()
+
+        print(f"✅ All new data saved to {output_file}")
+        page.wait_for_timeout(5000)  
         browser.close()
 
 if __name__ == "__main__":
