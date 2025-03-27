@@ -5,14 +5,14 @@ import os
 
 def open_website():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Set to True for silent execution
+        browser = p.chromium.launch(headless=False)  # Set to True for silent execution
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
 
         def load_page():
             """Reopen the page and wait for it to fully load"""
-            page.goto(url, timeout=90000, wait_until="networkidle")
-            page.wait_for_selector("#idTAUnitNo", timeout=90000)
+            page.goto(url, timeout=400000, wait_until="networkidle")
+            page.wait_for_selector("#idTAUnitNo", timeout=400000)
             print("✅ Page reloaded successfully")
 
         def scroll_table():
