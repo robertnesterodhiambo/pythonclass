@@ -1,6 +1,5 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
-import time
 import os
 
 def open_website():
@@ -11,27 +10,20 @@ def open_website():
 
         def load_page():
             """Reopen the page and wait for it to fully load"""
-            page.goto(url, timeout=400000, wait_until="networkidle")
+            page.goto(url, timeout=400000, wait_until="domcontentloaded")  # Faster loading
+            page.wait_for_load_state("domcontentloaded")  
             page.wait_for_selector("#idTAUnitNo", timeout=400000)
             print("✅ Page reloaded successfully")
 
-        def scroll_table():
-            """Scrolls the table up to reveal hidden content"""
+        def fast_scroll():
+            """Quickly scrolls to reveal hidden content"""
             page.wait_for_selector("#idUnitStatusPanel-vsb", timeout=15000)
             page.evaluate("""
                 (async function() {
                     let scrollDiv = document.querySelector("#idUnitStatusPanel-vsb");
-                    if (!scrollDiv) return;
-                    
-                    let lastScroll = -1;
-                    while (scrollDiv.scrollTop !== lastScroll) {
-                        lastScroll = scrollDiv.scrollTop;
-                        scrollDiv.scrollBy(0, -200);  // Scroll UP by 200 pixels
-                        await new Promise(r => setTimeout(r, 500)); // Wait for content to load
-                    }
+                    if (scrollDiv) scrollDiv.scrollTop = 0;  // Instantly move to top
                 })();
             """)
-            page.wait_for_timeout(3000)
 
         # Load page initially
         load_page()
@@ -67,17 +59,15 @@ def open_website():
             try:
                 # Fill the input field
                 text_area.fill(str(value))
-                time.sleep(1)
 
                 # Click submit
                 submit_button.click()
 
                 # Wait for results
                 page.wait_for_selector("#__view1-__clone1", timeout=90000)
-                time.sleep(5)  
 
-                # Perform scrolling to reveal hidden content
-                scroll_table()
+                # Perform fast scrolling to reveal hidden content
+                fast_scroll()
 
                 # Check if "No Data Found" message appears
                 if page.locator("#noDataMessage").is_visible():
@@ -150,7 +140,6 @@ def open_website():
             load_page()
 
         print(f"✅ All new data saved to {output_file}")
-        page.wait_for_timeout(5000)  
         browser.close()
 
 if __name__ == "__main__":
