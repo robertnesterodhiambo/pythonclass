@@ -5,7 +5,7 @@ import os
 
 def open_website():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set to True for silent execution
+        browser = p.chromium.launch(headless=True)  # Set to True for silent execution
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
 
@@ -60,7 +60,7 @@ def open_website():
                 print(f"Skipping {value} (already processed)")
                 continue
 
-            if new_entries_count >= 5:
+            if new_entries_count >= 312640:
                 print("✅ Collected 5 new entries, stopping execution.")
                 break  
 
