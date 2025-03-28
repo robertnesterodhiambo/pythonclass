@@ -2,27 +2,26 @@ from playwright.sync_api import sync_playwright
 import pandas as pd
 import time
 import os
+import threading
 
-def open_website():
+def process_entries(entries, output_file, thread_id):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Set to True for silent execution
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
-
+        
         def load_page():
-            """Reopen the page and wait for it to fully load"""
             try:
                 page.goto(url, timeout=90000, wait_until="networkidle")
                 page.wait_for_selector("#idTAUnitNo", timeout=90000)
-                print("✅ Page reloaded successfully")
+                print(f"✅ [Thread {thread_id}] Page loaded successfully")
             except Exception as e:
-                print(f"⚠️ Error loading page: {e}. Retrying...")
+                print(f"⚠️ [Thread {thread_id}] Error loading page: {e}. Retrying...")
                 time.sleep(5)
                 page.reload()
                 page.wait_for_selector("#idTAUnitNo", timeout=90000)
 
         def scroll_table():
-            """Scrolls the table up to reveal hidden content"""
             try:
                 page.wait_for_selector("#idUnitStatusPanel-vsb", timeout=15000)
                 page.evaluate("""
@@ -33,17 +32,16 @@ def open_website():
                         let lastScroll = -1;
                         while (scrollDiv.scrollTop !== lastScroll) {
                             lastScroll = scrollDiv.scrollTop;
-                            scrollDiv.scrollBy(0, -200);  // Scroll UP by 200 pixels
-                            await new Promise(r => setTimeout(r, 500)); // Wait for content to load
+                            scrollDiv.scrollBy(0, -200);
+                            await new Promise(r => setTimeout(r, 500));
                         }
                     })();
                 """)
                 page.wait_for_timeout(5000)
             except Exception as e:
-                print(f"⚠️ Error while scrolling: {e}")
+                print(f"⚠️ [Thread {thread_id}] Error while scrolling: {e}")
 
         def get_text(locator):
-            """Returns text content of an element if found, else 'Not Found'"""
             try:
                 element = page.locator(locator)
                 if element.is_visible():
@@ -52,32 +50,12 @@ def open_website():
             except Exception:
                 return "Not Found"
 
-        # Load the page initially
         load_page()
-
-        df = pd.read_csv("sea_combined.csv")
-        output_file = "extracted_unit_numbers.csv"
-        file_exists = os.path.exists(output_file)
-
-        if file_exists:
-            existing_data = pd.read_csv(output_file)
-            processed_values = set(existing_data["Input"].astype(str))
-        else:
-            processed_values = set()
 
         text_area = page.locator("#idTAUnitNo")
         submit_button = page.locator("#idBtnUnitEnqSubmit")
-        new_entries_count = 0
-
-        for value in df["sea_combined"].astype(str):
-            if value in processed_values:
-                print(f"⏩ Skipping {value} (already processed)")
-                continue
-
-            if new_entries_count >= 312640:
-                print("✅ Collected required entries, stopping execution.")
-                break  
-
+        
+        for value in entries:
             try:
                 text_area.fill(str(value))
                 time.sleep(1)
@@ -86,7 +64,6 @@ def open_website():
                 scroll_table()
 
                 if page.locator("#noDataMessage").is_visible():
-                    print(f"⚠️ No data found for {value}. Saving as 'Not Found'.")
                     data_entry = pd.DataFrame([{ 
                         "Input": value, "Unit Number": "Not Found", "Unit Type": "Not Found",
                         "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
@@ -105,27 +82,45 @@ def open_website():
                         "Manufacturer": get_text("#idUnitStatusPanel-rows-row0-col1")
                     }])
 
-                    print(f"✅ Processed Entry: {value}")
-                    print(f"🔹 Unit Number: {data_entry.iloc[0]['Unit Number']}, Type: {data_entry.iloc[0]['Unit Type']}, Status: {data_entry.iloc[0]['Status']}")
-
-                try:
-                    data_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
-                    file_exists = True  
-                    print(f"✅ Data for {value} saved successfully.")
-                    new_entries_count += 1  
-                except Exception as e:
-                    print(f"⚠️ Error saving data: {e}")
-
+                with threading.Lock():
+                    data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+                    print(f"✅ [Thread {thread_id}] Processed {value}")
+            
             except Exception as e:
-                print(f"⚠️ Error processing entry {value}: {e}. Refreshing page and moving to next entry.")
-                load_page()  # Refresh the website before continuing to the next entry
-                continue  # Skip to the next iteration
+                print(f"⚠️ [Thread {thread_id}] Error processing {value}: {e}")
+                load_page()
+                continue
 
-            load_page()
-        
-        print(f"✅ All new data saved to {output_file}")
-        page.wait_for_timeout(5000)  
         browser.close()
+        print(f"✅ [Thread {thread_id}] Completed processing.")
 
 if __name__ == "__main__":
-    open_website()
+    df = pd.read_csv("sea_combined.csv")
+    output_file = "extracted_unit_numbers.csv"
+    existing_entries = set()
+    
+    if os.path.exists(output_file):
+        existing_data = pd.read_csv(output_file)
+        existing_entries = set(existing_data["Input"].astype(str))
+    
+    new_entries = []
+    for val in df["sea_combined"].astype(str):
+        if val in existing_entries:
+            print(f"⏩ Skipping already processed entry: {val}")
+        else:
+            new_entries.append(val)
+    
+    chunk_size = len(new_entries) // 6  # Now using 6 browsers
+    threads = []
+    
+    for i in range(6):  # Launch 6 threads
+        start_idx = i * chunk_size
+        end_idx = None if i == 5 else (i + 1) * chunk_size
+        thread = threading.Thread(target=process_entries, args=(new_entries[start_idx:end_idx], output_file, i + 1))
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
+    
+    print("✅ All threads completed execution.")

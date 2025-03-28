@@ -10,7 +10,7 @@ def open_website():
 
         def load_page():
             """Reopen the page and wait for it to fully load"""
-            page.goto(url, timeout=400000, wait_until="domcontentloaded")  # Faster loading
+            page.goto(url, timeout=400000, wait_until="domcontentloaded")  
             page.wait_for_load_state("domcontentloaded")  
             page.wait_for_selector("#idTAUnitNo", timeout=400000)
             print("✅ Page reloaded successfully")
@@ -64,13 +64,13 @@ def open_website():
                 submit_button.click()
 
                 # Wait for results
-                page.wait_for_selector("#__view1-__clone1", timeout=90000)
+                page.wait_for_selector("#__view1-__clone1", timeout=40000)
 
                 # Perform fast scrolling to reveal hidden content
                 fast_scroll()
 
-                # Check if "No Data Found" message appears
-                if page.locator("#noDataMessage").is_visible():
+                # If "No Data Found" appears, save immediately
+                if page.locator("#noDataMessage").count() > 0:
                     print(f"⚠️ No data found for {value}. Saving as 'Not Found'.")
                     data_entry = pd.DataFrame([{
                         "Input": value,
@@ -84,15 +84,15 @@ def open_website():
                         "Manufacturer": "Not Found"
                     }])
                 else:
-                    # Extract data if found
-                    unit_number = page.locator("#__view1-__clone1").text_content().strip()
-                    unit_type = page.locator("#__view1-__clone3").text_content().strip()
-                    lesse = page.locator("#__view1-__clone5").text_content().strip()
-                    status = page.locator("#__view1-__clone7").text_content().strip()
-                    city = page.locator("#__view1-__clone9").text_content().strip()
-                    depot = page.locator("#__view1-__clone11").text_content().strip()
-                    manuf_year_month = page.locator("#__view3-__clone17").text_content().strip()
-                    manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip()
+                    # **New Check: If an element is missing, save as "Not Found"**
+                    unit_number = page.locator("#__view1-__clone1").text_content().strip() if page.locator("#__view1-__clone1").count() > 0 else "Not Found"
+                    unit_type = page.locator("#__view1-__clone3").text_content().strip() if page.locator("#__view1-__clone3").count() > 0 else "Not Found"
+                    lesse = page.locator("#__view1-__clone5").text_content().strip() if page.locator("#__view1-__clone5").count() > 0 else "Not Found"
+                    status = page.locator("#__view1-__clone7").text_content().strip() if page.locator("#__view1-__clone7").count() > 0 else "Not Found"
+                    city = page.locator("#__view1-__clone9").text_content().strip() if page.locator("#__view1-__clone9").count() > 0 else "Not Found"
+                    depot = page.locator("#__view1-__clone11").text_content().strip() if page.locator("#__view1-__clone11").count() > 0 else "Not Found"
+                    manuf_year_month = page.locator("#__view3-__clone17").text_content().strip() if page.locator("#__view3-__clone17").count() > 0 else "Not Found"
+                    manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip() if page.locator("#idUnitStatusPanel-rows-row0-col1").count() > 0 else "Not Found"
 
                     print(f"✅ Processed Entry: {value}")
                     print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
