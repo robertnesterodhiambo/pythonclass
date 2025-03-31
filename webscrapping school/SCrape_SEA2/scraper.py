@@ -1,11 +1,27 @@
+import threading
+import pickle
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import os
-import threading
 from concurrent.futures import ThreadPoolExecutor
 
 # Lock to avoid double saving
 file_lock = threading.Lock()
+
+# Thread-local storage for processed values
+thread_local = threading.local()
+
+# Function to load processed values from file
+def load_processed_values(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            return pickle.load(f)
+    return set()
+
+# Function to save processed values to file
+def save_processed_values(file_path, processed_values):
+    with open(file_path, "wb") as f:
+        pickle.dump(processed_values, f)
 
 # Function to load the website page
 def load_page(page, url):
@@ -27,6 +43,11 @@ def fast_scroll(page):
 # Function to process each value
 def process_entry(value, processed_values, output_file, df):
     try:
+        # Check if the entry is already processed
+        if value in processed_values:
+            print(f"Skipping {value} (already processed)")
+            return
+
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=False)  # Set to True for silent execution
             page = browser.new_page()
@@ -35,12 +56,6 @@ def process_entry(value, processed_values, output_file, df):
 
             text_area = page.locator("#idTAUnitNo")
             submit_button = page.locator("#idBtnUnitEnqSubmit")
-
-            # Skip if already processed
-            if value in processed_values:
-                print(f"Skipping {value} (already processed)")
-                browser.close()
-                return
 
             print(f"Processing {value}...")
 
@@ -90,8 +105,9 @@ def process_entry(value, processed_values, output_file, df):
             # Ensure no double saving using a lock
             with file_lock:
                 data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-                processed_values.add(value)
-                print(f"✅ Data for {value} saved.")
+
+            # Update the processed values for this thread
+            processed_values.add(value)
 
             browser.close()
 
@@ -102,13 +118,20 @@ def process_entry(value, processed_values, output_file, df):
 def open_website():
     df = pd.read_csv("sea_combined.csv")
     output_file = "extracted_unit_numbers.csv"
+    processed_file = "processed_values.pkl"  # File to store processed entries
 
-    # Initialize set to track processed values
-    processed_values = set()
+    # Load previously processed values
+    processed_values = load_processed_values(processed_file)
+
+    # Assign the processed values to thread-local storage
+    thread_local.processed_values = processed_values
 
     # Using ThreadPoolExecutor to handle multiple threads
     with ThreadPoolExecutor(max_workers=6) as executor:
-        executor.map(lambda value: process_entry(value, processed_values, output_file, df), df["sea_combined"].astype(str))
+        executor.map(lambda value: process_entry(value, thread_local.processed_values, output_file, df), df["sea_combined"].astype(str))
+
+    # Save the processed values to file after completion
+    save_processed_values(processed_file, thread_local.processed_values)
 
     print("✅ All new data saved to output file.")
 

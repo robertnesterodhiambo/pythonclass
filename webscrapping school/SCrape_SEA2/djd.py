@@ -63,11 +63,19 @@ def process_entries(entries, output_file, thread_id):
                 page.wait_for_selector("#__view1-__clone1", timeout=10000)
                 scroll_table()
 
+                # Extract On Hire Date
+                on_hire_date = "Not Found"
+                if page.locator("#__label55").count() > 0:
+                    on_hire_date = page.locator("#__label55").text_content().strip()
+                elif page.locator("#idFlexBoxActivitiesBlock").count() > 0:
+                    on_hire_date = page.locator("#idFlexBoxActivitiesBlock").text_content().strip()
+
                 if page.locator("#noDataMessage").is_visible():
                     data_entry = pd.DataFrame([{ 
                         "Input": value, "Unit Number": "Not Found", "Unit Type": "Not Found",
                         "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
-                        "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found" 
+                        "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
+                        "On Hire Date": on_hire_date
                     }])
                 else:
                     data_entry = pd.DataFrame([{ 
@@ -79,7 +87,8 @@ def process_entries(entries, output_file, thread_id):
                         "City": get_text("#__view1-__clone9"),
                         "Depot": get_text("#__view1-__clone11"),
                         "Manuf. Year/Month": get_text("#__view3-__clone17"),
-                        "Manufacturer": get_text("#idUnitStatusPanel-rows-row0-col1")
+                        "Manufacturer": get_text("#idUnitStatusPanel-rows-row0-col1"),
+                        "On Hire Date": on_hire_date
                     }])
 
                 with threading.Lock():
