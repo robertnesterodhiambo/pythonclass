@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import os
+import re
 
 def open_website():
     with sync_playwright() as p:
@@ -81,10 +82,11 @@ def open_website():
                         "City": "Not Found",
                         "Depot": "Not Found",
                         "Manuf. Year/Month": "Not Found",
-                        "Manufacturer": "Not Found"
+                        "Manufacturer": "Not Found",
+                        "On Hire Date": "Not Found"
                     }])
                 else:
-                    # **New Check: If an element is missing, save as "Not Found"**
+                    # Extract information
                     unit_number = page.locator("#__view1-__clone1").text_content().strip() if page.locator("#__view1-__clone1").count() > 0 else "Not Found"
                     unit_type = page.locator("#__view1-__clone3").text_content().strip() if page.locator("#__view1-__clone3").count() > 0 else "Not Found"
                     lesse = page.locator("#__view1-__clone5").text_content().strip() if page.locator("#__view1-__clone5").count() > 0 else "Not Found"
@@ -93,9 +95,15 @@ def open_website():
                     depot = page.locator("#__view1-__clone11").text_content().strip() if page.locator("#__view1-__clone11").count() > 0 else "Not Found"
                     manuf_year_month = page.locator("#__view3-__clone17").text_content().strip() if page.locator("#__view3-__clone17").count() > 0 else "Not Found"
                     manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip() if page.locator("#idUnitStatusPanel-rows-row0-col1").count() > 0 else "Not Found"
-
+                    
+                    # Extract On Hire Date
+                    on_hire_date = "Not Found"
+                    if page.locator("#__label55").count() > 0:
+                        on_hire_date = page.locator("#__label55").text_content().strip()
+                    elif page.locator("#idFlexBoxActivitiesBlock").count() > 0:
+                        on_hire_date = page.locator("#idFlexBoxActivitiesBlock").text_content().strip()
+                    
                     print(f"✅ Processed Entry: {value}")
-                    print(f"Unit Number: {unit_number}, Unit Type: {unit_type}, Lesse: {lesse}, Status: {status}")
 
                     # Create a DataFrame for the entry
                     data_entry = pd.DataFrame([{
@@ -107,35 +115,19 @@ def open_website():
                         "City": city,
                         "Depot": depot,
                         "Manuf. Year/Month": manuf_year_month,
-                        "Manufacturer": manufacturer
+                        "Manufacturer": manufacturer,
+                        "On Hire Date": on_hire_date
                     }])
 
                 # Append data to CSV immediately
                 data_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
                 file_exists = True  
-
                 print(f"✅ Data for {value} saved.")
                 new_entries_count += 1  
 
             except Exception as e:
                 print(f"⚠️ Timeout/Error processing entry {value}: {e}")
-                print("🚨 Saving as 'Timeout' and moving to next entry.")
-
-                # Save "Timeout" entry
-                timeout_entry = pd.DataFrame([{
-                    "Input": value,
-                    "Unit Number": "Timeout",
-                    "Unit Type": "Timeout",
-                    "Lesse": "Timeout",
-                    "Status": "Timeout",
-                    "City": "Timeout",
-                    "Depot": "Timeout",
-                    "Manuf. Year/Month": "Timeout",
-                    "Manufacturer": "Timeout"
-                }])
-                timeout_entry.to_csv(output_file, mode='a', header=not file_exists, index=False)
-                file_exists = True  
-
+                
             # Reopen the URL for the next entry
             load_page()
 
