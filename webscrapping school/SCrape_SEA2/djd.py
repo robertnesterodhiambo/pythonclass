@@ -104,32 +104,44 @@ def process_entries(entries, output_file, thread_id):
         print(f"✅ [Thread {thread_id}] Completed processing.")
 
 if __name__ == "__main__":
-    df = pd.read_csv("sea_combined.csv")
-    output_file = "extracted_unit_numbers.csv"
-    existing_entries = set()
-    
-    if os.path.exists(output_file):
-        existing_data = pd.read_csv(output_file)
-        existing_entries = set(existing_data["Input"].astype(str))
-    
-    new_entries = []
-    for val in df["sea_combined"].astype(str):
-        if val in existing_entries:
-            print(f"⏩ Skipping already processed entry: {val}")
-        else:
-            new_entries.append(val)
-    
-    chunk_size = len(new_entries) // 6  # Now using 6 browsers
-    threads = []
-    
-    for i in range(6):  # Launch 6 threads
-        start_idx = i * chunk_size
-        end_idx = None if i == 5 else (i + 1) * chunk_size
-        thread = threading.Thread(target=process_entries, args=(new_entries[start_idx:end_idx], output_file, i + 1))
-        threads.append(thread)
-        thread.start()
-    
-    for thread in threads:
-        thread.join()
-    
-    print("✅ All threads completed execution.")
+    while True:
+        df = pd.read_csv("sea_combined.csv")
+        output_file = "extracted_unit_numbers.csv"
+        existing_entries = set()
+        
+        if os.path.exists(output_file):
+            existing_data = pd.read_csv(output_file)
+            existing_entries = set(existing_data["Input"].astype(str))
+        
+        new_entries = []
+        for val in df["sea_combined"].astype(str):
+            if val in existing_entries:
+                print(f"⏩ Skipping already processed entry: {val}")
+            else:
+                new_entries.append(val)
+        
+        if not new_entries:
+            print("✅ No new entries to process. Exiting.")
+            break
+
+        batch_size = 100  # Process 100 entries at a time
+        total_entries = len(new_entries)
+
+        for batch_start in range(0, total_entries, batch_size):
+            batch_entries = new_entries[batch_start:batch_start + batch_size]
+
+            chunk_size = len(batch_entries) // 6  # Now using 6 browsers
+            threads = []
+
+            for i in range(6):  # Launch 6 threads
+                start_idx = i * chunk_size
+                end_idx = None if i == 5 else (i + 1) * chunk_size
+                thread = threading.Thread(target=process_entries, args=(batch_entries[start_idx:end_idx], output_file, i + 1))
+                threads.append(thread)
+                thread.start()
+
+            for thread in threads:
+                thread.join()
+
+            print(f"✅ Processed {len(batch_entries)} entries. Restarting to free memory...")
+            time.sleep(10)  # Allow some cooldown before restarting
