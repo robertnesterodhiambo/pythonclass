@@ -130,10 +130,10 @@ if __name__ == "__main__":
         for batch_start in range(0, total_entries, batch_size):
             batch_entries = new_entries[batch_start:batch_start + batch_size]
 
-            chunk_size = len(batch_entries) // 6  # Now using 6 browsers
+            chunk_size = len(batch_entries) // 10  # Now using 6 browsers
             threads = []
 
-            for i in range(6):  # Launch 6 threads
+            for i in range(10):  # Launch 6 threads
                 start_idx = i * chunk_size
                 end_idx = None if i == 5 else (i + 1) * chunk_size
                 thread = threading.Thread(target=process_entries, args=(batch_entries[start_idx:end_idx], output_file, i + 1))
