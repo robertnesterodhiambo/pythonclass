@@ -1,5 +1,6 @@
 import requests
 import time
+import csv
 
 # Base URL and credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -20,35 +21,56 @@ if "accessToken" in auth_response:
     print("Login successful.")
     print(f"Active Cart QID: {cart_qid}\n")
 
-    # Step 2: Paginate through all results
-    page = 1
-    size = 5000  # Reasonable size per page
-    total_count = 0
+    # Open CSV file for writing (append mode to add new entries)
+    with open("products.csv", mode="w", newline='', encoding="utf-8") as file:
+        # Define CSV writer
+        fieldnames = ["gtin", "name", "categoryName", "brandName", "price", "inventory", "imageUrl"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-    while True:
-        print(f"Fetching page {page}...")
+        # Write the header to the CSV file
+        writer.writeheader()
 
-        search_url = (
-            f"{QOGITA_API_URL}/variants/search/?"
-            f"page={page}&size={size}"
-        )
+        # Step 2: Paginate through all results
+        page = 1
+        size = 5000  # Reasonable size per page
+        total_count = 0
 
-        response = requests.get(url=search_url, headers=headers).json()
+        while True:
+            print(f"Fetching page {page}...")
 
-        results = response.get("results", [])
-        if not results:
-            print("No more results. Done.")
-            break
+            search_url = (
+                f"{QOGITA_API_URL}/variants/search/?"
+                f"page={page}&size={size}"
+            )
 
-        for variant in results:
-            print(f"{variant['gtin']} | {variant['name']} | {variant['categoryName']} | {variant['brandName']} | "
-                  f"{variant['price']} | {variant['inventory']} | {variant['imageUrl']} ")
-            total_count += 1
+            response = requests.get(url=search_url, headers=headers).json()
 
-        page += 1
-        time.sleep(0.5)  # Sleep to avoid rate limits
+            results = response.get("results", [])
+            if not results:
+                print("No more results. Done.")
+                break
 
-    print(f"\n✅ Total products retrieved: {total_count}")
+            for variant in results:
+                # Write each result to the CSV file
+                writer.writerow({
+                    "gtin": variant.get('gtin', ''),
+                    "name": variant.get('name', ''),
+                    "categoryName": variant.get('categoryName', ''),
+                    "brandName": variant.get('brandName', ''),
+                    "price": variant.get('price', ''),
+                    "inventory": variant.get('inventory', ''),
+                    "imageUrl": variant.get('imageUrl', '')
+                })
+
+                print(f"Saved: {variant['gtin']} | {variant['name']} | {variant['categoryName']} | "
+                      f"{variant['brandName']} | {variant['price']} | {variant['inventory']} | {variant['imageUrl']}")
+
+                total_count += 1
+
+            page += 1
+            time.sleep(0.5)  # Sleep to avoid rate limits
+
+        print(f"\n✅ Total products retrieved: {total_count}")
 
 else:
     print("Login failed:", auth_response)
