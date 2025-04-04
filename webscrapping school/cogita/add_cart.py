@@ -22,52 +22,56 @@ cart_qid = auth_response["user"]["activeCartQid"]
 print("✅ Authenticated successfully.")
 print(f"🛒 Active Cart QID: {cart_qid}")
 
-# Step 2: Search for product variant
-query = "phantom 150ml"
-search_response = requests.get(
-    f"{QOGITA_API_URL}/variants/search/?query={query}&page=1&size=10",
-    headers=headers
-).json()
+# Step 2: Get all variants (page by page)
+page = 1
+while True:
+    search_response = requests.get(
+        f"{QOGITA_API_URL}/variants/search/?page={page}&size=100",  # Adjust size as needed
+        headers=headers
+    ).json()
 
-results = search_response.get("results", [])
-if not results:
-    print("❌ No products found.")
-    exit()
+    results = search_response.get("results", [])
+    if not results:
+        print("❌ No more products found.")
+        break  # Exit the loop when no products are left
 
-variant = results[0]
-fid = variant["fid"]
-slug = variant["slug"]
+    # Process each product (variant)
+    for variant in results:
+        fid = variant["fid"]
+        slug = variant["slug"]
 
-# Step 3: Get offers from specific variant
-offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
-offers_response = requests.get(offers_url, headers=headers).json()
+        # Step 3: Get offers for each variant
+        offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
+        offers_response = requests.get(offers_url, headers=headers).json()
 
-# DEBUG: print response to understand structure
-print("📄 Offers Response Structure:")
-print(offers_response)
+        # DEBUG: print response to understand structure
+        print("📄 Offers Response Structure for Variant:", variant["name"])
+        print(offers_response)
 
-# Extract offers safely
-offers = offers_response.get("results", []) if isinstance(offers_response, dict) else offers_response
+        # Extract offers safely
+        offers = offers_response.get("results", []) if isinstance(offers_response, dict) else offers_response
 
-if not offers:
-    print("❌ No offers found.")
-    exit()
+        if not offers:
+            print(f"❌ No offers found for {variant['name']}.")
+            continue
 
-# Pick first offer (you can apply your own logic for choosing)
-offer = offers[0]
-offer_qid = offer["qid"]
-quantity = 100
+        # Pick first offer (you can apply your own logic for choosing)
+        offer = offers[0]
+        offer_qid = offer["qid"]
+        quantity = 100  # You can change this based on your needs
 
-print(f"📦 Found Offer: {offer_qid} | Price: {offer['price']} | Available: {offer['inventory']}")
+        print(f"📦 Found Offer for {variant['name']}: {offer_qid} | Price: {offer['price']} | Available: {offer['inventory']}")
 
-# Step 4: Add to cart using offerQid
-add_response = requests.post(
-    url=f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
-    json={"offerQid": offer_qid, "quantity": quantity},
-    headers=headers
-)
+        # Step 4: Add to cart using offerQid
+        add_response = requests.post(
+            url=f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
+            json={"offerQid": offer_qid, "quantity": quantity},
+            headers=headers
+        )
 
-if add_response.ok:
-    print(f"✅ Successfully added {quantity} units to cart using Offer QID.")
-else:
-    print("❌ Failed to add to cart:", add_response.json())
+        if add_response.ok:
+            print(f"✅ Successfully added {quantity} units of {variant['name']} to cart.")
+        else:
+            print(f"❌ Failed to add {variant['name']} to cart:", add_response.json())
+
+    page += 1  # Move to the next page of variants

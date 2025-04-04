@@ -42,7 +42,7 @@ if "accessToken" in auth_response:
 
         for variant in results:
             print(f"{variant['gtin']} | {variant['name']} | {variant['categoryName']} | {variant['brandName']} | "
-                  f"{variant['price']} | {variant['inventory']} | {variant['imageUrl']}")
+                  f"{variant['price']} | {variant['inventory']} | {variant['imageUrl']} ")
             total_count += 1
 
         page += 1
