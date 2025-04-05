@@ -32,7 +32,7 @@ if "accessToken" in auth_response:
 
         # Step 2: Paginate through all results
         page = 1
-        size = 5000  # Reasonable size per page
+        size = 500000  # Reasonable size per page
         total_count = 0
 
         while True:
