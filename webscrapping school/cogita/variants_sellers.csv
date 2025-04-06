@@ -1,30 +1,43 @@
-Variant Name,Seller,Price (€),MOV (€),Available Qty,Ordering Qty,Total Price (€)
-Yara by Lattafa Perfumes Eau De Parfum 100ml 3.4 fl oz for Women,GELD3O,13.48,350.00,0,0,0.00
-Armaf Club De Nuit Intense Man 105ml/3.6oz Eau de Toilette Cologne Spray for Men Floral 105ml,164OY1,18.99,350.00,0,0,0.00
-Yara Moi by Lattafa 100ml Eau De Perfume Spray,GELD3O,11.99,350.00,0,0,0.00
-LATTAFA FAKHAR by Lattafa Eau de Parfum Spray 3.4 oz,D3YDKE,13.81,600.00,0,0,0.00
-Men's Asad Eau De Parfum Spray 3.4 oz Fragrances,D3JVOD,13.59,350.00,0,0,0.00
-Lattafa Oud For Glory Bade'e Al Oud Eau De Parfum 100ml Unisex,6KLEXY,12.16,600.00,0,0,0.00
-Terre D'Hermes by Hermes Eau De Toilette For Men 100ml,GELD3O,53.38,350.00,0,0,0.00
-Davidoff Cool Water for Men Eau De Toilette 125 ml,LEKM75,18.23,350.00,0,0,0.00
-Aventus by Creed Eau De Parfum 100ml Musk,2V7Q9X,196.70,350.00,0,0,0.00
-Khamrah Eau De Parfum Unisex 100ml Vanilla Sweet Warm Spicy Woody by Lattafa Perfumes,EMQWQQ,18.78,400.00,0,0,0.00
-Afnan 9 PM Eau De Parfum 100ml,D3GL69,17.47,600.00,0,0,0.00
-Versace Bright Crystal Women's Perfume EDT,YEO149,44.28,350.00,0,0,0.00
-Lattafa Khamrah Qahwa EDP Unisex 3.4 Fl oz,GELD3O,18.67,350.00,0,0,0.00
-Lattafa Fakhar Men Eau De Parfum - 100ml,EMQWQQ,12.76,400.00,0,0,0.00
-Tom Ford Black Orchid Eau De Perfume Spray 100ml,D3GL69,92.22,600.00,0,0,0.00
-Lattafa Yara TOUS,2V4GXZ,12.09,450.00,0,0,0.00
-Aromatics Elixir by Clinique Eau de Parfum For Women 100ml,16QJWR,24.27,600.00,0,0,0.00
-Narciso Rodriguez Edp vapo to spray 100ml,VVQKD9,52.27,350.00,0,0,0.00
-Paco Rabanne 1 Million For Men 3.4 Oz Edt Spray 100ml,9975VV,53.54,350.00,0,0,0.00
-Si by Giorgio Armani Eau de Parfum For Women 100ml Chypre,EMV827,71.83,400.00,0,0,0.00
-Hugo Boss Bottled Eau de Toilette for Men 100ml,87WEZ3,38.62,1150.00,0,0,0.00
-Narciso Rodriguez For Her Eau De Toilette Spray 50ml,VVQKD9,37.57,350.00,0,0,0.00
-Qaed Al Fursan Eau de Parfum for Men 90mL,YEWKXG,8.29,600.00,0,0,0.00
-Lancome Tresor Eau de Parfum Spray 30ml,GELD3O,23.76,350.00,0,0,0.00
-Bright Crystal Eau de Toilette Vaporizer 50ml,VV9JDK,32.37,350.00,0,0,0.00
-Narciso Rodriguez All Of Me EDP For Women 3.0 Fl Oz,16E19R,49.40,350.00,0,0,0.00
-Lattafa Badee Al Oud Sublime EDP 3.4 fl oz,VV9JDK,13.26,350.00,0,0,0.00
-GIORGIO ARMANI Armani Code Eau de Toilette for Men 125ml,EMV827,59.74,400.00,0,0,0.00
-Versace Eros for Men Eau de Toilette Spray 1.7 Ounce Fresh 0.17 Fl Oz,GELD3O,30.65,350.00,0,0,0.00
+GTIN,Variant Name,Category Name,Brand Name,Price (€),Inventory,Image URL,Seller,MOV (€),Available Qty,Ordering Qty,Total Price (€)
+6291108730515,Yara by Lattafa Perfumes Eau De Parfum 100ml 3.4 fl oz for Women,Eau De Parfum,Lattafa,13.49,1141,https://static.prod.qogita.com/files/images/variants/TWttPXFk3XuSBGeaRmb2jj.jpg,GELD3O,350.00,0,0,0.00
+6085010044712,Armaf Club De Nuit Intense Man 105ml/3.6oz Eau de Toilette Cologne Spray for Men Floral 105ml,Eau De Toilette,Armaf,18.99,8573,https://static.prod.qogita.com/files/images/variants/2h9t9tGNtYLxpkmxR8bGX4.jpg,164OY1,350.00,0,0,0.00
+6290360591421,Yara Moi by Lattafa 100ml Eau De Perfume Spray,Eau De Parfum,Lattafa,12.00,1625,https://static.prod.qogita.com/files/images/variants/k4ZCsCAXWYWEKeGcHKC3J2.jpg,GELD3O,350.00,0,0,0.00
+6291107456041,LATTAFA FAKHAR by Lattafa Eau de Parfum Spray 3.4 oz,Eau De Parfum,Lattafa,14.92,838,https://static.prod.qogita.com/files/images/variants/7J8pi6Saxg6uHJrmQfXk3i.jpg,D3YDKE,600.00,0,0,0.00
+6291108735411,Men's Asad Eau De Parfum Spray 3.4 oz Fragrances,Eau De Parfum,Lattafa,13.60,1017,https://static.prod.qogita.com/files/images/variants/JojSNinawipnDA6qqRqPu8.jpg,D3JVOD,350.00,0,0,0.00
+6291107458328,Lattafa Oud For Glory Bade'e Al Oud Eau De Parfum 100ml Unisex,Eau De Parfum,Zkmagic,14.33,39,https://static.prod.qogita.com/files/images/variants/ZCzydkyUnymj9YesimstfW.jpg,6KLEXY,600.00,0,0,0.00
+3346130009603,Terre D'Hermes by Hermes Eau De Toilette For Men 100ml,Eau De Toilette,Hermès,53.38,117,https://static.prod.qogita.com/files/images/variants/dfAUgB5rNfYpCnxAeLTWMJ.jpg,GELD3O,350.00,0,0,0.00
+3414202000572,Davidoff Cool Water for Men Eau De Toilette 125 ml,Eau De Toilette,Davidoff,18.24,358,https://static.prod.qogita.com/files/images/variants/XfVqmsT7KJsthfr5emHvai.jpg,LEKM75,350.00,0,0,0.00
+3508441001114,Aventus by Creed Eau De Parfum 100ml Musk,Eau De Parfum,Creed,202.18,19,https://static.prod.qogita.com/files/images/variants/P2ZFHzppJDdobdgCY9xFXm.jpg,2V7Q9X,350.00,0,0,0.00
+6291108737194,Khamrah Eau De Parfum Unisex 100ml Vanilla Sweet Warm Spicy Woody by Lattafa Perfumes,Eau De Parfum,Lattafa,18.78,872,https://static.prod.qogita.com/files/images/variants/hwtict9pmM4WTa3aiMDGhV.jpg,EMQWQQ,400.00,0,0,0.00
+6290171002338,Afnan 9 PM Eau De Parfum 100ml,Eau De Parfum,Afnan,17.48,427,https://static.prod.qogita.com/files/images/variants/VhLdYFBqgAFfk8ps9Jitu8.jpg,D3GL69,600.00,0,0,0.00
+8011003993826,Versace Bright Crystal Women's Perfume EDT,Eau De Toilette,Versace,44.29,72,https://static.prod.qogita.com/files/images/variants/TkBVaD7ysCWFtboqh2ouSF.jpg,YEO149,350.00,0,0,0.00
+6290360593661,Lattafa Khamrah Qahwa EDP Unisex 3.4 Fl oz,Eau De Parfum,Lattafa,18.67,2987,https://static.prod.qogita.com/files/images/variants/9pDnDpy72aNQ7UwWAzcx4j.jpg,GELD3O,350.00,0,0,0.00
+6291107456058,Lattafa Fakhar Men Eau De Parfum - 100ml,Eau De Parfum,Lattafa,12.77,2008,https://static.prod.qogita.com/files/images/variants/NFLUmmCQ7LLFKadEDJhoEq.jpg,EMQWQQ,400.00,0,0,0.00
+0888066000079,Tom Ford Black Orchid Eau De Perfume Spray 100ml,Eau De Parfum,Tom Ford,92.23,27,https://static.prod.qogita.com/files/images/variants/JfDhnf5iQrRERcorhrEBJK.jpg,D3GL69,600.00,0,0,0.00
+6290360594552,Lattafa Yara TOUS,Eau De Parfum,Lattafa,12.10,776,https://static.prod.qogita.com/files/images/variants/P4zjkm7h3XnGof6crSS3hV.jpg,2V4GXZ,450.00,0,0,0.00
+0020714999346,Aromatics Elixir by Clinique Eau de Parfum For Women 100ml,Eau De Parfum,Clinique,24.27,401,https://static.prod.qogita.com/files/images/variants/ewtaZYerwnQdZiBvwXyKbq.jpg,16QJWR,600.00,0,0,0.00
+3423470890129,Narciso Rodriguez Edp vapo to spray 100ml,Eau De Parfum,Narciso Rodriguez,52.28,571,https://static.prod.qogita.com/files/images/variants/5Uv5HD7seC7w3RTgqzjvLw.jpg,VVQKD9,350.00,0,0,0.00
+3349666007921,Paco Rabanne 1 Million For Men 3.4 Oz Edt Spray 100ml,Eau De Toilette,Paco Rabanne,53.55,225,https://static.prod.qogita.com/files/images/variants/4m32DiKAePkiZNyx4jpHnQ.jpg,9975VV,350.00,0,0,0.00
+3605521816658,Si by Giorgio Armani Eau de Parfum For Women 100ml Chypre,Eau De Parfum,Giorgio Armani,71.84,604,https://static.prod.qogita.com/files/images/variants/aCyRJ6h3BNnjiwR4MX39nb.jpg,EMV827,400.00,0,0,0.00
+0737052351100,Hugo Boss Bottled Eau de Toilette for Men 100ml,Eau De Toilette,Hugo Boss,38.63,970,https://static.prod.qogita.com/files/images/variants/MVPUcTYtSSXtHKB4zNf9k2.jpg,87WEZ3,1150.00,0,0,0.00
+3423470890013,Narciso Rodriguez For Her Eau De Toilette Spray 50ml,Eau De Toilette,Narciso Rodriguez,38.46,60,https://static.prod.qogita.com/files/images/variants/PDHGkGtKET2aRTWivs5xBn.jpg,VVQKD9,350.00,0,0,0.00
+6291107455365,Qaed Al Fursan Eau de Parfum for Men 90mL,Eau De Parfum,Lattafa,8.29,2673,https://static.prod.qogita.com/files/images/variants/PbCNgk2YpJkBBqjLnFoDn9.jpg,YEWKXG,600.00,0,0,0.00
+3147758034905,Lancome Tresor Eau de Parfum Spray 30ml,Eau De Parfum,Lancôme,23.77,732,https://static.prod.qogita.com/files/images/variants/2KLo7gcihQDRb2vxtSJEac.jpg,GELD3O,350.00,0,0,0.00
+8011003993819,Bright Crystal Eau de Toilette Vaporizer 50ml,Eau De Toilette,Versace,32.37,38,https://static.prod.qogita.com/files/images/variants/X3SC35SoNPuZVGp5rrmSpZ.jpg,VV9JDK,350.00,0,0,0.00
+3423222080969,Narciso Rodriguez All Of Me EDP For Women 3.0 Fl Oz,Eau De Parfum,Narciso Rodriguez,49.40,28,https://static.prod.qogita.com/files/images/variants/BDvwfPkQAWAPdFtSwuL2uU.jpg,16E19R,350.00,0,0,0.00
+6290360593142,Lattafa Badee Al Oud Sublime EDP 3.4 fl oz,Eau De Parfum,Lattafa,13.27,1204,https://static.prod.qogita.com/files/images/variants/35BwvnWM6mzymbRn97tHPS.jpg,VV9JDK,350.00,0,0,0.00
+3614273636513,GIORGIO ARMANI Armani Code Eau de Toilette for Men 125ml,Eau De Toilette,Giorgio Armani,59.75,581,https://static.prod.qogita.com/files/images/variants/9kQ98k7irevkSFLr7ioADo.jpg,EMV827,400.00,0,0,0.00
+8011003809202,Versace Eros for Men Eau de Toilette Spray 1.7 Ounce Fresh 0.17 Fl Oz,Eau De Toilette,Versace,30.65,52,https://static.prod.qogita.com/files/images/variants/FeYShBM3oNeL9Xbfu49rgK.jpg,GELD3O,350.00,0,0,0.00
+3423470300161,Issey Miyake L'eau D'Issey Eau De Toilette Fragrance Spray 100 ml,Eau De Toilette,Issey Miyake,34.25,310,https://static.prod.qogita.com/files/images/variants/ja7TnKDdyFovWJwQ77Eb9q.jpg,EMV827,400.00,0,0,0.00
+6290360598666,Lattafa Asad Zanzibar for Men 100ml Eau de Parfum Spray 3.4 Ounce,Eau De Parfum,Lattafa,11.16,2955,https://static.prod.qogita.com/files/images/variants/g6urVLW55K2fHWtF8jever.jpg,2V4GXZ,450.00,0,0,0.00
+3349668515660,Invictus by Paco Rabanne Eau De Toilette for Men 100ml,Eau De Toilette,Paco Rabanne,53.98,24,https://static.prod.qogita.com/files/images/variants/5JXWpzMi2V6FG9zMD43Es4.jpg,5WZVKX,600.00,0,0,0.00
+3360373016358,Cacharel Noa Eau de Toilette 100ml Women Spray,Eau De Toilette,Cacharel,24.10,325,https://static.prod.qogita.com/files/images/variants/C39GwqMWCpMnRAPHEXTY5G.jpg,EMV827,400.00,0,0,0.00
+8057971183661,Dolce & Gabbana Q Eau de Parfum Spray for Women 100ml,Eau De Parfum,Dolce & Gabbana,46.19,566,https://static.prod.qogita.com/files/images/variants/MeLkTFX5z9ZAXojyT6Uu2v.jpg,YEO149,350.00,0,0,0.00
+6291108733875,Unisex Bade'e Al Oud Amethyst Eau De Parfum Spray 3.38 oz Fragrances,Eau De Parfum,Lattafa,13.54,2519,https://static.prod.qogita.com/files/images/variants/LuPhWqoJmhh6tHaZWMJszQ.jpg,VV9JDK,350.00,0,0,0.00
+3349668515653,Paco Rabanne Invictus Eau de Toilette 50ml,Eau De Toilette,Paco Rabanne,38.57,154,https://static.prod.qogita.com/files/images/variants/27CCTCEND2pe8DDtauRePv.jpg,GELD3O,350.00,0,0,0.00
+3386460032681,Montblanc Legend Eau de Toilette 100ml,Eau De Toilette,Montblanc,26.31,128,https://static.prod.qogita.com/files/images/variants/hTrGu3fmbWy4RNyhHwwq2f.jpg,YEO149,350.00,0,0,0.00
+3423470890020,Narciso Rodriguez For Her Eau de Toilette 100ml,Eau De Toilette,Narciso Rodriguez,45.87,1339,https://static.prod.qogita.com/files/images/variants/QFbedQR4K3BSe36KiRSuzc.jpg,VVQKD9,350.00,0,0,0.00
+6290360599168,Lattafa Yara Candy for Women Eau de Parfum Spray 3.4 Fl Oz 100ml,Eau De Parfum,Lattafa,13.24,1414,https://static.prod.qogita.com/files/images/variants/fA54ziW6VP9ANc3w4Y4JcN.jpg,EMQWQQ,400.00,0,0,0.00
+3605533286555,La Vie Est Belle by Lancome Eau De Parfum for Women 100ml Fruity,Eau De Parfum,Lancôme,67.97,743,https://static.prod.qogita.com/files/images/variants/44hWfAB3TiNciGt6ffHs95.jpg,WEDJJK,350.00,0,0,0.00
+8011003809219,Eros by Versace Eau De Toilette For Men 100ml,Eau De Toilette,Versace,43.05,16,https://static.prod.qogita.com/files/images/variants/MDXPGQDR5RWTJUb94zzL59.jpg,O86XG9,350.00,0,0,0.00
+3349668594412,Paco Rabanne Fame Eau De Perfume Spray 80ml,Eau De Parfum,Paco Rabanne,63.79,114,https://static.prod.qogita.com/files/images/variants/SN7AgaV7FBLPzp4FoVXsKf.jpg,EMYX81,350.00,0,0,0.00

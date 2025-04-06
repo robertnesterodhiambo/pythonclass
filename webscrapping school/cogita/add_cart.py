@@ -14,7 +14,10 @@ cart_qid = None
 # Prepare CSV File (open in append mode so data is added incrementally)
 csv_file = open('variants_sellers.csv', mode='w', newline='', encoding='utf-8')
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow(['Variant Name', 'Seller', 'Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)'])
+csv_writer.writerow([
+    'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL', 
+    'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)'
+])
 
 def login():
     global access_token, headers, cart_qid
@@ -65,6 +68,14 @@ while True:
         slug = variant["slug"]
         variant_name = variant["name"]
 
+        # Collect additional information
+        gtin = variant.get('gtin', '')
+        category_name = variant.get('categoryName', '')
+        brand_name = variant.get('brandName', '')
+        price = variant.get('price', '')
+        inventory = variant.get('inventory', '')
+        image_url = variant.get('imageUrl', '')
+
         offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
         offers_raw_response = safe_request("GET", offers_url)
 
@@ -110,20 +121,20 @@ while True:
 
         # Save to CSV immediately before printing
         csv_writer.writerow([
-            variant_name,
-            best_offer['seller'],
-            best_offer['price'],
-            best_offer['mov'],
-            available_quantity,
-            quantity_to_order,
-            f"{total_price:.2f}"
+            gtin, variant_name, category_name, brand_name, price, inventory, image_url, 
+            best_offer['seller'], best_offer['mov'], available_quantity, quantity_to_order, f"{total_price:.2f}"
         ])
         csv_file.flush()  # Ensures data is written to the file immediately
 
         # Print the output after saving the data
         print(f"📦 Selected Offer for {variant_name}:")
+        print(f"    GTIN: {gtin}")
+        print(f"    Category: {category_name}")
+        print(f"    Brand: {brand_name}")
+        print(f"    Price: €{price}")
+        print(f"    Inventory: {inventory}")
+        print(f"    Image URL: {image_url}")
         print(f"    Seller: {best_offer['seller']}")
-        print(f"    Price: €{best_offer['price']}")
         print(f"    MOV: €{best_offer['mov']}")
         print(f"    Available: {available_quantity}")
         print(f"    Ordering: {quantity_to_order} units | Total: €{total_price:.2f}")
