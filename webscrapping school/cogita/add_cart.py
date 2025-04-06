@@ -1,4 +1,5 @@
 import requests
+import csv
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -9,6 +10,11 @@ QOGITA_PASSWORD = "JB100noga!"
 access_token = None
 headers = {}
 cart_qid = None
+
+# Prepare CSV File (open in append mode so data is added incrementally)
+csv_file = open('variants_sellers.csv', mode='w', newline='', encoding='utf-8')
+csv_writer = csv.writer(csv_file)
+csv_writer.writerow(['Variant Name', 'Seller', 'Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)'])
 
 def login():
     global access_token, headers, cart_qid
@@ -102,6 +108,19 @@ while True:
         quantity_to_order = min(requested_quantity, available_quantity)
         total_price = float(best_offer["price"]) * quantity_to_order
 
+        # Save to CSV immediately before printing
+        csv_writer.writerow([
+            variant_name,
+            best_offer['seller'],
+            best_offer['price'],
+            best_offer['mov'],
+            available_quantity,
+            quantity_to_order,
+            f"{total_price:.2f}"
+        ])
+        csv_file.flush()  # Ensures data is written to the file immediately
+
+        # Print the output after saving the data
         print(f"📦 Selected Offer for {variant_name}:")
         print(f"    Seller: {best_offer['seller']}")
         print(f"    Price: €{best_offer['price']}")
@@ -125,3 +144,7 @@ while True:
                 print(f"❌ Failed to add {variant_name} to cart. Raw response:", add_to_cart_response.text)
 
     page += 1
+
+# Close the CSV file after processing all pages
+csv_file.close()
+print("💾 Data saved to variants_sellers.csv")
