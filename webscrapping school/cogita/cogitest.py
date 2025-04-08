@@ -1,4 +1,6 @@
 import requests
+import pandas as pd
+import os
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -46,6 +48,19 @@ offers_response = requests.get(offers_url, headers=headers).json()
 print("📄 Offers Response Structure:")
 print(offers_response)
 
+# ✅ Save offers to CSV
+df = pd.DataFrame(offers_response)
+csv_file = "qogita_offers.csv"
+
+# Append or create new CSV
+if not os.path.exists(csv_file):
+    df.to_csv(csv_file, index=False)
+    print(f"💾 Created new CSV file: {csv_file}")
+else:
+    df.to_csv(csv_file, mode='a', header=False, index=False)
+    print(f"📥 Appended offers to: {csv_file}")
+
+
 # Extract offers safely
 offers = offers_response.get("results", []) if isinstance(offers_response, dict) else offers_response
 
@@ -71,4 +86,6 @@ if add_response.ok:
     print(f"✅ Successfully added {quantity} units to cart using Offer QID.")
 else:
     print("❌ Failed to add to cart:", add_response.json())
+
+
 
