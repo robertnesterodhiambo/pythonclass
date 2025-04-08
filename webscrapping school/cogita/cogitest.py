@@ -39,20 +39,35 @@ if not results:
 variant = results[0]
 fid = variant["fid"]
 slug = variant["slug"]
+product_name = variant["name"]
 
 # Step 3: Get offers from specific variant
 offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
 offers_response = requests.get(offers_url, headers=headers).json()
-
-# DEBUG: print response to understand structure
-print("📄 Offers Response Structure:")
 print(offers_response)
 
-# ✅ Save offers to CSV
-df = pd.DataFrame(offers_response)
-csv_file = "qogita_offers.csv"
+# Extract offers list
+offers = offers_response.get("results", []) if isinstance(offers_response, dict) else offers_response
 
-# Append or create new CSV
+if not offers:
+    print("❌ No offers found.")
+    exit()
+
+# Build a clean structured list of offers
+product_offers = []
+for offer in offers:
+    offer["product"] = product_name  # Attach product name to each offer
+    product_offers.append(offer)
+
+# Create DataFrame and select useful columns
+df = pd.DataFrame(product_offers)
+
+# Optional: rearrange or select specific columns
+desired_columns = ['product', 'qid', 'seller', 'price', 'priceCurrency', 'inventory', 'mov']
+df = df[[col for col in desired_columns if col in df.columns]]
+
+# Save to CSV
+csv_file = "qogita_offers.csv"
 if not os.path.exists(csv_file):
     df.to_csv(csv_file, index=False)
     print(f"💾 Created new CSV file: {csv_file}")
@@ -60,15 +75,7 @@ else:
     df.to_csv(csv_file, mode='a', header=False, index=False)
     print(f"📥 Appended offers to: {csv_file}")
 
-
-# Extract offers safely
-offers = offers_response.get("results", []) if isinstance(offers_response, dict) else offers_response
-
-if not offers:
-    print("❌ No offers found.")
-    exit()
-
-# Pick first offer (you can apply your own logic for choosing)
+# Show one selected offer
 offer = offers[0]
 offer_qid = offer["qid"]
 quantity = 100
@@ -88,4 +95,11 @@ else:
     print("❌ Failed to add to cart:", add_response.json())
 
 
+json_data = offers_response
+# Convert JSON offers list to DataFrame
+offers_df = pd.DataFrame(json_data['seller'])
 
+# Save to CSV
+offers_df.to_csv('offers_data.csv', index=False)
+
+print("CSV file 'offers_data.csv' has been created.")
