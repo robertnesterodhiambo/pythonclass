@@ -207,3 +207,4 @@ while True:
 # Close the CSV file after processing all pages
 csv_file.close()
 print("💾 Data saved to variants_sellers.csv")
+# new script
