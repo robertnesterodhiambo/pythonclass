@@ -27,12 +27,13 @@ if os.stat('variants_sellers.csv').st_size == 0:
 # Read existing GTINs from the CSV to avoid duplicates
 def get_existing_gtins():
     existing_gtins = set()
-    if os.path.exists('variants_sellers.csv'):
+    if os.path.exists('variants_sellers.csv') and os.stat('variants_sellers.csv').st_size > 0:
         with open('variants_sellers.csv', mode='r', encoding='utf-8') as file:
             csv_reader = csv.reader(file)
-            next(csv_reader)  # Skip header row
-            for row in csv_reader:
-                existing_gtins.add(row[0])  # GTIN is in the first column
+            header = next(csv_reader, None)  # Skip header row, or None if no header exists
+            if header:  # If there's a header row, proceed to read the data
+                for row in csv_reader:
+                    existing_gtins.add(row[0])  # GTIN is in the first column
     return existing_gtins
 
 existing_gtins = get_existing_gtins()
@@ -207,4 +208,3 @@ while True:
 # Close the CSV file after processing all pages
 csv_file.close()
 print("💾 Data saved to variants_sellers.csv")
-# new script
