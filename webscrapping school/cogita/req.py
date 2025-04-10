@@ -40,13 +40,20 @@ def login():
     print(f"🛒 Active Cart QID: {cart_qid}")
 
 def safe_request(method, url, **kwargs):
-    """Wrapper to handle 401 errors by re-logging in and retrying once."""
+    """Wrapper to handle 401 errors by re-logging in and retrying once, and handling Cloudflare blocks."""
     global headers
     response = requests.request(method, url, headers=headers, **kwargs)
+
+    # Handle token expiration (401) and Cloudflare errors (403/503)
     if response.status_code == 401:
         print("🔁 Token expired, re-authenticating...")
         login()
         response = requests.request(method, url, headers=headers, **kwargs)
+    elif response.status_code in [403, 503]:
+        print("🔁 Cloudflare block detected. Re-authenticating...")
+        login()
+        response = requests.request(method, url, headers=headers, **kwargs)
+    
     return response
 
 def get_variants(page):
