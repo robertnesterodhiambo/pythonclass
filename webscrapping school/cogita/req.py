@@ -1,6 +1,7 @@
 import requests
 import csv
 import time
+import os
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -13,12 +14,15 @@ headers = {}
 cart_qid = None
 
 # Prepare CSV File (open in append mode so data is added incrementally)
-csv_file = open('variants_sellers.csv', mode='w', newline='', encoding='utf-8')
+csv_file = open('variants_sellers.csv', mode='a', newline='', encoding='utf-8')
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow([
-    'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL', 
-    'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', "Unit"
-])
+
+# Check if CSV has headers, if not write headers
+if os.stat('variants_sellers.csv').st_size == 0:
+    csv_writer.writerow([
+        'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL', 
+        'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', "Unit"
+    ])
 
 def login():
     """Login to the API and set the access token and headers."""
@@ -40,20 +44,13 @@ def login():
     print(f"🛒 Active Cart QID: {cart_qid}")
 
 def safe_request(method, url, **kwargs):
-    """Wrapper to handle 401 errors by re-logging in and retrying once, and handling Cloudflare blocks."""
+    """Wrapper to handle 401 errors by re-logging in and retrying once."""
     global headers
     response = requests.request(method, url, headers=headers, **kwargs)
-
-    # Handle token expiration (401) and Cloudflare errors (403/503)
     if response.status_code == 401:
         print("🔁 Token expired, re-authenticating...")
         login()
         response = requests.request(method, url, headers=headers, **kwargs)
-    elif response.status_code in [403, 503]:
-        print("🔁 Cloudflare block detected. Re-authenticating...")
-        login()
-        response = requests.request(method, url, headers=headers, **kwargs)
-    
     return response
 
 def get_variants(page):
@@ -111,8 +108,8 @@ def process_variant(variant):
         print(f"⚠️ No valid offers for {variant_name} meet the MOV requirement.")
         return
 
-    # Choose the best offer (min price)
-    best_offer = min(valid_offers, key=lambda x: float(x["price"]))
+    # Choose the first available offer
+    best_offer = valid_offers[0]
     offer_qid = best_offer["qid"]
 
     # Check available quantity and adjust order quantity if needed
@@ -151,16 +148,38 @@ def process_variant(variant):
     if add_to_cart_response.ok:
         print(f"✅ Added {quantity_to_order} units of {variant_name} to cart.\n")
     else:
+        # Print detailed error information from the response
         try:
-            print(f"❌ Failed to add {variant_name} to cart:", add_to_cart_response.json())
-        except:
-            print(f"❌ Failed to add {variant_name} to cart. Raw response:", add_to_cart_response.text)
+            error_data = add_to_cart_response.json()
+            print(f"❌ Failed to add {variant_name} to cart. Error: {error_data}")
+        except Exception as e:
+            print(f"❌ Failed to add {variant_name} to cart. Raw response: {add_to_cart_response.text}, Error: {str(e)}")
+
+def load_last_page_processed():
+    """Load the last page that was successfully processed from a file."""
+    if os.path.exists("last_processed_page.txt"):
+        with open("last_processed_page.txt", "r") as f:
+            last_page = int(f.read().strip())
+            # Ensure we start from the next page (i.e., if last page was 1, start from page 2)
+            return last_page + 1 if last_page == 1 else last_page
+    return 2  # If no page has been processed, start from page 2
+
+def save_last_page_processed(page):
+    """Save the last successfully processed page to a file."""
+    with open("last_processed_page.txt", "w") as f:
+        f.write(str(page))
 
 # Initial login
 login()
 
-# Step 2: Get all variants (page by page)
-page = 1
+# Step 2: Get total number of variants (before starting the loop)
+initial_response = get_variants(1)
+total_entries = initial_response.get('totalElements', 0)
+
+print(f"Total variants found: {total_entries}")
+
+# Step 3: Start fetching and processing variants
+page = load_last_page_processed()
 while True:
     search_response = get_variants(page)
 
@@ -171,6 +190,9 @@ while True:
 
     for variant in results:
         process_variant(variant)
+
+    # Save the page number to resume from the next time
+    save_last_page_processed(page)
 
     page += 1
     time.sleep(1)  # To avoid hitting API too quickly
