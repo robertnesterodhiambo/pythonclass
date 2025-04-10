@@ -6,7 +6,7 @@ import threading
 
 def process_entries(entries, output_file, thread_id):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
         
@@ -46,9 +46,9 @@ def process_entries(entries, output_file, thread_id):
                 element = page.locator(locator)
                 if element.is_visible():
                     return element.text_content().strip()
-                return "Not Found"
+                return ""
             except Exception:
-                return "Not Found"
+                return ""
 
         load_page()
 
@@ -63,56 +63,61 @@ def process_entries(entries, output_file, thread_id):
                 page.wait_for_selector("#__view1-__clone1", timeout=10000)
                 scroll_table()
 
+                # Prepare the dictionary to save results
+                data_entry = {
+                    "Input": value,
+                    "Unit Number": "", "Unit Type": "", "Lesse": "", "Status": "", 
+                    "City": "", "Depot": "", "Manuf. Year/Month": "", "Manufacturer": "", "On Hire Date": ""
+                }
+
                 # Check if the popup appears
                 if page.locator("#__mbox0-hdr").is_visible():
-                    print(f"⚠️ [Thread {thread_id}] Popup detected. Storing as 'Not Found' for {value}")
-                    data_entry = pd.DataFrame([{ 
-                        "Input": value, "Unit Number": "Not Found", "Unit Type": "Not Found",
-                        "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
-                        "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
-                        "On Hire Date": "Not Found"
-                    }])
+                    print(f"⚠️ [Thread {thread_id}] Popup detected. Storing searched number for {value}")
+                    data_entry["Unit Number"] = "Popup detected"
+                    # Write the data_entry even if the popup appears
                     with threading.Lock():
-                        data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-                    page.reload()  # Refresh the page
+                        pd.DataFrame([data_entry]).to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+                    page.reload()  # Refresh the page after popup detection
                     time.sleep(5)
                     continue  # Skip further processing for this entry
-                
+
                 # Extract On Hire Date
-                on_hire_date = "Not Found"
+                on_hire_date = ""
                 if page.locator("#__label55").count() > 0:
                     on_hire_date = page.locator("#__label55").text_content().strip()
                 elif page.locator("#idFlexBoxActivitiesBlock").count() > 0:
                     on_hire_date = page.locator("#idFlexBoxActivitiesBlock").text_content().strip()
 
+                # If there's no data (no results), write the input value with blank fields
                 if page.locator("#noDataMessage").is_visible():
-                    data_entry = pd.DataFrame([{ 
-                        "Input": value, "Unit Number": "Not Found", "Unit Type": "Not Found",
-                        "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
-                        "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
-                        "On Hire Date": on_hire_date
-                    }])
-                else:
-                    data_entry = pd.DataFrame([{ 
-                        "Input": value, 
-                        "Unit Number": get_text("#__view1-__clone1"),
-                        "Unit Type": get_text("#__view1-__clone3"),
-                        "Lesse": get_text("#__view1-__clone5"),
-                        "Status": get_text("#__view1-__clone7"),
-                        "City": get_text("#__view1-__clone9"),
-                        "Depot": get_text("#__view1-__clone11"),
-                        "Manuf. Year/Month": get_text("#__view3-__clone17"),
-                        "Manufacturer": get_text("#idUnitStatusPanel-rows-row0-col1"),
-                        "On Hire Date": on_hire_date
-                    }])
+                    data_entry["On Hire Date"] = on_hire_date
+                    with threading.Lock():
+                        pd.DataFrame([data_entry]).to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+                    continue
 
+                # Otherwise, extract the actual data
+                data_entry["Unit Number"] = get_text("#__view1-__clone1")
+                data_entry["Unit Type"] = get_text("#__view1-__clone3")
+                data_entry["Lesse"] = get_text("#__view1-__clone5")
+                data_entry["Status"] = get_text("#__view1-__clone7")
+                data_entry["City"] = get_text("#__view1-__clone9")
+                data_entry["Depot"] = get_text("#__view1-__clone11")
+                data_entry["Manuf. Year/Month"] = get_text("#__view3-__clone17")
+                data_entry["Manufacturer"] = get_text("#idUnitStatusPanel-rows-row0-col1")
+                data_entry["On Hire Date"] = on_hire_date
+
+                # Save the result, even if there was no data found or if timeout occurred
                 with threading.Lock():
-                    data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-                    print(f"✅ [Thread {thread_id}] Processed {value}")
+                    pd.DataFrame([data_entry]).to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+                print(f"✅ [Thread {thread_id}] Processed {value}")
             
             except Exception as e:
                 print(f"⚠️ [Thread {thread_id}] Error processing {value}: {e}")
-                load_page()
+                # Write the input value even if there's an error or timeout
+                data_entry = { "Input": value, "Unit Number": "Error", "Unit Type": "", "Lesse": "", "Status": "", 
+                               "City": "", "Depot": "", "Manuf. Year/Month": "", "Manufacturer": "", "On Hire Date": "" }
+                with threading.Lock():
+                    pd.DataFrame([data_entry]).to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
                 continue
 
         browser.close()
