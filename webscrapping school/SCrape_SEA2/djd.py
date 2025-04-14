@@ -5,11 +5,12 @@ import os
 import threading
 
 def process_entries(entries, output_file, thread_id):
+    lock = threading.Lock()
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
-        
+
         def load_page():
             try:
                 page.goto(url, timeout=90000, wait_until="networkidle")
@@ -28,7 +29,7 @@ def process_entries(entries, output_file, thread_id):
                     (async function() {
                         let scrollDiv = document.querySelector("#idUnitStatusPanel-vsb");
                         if (!scrollDiv) return;
-                        
+
                         let lastScroll = -1;
                         while (scrollDiv.scrollTop !== lastScroll) {
                             lastScroll = scrollDiv.scrollTop;
@@ -51,15 +52,31 @@ def process_entries(entries, output_file, thread_id):
                 return "Not Found"
 
         load_page()
-
         text_area = page.locator("#idTAUnitNo")
         submit_button = page.locator("#idBtnUnitEnqSubmit")
-        
+
         for value in entries:
             try:
                 text_area.fill(str(value))
                 time.sleep(1)
                 submit_button.click()
+                page.wait_for_timeout(5000)
+
+                # Check for "No Data" popup
+                if page.locator("#__mbox0-cont").is_visible():
+                    print(f"⚠️ [Thread {thread_id}] No data for {value}, logging as Not Found and reloading.")
+                    data_entry = pd.DataFrame([{
+                        "Input": value, "Unit Number": "Not Found", "Unit Type": "Not Found",
+                        "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
+                        "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
+                        "On Hire Date": "Not Found"
+                    }])
+                    with lock:
+                        data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
+                    page.reload()
+                    page.wait_for_selector("#idTAUnitNo", timeout=60000)
+                    continue
+
                 page.wait_for_selector("#__view1-__clone1", timeout=10000)
                 scroll_table()
 
@@ -91,10 +108,10 @@ def process_entries(entries, output_file, thread_id):
                         "On Hire Date": on_hire_date
                     }])
 
-                with threading.Lock():
+                with lock:
                     data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-                    print(f"✅ [Thread {thread_id}] Processed {value}")
-            
+                print(f"✅ [Thread {thread_id}] Processed {value}")
+
             except Exception as e:
                 print(f"⚠️ [Thread {thread_id}] Error processing {value}: {e}")
                 load_page()
@@ -108,34 +125,34 @@ if __name__ == "__main__":
         df = pd.read_csv("sea_combined.csv")
         output_file = "extracted_unit_numbers.csv"
         existing_entries = set()
-        
+
         if os.path.exists(output_file):
             existing_data = pd.read_csv(output_file)
             existing_entries = set(existing_data["Input"].astype(str))
-        
+
         new_entries = []
         for val in df["sea_combined"].astype(str):
             if val in existing_entries:
                 print(f"⏩ Skipping already processed entry: {val}")
             else:
                 new_entries.append(val)
-        
+
         if not new_entries:
             print("✅ No new entries to process. Exiting.")
             break
 
-        batch_size = 100  # Process 100 entries at a time
+        batch_size = 800
         total_entries = len(new_entries)
 
         for batch_start in range(0, total_entries, batch_size):
             batch_entries = new_entries[batch_start:batch_start + batch_size]
 
-            chunk_size = len(batch_entries) // 10  # Now using 6 browsers
+            chunk_size = len(batch_entries) // 30
             threads = []
 
-            for i in range(10):  # Launch 6 threads
+            for i in range(30):
                 start_idx = i * chunk_size
-                end_idx = None if i == 5 else (i + 1) * chunk_size
+                end_idx = None if i == 29 else (i + 1) * chunk_size
                 thread = threading.Thread(target=process_entries, args=(batch_entries[start_idx:end_idx], output_file, i + 1))
                 threads.append(thread)
                 thread.start()
@@ -144,4 +161,4 @@ if __name__ == "__main__":
                 thread.join()
 
             print(f"✅ Processed {len(batch_entries)} entries. Restarting to free memory...")
-            time.sleep(10)  # Allow some cooldown before restarting
+            time.sleep(10)
