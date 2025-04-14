@@ -123,6 +123,7 @@ def process_entries(entries, output_file, thread_id):
 if __name__ == "__main__":
     while True:
         df = pd.read_csv("sea_combined.csv")
+        #df = pd.read_csv(r"C:\Users\Dragon\Documents\GitHub\pythonclass\webscrapping school\SCrape_SEA2\sea_combined.csv")
         output_file = "extracted_unit_numbers.csv"
         existing_entries = set()
 
@@ -141,7 +142,7 @@ if __name__ == "__main__":
             print("✅ No new entries to process. Exiting.")
             break
 
-        batch_size = 800
+        batch_size = 224
         total_entries = len(new_entries)
 
         for batch_start in range(0, total_entries, batch_size):
