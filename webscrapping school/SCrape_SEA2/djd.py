@@ -123,7 +123,7 @@ def process_entries(entries, output_file, thread_id):
 if __name__ == "__main__":
     while True:
         df = pd.read_csv("sea_combined.csv")
-        #df = pd.read_csv(r"C:\Users\Dragon\Documents\GitHub\pythonclass\webscrapping school\SCrape_SEA2\sea_combined.csv")
+        #df = pd.read_csv(r"C:\Users\Dragon\Documents\sea_combined.csv")
         output_file = "extracted_unit_numbers.csv"
         existing_entries = set()
 
