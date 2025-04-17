@@ -181,7 +181,7 @@ if __name__ == "__main__":
             print("✅ No new entries to process. Exiting.")
             break
 
-        batch_size = 260
+        batch_size = 100
         total_entries = len(new_entries)
 
         for batch_start in range(0, total_entries, batch_size):
