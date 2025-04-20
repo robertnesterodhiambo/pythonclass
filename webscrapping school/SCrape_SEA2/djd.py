@@ -139,10 +139,10 @@ def monitor_threads(batch_entries, output_file):
         thread.start()
         thread_refs[i] = (thread, entries_slice)
 
-    chunk_size = len(batch_entries) // 50
-    for i in range(50):
+    chunk_size = len(batch_entries) // 20
+    for i in range(20):
         start_idx = i * chunk_size
-        end_idx = None if i == 49 else (i + 1) * chunk_size
+        end_idx = None if i == 19 else (i + 1) * chunk_size
         entries_slice = batch_entries[start_idx:end_idx]
         start_thread(i, entries_slice)
 
