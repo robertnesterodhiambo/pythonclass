@@ -61,6 +61,7 @@ def process_entries(entries, output_file, thread_id):
                 for value in entries:
                     value_str = str(value)
                     try:
+                        # Always clear and reload page after each container
                         text_area.fill(value_str)
                         time.sleep(1)
                         submit_button.click()
@@ -70,16 +71,20 @@ def process_entries(entries, output_file, thread_id):
                             print(f"[Thread {thread_id}] No data for {value_str}")
                             data_entry = pd.DataFrame([{
                                 "Input": value_str, "Unit Number": "Not Found", "Unit Type": "Not Found",
-                                "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
-                                "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
+                                "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found",
+                                "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found",
                                 "On Hire Date": "Not Found"
                             }])
                             with lock:
                                 data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-                            page.reload()
-                            page.wait_for_selector("#idTAUnitNo", timeout=60000)
                             collected += 1
-                            print(f"[Thread {thread_id}] Collected: {collected}")
+                            print(f"[Thread {thread_id}] Collected: {collected} ({value_str})")
+
+                            # ➡️ Refresh page after each entry
+                            page.reload()
+                            page.wait_for_selector("#idTAUnitNo", timeout=90000)
+                            text_area = page.locator("#idTAUnitNo")
+                            submit_button = page.locator("#idBtnUnitEnqSubmit")
                             continue
 
                         page.wait_for_selector("#__view1-__clone1", timeout=60000)
@@ -94,13 +99,13 @@ def process_entries(entries, output_file, thread_id):
                         if page.locator("#noDataMessage").is_visible():
                             data_entry = pd.DataFrame([{ 
                                 "Input": value_str, "Unit Number": "Not Found", "Unit Type": "Not Found",
-                                "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found", 
-                                "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found", 
+                                "Lesse": "Not Found", "Status": "Not Found", "City": "Not Found",
+                                "Depot": "Not Found", "Manuf. Year/Month": "Not Found", "Manufacturer": "Not Found",
                                 "On Hire Date": on_hire_date
                             }])
                         else:
                             data_entry = pd.DataFrame([{ 
-                                "Input": value_str, 
+                                "Input": value_str,
                                 "Unit Number": get_text("#__view1-__clone1"),
                                 "Unit Type": get_text("#__view1-__clone3"),
                                 "Lesse": get_text("#__view1-__clone5"),
@@ -117,9 +122,19 @@ def process_entries(entries, output_file, thread_id):
                         collected += 1
                         print(f"[Thread {thread_id}] Collected: {collected} ({value_str})")
 
+                        # ➡️ Refresh page after each entry
+                        page.reload()
+                        page.wait_for_selector("#idTAUnitNo", timeout=90000)
+                        text_area = page.locator("#idTAUnitNo")
+                        submit_button = page.locator("#idBtnUnitEnqSubmit")
+
                     except Exception as e:
                         print(f"[Thread {thread_id}] Error with {value_str}: {e}")
-                        load_page()
+                        # Refresh page in case of exception to avoid being stuck
+                        page.reload()
+                        page.wait_for_selector("#idTAUnitNo", timeout=90000)
+                        text_area = page.locator("#idTAUnitNo")
+                        submit_button = page.locator("#idBtnUnitEnqSubmit")
                         continue
 
                 browser.close()
@@ -137,12 +152,12 @@ def monitor_threads(batch_entries, output_file):
         thread = threading.Thread(target=process_entries, args=(entries_slice, output_file, i + 1))
         thread.daemon = True
         thread.start()
-        thread_refs[i] = (thread, entries_slice)  # <- update the reference when (re)starting
+        thread_refs[i] = (thread, entries_slice)
 
-    chunk_size = len(batch_entries) // 10
-    for i in range(10):
+    chunk_size = len(batch_entries) // 20
+    for i in range(20):
         start_idx = i * chunk_size
-        end_idx = None if i == 9 else (i + 1) * chunk_size
+        end_idx = None if i == 19 else (i + 1) * chunk_size
         entries_slice = batch_entries[start_idx:end_idx]
         start_thread(i, entries_slice)
 
@@ -151,7 +166,7 @@ def monitor_threads(batch_entries, output_file):
         for i, (thread, entries_slice) in list(thread_refs.items()):
             if not thread.is_alive():
                 print(f"[Monitor] Restarting thread {i + 1}")
-                start_thread(i, entries_slice)  # <- restart and update thread_refs
+                start_thread(i, entries_slice)
                 all_alive = False
         if all_alive:
             time.sleep(5)
@@ -161,7 +176,7 @@ def monitor_threads(batch_entries, output_file):
 if __name__ == "__main__":
     while True:
         df = pd.read_csv("sea_combined.csv")
-        output_file = "extracted_unit_numbers.csv"
+        output_file = "/home/dragon/DATA/extracted_unit_numbers.csv"
 
         if os.path.exists(output_file):
             processed_df = pd.read_csv(output_file)
