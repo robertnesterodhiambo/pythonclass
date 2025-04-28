@@ -137,21 +137,21 @@ def monitor_threads(batch_entries, output_file):
         thread = threading.Thread(target=process_entries, args=(entries_slice, output_file, i + 1))
         thread.daemon = True
         thread.start()
-        thread_refs[i] = (thread, entries_slice)
+        thread_refs[i] = (thread, entries_slice)  # <- update the reference when (re)starting
 
-    chunk_size = len(batch_entries) // 50
-    for i in range(50):
+    chunk_size = len(batch_entries) // 10
+    for i in range(10):
         start_idx = i * chunk_size
-        end_idx = None if i == 49 else (i + 1) * chunk_size
+        end_idx = None if i == 9 else (i + 1) * chunk_size
         entries_slice = batch_entries[start_idx:end_idx]
         start_thread(i, entries_slice)
 
     while True:
         all_alive = True
-        for i, (thread, entries_slice) in thread_refs.items():
+        for i, (thread, entries_slice) in list(thread_refs.items()):
             if not thread.is_alive():
                 print(f"[Monitor] Restarting thread {i + 1}")
-                start_thread(i, entries_slice)
+                start_thread(i, entries_slice)  # <- restart and update thread_refs
                 all_alive = False
         if all_alive:
             time.sleep(5)
