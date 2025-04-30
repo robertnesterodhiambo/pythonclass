@@ -2,6 +2,7 @@ import requests
 import csv
 import time
 import os
+import random
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -20,7 +21,7 @@ csv_writer = csv.writer(csv_file)
 # Check if CSV has headers, if not write headers
 if os.stat('variants_sellers.csv').st_size == 0:
     csv_writer.writerow([
-        'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL', 
+        'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
         'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', "Unit"
     ])
 
@@ -30,10 +31,10 @@ def get_existing_gtins():
     if os.path.exists('variants_sellers.csv') and os.stat('variants_sellers.csv').st_size > 0:
         with open('variants_sellers.csv', mode='r', encoding='utf-8') as file:
             csv_reader = csv.reader(file)
-            header = next(csv_reader, None)  # Skip header row, or None if no header exists
-            if header:  # If there's a header row, proceed to read the data
+            header = next(csv_reader, None)
+            if header:
                 for row in csv_reader:
-                    existing_gtins.add(row[0])  # GTIN is in the first column
+                    existing_gtins.add(row[0])
     return existing_gtins
 
 existing_gtins = get_existing_gtins()
@@ -62,11 +63,11 @@ def safe_request(method, url, **kwargs):
     global headers
     try:
         response = requests.request(method, url, headers=headers, **kwargs)
-        response.raise_for_status()  # Raise HTTPError for bad responses
+        response.raise_for_status()
     except requests.exceptions.HTTPError as http_err:
         print(f"❌ HTTP error occurred: {http_err}")
-        print(f"Response body: {http_err.response.text}")  # Print the error details
-        if http_err.response.status_code == 401:  # Unauthorized
+        print(f"Response body: {http_err.response.text}")
+        if http_err.response.status_code == 401:
             print("🔁 Token expired, re-authenticating...")
             login()
             response = requests.request(method, url, headers=headers, **kwargs)
@@ -78,7 +79,6 @@ def safe_request(method, url, **kwargs):
     return response
 
 def get_variants(page):
-    """Fetch variants from the Qogita API."""
     print(f"🔄 Fetching variants for page {page}...")
     response = safe_request(
         "GET",
@@ -89,7 +89,6 @@ def get_variants(page):
     return None
 
 def get_offers(fid, slug):
-    """Fetch offers for a variant from the Qogita API."""
     offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
     print(f"🔄 Fetching offers for variant {fid} - {slug}...")
     offers_raw_response = safe_request("GET", offers_url)
@@ -98,7 +97,6 @@ def get_offers(fid, slug):
     return []
 
 def process_variant(variant):
-    """Process each variant and fetch its details."""
     try:
         gtin = variant.get('gtin', '')
         variant_name = variant["name"]
@@ -110,12 +108,10 @@ def process_variant(variant):
         inventory = variant.get('inventory', '')
         image_url = variant.get('imageUrl', '')
 
-        # Skip if GTIN already exists
         if gtin in existing_gtins:
             print(f"🔄 Skipping already processed GTIN: {gtin}")
             return
 
-        # Fetch offers for this variant
         offers_response = get_offers(fid, slug)
 
         if not offers_response:
@@ -127,10 +123,8 @@ def process_variant(variant):
             print(f"❌ No offers found for {variant_name}.")
             return
 
-        # Start with the requested quantity
         requested_quantity = 100
 
-        # Find valid offers that meet the MOV requirement
         valid_offers = [
             offer for offer in offers
             if requested_quantity * float(offer["price"]) >= float(offer["mov"])
@@ -140,23 +134,19 @@ def process_variant(variant):
             print(f"⚠️ No valid offers for {variant_name} meet the MOV requirement.")
             return
 
-        # Choose the best offer (min price)
         best_offer = min(valid_offers, key=lambda x: float(x["price"]))
         offer_qid = best_offer["qid"]
-
-        # Check available quantity and adjust order quantity if needed
         available_quantity = best_offer.get("availableQuantity", 0)
         quantity_to_order = min(requested_quantity, available_quantity)
         total_price = float(best_offer["price"]) * quantity_to_order
 
-        # Save to CSV immediately before printing
         csv_writer.writerow([
-            gtin, variant_name, category_name, brand_name, price, inventory, image_url, 
-            best_offer['seller'], best_offer['mov'], available_quantity, quantity_to_order, f"{total_price:.2f}", best_offer["unit"]
+            gtin, variant_name, category_name, brand_name, price, inventory, image_url,
+            best_offer['seller'], best_offer['mov'], available_quantity, quantity_to_order,
+            f"{total_price:.2f}", best_offer["unit"]
         ])
-        csv_file.flush()  # Ensures data is written to the file immediately
+        csv_file.flush()
 
-        # Print the output after saving the data
         print(f"📦 Selected Offer for {variant_name}:")
         print(f"    GTIN: {gtin}")
         print(f"    Category: {category_name}")
@@ -168,12 +158,10 @@ def process_variant(variant):
         print(f"    MOV: €{best_offer['mov']}")
         print(f"    Available: {available_quantity}")
         print(f"    Ordering: {quantity_to_order} units | Total: €{total_price:.2f}")
-        print(f"unit is : {best_offer['unit']}")
+        print(f"    Unit: {best_offer['unit']}")
 
-        # Debug: Check the offer and quantity before adding to cart
         print(f"🔄 Adding to cart with offerQid: {offer_qid}, Quantity: {quantity_to_order}")
-        
-        # Add to cart
+
         add_to_cart_response = safe_request(
             "POST",
             f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
@@ -185,8 +173,12 @@ def process_variant(variant):
         else:
             print(f"❌ Failed to add {variant_name} to cart:", add_to_cart_response.json() if add_to_cart_response else "No response")
 
-        # Add GTIN to the set of existing GTINs after processing
         existing_gtins.add(gtin)
+
+        # Wait 2 to 5 seconds to simulate human-like delay
+        sleep_duration = random.uniform(2, 5)
+        print(f"⏳ Waiting for {sleep_duration:.2f} seconds...\n")
+        time.sleep(sleep_duration)
 
     except Exception as e:
         print(f"❌ Error processing variant {variant.get('name', 'Unknown')}: {e}")
@@ -194,7 +186,7 @@ def process_variant(variant):
 # Initial login
 login()
 
-# Step 2: Get all variants (page by page)
+# Start processing pages
 page = 1
 while True:
     search_response = get_variants(page)
@@ -212,8 +204,12 @@ while True:
         process_variant(variant)
 
     page += 1
-    time.sleep(1)  # To avoid hitting API too quickly
 
-# Close the CSV file after processing all pages
+    # Wait 5 to 10 seconds between pages to slow down crawling
+    page_delay = random.uniform(5, 10)
+    print(f"📄 Finished page {page - 1}. Waiting {page_delay:.2f} seconds before next page...\n")
+    time.sleep(page_delay)
+
+# Close the file
 csv_file.close()
 print("💾 Data saved to variants_sellers.csv")

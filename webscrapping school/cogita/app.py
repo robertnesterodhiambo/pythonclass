@@ -1,76 +1,122 @@
 import requests
 import time
 import csv
+import random
+from requests.exceptions import RequestException
 
 # Base URL and credentials
 QOGITA_API_URL = "https://api.qogita.com"
 QOGITA_EMAIL = "jacek.budner@gmail.com"
 QOGITA_PASSWORD = "JB100noga!"
 
-# Step 1: Authentication
-auth_response = requests.post(
-    f"{QOGITA_API_URL}/auth/login/",
-    json={"email": QOGITA_EMAIL, "password": QOGITA_PASSWORD}
-).json()
+# Authentication function
+def authenticate():
+    print("🔐 Logging in...")
+    auth_response = requests.post(
+        f"{QOGITA_API_URL}/auth/login/",
+        json={"email": QOGITA_EMAIL, "password": QOGITA_PASSWORD}
+    )
+    if auth_response.status_code == 200:
+        data = auth_response.json()
+        token = data["accessToken"]
+        cart = data["user"]["activeCartQid"]
+        print("✅ Login successful.\n")
+        return token, cart
+    else:
+        print(f"❌ Login failed: {auth_response.status_code} - {auth_response.text}")
+        exit()
 
-if "accessToken" in auth_response:
-    access_token = auth_response["accessToken"]
-    headers = {"Authorization": f"Bearer {access_token}"}
-    cart_qid = auth_response["user"]["activeCartQid"]
+# Retry wrapper for GET requests
+def make_request_with_retries(url, headers, max_retries=5):
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, headers=headers)
+            if response.status_code == 401:
+                return "unauthorized"
+            response.raise_for_status()
+            return response
+        except RequestException as e:
+            wait_time = (10 ** attempt) + random.uniform(0, 1)
+            print(f"⚠️ Request failed (attempt {attempt + 1}/{max_retries}): {e}")
+            print(f"⏳ Retrying in {wait_time:.2f} seconds...\n")
+            time.sleep(wait_time)
+    print("❌ Max retries reached. Skipping this request.\n")
+    return None
 
-    print("Login successful.")
-    print(f"Active Cart QID: {cart_qid}\n")
+# Step 0: Load previously collected GTINs
+collected_gtins = set()
+try:
+    with open("/home/dragon/DATA/products.csv", mode="r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            collected_gtins.add(row["gtin"])
+    print(f"✅ Loaded {len(collected_gtins)} existing GTINs.\n")
+except FileNotFoundError:
+    print("ℹ️ No existing CSV found. A new one will be created.\n")
 
-    # Open CSV file for writing (append mode to add new entries)
-    with open("products.csv", mode="w", newline='', encoding="utf-8") as file:
-        # Define CSV writer
-        fieldnames = ["gtin", "name", "categoryName", "brandName", "price", "inventory", "imageUrl"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+# Step 1: Initial authentication
+access_token, cart_qid = authenticate()
+headers = {"Authorization": f"Bearer {access_token}"}
 
-        # Write the header to the CSV file
+print(f"Active Cart QID: {cart_qid}\n")
+
+# Open CSV in append mode
+with open("/home/dragon/DATA/products.csv", mode="a", newline='', encoding="utf-8") as file:
+    fieldnames = ["gtin", "name", "categoryName", "brandName", "price", "inventory", "imageUrl"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+    if len(collected_gtins) == 0:
         writer.writeheader()
 
-        # Step 2: Paginate through all results
-        page = 1
-        size = 500000  # Reasonable size per page
-        total_count = 0
+    page = 1
+    size = 500000
+    total_count = 0
 
-        while True:
-            print(f"Fetching page {page}...")
+    while True:
+        print(f"Fetching page {page}...")
+        search_url = f"{QOGITA_API_URL}/variants/search/?page={page}&size={size}"
 
-            search_url = (
-                f"{QOGITA_API_URL}/variants/search/?"
-                f"page={page}&size={size}"
-            )
+        response_raw = make_request_with_retries(search_url, headers)
+        
+        # Re-authenticate if token expired
+        if response_raw == "unauthorized":
+            print("🔁 Token expired. Re-authenticating...\n")
+            access_token, cart_qid = authenticate()
+            headers = {"Authorization": f"Bearer {access_token}"}
+            response_raw = make_request_with_retries(search_url, headers)
 
-            response = requests.get(url=search_url, headers=headers).json()
+        if response_raw is None or not response_raw.ok:
+            print(f"❌ Failed to fetch page {page}. Moving to next.")
+            break
 
-            results = response.get("results", [])
-            if not results:
-                print("No more results. Done.")
-                break
+        response = response_raw.json()
+        results = response.get("results", [])
 
-            for variant in results:
-                # Write each result to the CSV file
-                writer.writerow({
-                    "gtin": variant.get('gtin', ''),
-                    "name": variant.get('name', ''),
-                    "categoryName": variant.get('categoryName', ''),
-                    "brandName": variant.get('brandName', ''),
-                    "price": variant.get('price', ''),
-                    "inventory": variant.get('inventory', ''),
-                    "imageUrl": variant.get('imageUrl', '')
-                })
+        if not results:
+            print("✅ No more results. Finished.\n")
+            break
 
-                print(f"Saved: {variant['gtin']} | {variant['name']} | {variant['categoryName']} | "
-                      f"{variant['brandName']} | {variant['price']} | {variant['inventory']} | {variant['imageUrl']}")
+        for variant in results:
+            gtin = variant.get('gtin', '')
+            if gtin in collected_gtins:
+                continue
 
-                total_count += 1
+            writer.writerow({
+                "gtin": gtin,
+                "name": variant.get('name', ''),
+                "categoryName": variant.get('categoryName', ''),
+                "brandName": variant.get('brandName', ''),
+                "price": variant.get('price', ''),
+                "inventory": variant.get('inventory', ''),
+                "imageUrl": variant.get('imageUrl', '')
+            })
 
-            page += 1
-            time.sleep(0.5)  # Sleep to avoid rate limits
+            print(f"Saved: {gtin} | {variant.get('name')}")
 
-        print(f"\n✅ Total products retrieved: {total_count}")
+            collected_gtins.add(gtin)
+            total_count += 1
 
-else:
-    print("Login failed:", auth_response)
+        page += 1
+        time.sleep(0.5)
+
+    print(f"\n✅ Total new products retrieved: {total_count}")
