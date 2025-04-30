@@ -3,8 +3,8 @@ import random
 from datetime import datetime, timedelta
 
 # Start and end dates
-start_date = datetime(2025, 4, 17)
-end_date = datetime(2025, 4, 19)
+start_date = datetime(2025, 4, 26)
+end_date = datetime(2025, 4, 27)
 
 # Path to the text file
 date_file_path = "commit_dates.txt"
