@@ -14,34 +14,33 @@ access_token = None
 headers = {}
 cart_qid = None
 
-# Path to CSV
-csv_path = '/home/dragon/DATA/variants_sellers.csv'
-
-# Prepare CSV File (append mode)
-csv_file = open(csv_path, mode='a', newline='', encoding='utf-8')
+# Prepare CSV File (open in append mode so data is added incrementally)
+csv_file = open('/home/dragon/DATA/variants_sellers.csv', mode='a', newline='', encoding='utf-8')
 csv_writer = csv.writer(csv_file)
 
-# Check if CSV has headers
-if os.stat(csv_path).st_size == 0:
+# Check if CSV has headers, if not write headers
+if os.stat('variants_sellers.csv').st_size == 0:
     csv_writer.writerow([
         'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-        'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', "Unit"
+        'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
     ])
 
 # Read existing GTINs from the CSV to avoid duplicates
 def get_existing_gtins():
     existing_gtins = set()
-    if os.path.exists(csv_path) and os.stat(csv_path).st_size > 0:
-        with open(csv_path, mode='r', encoding='utf-8') as file:
+    if os.path.exists('variants_sellers.csv') and os.stat('variants_sellers.csv').st_size > 0:
+        with open('variants_sellers.csv', mode='r', encoding='utf-8') as file:
             csv_reader = csv.reader(file)
-            next(csv_reader, None)
-            for row in csv_reader:
-                existing_gtins.add(row[0])
+            header = next(csv_reader, None)
+            if header:
+                for row in csv_reader:
+                    existing_gtins.add(row[0])
     return existing_gtins
 
 existing_gtins = get_existing_gtins()
 
 def login():
+    """Login to the API and set the access token and headers."""
     global access_token, headers, cart_qid
     print("🔐 Logging in...")
     auth_response = requests.post(
@@ -60,6 +59,7 @@ def login():
     print(f"🛒 Active Cart QID: {cart_qid}")
 
 def safe_request(method, url, **kwargs):
+    """Wrapper to handle 401 errors by re-logging in and retrying once."""
     global headers
     try:
         response = requests.request(method, url, headers=headers, **kwargs)
@@ -79,21 +79,16 @@ def safe_request(method, url, **kwargs):
     return response
 
 def get_variant_by_gtin(gtin):
-    print(f"🔍 Searching variant by GTIN: {gtin}")
-    response = safe_request(
-        "GET",
-        f"{QOGITA_API_URL}/variants/search/?gtin={gtin}"
-    )
+    """Fetch variant by GTIN."""
+    response = safe_request("GET", f"{QOGITA_API_URL}/variants/{gtin}/")
     if response and response.ok:
-        results = response.json().get("results", [])
-        if results:
-            return results[0]  # Return first matched result
-    print(f"❌ Variant not found for GTIN: {gtin}")
+        return response.json()
     return None
 
 def get_offers(fid, slug):
+    offers_url = f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/"
     print(f"🔄 Fetching offers for variant {fid} - {slug}...")
-    offers_raw_response = safe_request("GET", f"{QOGITA_API_URL}/variants/{fid}/{slug}/offers/")
+    offers_raw_response = safe_request("GET", offers_url)
     if offers_raw_response and offers_raw_response.ok:
         return offers_raw_response.json()
     return []
@@ -120,6 +115,9 @@ def process_gtin(gtin):
         offers_response = get_offers(fid, slug)
         offers = offers_response.get("offers", []) if offers_response else []
 
+        # 🔢 Print how many sellers returned
+        print(f"📊 Sellers returned for {variant_name} (GTIN: {gtin}): {len(offers)}")
+
         if not offers:
             print(f"❌ No offers found for {variant_name}")
             return
@@ -134,43 +132,44 @@ def process_gtin(gtin):
             print(f"⚠️ No valid offers for {variant_name} meet the MOV requirement.")
             return
 
-        best_offer = min(valid_offers, key=lambda x: float(x["price"]))
-        offer_qid = best_offer["qid"]
-        available_quantity = best_offer.get("availableQuantity", 0)
-        quantity_to_order = min(requested_quantity, available_quantity)
-        total_price = float(best_offer["price"]) * quantity_to_order
+        for offer in valid_offers:
+            best_offer = offer
+            offer_qid = best_offer["qid"]
+            available_quantity = best_offer.get("availableQuantity", 0)
+            quantity_to_order = min(requested_quantity, available_quantity)
+            total_price = float(best_offer["price"]) * quantity_to_order
 
-        csv_writer.writerow([
-            gtin, variant_name, category_name, brand_name, price, inventory, image_url,
-            best_offer['seller'], best_offer['mov'], available_quantity, quantity_to_order,
-            f"{total_price:.2f}", best_offer["unit"]
-        ])
-        csv_file.flush()
+            csv_writer.writerow([
+                gtin, variant_name, category_name, brand_name, price, inventory, image_url,
+                best_offer['seller'], best_offer['mov'], available_quantity, quantity_to_order,
+                f"{total_price:.2f}", best_offer["unit"], len(offers)  # Sellers count added here
+            ])
+            csv_file.flush()
 
-        print(f"📦 Selected Offer for {variant_name}:")
-        print(f"    GTIN: {gtin}")
-        print(f"    Category: {category_name}")
-        print(f"    Brand: {brand_name}")
-        print(f"    Price: €{price}")
-        print(f"    Inventory: {inventory}")
-        print(f"    Image URL: {image_url}")
-        print(f"    Seller: {best_offer['seller']}")
-        print(f"    MOV: €{best_offer['mov']}")
-        print(f"    Available: {available_quantity}")
-        print(f"    Ordering: {quantity_to_order} units | Total: €{total_price:.2f}")
-        print(f"    Unit: {best_offer['unit']}")
+            print(f"📦 Selected Offer for {variant_name}:")
+            print(f"    GTIN: {gtin}")
+            print(f"    Category: {category_name}")
+            print(f"    Brand: {brand_name}")
+            print(f"    Price: €{price}")
+            print(f"    Inventory: {inventory}")
+            print(f"    Image URL: {image_url}")
+            print(f"    Seller: {best_offer['seller']}")
+            print(f"    MOV: €{best_offer['mov']}")
+            print(f"    Available: {available_quantity}")
+            print(f"    Ordering: {quantity_to_order} units | Total: €{total_price:.2f}")
+            print(f"    Unit: {best_offer['unit']}")
 
-        print(f"🔄 Adding to cart with offerQid: {offer_qid}, Quantity: {quantity_to_order}")
-        add_to_cart_response = safe_request(
-            "POST",
-            f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
-            json={"offerQid": offer_qid, "quantity": quantity_to_order}
-        )
+            print(f"🔄 Adding to cart with offerQid: {offer_qid}, Quantity: {quantity_to_order}")
+            add_to_cart_response = safe_request(
+                "POST",
+                f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
+                json={"offerQid": offer_qid, "quantity": quantity_to_order}
+            )
 
-        if add_to_cart_response and add_to_cart_response.ok:
-            print(f"✅ Added {quantity_to_order} units of {variant_name} to cart.\n")
-        else:
-            print(f"❌ Failed to add {variant_name} to cart:", add_to_cart_response.json() if add_to_cart_response else "No response")
+            if add_to_cart_response and add_to_cart_response.ok:
+                print(f"✅ Added {quantity_to_order} units of {variant_name} to cart.\n")
+            else:
+                print(f"❌ Failed to add {variant_name} to cart:", add_to_cart_response.json() if add_to_cart_response else "No response")
 
         existing_gtins.add(gtin)
 
@@ -181,20 +180,16 @@ def process_gtin(gtin):
     except Exception as e:
         print(f"❌ Error processing GTIN {gtin}: {e}")
 
-# Example list of GTINs to process
-gtin_list = [
-    "1234567890123",
-    "4006381333931",
-    "8411114033491"
-]
-
-# Login once at the beginning
+# Initial login
 login()
 
-# Process each GTIN
-for gtin in gtin_list:
+# Example list of GTINs to process
+gtins_to_process = ["3349668614608", "0987654321", "1122334455"]  # Replace with your actual list
+
+# Start processing GTINs
+for gtin in gtins_to_process:
     process_gtin(gtin)
 
-# Close CSV file
+# Close the file
 csv_file.close()
 print("💾 Data saved to variants_sellers.csv")
