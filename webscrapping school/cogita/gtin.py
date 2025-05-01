@@ -86,6 +86,14 @@ def safe_request(method, url, retry=1, **kwargs):
                 return None
 
         response.raise_for_status()
+
+        # Check for specific 400 error related to quantity and skip the request
+        if response.status_code == 400:
+            error_message = response.json().get('message', '')
+            if 'quantity' in error_message and "Ensure this value is greater than or equal to 1." in error_message:
+                print(f"⚠️ Skipping due to quantity error: {error_message}")
+                return None  # Skip this request and don't retry
+
         return response
     except ValueError:
         print(f"⚠️ Non-JSON response received from {url}. Possibly blocked by Cloudflare.")
@@ -171,7 +179,7 @@ def process_gtin(gtin):
                 print(f"❌ Add to cart failed: {error}")
 
         existing_gtins.add(gtin)
-        sleep_duration = random.uniform(2, 5)
+        sleep_duration = random.uniform(1, 1.5)
         print(f"⏳ Sleeping {sleep_duration:.2f} seconds...\n")
         time.sleep(sleep_duration)
 
@@ -191,8 +199,7 @@ df = pd.read_csv(file_path)
 # Extract the GTIN column and drop missing values
 gtins_to_process = df['GTIN'].dropna().astype(str).unique().tolist()
 # Read the CSV file
-print(gtins_to_process)
-print(df.head())
+
 
 for gtin in gtins_to_process:
     process_gtin(gtin)
