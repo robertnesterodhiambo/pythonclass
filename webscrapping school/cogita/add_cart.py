@@ -15,7 +15,7 @@ headers = {}
 cart_qid = None
 
 # Prepare CSV File (open in append mode so data is added incrementally)
-csv_file = open('variants_sellers.csv', mode='a', newline='', encoding='utf-8')
+csv_file = open('/home/dragon/DATA/variants_sellers.csv', mode='a', newline='', encoding='utf-8')
 csv_writer = csv.writer(csv_file)
 
 # Check if CSV has headers, if not write headers
