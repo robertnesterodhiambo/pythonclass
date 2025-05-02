@@ -15,10 +15,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-
 
 import time
 import os
@@ -80,12 +76,12 @@ def init_driver():
     try:
         path_to_driver = os.path.join(driver_dir, chrome_exe)
         driver = webdriver.Chrome(options=options)
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
     except:
         path_to_driver = os.path.join(driver_dir, chrome_exe.replace(".exe", ""))
         driver = webdriver.Chrome(options=options)
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
     if dev:
         driver.set_window_size(1300, 1000)

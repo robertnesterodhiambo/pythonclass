@@ -42,21 +42,41 @@ def RepresentsInt(s):
     return isInt
 
 def parse_address(address):
-    zip_code = re.findall(r'\d{4,5}', address)  # Updated to raw string
+    zip_code = re.findall('\d{4,5}', address)
     address = address.split('.')[0]
     if len(zip_code) > 0:
         zip_code = zip_code[0]
 
     if len(address.split(',')) > 3:
         new_add = address.split(',')[:3]
-        zip_part = re.findall(r'\d{4,5}', " ".join(new_add[1:]))  # Updated to raw string
+        zip_part = re.findall('\d{4,5}', " ".join(new_add[1:]))
         sec_elm = new_add[1]
         num_center = len(sec_elm.split())
         if not RepresentsInt(sec_elm) and bool(zip_part) and num_center <= 3:
             address = ",".join(new_add).strip()
 
-    # ... rest of the function remains unchanged
+    if bool(address) and any([address.startswith(p) for p in PUNCTUATION]):
+        address = address[1:].strip()
 
+    street = str(address.split(',')[0].title().strip() if len(address.split(',')) > 0 else '').strip()
+    city = str(address.split(',')[1].title().strip() if len(address.split(',')) > 1 else '').strip()
+
+    if street.lower().endswith(" rd"):
+        street = street[:-2] + "Road"
+    if street.lower().endswith(" st"):
+        street = street[:-2] + "Street"
+    if street.lower().endswith(" ave"):
+        street = street[:-3] + "Avenue"
+    if street.lower().endswith(" dr."):
+        street = street[:-3] + "Drive"
+
+    info = {
+        'Street': street,
+        'City': city,
+        'Zip_Code': zip_code if bool(zip_code) else '',
+        'Address': str(bool(address)),
+    }
+    return info
 
 def gets_usaddress(text):
     ans = usaddress.parse(text)
