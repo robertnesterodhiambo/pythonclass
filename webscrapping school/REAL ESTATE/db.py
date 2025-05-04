@@ -12,11 +12,11 @@ import logging
 class Mysql:
 	def __init__(self, dev=True):
 		self.dev = dev
-		db_base = "helixhel_oldcrawlersdb"
+		db_base = "cashprohomebuyer_new_real_state"
 		config = {
-			'user': "root",
-			'password': "1234",
-			'host': "localhost",
+			'user': "cashprohomebuyer_new_real_state",
+			'password': "KH8lhGoLK4Sl",
+			'host': "144.76.112.25",
 			'database': db_base
 		}
 

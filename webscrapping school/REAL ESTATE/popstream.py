@@ -362,10 +362,10 @@ def save_data_to_mysql(data):
     try:
         # Connect to the MySQL database
         conn_mysql = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='1234',
-            database='helixhel_oldcrawlersdb',
+            host='144.76.112.25',
+            user='cashprohomebuyer_new_real_state',
+            password='KH8lhGoLK4Sl',
+            database='cashprohomebuyer_new_real_state', 
         )
         cursor_mysql = conn_mysql.cursor()
 
