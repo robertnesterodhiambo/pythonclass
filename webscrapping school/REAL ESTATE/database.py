@@ -6,7 +6,7 @@ from datetime import datetime
 def db_gapubs_connect():
     # Establish a connection to the first database
     conn1 = mysql.connector.connect(
-     host='144.76.112.25',
+     host='104.238.220.190',
      user='cashprohomebuyer_new_real_state',
     password='KH8lhGoLK4Sl',
     database='cashprohomebuyer_new_real_state', 

@@ -16,7 +16,7 @@ class Mysql:
 		config = {
 			'user': "cashprohomebuyer_new_real_state",
 			'password': "KH8lhGoLK4Sl",
-			'host': "144.76.112.25",
+			'host': "104.238.220.190",
 			'database': db_base
 		}
 
