@@ -6,15 +6,16 @@ app = Flask(__name__)
 
 # Database Configuration
 DB_CONFIG = {
-    "host": "localhost",
-   # "database": "stocksjbetadev_Stocks",
-   # "user": "stocksjbetadev",
-   # "password": "qZh]R0+inyo+",
-   "database": "Stocks",
-   "user": "root",
-   "password": "1234",
+   # "host": "localhost",
+   "host" : "104.238.220.190",
+    "database": "stocksjbetadev_Stocks",
+    "user": "stocksjbetadev",
+    "password": "qZh]R0+inyo+",
+   #"database": "Stocks",
+   #"user": "root",
+   #"password": "1234",
     "port": 3306,
-    "charset": "utf8mb4",
+    #"charset": "utf8mb4",
 }
 
 def get_db_connection():
