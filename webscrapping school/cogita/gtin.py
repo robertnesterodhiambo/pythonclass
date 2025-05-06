@@ -188,9 +188,7 @@ def process_gtin(gtin):
                 print(f"❌ Add to cart failed: {error}")
 
         existing_gtins.add(gtin)
-        sleep_duration = random.uniform(1, 1.5)
-        print(f"⏳ Sleeping {sleep_duration:.2f} seconds...\n")
-        time.sleep(sleep_duration)
+        
 
     except Exception as e:
         print(f"❌ Exception while processing {gtin}: {e}")
