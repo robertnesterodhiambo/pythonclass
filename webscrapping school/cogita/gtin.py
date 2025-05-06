@@ -25,7 +25,7 @@ csv_writer = csv.writer(csv_file)
 if os.stat(csv_path).st_size == 0:
     csv_writer.writerow([
         'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-        'Seller', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
+        'Seller', 'Seller Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
     ])
 
 # Read existing GTINs from the CSV to avoid duplicates
@@ -63,6 +63,7 @@ def login():
         headers = {"Authorization": f"Bearer {access_token}"}
         cart_qid = auth_data["user"]["activeCartQid"]
         print("✅ Authenticated successfully.")
+        print(access_token)
         print(f"🛒 Active Cart QID: {cart_qid}")
         return True
     except Exception as e:
@@ -163,15 +164,16 @@ def process_gtin(gtin):
             quantity_to_order = min(requested_quantity, available_quantity)
             total_price = float(offer["price"]) * quantity_to_order
 
+            # Now each seller's price is stored individually
             csv_writer.writerow([
                 gtin, variant_name, category_name, brand_name, price, inventory, image_url,
-                offer['seller'], offer['mov'], available_quantity, quantity_to_order,
+                offer['seller'], offer['price'], offer['mov'], available_quantity, quantity_to_order,
                 f"{total_price:.2f}", offer["unit"], len(offers)
             ])
             csv_file.flush()
 
             print(f"📦 Selected Offer:")
-            print(f"    Seller: {offer['seller']} | Qty: {quantity_to_order} | Total: €{total_price:.2f}")
+            print(f"    Seller: {offer['seller']} | Price: €{offer['price']} | Qty: {quantity_to_order} | Total: €{total_price:.2f}")
 
             cart_response = safe_request(
                 "POST",
