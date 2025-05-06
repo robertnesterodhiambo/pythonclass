@@ -4,6 +4,7 @@ import time
 import os
 import random
 import pandas as pd
+from tqdm import tqdm
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -69,39 +70,45 @@ def login():
         return False
 
 def safe_request(method, url, retry=1, **kwargs):
-    """Wrapper to handle 401 and non-JSON responses with retry mechanism."""
     global headers
-    try:
-        response = requests.request(method, url, headers=headers, **kwargs)
+    backoff = 5  # Start with 5 seconds
+    max_backoff = 120  # Cap wait time to 2 minutes
 
-        # Check if it's a valid JSON
-        if 'application/json' not in response.headers.get('Content-Type', ''):
-            raise ValueError("Response not JSON")
+    while True:
+        try:
+            response = requests.request(method, url, headers=headers, **kwargs)
 
-        if response.status_code == 401 and retry > 0:
-            print("🔁 Token expired or unauthorized. Re-authenticating...")
-            if login():
-                return safe_request(method, url, retry=retry-1, **kwargs)
-            else:
-                return None
+            if 'application/json' not in response.headers.get('Content-Type', ''):
+                print(f"⚠️ Non-JSON response received from {url}. Possibly blocked by Cloudflare.")
+                print(f"⏳ Waiting {backoff} seconds before retrying...")
+                time.sleep(backoff)
+                backoff = min(backoff * 2, max_backoff)  # exponential backoff
+                continue  # retry indefinitely
 
-        response.raise_for_status()
+            if response.status_code == 401 and retry > 0:
+                print("🔁 Token expired or unauthorized. Re-authenticating...")
+                if login():
+                    return safe_request(method, url, retry=retry - 1, **kwargs)
+                else:
+                    return None
 
-        # Check for specific 400 error related to quantity and skip the request
-        if response.status_code == 400:
-            error_message = response.json().get('message', '')
-            if 'quantity' in error_message and "Ensure this value is greater than or equal to 1." in error_message:
-                print(f"⚠️ Skipping due to quantity error: {error_message}")
-                return None  # Skip this request and don't retry
+            response.raise_for_status()
 
-        return response
-    except ValueError:
-        print(f"⚠️ Non-JSON response received from {url}. Possibly blocked by Cloudflare.")
-    except requests.exceptions.HTTPError as http_err:
-        print(f"❌ HTTP error: {http_err} | Response: {http_err.response.text}")
-    except requests.exceptions.RequestException as err:
-        print(f"❌ Request failed: {err}")
-    return None
+            # 400 error (e.g., bad quantity)
+            if response.status_code == 400:
+                error_message = response.json().get('message', '')
+                if 'quantity' in error_message and "Ensure this value is greater than or equal to 1." in error_message:
+                    print(f"⚠️ Skipping due to quantity error: {error_message}")
+                    return None
+
+            return response
+
+        except requests.exceptions.HTTPError as http_err:
+            print(f"❌ HTTP error: {http_err} | Response: {http_err.response.text}")
+            return None
+        except requests.exceptions.RequestException as err:
+            print(f"❌ Request failed: {err}")
+            return None
 
 def get_variant_by_gtin(gtin):
     response = safe_request("GET", f"{QOGITA_API_URL}/variants/{gtin}/")
@@ -191,17 +198,14 @@ if not login():
     print("❌ Cannot proceed without login.")
     exit()
 
-# Example GTINs
-#gtins_to_process = ["3349668614608", "0987654321", "1122334455"]  # Replace as needed
-# Replace '~/DATA' with the full path or expand the '~' to your home directory
+# Read GTINs from CSV
 file_path = '~/DATA/variants.csv'
+file_path = os.path.expanduser(file_path)
 df = pd.read_csv(file_path)
-# Extract the GTIN column and drop missing values
 gtins_to_process = df['GTIN'].dropna().astype(str).unique().tolist()
-# Read the CSV file
 
-
-for gtin in gtins_to_process:
+# Progress bar
+for gtin in tqdm(gtins_to_process, desc="Processing GTINs"):
     process_gtin(gtin)
 
 csv_file.close()
