@@ -4,7 +4,9 @@ import time
 import os
 import random
 import pandas as pd
+import threading
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Credentials
 QOGITA_API_URL = "https://api.qogita.com"
@@ -16,33 +18,34 @@ access_token = None
 headers = {}
 cart_qid = None
 
-# Prepare CSV File
+# CSV path
 csv_path = '/home/dragon/DATA/variants_sellers.csv'
-csv_file = open(csv_path, mode='a', newline='', encoding='utf-8')
-csv_writer = csv.writer(csv_file)
+csv_lock = threading.Lock()
+gtin_lock = threading.Lock()
 
-# Check if CSV has headers, if not write headers
-if os.stat(csv_path).st_size == 0:
-    csv_writer.writerow([
-        'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-        'Seller', 'Seller Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
-    ])
+# Ensure CSV file and write headers if missing
+if not os.path.exists(csv_path) or os.stat(csv_path).st_size == 0:
+    with open(csv_path, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
+            'Seller', 'Seller Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
+        ])
 
-# Read existing GTINs from the CSV to avoid duplicates
+# Read existing GTINs
 def get_existing_gtins():
     existing_gtins = set()
     if os.path.exists(csv_path) and os.stat(csv_path).st_size > 0:
         with open(csv_path, mode='r', encoding='utf-8') as file:
-            csv_reader = csv.reader(file)
-            next(csv_reader, None)  # skip header
-            for row in csv_reader:
+            reader = csv.reader(file)
+            next(reader, None)
+            for row in reader:
                 existing_gtins.add(row[0])
     return existing_gtins
 
 existing_gtins = get_existing_gtins()
 
 def login():
-    """Login to the API and set the access token and headers."""
     global access_token, headers, cart_qid
     print("🔐 Logging in...")
     try:
@@ -63,7 +66,6 @@ def login():
         headers = {"Authorization": f"Bearer {access_token}"}
         cart_qid = auth_data["user"]["activeCartQid"]
         print("✅ Authenticated successfully.")
-        print(access_token)
         print(f"🛒 Active Cart QID: {cart_qid}")
         return True
     except Exception as e:
@@ -72,22 +74,21 @@ def login():
 
 def safe_request(method, url, retry=1, **kwargs):
     global headers
-    backoff = 5  # Start with 5 seconds
-    max_backoff = 120  # Cap wait time to 2 minutes
+    backoff = 5
+    max_backoff = 120
 
     while True:
         try:
             response = requests.request(method, url, headers=headers, **kwargs)
 
             if 'application/json' not in response.headers.get('Content-Type', ''):
-                print(f"⚠️ Non-JSON response received from {url}. Possibly blocked by Cloudflare.")
-                print(f"⏳ Waiting {backoff} seconds before retrying...")
+                print(f"⚠️ Non-JSON response from {url}. Retrying after {backoff}s...")
                 time.sleep(backoff)
-                backoff = min(backoff * 2, max_backoff)  # exponential backoff
-                continue  # retry indefinitely
+                backoff = min(backoff * 2, max_backoff)
+                continue
 
             if response.status_code == 401 and retry > 0:
-                print("🔁 Token expired or unauthorized. Re-authenticating...")
+                print("🔁 Token expired. Re-authenticating...")
                 if login():
                     return safe_request(method, url, retry=retry - 1, **kwargs)
                 else:
@@ -95,17 +96,16 @@ def safe_request(method, url, retry=1, **kwargs):
 
             response.raise_for_status()
 
-            # 400 error (e.g., bad quantity)
             if response.status_code == 400:
                 error_message = response.json().get('message', '')
                 if 'quantity' in error_message and "Ensure this value is greater than or equal to 1." in error_message:
-                    print(f"⚠️ Skipping due to quantity error: {error_message}")
+                    print(f"⚠️ Quantity error: {error_message}")
                     return None
 
             return response
 
         except requests.exceptions.HTTPError as http_err:
-            print(f"❌ HTTP error: {http_err} | Response: {http_err.response.text}")
+            print(f"❌ HTTP error: {http_err} | {http_err.response.text}")
             return None
         except requests.exceptions.RequestException as err:
             print(f"❌ Request failed: {err}")
@@ -120,13 +120,14 @@ def get_offers(fid, slug):
     return response.json() if response and response.ok else None
 
 def process_gtin(gtin):
-    if gtin in existing_gtins:
-        print(f"🔄 Skipping already processed GTIN: {gtin}")
-        return
+    with gtin_lock:
+        if gtin in existing_gtins:
+            print(f"🔄 Skipping already processed GTIN: {gtin}")
+            return
 
     variant = get_variant_by_gtin(gtin)
     if not variant:
-        print(f"⚠️ Skipping GTIN {gtin}: Variant not found or error fetching.")
+        print(f"⚠️ Skipping GTIN {gtin}: Variant not found.")
         return
 
     try:
@@ -142,10 +143,10 @@ def process_gtin(gtin):
         offers_response = get_offers(fid, slug)
         offers = offers_response.get("offers", []) if offers_response else []
 
-        print(f"📊 Sellers returned for {variant_name} (GTIN: {gtin}): {len(offers)}")
+        print(f"📊 Sellers for {variant_name} (GTIN: {gtin}): {len(offers)}")
 
         if not offers:
-            print(f"❌ No offers found for {variant_name}")
+            print(f"❌ No offers for {variant_name}")
             return
 
         requested_quantity = 100
@@ -155,58 +156,60 @@ def process_gtin(gtin):
         ]
 
         if not valid_offers:
-            print(f"⚠️ No valid offers meet MOV requirement for {variant_name}")
+            print(f"⚠️ No valid offers meet MOV for {variant_name}")
             return
 
-        for offer in valid_offers:
-            offer_qid = offer["qid"]
-            available_quantity = offer.get("availableQuantity", 0)
-            quantity_to_order = min(requested_quantity, available_quantity)
-            total_price = float(offer["price"]) * quantity_to_order
+        with csv_lock, open(csv_path, mode='a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
 
-            # Now each seller's price is stored individually
-            csv_writer.writerow([
-                gtin, variant_name, category_name, brand_name, price, inventory, image_url,
-                offer['seller'], offer['price'], offer['mov'], available_quantity, quantity_to_order,
-                f"{total_price:.2f}", offer["unit"], len(offers)
-            ])
-            csv_file.flush()
+            for offer in valid_offers:
+                offer_qid = offer["qid"]
+                available_quantity = offer.get("availableQuantity", 0)
+                quantity_to_order = min(requested_quantity, available_quantity)
+                total_price = float(offer["price"]) * quantity_to_order
 
-            print(f"📦 Selected Offer:")
-            print(f"    Seller: {offer['seller']} | Price: €{offer['price']} | Qty: {quantity_to_order} | Total: €{total_price:.2f}")
+                writer.writerow([
+                    gtin, variant_name, category_name, brand_name, price, inventory, image_url,
+                    offer['seller'], offer['price'], offer['mov'], available_quantity, quantity_to_order,
+                    f"{total_price:.2f}", offer["unit"], len(offers)
+                ])
 
-            cart_response = safe_request(
-                "POST",
-                f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
-                json={"offerQid": offer_qid, "quantity": quantity_to_order}
-            )
+                print(f"📦 Offer:")
+                print(f"    Seller: {offer['seller']} | Price: €{offer['price']} | Qty: {quantity_to_order} | Total: €{total_price:.2f}")
 
-            if cart_response and cart_response.ok:
-                print(f"✅ Added to cart.\n")
-            else:
-                error = cart_response.json() if cart_response else "No response"
-                print(f"❌ Add to cart failed: {error}")
+                cart_response = safe_request(
+                    "POST",
+                    f"{QOGITA_API_URL}/carts/{cart_qid}/lines/",
+                    json={"offerQid": offer_qid, "quantity": quantity_to_order}
+                )
 
-        existing_gtins.add(gtin)
-        
+                if cart_response and cart_response.ok:
+                    print(f"✅ Added to cart.\n")
+                else:
+                    error = cart_response.json() if cart_response else "No response"
+                    print(f"❌ Add to cart failed: {error}")
+
+        with gtin_lock:
+            existing_gtins.add(gtin)
 
     except Exception as e:
-        print(f"❌ Exception while processing {gtin}: {e}")
+        print(f"❌ Exception on GTIN {gtin}: {e}")
 
-# Initial login
+# Login first
 if not login():
     print("❌ Cannot proceed without login.")
     exit()
 
-# Read GTINs from CSV
+# Read GTINs
 file_path = '~/DATA/variants.csv'
 file_path = os.path.expanduser(file_path)
 df = pd.read_csv(file_path)
 gtins_to_process = df['GTIN'].dropna().astype(str).unique().tolist()
 
-# Progress bar
-for gtin in tqdm(gtins_to_process, desc="Processing GTINs"):
-    process_gtin(gtin)
+# Process using ThreadPool
+with ThreadPoolExecutor(max_workers=1) as executor:
+    futures = {executor.submit(process_gtin, gtin): gtin for gtin in gtins_to_process}
+    for future in tqdm(as_completed(futures), total=len(futures), desc="Processing GTINs"):
+        pass
 
-csv_file.close()
-print("💾 Data saved to variants_sellers.csv")
+print("💾 All data saved to variants_sellers.csv")
