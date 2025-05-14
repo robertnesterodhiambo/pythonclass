@@ -1,5 +1,3 @@
-# Full Modified Code with Asyncio, Targeted Fields, and Optimizations
-
 import asyncio
 from playwright.async_api import async_playwright
 import pandas as pd
@@ -54,6 +52,14 @@ async def extract_data(playwright, value, semaphore):
                         return (await el.text_content()).strip()
                     return "Not Found"
 
+                # Scroll the div upward before collecting Manufacturer
+                await page.evaluate("""() => {
+                    const el = document.getElementById('idUnitStatusPanel-vsb');
+                    if (el) {
+                        el.scrollTop = 0;
+                    }
+                }""")
+
                 result = {
                     "Input": value,
                     "Unit Type": await get_text("#__view1-__clone3"),
@@ -73,11 +79,14 @@ async def extract_data(playwright, value, semaphore):
         finally:
             await browser.close()
 
-        # Append to CSV
+        # Append to CSV with proper header logic
+        df = pd.DataFrame([result])
+        file_exists = os.path.exists(OUTPUT_FILE)
+        file_empty = os.path.getsize(OUTPUT_FILE) == 0 if file_exists else True
+        csv_data = df.to_csv(index=False, header=file_empty)
         async with aiofiles.open(OUTPUT_FILE, mode='a') as f:
-            df = pd.DataFrame([result])
-            write_header = not os.path.exists(OUTPUT_FILE)
-            await f.write(df.to_csv(index=False, header=write_header if os.path.getsize(OUTPUT_FILE) == 0 else False))
+            await f.write(csv_data)
+
         print(f"[+] Collected {value}")
 
 async def main():
