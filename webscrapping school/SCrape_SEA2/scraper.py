@@ -1,139 +1,208 @@
-import threading
-import pickle
-from playwright.sync_api import sync_playwright
-import pandas as pd
-import os
-from concurrent.futures import ThreadPoolExecutor
+import requests
+from datetime import datetime
+import logging
+import time
+import traceback
+from openpyxl import load_workbook
 
-# Lock to avoid double saving
-file_lock = threading.Lock()
+logging.basicConfig(
+    filename=f"logs_{int(time.time())}.log",
+    format="%(asctime)s - %(levelname)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s",
+    filemode="w",
+)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
-# Thread-local storage for processed values
-thread_local = threading.local()
+file_path = "SEACO.xlsx"  # Source of units numbers
+output_filename = "seaco.csv"  # Output file
 
-# Function to load processed values from file
-def load_processed_values(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            return pickle.load(f)
-    return set()
 
-# Function to save processed values to file
-def save_processed_values(file_path, processed_values):
-    with open(file_path, "wb") as f:
-        pickle.dump(processed_values, f)
+def read_excel_as_chunks(file_path, chunk_size=25):
+    "Read the units number from the excel file and return a list of list 25 numbers each"
+    # Load the workbook and select the active worksheet
+    workbook = load_workbook(file_path)
+    sheet = workbook.active
 
-# Function to load the website page
-def load_page(page, url):
-    page.goto(url, timeout=400000, wait_until="domcontentloaded")
-    page.wait_for_load_state("domcontentloaded")
-    page.wait_for_selector("#idTAUnitNo", timeout=400000)
-    print("✅ Page reloaded successfully")
+    # Gather all values from the sheet into a flat list
+    all_values = []
+    for col in sheet.iter_cols(min_row=2, values_only=True):  # Skip header row
+        all_values.extend(filter(None, col))  # Add non-None values
+    print(f"Number of units: {len(all_values)}")
+    print(f"Number of unique units: {len(set(all_values))}")
+    # return all_values
+    # Split the flat list into chunks of size chunk_size
+    chunks = [
+        all_values[i : i + chunk_size] for i in range(0, len(all_values), chunk_size)
+    ]
+    return chunks
 
-# Function to perform fast scrolling
-def fast_scroll(page):
-    page.wait_for_selector("#idUnitStatusPanel-vsb", timeout=15000)
-    page.evaluate("""
-        (async function() {
-            let scrollDiv = document.querySelector("#idUnitStatusPanel-vsb");
-            if (scrollDiv) scrollDiv.scrollTop = 0;  // Instantly move to top
-        })();
-    """)
 
-# Function to process each value
-def process_entry(value, processed_values, output_file, df):
+headers = {
+    "accept": "application/atomsvc+xml;q=0.8, application/json;odata=fullmetadata;q=0.7, application/json;q=0.5, */*;q=0.1",
+    "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,ar;q=0.6",
+    "content-type": "application/json; charset=utf-8",
+    "cookie": "sap-usercontext=sap-client=100; oucqsvzubqrobvzdoredfoaeacoassxuzatwuyx=GET#MIICIAYJKoZIhvcNAQc...",
+    "dataserviceversion": "2.0",
+    "maxdataserviceversion": "3.0",
+    "priority": "u=1, i",
+    "referer": "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html",
+    "sap-passport": "2A54482A0300E60000756E64657465726D696E6564202020202020202020202020202020202020202000005341505F453245...",
+    "sec-ch-ua": '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"Windows"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "x-csrf-token": "Fetch",
+    "x-requested-with": "XMLHttpRequest",
+}
+
+
+def split_equnr(lst):
+    # Ensure the list contains 25 elements or fewer
+    if len(lst) > 25:
+        raise ValueError("The input list must contain 25 elements or fewer.")
+
+    # Split the list into two parts
+    midpoint = (len(lst) + 1) // 2  # Ensures more elements go to Equnr if odd length
+    equnr = lst[:midpoint]  # First part
+    equnr1 = lst[midpoint:]  # Second part
+
+    return equnr, equnr1
+
+
+def writeCsv(row, output_filename):
+    headers = [
+        "Unit Number",
+        "Unit Type",
+        "Status",
+        "Customer",
+        "On/Off hire Date",
+        "On/Off hire city",
+        "Year of Manuf",
+    ]
+    headers = ";".join(headers)
+    row = ";".join(row)
     try:
-        # Check if the entry is already processed
-        if value in processed_values:
-            print(f"Skipping {value} (already processed)")
-            return
-
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False)  # Set to True for silent execution
-            page = browser.new_page()
-            url = "https://seaweb.seacoglobal.com/sap/bc/ui5_ui5/sap/zseaco_ue17/index.html"
-            load_page(page, url)
-
-            text_area = page.locator("#idTAUnitNo")
-            submit_button = page.locator("#idBtnUnitEnqSubmit")
-
-            print(f"Processing {value}...")
-
-            # Fill the input field
-            text_area.fill(str(value))
-            submit_button.click()
-
-            # Wait for results
-            page.wait_for_selector("#__view1-__clone1", timeout=40000)
-
-            # Perform fast scrolling to reveal hidden content
-            fast_scroll(page)
-
-            # Extract data or mark as "Not Found"
-            unit_number = page.locator("#__view1-__clone1").text_content().strip() if page.locator("#__view1-__clone1").count() > 0 else "Not Found"
-            unit_type = page.locator("#__view1-__clone3").text_content().strip() if page.locator("#__view1-__clone3").count() > 0 else "Not Found"
-            lesse = page.locator("#__view1-__clone5").text_content().strip() if page.locator("#__view1-__clone5").count() > 0 else "Not Found"
-            status = page.locator("#__view1-__clone7").text_content().strip() if page.locator("#__view1-__clone7").count() > 0 else "Not Found"
-            city = page.locator("#__view1-__clone9").text_content().strip() if page.locator("#__view1-__clone9").count() > 0 else "Not Found"
-            depot = page.locator("#__view1-__clone11").text_content().strip() if page.locator("#__view1-__clone11").count() > 0 else "Not Found"
-            manuf_year_month = page.locator("#__view3-__clone17").text_content().strip() if page.locator("#__view3-__clone17").count() > 0 else "Not Found"
-            manufacturer = page.locator("#idUnitStatusPanel-rows-row0-col1").text_content().strip() if page.locator("#idUnitStatusPanel-rows-row0-col1").count() > 0 else "Not Found"
-
-            # Extract On Hire Date
-            on_hire_date = "Not Found"
-            if page.locator("#__label55").count() > 0:
-                on_hire_date = page.locator("#__label55").text_content().strip()
-            elif page.locator("#idFlexBoxActivitiesBlock").count() > 0:
-                on_hire_date = page.locator("#idFlexBoxActivitiesBlock").text_content().strip()
-
-            print(f"✅ Processed Entry: {value}")
-
-            # Create a DataFrame for the entry
-            data_entry = pd.DataFrame([{
-                "Input": value,
-                "Unit Number": unit_number,
-                "Unit Type": unit_type,
-                "Lesse": lesse,
-                "Status": status,
-                "City": city,
-                "Depot": depot,
-                "Manuf. Year/Month": manuf_year_month,
-                "Manufacturer": manufacturer,
-                "On Hire Date": on_hire_date
-            }])
-
-            # Ensure no double saving using a lock
-            with file_lock:
-                data_entry.to_csv(output_file, mode='a', header=not os.path.exists(output_file), index=False)
-
-            # Update the processed values for this thread
-            processed_values.add(value)
-
-            browser.close()
-
+        with open(output_filename, "a", encoding="utf-8") as f:
+            f.write(row + "\n")
     except Exception as e:
-        print(f"⚠️ Error processing entry {value}: {e}")
+        logger.log(traceback.format_exc())
 
-# Main function to open the website
-def open_website():
-    df = pd.read_csv("sea_combined.csv")
-    output_file = "extracted_unit_numbers.csv"
-    processed_file = "processed_values.pkl"  # File to store processed entries
 
-    # Load previously processed values
-    processed_values = load_processed_values(processed_file)
+def makeRequest(url, params=None, headers=headers):
+    "Make a get request and retry if response is anything else but 200"
+    try:
+        response = requests.get(url, params=params, headers=headers)
+        if response.status_code == 200:
+            results = response.json()["d"]["results"]
+            return results
+        elif response.status_code == 429:  # too many requests
+            logger.error(f"{response.status_code}, {url}")
+            ban_time = int(response.headers["Retry-After"])
+            logger.error(f"Sleeping for {ban_time} seconds...")
+            time.sleep(ban_time)
+            return makeRequest(url, params=params, headers=headers)
+        elif response.status_code == 502:  # bad gateway
+            logger.error(f"{response.status_code}, {url}")
+            time.sleep(1)
+            return makeRequest(url, params=params, headers=headers)
+        else:
+            logger.info(f"{response.status_code}, {url}")
+            return makeRequest(url, params=params, headers=headers)
+    except requests.exceptions.JSONDecodeError:
+        logger.error(traceback.format_exc())
+        logger.error(response.text)
+        logger.error(params)
+    except Exception as e:  # network error
+        logger.error(traceback.format_exc())
+        time.sleep(10)  # sleep 10 seconds before retry
+        return makeRequest(url, params=params, headers=headers)
+    return response
 
-    # Assign the processed values to thread-local storage
-    thread_local.processed_values = processed_values
 
-    # Using ThreadPoolExecutor to handle multiple threads
-    with ThreadPoolExecutor(max_workers=6) as executor:
-        executor.map(lambda value: process_entry(value, thread_local.processed_values, output_file, df), df["sea_combined"].astype(str))
+def getUnitStatus(list_numbers=[]):
 
-    # Save the processed values to file after completion
-    save_processed_values(processed_file, thread_local.processed_values)
+    url = "https://seaweb.seacoglobal.com/sap/opu/odata/sap/ZNW_SEACO_PUBLIC_UE_PGW_1_SRV/Unit_Status_Multiple"
+    equnr, equnr1 = split_equnr(list_numbers)
+    str_numbers = ",".join(equnr).upper()
+    str_numbers1 = ",".join(equnr1).upper()
+    params = {
+        "$filter": f"Equnr eq '{str_numbers},' and Equnr1 eq '{str_numbers1},'",
+        "saml2": "disabled",
+    }
+    results = makeRequest(url, params)
+    list_units = []
+    for result in results:
+        Message = result["Message"]
+        if Message == "Unit not found":
+            logger.info(f"Not found: {result}")
+        UnitNumber = result["UnitNumber"]
+        ProductType = result["ProductType"]
+        Status = result["Status"]
+        Customer = result["Customer"]
+        HireDate = result["HireDate"]
+        City = result["City"]
+        if HireDate != "/Date(253392451200000)/":  # this ts mean no date
+            timestamp = HireDate.replace("/Date(", "").replace(")/", "")
+            try:
+                dt_object = datetime.fromtimestamp(float(timestamp) / 1000).date()
+            except:
+                logger.error(traceback.format_exc())
+                logger.error(UnitNumber)
+        else:
+            dt_object = ""
+        row = [UnitNumber, ProductType, Status, Customer, str(dt_object), City]
+        list_units.append(row)
+    return list_units
 
-    print("✅ All new data saved to output file.")
+
+def getEquipementStatus(list_numbers):
+    url = "https://seaweb.seacoglobal.com/sap/opu/odata/sap/ZNW_SEACO_PUBLIC_UE_PGW_1_SRV/Equipment_Status"
+    equnr, equnr1 = split_equnr(list_numbers)
+    str_numbers = ",".join(equnr).upper()
+    str_numbers2 = ",".join(equnr1).upper()
+    params = {
+        "$filter": f"IUnitNo eq '{str_numbers},' and IUnitNo1 eq '{str_numbers2},'",
+        "saml2": "disabled",
+    }
+    results = makeRequest(url, params=params, headers=headers)
+    list_equipements = []
+    for result in results:
+        Message = result["Message"]
+        if Message == "Unit not found":
+            logger.info(f"Not found: {result}")
+        Manmonth = result["Manmonth"]
+        ProductType = result["Manyear"]
+        year_man = f"{Manmonth}/{ProductType}"
+        list_equipements.append(year_man)
+    return list_equipements
+
+
+def removeDuplicate(file_name, output_file):
+    "Remove duplicate and the '/' in manf. year if empty"
+    with open(file_name, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    with open(output_file, "w", encoding="utf-8") as f:
+        for line in lines:
+            line = line.replace(";/", ";")
+            f.write(line)
+
+
+def getAllUnits():
+    chunks = read_excel_as_chunks(file_path)
+
+    for chunk in chunks:
+        print(f"Getting chunk {chunks.index(chunk)} from {len(chunks)}")
+        list_units = getUnitStatus(chunk)
+        list_equipements = getEquipementStatus(chunk)
+        for i in range(len(list_units)):
+            list_units[i].append(list_equipements[i])
+            writeCsv(list_units[i], output_filename)
+
 
 if __name__ == "__main__":
-    open_website()
+    getAllUnits()
+    # removeDuplicate("seaco.csv", "full_seaco.csv")
