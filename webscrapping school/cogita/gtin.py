@@ -29,7 +29,7 @@ if not os.path.exists(csv_path) or os.stat(csv_path).st_size == 0:
         writer = csv.writer(f)
         writer.writerow([
             'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-            'Seller', 'Seller Price (€)', 'MOV (€)', 'Available Qty', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
+            'Seller', 'Seller Price (€)', 'MOV (€)', 'Stock', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
         ])
 
 # Read existing GTINs
@@ -164,7 +164,7 @@ def process_gtin(gtin):
 
             for offer in valid_offers:
                 offer_qid = offer["qid"]
-                available_quantity = offer.get("availableQuantity", 0)
+                available_quantity = offer.get("inventory", 0)
                 quantity_to_order = min(requested_quantity, available_quantity)
                 total_price = float(offer["price"]) * quantity_to_order
 
@@ -175,7 +175,11 @@ def process_gtin(gtin):
                 ])
 
                 print(f"📦 Offer:")
-                print(f"    Seller: {offer['seller']} | Price: €{offer['price']} | Qty: {quantity_to_order} | Total: €{total_price:.2f}")
+                print(f"    Seller: {offer['seller']}")
+                print(f"    Price: €{offer['price']}")
+                print(f"    Seller Stock: {available_quantity}")
+                print(f"    Ordering Qty: {quantity_to_order}")
+                print(f"    Total: €{total_price:.2f}")
 
                 cart_response = safe_request(
                     "POST",
