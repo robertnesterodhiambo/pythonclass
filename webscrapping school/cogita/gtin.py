@@ -29,7 +29,7 @@ if not os.path.exists(csv_path) or os.stat(csv_path).st_size == 0:
         writer = csv.writer(f)
         writer.writerow([
             'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-            'Seller', 'Seller Price (€)', 'MOV (€)', 'Stock', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
+            'Seller', 'Seller Price (€)', 'MOV (€)', 'Seller Stock', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
         ])
 
 # Read existing GTINs

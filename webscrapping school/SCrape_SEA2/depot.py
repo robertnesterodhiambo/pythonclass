@@ -9,7 +9,7 @@ import logging
 # === CONFIGURATION ===
 OUTPUT_FILE = "/home/dragon/DATA/extracted_unit_numbers.csv"
 INPUT_FILE = "sea_combined.csv"
-MAX_CONCURRENT_TASKS = 20
+MAX_CONCURRENT_TASKS = 1
 BATCH_SIZE = 1000
 MAX_RETRIES = 3
 
