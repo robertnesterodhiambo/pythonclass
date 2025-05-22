@@ -12,9 +12,10 @@ import time
 # Step 1: Load CSV
 df = pd.read_csv('100 Country list 20180621.csv')
 
-# Use only the first 5 countries from the DataFrame
-country_list = df["countryname"].dropna().iloc[:5].tolist()
-print("Countries loaded from CSV (first 5):", country_list)
+# Use only the first 5 rows with 'countryname' and 'city'
+country_data = df[["countryname", "city"]].dropna().iloc[:5]
+print("Loaded country & city data:")
+print(country_data)
 
 # Step 2: Chrome setup
 options = Options()
@@ -33,8 +34,9 @@ from_entries = ["Torrance, CA", "Tualatin, OR", "Fort Pierce, FL", "United Kingd
 
 try:
     for from_entry in from_entries:
-        print(f"--- Processing 'Shipping From': {from_entry} ---")
+        print(f"\n--- Processing 'Shipping From': {from_entry} ---")
 
+        # Select "Shipping From"
         from_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[0]
         from_dropdown.click()
 
@@ -44,7 +46,7 @@ try:
         input_box.clear()
         for ch in from_entry:
             input_box.send_keys(ch)
-            time.sleep(0.1)  # simulate natural typing
+            time.sleep(0.1)
 
         time.sleep(0.7)
 
@@ -57,12 +59,14 @@ try:
 
         time.sleep(1)
 
-        # === PART 2: Handle "Shipping To" (second dropdown) ===
+        # === PART 2: Handle "Shipping To" and city input ===
         to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
         to_dropdown.click()
 
-        for country in country_list:
-            print(f"Selecting 'Shipping To' country: {country}")
+        for index, row in country_data.iterrows():
+            country = row["countryname"]
+            city = row["city"]
+            print(f"Selecting 'Shipping To': {country} | City: {city}")
 
             input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
             input_box = input_boxes[1]
@@ -70,7 +74,7 @@ try:
             input_box.clear()
             for ch in country:
                 input_box.send_keys(ch)
-                time.sleep(0.1)  # simulate typing
+                time.sleep(0.1)
 
             time.sleep(0.7)
 
@@ -90,6 +94,17 @@ try:
             except:
                 print(f"No dropdown result for: {country}")
 
+            # === Enter city into input with id="city" ===
+            try:
+                city_input = wait.until(EC.presence_of_element_located((By.ID, "city")))
+                city_input.clear()
+                for ch in city:
+                    city_input.send_keys(ch)
+                    time.sleep(0.05)
+                print(f"Entered city: {city}")
+            except:
+                print(f"City input not found for: {city}")
+
             time.sleep(1)
 
             # Reopen dropdown for next country
@@ -101,5 +116,6 @@ try:
 except Exception as e:
     print("Error in dropdown processing:", e)
 
-input("Press Enter to close browser...")
+# End the process
+input("\nPress Enter to close browser...")
 driver.quit()
