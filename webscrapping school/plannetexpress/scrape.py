@@ -12,9 +12,9 @@ import time
 # Step 1: Load CSV
 df = pd.read_csv('100 Country list 20180621.csv')
 
-# Use only the first 5 rows with 'countryname' and 'city'
-country_data = df[["countryname", "city"]].dropna().iloc[:5]
-print("Loaded country & city data:")
+# Use only the first 5 rows with 'countryname', 'city', and 'zipcode'
+country_data = df[["countryname", "city", "zipcode"]].dropna().iloc[:5]
+print("Loaded country, city, and zipcode data:")
 print(country_data)
 
 # Step 2: Chrome setup
@@ -59,14 +59,15 @@ try:
 
         time.sleep(1)
 
-        # === PART 2: Handle "Shipping To" and city input ===
+        # === PART 2: Handle "Shipping To", city, and postal code ===
         to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
         to_dropdown.click()
 
         for index, row in country_data.iterrows():
             country = row["countryname"]
-            city = row["city"]
-            print(f"Selecting 'Shipping To': {country} | City: {city}")
+            city = str(row["city"])
+            zipcode = str(row["zipcode"])
+            print(f"Shipping To: {country} | City: {city} | Zipcode: {zipcode}")
 
             input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
             input_box = input_boxes[1]
@@ -104,6 +105,17 @@ try:
                 print(f"Entered city: {city}")
             except:
                 print(f"City input not found for: {city}")
+
+            # === Enter zipcode into input with id="postalcode" ===
+            try:
+                zip_input = wait.until(EC.presence_of_element_located((By.ID, "postalcode")))
+                zip_input.clear()
+                for ch in zipcode:
+                    zip_input.send_keys(ch)
+                    time.sleep(0.05)
+                print(f"Entered postal code: {zipcode}")
+            except:
+                print(f"Postal code input not found for: {zipcode}")
 
             time.sleep(1)
 
