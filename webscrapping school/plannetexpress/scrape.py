@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
+import csv
+import os
 
 # === Step 1: Load CSV ===
 df = pd.read_csv('100 Country list 20180621.csv')
@@ -18,8 +20,7 @@ all_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75
 package_sizes = [
     (12, 8, 1)
 ]
-goods_values = [v for v in range(10, 20, 10)]  # 10, 20, 30, ..., 100
-
+goods_values = [v for v in range(10, 20, 10)]  # 10, 20
 
 # === Step 3: Set up Chrome ===
 options = Options()
@@ -30,6 +31,18 @@ wait = WebDriverWait(driver, 15)
 driver.get("https://planetexpress.com/postage-calculator/")
 
 from_entries = ["Torrance, CA", "Tualatin, OR", "Fort Pierce, FL", "United Kingdom"]
+
+# === Step 3.5: Prepare CSV File ===
+output_file = 'shipping_results.csv'
+write_header = not os.path.exists(output_file)
+if write_header:
+    with open(output_file, mode='a', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([
+            "From", "To Country", "To City", "Postal Code",
+            "Weight (lbs)", "Length", "Width", "Height", "Value (USD)",
+            "Shipping Method", "Estimated Delivery", "Price", "Currency", "Insurance Text", "Insurance Amount"
+        ])
 
 # === Step 4: Main Automation ===
 try:
@@ -131,58 +144,50 @@ try:
                                 value_input.send_keys(ch)
                                 time.sleep(0.05)
 
-                            value_input.send_keys(Keys.TAB)  # Ensure value input loses focus
+                            value_input.send_keys(Keys.TAB)
                             time.sleep(0.3)
 
-                            # Click the "Calculate" button reliably using JavaScript
                             calculate_button = driver.find_element(By.NAME, "calculate")
                             driver.execute_script("arguments[0].click();", calculate_button)
 
-                            # Wait for 5 seconds after clicking the Calculate button
                             time.sleep(5)
 
                             # === Step 5: Extract shipping information ===
                             try:
-                                # Wait for the shipping rates div to appear
                                 shipping_rates_div = wait.until(EC.presence_of_element_located((By.ID, "shippingRates")))
-
-                                # Find all carrier divs within the shipping rates div
                                 carriers = shipping_rates_div.find_elements(By.CLASS_NAME, "carrier")
 
-                                # Loop through each carrier div and extract the desired information
                                 for carrier in carriers:
-                                    # Extract the entire shipping method (e.g., "Aramex: Economy Parcel Express")
-                                    shipping_method = carrier.find_element(By.CSS_SELECTOR, ".dataContainer strong").text.strip()
-
-                                    # Extract estimated delivery time (e.g., "8-12 business days")
+                                    shipping_method = carrier.find_element(By.CSS_SELECTOR, ".dataContainer").text.strip().split("\n")[0]
                                     estimated_delivery_time = carrier.find_element(By.CSS_SELECTOR, ".dataContainer em").text.strip()
-
-                                    # Extract price (e.g., "21.02 USD")
                                     price = carrier.find_element(By.CSS_SELECTOR, ".priceContainer strong").text.strip()
-
-                                    # Extract the currency (e.g., "USD")
-                                    currency = price.split(" ")[-1]  # Extract the currency from the price string
-
-                                    # Extract insurance (e.g., "+ Insurance 3.02 USD")
+                                    currency = price.split(" ")[-1]
                                     insurance_text = carrier.find_element(By.CSS_SELECTOR, ".priceContainer small").text.strip()
 
-                                    # If there's an insurance value, extract it
-                                    insurance_amount = 0.0  # Default to 0.0 if no insurance found
+                                    insurance_amount = 0.0
                                     if 'Insurance' in insurance_text:
-                                        # Split the insurance string and extract the amount (e.g., "3.02 USD")
-                                        insurance_amount_str = insurance_text.split(" ")[-2]  # Extract the numeric part
                                         try:
-                                            insurance_amount = float(insurance_amount_str)  # Convert to float
+                                            insurance_amount_str = insurance_text.split(" ")[-2]
+                                            insurance_amount = float(insurance_amount_str)
                                         except ValueError:
-                                            insurance_amount = 0.0  # If conversion fails, set to 0.0
+                                            insurance_amount = 0.0
 
-                                    # Print the collected data
                                     print(f"Shipping Method: {shipping_method}")
                                     print(f"Estimated Delivery Time: {estimated_delivery_time}")
                                     print(f"Price: {price}")
                                     print(f"Currency: {currency}")
                                     print(f"Insurance: {insurance_text}")
                                     print(f"Insurance Amount: {insurance_amount}\n")
+
+                                    # === Save data to CSV ===
+                                    with open(output_file, mode='a', newline='', encoding='utf-8') as csvfile:
+                                        writer = csv.writer(csvfile)
+                                        writer.writerow([
+                                            from_entry, country, city, zipcode,
+                                            weight, length, width, height, value,
+                                            shipping_method, estimated_delivery_time,
+                                            price, currency, insurance_text, insurance_amount
+                                        ])
 
                             except Exception as e:
                                 print(f"Error extracting shipping rates: {e}")
