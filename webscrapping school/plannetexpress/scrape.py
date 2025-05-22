@@ -13,8 +13,8 @@ import time
 df = pd.read_csv('100 Country list 20180621.csv')
 
 # Use only the first 5 countries from the DataFrame
-country_list = df.iloc[:5, 0].dropna().tolist()  # Assumes country names are in the first column
-print("Countries loaded from CSV (first 5):", country_list)  # Preview the first 5 countries
+country_list = df["countryname"].dropna().iloc[:5].tolist()
+print("Countries loaded from CSV (first 5):", country_list)
 
 # Step 2: Chrome setup
 options = Options()
@@ -32,20 +32,20 @@ driver.get("https://planetexpress.com/postage-calculator/")
 from_entries = ["Torrance, CA", "Tualatin, OR", "Fort Pierce, FL", "United Kingdom"]
 
 try:
-    # Loop through each "Shipping From" entry
     for from_entry in from_entries:
         print(f"--- Processing 'Shipping From': {from_entry} ---")
-        
-        # Click first dropdown (Shipping From)
+
         from_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[0]
         from_dropdown.click()
 
-        # Select the correct input for "Shipping From"
         input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
         input_box = input_boxes[0]
-        
+
         input_box.clear()
-        input_box.send_keys(from_entry)
+        for ch in from_entry:
+            input_box.send_keys(ch)
+            time.sleep(0.1)  # simulate natural typing
+
         time.sleep(0.7)
 
         results = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "ul.chosen-results li.active-result")))
@@ -54,27 +54,27 @@ try:
                 print(f"Selected 'From': {item.text}")
                 item.click()
                 break
-        
+
         time.sleep(1)
 
         # === PART 2: Handle "Shipping To" (second dropdown) ===
         to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
         to_dropdown.click()
 
-        # Loop through each country for "Shipping To"
         for country in country_list:
             print(f"Selecting 'Shipping To' country: {country}")
 
-            # Get correct input for "Shipping To"
             input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
             input_box = input_boxes[1]
 
             input_box.clear()
-            input_box.send_keys(country)
+            for ch in country:
+                input_box.send_keys(ch)
+                time.sleep(0.1)  # simulate typing
+
             time.sleep(0.7)
 
             try:
-                # Wait for results and select the matching country
                 results = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "ul.chosen-results li.active-result")))
                 found = False
                 for item in results:
@@ -92,7 +92,7 @@ try:
 
             time.sleep(1)
 
-            # Reopen "Shipping To" dropdown for the next country
+            # Reopen dropdown for next country
             to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
             to_dropdown.click()
 
@@ -101,6 +101,5 @@ try:
 except Exception as e:
     print("Error in dropdown processing:", e)
 
-# End the process
 input("Press Enter to close browser...")
 driver.quit()
