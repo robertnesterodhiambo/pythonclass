@@ -141,7 +141,44 @@ try:
                             # Wait for 5 seconds after clicking the Calculate button
                             time.sleep(5)
 
-                            print(f"Submitted: From={from_entry}, To={country}, City={city}, ZIP={zipcode}, Wt={weight}, Size={size}, Value=${value}")
+                            # === Step 5: Extract shipping information ===
+                            try:
+                                # Wait for the shipping rates div to appear
+                                shipping_rates_div = wait.until(EC.presence_of_element_located((By.ID, "shippingRates")))
+
+                                # Find all carrier divs within the shipping rates div
+                                carriers = shipping_rates_div.find_elements(By.CLASS_NAME, "carrier")
+
+                                # Loop through each carrier div and extract the desired information
+                                for carrier in carriers:
+                                    # Extract the entire shipping method (e.g., "Aramex: Economy Parcel Express")
+                                    shipping_method = carrier.find_element(By.CSS_SELECTOR, ".dataContainer strong").text.strip()
+
+                                    # Extract estimated delivery time (e.g., "8-12 business days")
+                                    estimated_delivery_time = carrier.find_element(By.CSS_SELECTOR, ".dataContainer em").text.strip()
+
+                                    # Extract price (e.g., "21.02 USD")
+                                    price = carrier.find_element(By.CSS_SELECTOR, ".priceContainer strong").text.strip()
+
+                                    # Extract the currency (e.g., "USD")
+                                    currency = price.split(" ")[-1]  # Extract the currency from the price string
+
+                                    # Extract insurance (e.g., "+ Insurance 3.02 USD")
+                                    insurance_text = carrier.find_element(By.CSS_SELECTOR, ".priceContainer small").text.strip()
+                                    insurance_amount_str = insurance_text.split(" ")[-2]  # Extract the insurance amount
+                                    insurance_amount = float(insurance_amount_str)  # Convert to float
+
+                                    # Print the collected data
+                                    print(f"Shipping Method: {shipping_method}")
+                                    print(f"Estimated Delivery Time: {estimated_delivery_time}")
+                                    print(f"Price: {price}")
+                                    print(f"Currency: {currency}")
+                                    print(f"Insurance: {insurance_text}")
+                                    print(f"Insurance Amount: {insurance_amount}\n")
+
+                            except Exception as e:
+                                print(f"Error extracting shipping rates: {e}")
+
                             time.sleep(0.5)
 
                         except Exception as e:
