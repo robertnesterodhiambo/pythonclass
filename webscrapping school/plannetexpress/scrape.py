@@ -165,8 +165,16 @@ try:
 
                                     # Extract insurance (e.g., "+ Insurance 3.02 USD")
                                     insurance_text = carrier.find_element(By.CSS_SELECTOR, ".priceContainer small").text.strip()
-                                    insurance_amount_str = insurance_text.split(" ")[-2]  # Extract the insurance amount
-                                    insurance_amount = float(insurance_amount_str)  # Convert to float
+
+                                    # If there's an insurance value, extract it
+                                    insurance_amount = 0.0  # Default to 0.0 if no insurance found
+                                    if 'Insurance' in insurance_text:
+                                        # Split the insurance string and extract the amount (e.g., "3.02 USD")
+                                        insurance_amount_str = insurance_text.split(" ")[-2]  # Extract the numeric part
+                                        try:
+                                            insurance_amount = float(insurance_amount_str)  # Convert to float
+                                        except ValueError:
+                                            insurance_amount = 0.0  # If conversion fails, set to 0.0
 
                                     # Print the collected data
                                     print(f"Shipping Method: {shipping_method}")
