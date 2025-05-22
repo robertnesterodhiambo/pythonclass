@@ -24,7 +24,14 @@ package_sizes = [
     (48, 24, 12), (60, 30, 30), (24, 20, 18), (72, 24, 24), (18, 12, 10)
 ]
 
-# Step 3: Chrome setup
+# Step 3: Define goods values (50 values for the "value" field)
+goods_values = [
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220,
+    230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410, 420,
+    430, 440, 450, 460, 470, 480, 490, 500, 510, 520
+]
+
+# Step 4: Chrome setup
 options = Options()
 options.add_argument("--start-maximized")
 options.add_argument("--disable-blink-features=AutomationControlled")
@@ -142,9 +149,26 @@ try:
 
                             print(f"Entered dimensions (L x W x H): {length} x {width} x {height}")
 
-                            # Optional: pause briefly between sizes
-                            time.sleep(0.3)
-                            
+                            # Loop through goods values
+                            for value in goods_values:
+                                try:
+                                    value_input = wait.until(EC.presence_of_element_located((By.NAME, "packages[0][value]")))
+                                    value_input.clear()
+                                    for ch in str(value):
+                                        value_input.send_keys(ch)
+                                        time.sleep(0.05)
+                                    print(f"Entered value: {value}")
+
+                                    # Optional: Pause briefly between goods values
+                                    time.sleep(0.3)
+
+                                except:
+                                    print("Value input not found.")
+                                    continue
+
+                            # Optional: pause between dimensions
+                            time.sleep(0.5)
+
                         except:
                             print("Package dimension input(s) not found.")
                             continue
