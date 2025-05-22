@@ -11,7 +11,7 @@ import time
 
 # === Step 1: Load CSV ===
 df = pd.read_csv('100 Country list 20180621.csv')
-country_data = df[["countryname", "city", "zipcode"]].dropna().iloc[:5]
+country_data = df[["countryname", "city", "zipcode"]].dropna()
 
 # === Step 2: Define weights, dimensions, values ===
 all_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
