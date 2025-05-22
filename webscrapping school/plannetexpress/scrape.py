@@ -15,8 +15,14 @@ country_data = df[["countryname", "city", "zipcode"]].dropna().iloc[:5]
 print("Loaded country, city, and zipcode data:")
 print(country_data)
 
-# Step 2: Define weight values
+# Step 2: Define weight values and package dimensions (L x W x H)
 all_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
+package_sizes = [
+    (12, 8, 1), (14, 9, 1), (12, 8, 5), (10, 6, 4), (18, 12, 6),
+    (24, 16, 8), (30, 18, 4), (36, 24, 6), (48, 24, 3), (60, 24, 4),
+    (10, 8, 6), (16, 12, 8), (6, 4, 3), (12, 10, 6), (20, 16, 10),
+    (48, 24, 12), (60, 30, 30), (24, 20, 18), (72, 24, 24), (18, 12, 10)
+]
 
 # Step 3: Chrome setup
 options = Options()
@@ -117,8 +123,34 @@ try:
                         time.sleep(0.05)
                     print(f"Entered weight: {weight} lbs")
 
-                    # Optional: pause briefly between weights (or submit, scrape, etc.)
-                    time.sleep(0.3)
+                    # Loop through package sizes (L x W x H) for each weight
+                    for size in package_sizes:
+                        length, width, height = size
+                        try:
+                            # Enter L, W, H in respective inputs
+                            length_input = wait.until(EC.presence_of_element_located((By.NAME, "packages[0][length]")))
+                            length_input.clear()
+                            length_input.send_keys(str(length))
+
+                            width_input = wait.until(EC.presence_of_element_located((By.NAME, "packages[0][width]")))
+                            width_input.clear()
+                            width_input.send_keys(str(width))
+
+                            height_input = wait.until(EC.presence_of_element_located((By.NAME, "packages[0][height]")))
+                            height_input.clear()
+                            height_input.send_keys(str(height))
+
+                            print(f"Entered dimensions (L x W x H): {length} x {width} x {height}")
+
+                            # Optional: pause briefly between sizes
+                            time.sleep(0.3)
+                            
+                        except:
+                            print("Package dimension input(s) not found.")
+                            continue
+                    
+                    # Optional: pause between each weight (before going to the next)
+                    time.sleep(0.5)
 
                 except:
                     print("Weight input not found.")
