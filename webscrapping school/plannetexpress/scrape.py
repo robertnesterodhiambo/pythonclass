@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -24,24 +25,54 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 url = "https://planetexpress.com/postage-calculator/"
 driver.get(url)
 
-# Step 5: Wait for the dropdown container
+# Step 5: Setup
 wait = WebDriverWait(driver, 15)
 
+# The fixed dropdown options
+fixed_entries = [
+    "Torrance, CA",
+    "Tualatin, OR",
+    "Fort Pierce, FL",
+    "United Kingdom"
+]
+
 try:
-    # Click the outer container to activate the input
+    # Click the dropdown to activate it
     dropdown_container = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".chosen-container")))
     dropdown_container.click()
     time.sleep(0.5)
 
-    # Focus the actual input field
     input_box = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "chosen-search-input")))
-    driver.execute_script("arguments[0].focus();", input_box)
 
-    print("Cursor is now focused in the input box.")
+    for entry in fixed_entries:
+        # Clear and type the entry
+        input_box.clear()
+        input_box.send_keys(entry)
+        time.sleep(0.7)
+
+        # Wait for dropdown items to appear
+        results = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "ul.chosen-results li.active-result")))
+
+        found = False
+        for item in results:
+            if item.text.strip().lower() == entry.lower():
+                print("Selected:", item.text)
+                item.click()
+                found = True
+                break
+
+        if not found:
+            print(f"Could not find option: {entry}")
+
+        time.sleep(1)
+
+        # Reopen dropdown for next round
+        dropdown_container = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".chosen-container")))
+        dropdown_container.click()
+        input_box = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "chosen-search-input")))
 
 except Exception as e:
-    print(f"Could not focus input box: {e}")
+    print("Error during dropdown automation:", e)
 
-# Pause so user can interact or view
 input("Press Enter to close browser...")
 driver.quit()
