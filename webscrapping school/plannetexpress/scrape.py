@@ -36,12 +36,14 @@ try:
     for from_entry in from_entries:
         print(f"--- Processing 'Shipping From': {from_entry} ---")
         
-        # Click first dropdown (Shipping From) - The first .chosen-container is for 'Shipping From'
+        # Click first dropdown (Shipping From)
         from_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[0]
         from_dropdown.click()
-        input_box = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "chosen-search-input")))
+
+        # Select the correct input for "Shipping From"
+        input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
+        input_box = input_boxes[0]
         
-        # Select the 'Shipping From' entry
         input_box.clear()
         input_box.send_keys(from_entry)
         time.sleep(0.7)
@@ -56,14 +58,17 @@ try:
         time.sleep(1)
 
         # === PART 2: Handle "Shipping To" (second dropdown) ===
-        # Now move to the second dropdown (Shipping To) - The second .chosen-container is for 'Shipping To'
         to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
         to_dropdown.click()
-        input_box = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "chosen-search-input")))
 
         # Loop through each country for "Shipping To"
         for country in country_list:
             print(f"Selecting 'Shipping To' country: {country}")
+
+            # Get correct input for "Shipping To"
+            input_boxes = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "chosen-search-input")))
+            input_box = input_boxes[1]
+
             input_box.clear()
             input_box.send_keys(country)
             time.sleep(0.7)
@@ -87,10 +92,9 @@ try:
 
             time.sleep(1)
 
-            # Reopen second dropdown for the next country
+            # Reopen "Shipping To" dropdown for the next country
             to_dropdown = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".chosen-container")))[1]
             to_dropdown.click()
-            input_box = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "chosen-search-input")))
 
         time.sleep(1)
 
