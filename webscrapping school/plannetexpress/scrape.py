@@ -44,6 +44,16 @@ if write_header:
             "Shipping Method", "Estimated Delivery", "Price", "Currency", "Insurance Text", "Insurance Amount"
         ])
 
+# === Step 3.6: Load existing results to avoid duplicates ===
+processed_keys = set()
+if os.path.exists(output_file):
+    with open(output_file, newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        next(reader)  # skip header
+        for row in reader:
+            key = (row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])  # from, to_country, city, zip, weight, length, width, height, value
+            processed_keys.add(tuple(key))
+
 # === Step 4: Main Automation ===
 try:
     for from_entry in from_entries:
@@ -137,6 +147,11 @@ try:
                         continue
 
                     for value in goods_values:
+                        entry_key = (from_entry, country, city, zipcode, str(weight), str(length), str(width), str(height), str(value))
+                        if entry_key in processed_keys:
+                            print(f"Skipping already processed entry: {entry_key}")
+                            continue
+
                         try:
                             value_input = wait.until(EC.presence_of_element_located((By.NAME, "packages[0][value]")))
                             value_input.clear()
@@ -188,6 +203,9 @@ try:
                                             shipping_method, estimated_delivery_time,
                                             price, currency, insurance_text, insurance_amount
                                         ])
+
+                                    # Add to processed set to avoid reprocessing in same run
+                                    processed_keys.add(entry_key)
 
                             except Exception as e:
                                 print(f"Error extracting shipping rates: {e}")
