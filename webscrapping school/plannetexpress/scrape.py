@@ -26,11 +26,12 @@ goods_values = [v for v in range(10, 20, 10)]  # 10, 20
 options = Options()
 options.add_argument("--start-maximized")
 options.add_argument("--disable-blink-features=AutomationControlled")
+options.add_argument("--headless=new") 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 wait = WebDriverWait(driver, 15)
 driver.get("https://planetexpress.com/postage-calculator/")
 
-from_entries = ["Torrance, CA", "Tualatin, OR", "Fort Pierce, FL", "United Kingdom"]
+from_entries = ["United Kingdom"] #,"Fort Pierce, FL", "United Kingdom","Torrance, CA", "Tualatin, OR"]
 
 # === Step 3.5: Prepare CSV File ===
 output_file = 'shipping_results.csv'
