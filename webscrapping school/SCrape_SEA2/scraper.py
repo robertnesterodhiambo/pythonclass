@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-file_path = "SEACO.xlsx"  # Source of units numbers
+file_path = "/home/dragon/DATA/SEACO.xlsx"  # Source of units numbers
 output_filename = "seaco.csv"  # Output file
 
 
