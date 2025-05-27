@@ -23,14 +23,30 @@ csv_path = '/home/dragon/DATA/variants_sellers.csv'
 csv_lock = threading.Lock()
 gtin_lock = threading.Lock()
 
-# Ensure CSV file and write headers if missing
+# 🆕 Read GTINs and variants data from input CSV
+file_path = '~/DATA/variants.csv'
+file_path = os.path.expanduser(file_path)
+df = pd.read_csv(file_path)
+df['GTIN'] = df['GTIN'].astype(str).fillna('')
+
+gtins_to_process = df['GTIN'].dropna().astype(str).unique().tolist()
+
+# 🆕 Create a lookup dictionary to join data from variants.csv
+variants_df = df.set_index('GTIN').astype(str).fillna('')
+variants_dict = variants_df.to_dict(orient='index')
+variant_columns = list(variants_df.columns)
+
+# 🆕 Define full CSV headers including original variant columns
+csv_headers = [
+    'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
+    'Seller', 'Seller Price (€)', 'MOV (€)', 'Seller Stock', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
+] + variant_columns
+
+# 🆕 Ensure CSV file and write headers if missing
 if not os.path.exists(csv_path) or os.stat(csv_path).st_size == 0:
     with open(csv_path, mode='w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerow([
-            'GTIN', 'Variant Name', 'Category Name', 'Brand Name', 'Price (€)', 'Inventory', 'Image URL',
-            'Seller', 'Seller Price (€)', 'MOV (€)', 'Seller Stock', 'Ordering Qty', 'Total Price (€)', 'Unit', 'Sellers Returned'
-        ])
+        writer.writerow(csv_headers)
 
 # Read existing GTINs
 def get_existing_gtins():
@@ -168,11 +184,15 @@ def process_gtin(gtin):
                 quantity_to_order = min(requested_quantity, available_quantity)
                 total_price = float(offer["price"]) * quantity_to_order
 
+                # 🆕 Join extra columns from variants.csv
+                variant_data = variants_dict.get(gtin, {})
+                joined_data = [variant_data.get(col, '') for col in variant_columns]
+
                 writer.writerow([
                     gtin, variant_name, category_name, brand_name, price, inventory, image_url,
                     offer['seller'], offer['price'], offer['mov'], available_quantity, quantity_to_order,
                     f"{total_price:.2f}", offer["unit"], len(offers)
-                ])
+                ] + joined_data)
 
                 print(f"📦 Offer:")
                 print(f"    Seller: {offer['seller']}")
@@ -203,12 +223,6 @@ def process_gtin(gtin):
 if not login():
     print("❌ Cannot proceed without login.")
     exit()
-
-# Read GTINs
-file_path = '~/DATA/variants.csv'
-file_path = os.path.expanduser(file_path)
-df = pd.read_csv(file_path)
-gtins_to_process = df['GTIN'].dropna().astype(str).unique().tolist()
 
 # Process using ThreadPool
 with ThreadPoolExecutor(max_workers=1) as executor:
