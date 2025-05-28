@@ -1,53 +1,92 @@
-from playwright.sync_api import sync_playwright
 import pandas as pd
-import time
+import numpy as np
+import random
 
-def scrape_and_type():
-    # Load first 5 country names from CSV
+# === File paths ===
+CSV_PATH = "/home/dragon/GIT/pythonclass/webscrapping school/plannetexpress/shipping_results.csv"
+XLSX_PATH = "1stackry.xlsx"  # This will be created/overwritten in the same directory
+
+# === Load CSV ===
+df_csv = pd.read_csv(CSV_PATH)
+
+# === Select 15,000 rows ===
+df_15k = df_csv.head(15000)
+
+# === Map to 1stackry.xlsx columns ===
+column_map = {
+    "To Country":         "Recieving Country",
+    "To City":            "Recieving City",
+    "Postal Code":        "Recieving Zipcode",
+    "Weight (lbs)":       "Weight in (LBS)",
+    "Shipping Method":    "Shipping Method",
+    "Estimated Delivery": "Estimated Delivery Time",
+    "Price":              "Price in USD",
+}
+
+# === Rename and order columns ===
+df_mapped = (
+    df_15k
+    .rename(columns=column_map)
+    [list(column_map.values())]
+    .assign(**{"SHIPPING METHODS": df_15k["Shipping Method"].values})
+)
+
+# === Clean data to avoid "Not valid input" errors ===
+
+# 1. Replace NaN, inf values with empty strings
+df_clean = df_mapped.replace([np.nan, np.inf, -np.inf], '')
+
+# 2. Convert columns to appropriate data types (numeric where applicable)
+df_clean["Weight in (LBS)"] = pd.to_numeric(df_clean["Weight in (LBS)"], errors='coerce')  # Force numbers in Weight column
+
+# 3. Strip leading/trailing spaces from all string columns
+df_clean = df_clean.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+# 4. Remove non-UTF8 characters
+df_clean = df_clean.applymap(lambda x: x.encode('utf-8', 'ignore').decode('utf-8') if isinstance(x, str) else x)
+
+# 5. Handle Excel formulas like strings (e.g., =SUM(...) in cells)
+df_clean = df_clean.applymap(lambda x: f"'{x}" if isinstance(x, str) and x.startswith('=') else x)
+
+# === Adjust Price and Estimated Delivery Time ===
+
+# Function to adjust price by ±10% or leave it same
+def adjust_price(price_str):
+    if pd.isna(price_str):
+        return price_str
     try:
-        df = pd.read_csv("100 Country list 20180621.csv")
-        countries = df['countryname'].dropna().astype(str).head(5).tolist()
-    except FileNotFoundError:
-        print("[!] CSV file not found.")
-        return
-    except KeyError:
-        print("[!] Column 'countryname' not found.")
-        return
+        # Remove the ' USD' part, convert to float, and adjust
+        price = float(price_str.replace(' USD', ''))
+        adjustment_factor = random.choice([1.1, 0.9, 1])  # +10%, -10%, or no change
+        adjusted_price = round(price * adjustment_factor, 2)  # Round to 2 decimal places
+        return f"{adjusted_price} USD"
+    except ValueError:
+        return price_str  # Return the original if there's an error
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        page = browser.new_page()
+# Function to adjust Estimated Delivery Time by adding ±10% or leaving it same
+def adjust_delivery_time(time_str):
+    if isinstance(time_str, str):
+        # Extract numeric ranges from the string (e.g., "8-12 business days")
+        try:
+            parts = time_str.split(' ')[0].split('-')
+            min_days = int(parts[0])
+            max_days = int(parts[1])
+            adjustment_factor = random.choice([1.1, 0.9, 1])  # +10%, -10%, or no change
+            
+            # Apply adjustment
+            min_days_adjusted = round(min_days * adjustment_factor)
+            max_days_adjusted = round(max_days * adjustment_factor)
+            
+            return f"{min_days_adjusted}-{max_days_adjusted} business days"
+        except ValueError:
+            return time_str  # Return original if format is unexpected
+    return time_str  # Return original if not a string
 
-        page.goto("https://calc.stackry.com/en", timeout=60000)
+# Apply adjustments
+df_clean["Price in USD"] = df_clean["Price in USD"].apply(adjust_price)
+df_clean["Estimated Delivery Time"] = df_clean["Estimated Delivery Time"].apply(adjust_delivery_time)
 
-        # Wait for the placeholder to appear by ID
-        placeholder_selector = "#react-select-4-placeholder"
-        page.wait_for_selector(placeholder_selector, timeout=15000)
+# === Write to Excel ===
+df_clean.to_excel(XLSX_PATH, index=False)
 
-        # Click on the placeholder to activate the input
-        page.click(placeholder_selector)
-
-        # Wait for the input by ID and focus it
-        input_selector = "#react-select-4-input"
-        page.wait_for_selector(input_selector, timeout=15000)
-        input_box = page.locator(input_selector)
-
-        # Type each country letter-by-letter
-        for country in countries:
-            print(f"Typing country: {country}")
-            input_box.fill("")  # Clear before typing
-            time.sleep(0.3)
-
-            for letter in country:
-                current_text = input_box.input_value()
-                input_box.fill(current_text + letter)
-                time.sleep(0.15)
-
-            time.sleep(1)  # Pause after full country typed
-            input_box.fill("")  # Clear input for next
-            time.sleep(0.5)
-
-        browser.close()
-
-if __name__ == "__main__":
-    scrape_and_type()
+print(f"✅ 15,000 adjusted entries written to {XLSX_PATH}")
