@@ -1,109 +1,119 @@
+import pandas as pd
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
-import pandas as pd
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 
-chrome_options = webdriver.ChromeOptions()
-#chrome_options.add_argument('--headless')  # Uncomment to run headlessly
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
+# List of weight values (lbs)
+ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
 
-driver = webdriver.Chrome(options=chrome_options)
-driver.maximize_window()
+# Load the CSV and select the first 5 entries
+csv_path = '100 Country list 20180621.csv'
+df = pd.read_csv(csv_path)
+entries = df[['countryname', 'city', 'zipcode']].dropna().head(5)
 
-df = pd.read_csv("100 Country list 20180621.csv")
+# Set up Chrome options
+options = Options()
+options.add_argument("--start-maximized")
 
+# Launch browser
+driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
+time.sleep(5)  # Wait for the page to load
 
-all_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
-final_output = []
+# Function to simulate typing each character individually
+def type_by_keystrokes(element, text):
+    for char in text:
+        element.send_keys(char)
+        time.sleep(0.1)  # Adjust the typing speed if needed
 
-for index, row in df[0:].iterrows():
-    time.sleep(3)
-    print(index)
+# Process each entry
+for index, row in entries.iterrows():
     try:
-        driver.find_element(By.XPATH, "//body").click()
-        driver.find_element(By.XPATH, "//div[@id='react-select-country']").click()
-        driver.find_element(By.XPATH, "//div[contains(text(), '" + str(row['countryname']) + "')]").click()
-        time.sleep(1)
-    except:
-        final_output.append([row["countryname"], row["city"], row["zipcode"]])
-        print(final_output[-1])
-        print("a")
-        continue
+        country = row['countryname']
+        city = row['city']
+        zipcode = str(row['zipcode'])
 
-    try:
-        cc = driver.find_elements(By.XPATH, "//div[@class='mb-3']")[1].find_element(By.XPATH, "div/input[@class=' form-control']")
-        cn = cc.get_attribute("name")
+        # Enter country
+        country_input = driver.find_element(By.ID, "react-select-country-input")
+        country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+        time.sleep(0.5)
+        type_by_keystrokes(country_input, country)
         time.sleep(1)
-        cc.clear()
-        if cn == "postalCode":
-            cc.send_keys(row["zipcode"])
+        country_input.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        # Move to next field (City or Postal Code)
+        country_input.send_keys(Keys.TAB)
+        time.sleep(1)
+
+        active_input = driver.switch_to.active_element
+
+        # Scan form labels to determine if it's City or Postal Code
+        form = driver.find_element(By.TAG_NAME, "form")
+        labels = form.find_elements(By.CLASS_NAME, "form-label")
+        label_texts = [label.text.lower() for label in labels]
+
+        # Determine field type
+        field_type = None
+        if any("city" in text for text in label_texts):
+            field_type = "city"
+        elif any("postal code" in text or "zip" in text for text in label_texts):
+            field_type = "zipcode"
+
+        # Enter city and press ENTER, or enter postal code and just TAB three times
+        if field_type == "city":
+            active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            type_by_keystrokes(active_input, city)
+            time.sleep(0.5)
+            active_input.send_keys(Keys.ENTER)
+            print(f"Entered City: {city}")
+            # Move to the next input point (TAB three times to the "weight" input field)
+            active_input.send_keys(Keys.TAB)
+            time.sleep(0.5)
+            active_input.send_keys(Keys.TAB)
+            time.sleep(0.5)
+            active_input.send_keys(Keys.TAB)
+
+        elif field_type == "zipcode":
+            active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            type_by_keystrokes(active_input, zipcode)
+            time.sleep(0.5)
+            # Move to the next input point (TAB three times to the "weight" input field) without pressing ENTER
+            active_input.send_keys(Keys.TAB)
+            time.sleep(0.5)
+            active_input.send_keys(Keys.TAB)
+            time.sleep(0.5)
+            active_input.send_keys(Keys.TAB)
+            print(f"Entered Zip Code: {zipcode}")
+
         else:
-            cc.send_keys(row["city"])
-    except:
-        print("b")
-        try:
-            driver.find_element(By.XPATH, "//div[@id='react-select-city']").click()
-            time.sleep(1)
-            driver.find_element(By.XPATH, "//div[contains(text(), '" + str(row['city']) + "')]").click()
-        except:
-            final_output.append([row["countryname"], row["city"], row["zipcode"]])
-            print(final_output[-1])
-            continue
+            print("Could not determine input type from labels.")
 
-    for el in all_lbs:
-        print("\n")
-        driver.find_element(By.XPATH, "//input[@name='weight']").clear()
-        driver.find_element(By.XPATH, "//input[@name='weight']").send_keys(str(el))
-        driver.find_element(By.XPATH, "//input[@value='Get Shipping Rates']").click()
+        # Focus on the "weight" input field after 3 tabs to ensure it's ready for input
+        weight_input = driver.find_element(By.NAME, "weight")
+        weight_input.click()  # Focus the field
+        time.sleep(1)  # Make sure it's ready
 
-        # Wait until the page is loaded and the "d-inline-block" elements appear
-        WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "d-inline-block")))
+        # Enter each weight value from ll_lbs one by one by keystrokes
+        for weight in ll_lbs:
+            print(f"Entering Weight: {weight} lbs")
+            weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)  # Clear the field before entering new value
+            time.sleep(0.5)
 
-        # Get all the "d-inline-block" div elements
-        inline_blocks = driver.find_elements(By.CLASS_NAME, "d-inline-block")
+            # Simulate typing the weight value character by character
+            type_by_keystrokes(weight_input, str(weight))
+            time.sleep(1)  # Wait for a second after typing the value
 
-        # Iterate through all "d-inline-block" div elements and click each one
-        for block in inline_blocks:
-            try:
-                block.click()
-                time.sleep(1)  # You can adjust the sleep time as needed
-            except Exception as e:
-                print(f"Error clicking block: {e}")
+            # Move to the next input field after each weight entry
+            weight_input.send_keys(Keys.TAB)
+            time.sleep(0.5)
 
-        p = 1
-        while p:
-            try:
-                driver.find_element(By.XPATH, "//span[@class=' badge badge-secondary']")
-                p = 1
-            except:
-                p = 0
+        time.sleep(2)  # Wait a bit before moving to the next country
 
-        etbl = []
-        for ee in driver.find_elements(By.XPATH, "//div[@class='card-header']")[1:]:
-            etbl = []
-            etbl += [e.strip("⚡ ").strip(" 🐌") for e in ee.text.split("\n") if "**" not in e]
-            ee.click()
-            for r in ee.find_elements(By.XPATH, "following-sibling::div/div/div[@class=' row']"):
-                if r.find_elements(By.XPATH, "div")[0].text == ' Estimated delivery time':
-                    continue
-                if r.find_elements(By.XPATH, "div")[0].text == ' Tracking':
-                    if r.find_elements(By.XPATH, "div")[1].find_element(By.XPATH, "span").get_attribute("class") == "text-success":
-                        etbl.append("Yes")
-                    else:
-                        etbl.append("No")
-                else:
-                    etbl.append(r.find_elements(By.XPATH, "div")[1].text)
-            final_output.append([row["countryname"], row["city"], row["zipcode"], el] + etbl)
-            print(final_output[-1])
-            ee.click()
+    except Exception as e:
+        print(f"Error on row {index}: {e}")
 
-        if len(etbl) < 1:
-            final_output.append([row["countryname"], row["city"], row["zipcode"], el])
-            print(final_output[-1])
-
-final_df = pd.DataFrame(final_output, columns=["Recieving Country", "Recieving City", "Recieving Zipcode", "Weight in (LBS)", "Shipping Method", "Estimated Delivery Time", "Price", "Maximum weight", "Dimensional weight", "Maximum Size", "Tracking", "Frequency of departure", "Insurance"])
-final_df.to_excel("fishisfast2.xlsx", index=False)
+input("Press Enter to close the browser...")
+driver.quit()
