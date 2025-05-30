@@ -4,123 +4,101 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# List of weight values (lbs)
+# Weights to test
 ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
 
-# Load the CSV and select the first 5 entries
-csv_path = '100 Country list 20180621.csv'
-df = pd.read_csv(csv_path)
+# Load countries
+df = pd.read_csv("100 Country list 20180621.csv")
 entries = df[['countryname', 'city', 'zipcode']].dropna().head(5)
 
-# Set up Chrome options
+# Chrome setup
 options = Options()
 options.add_argument("--start-maximized")
-
-# Launch browser
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
-time.sleep(5)  # Wait for the page to load
+time.sleep(5)
 
-# Function to simulate typing each character individually
 def type_by_keystrokes(element, text):
     for char in text:
         element.send_keys(char)
-        time.sleep(0.1)  # Adjust the typing speed if needed
+        time.sleep(0.1)
 
 # Process each entry
 for index, row in entries.iterrows():
     try:
-        country = row['countryname']
-        city = row['city']
-        zipcode = str(row['zipcode'])
+        country, city, zipcode = row['countryname'], row['city'], str(row['zipcode'])
 
-        # Enter country
+        # Country input
         country_input = driver.find_element(By.ID, "react-select-country-input")
         country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-        time.sleep(0.5)
         type_by_keystrokes(country_input, country)
         time.sleep(1)
         country_input.send_keys(Keys.ENTER)
         time.sleep(1)
-
-        # Move to next field (City or Postal Code)
         country_input.send_keys(Keys.TAB)
         time.sleep(1)
 
-        active_input = driver.switch_to.active_element
-
-        # Scan form labels to determine if it's City or Postal Code
+        # Determine next field type
         form = driver.find_element(By.TAG_NAME, "form")
         labels = form.find_elements(By.CLASS_NAME, "form-label")
         label_texts = [label.text.lower() for label in labels]
+        field_type = "city" if any("city" in text for text in label_texts) else "zipcode"
 
-        # Determine field type
-        field_type = None
-        if any("city" in text for text in label_texts):
-            field_type = "city"
-        elif any("postal code" in text or "zip" in text for text in label_texts):
-            field_type = "zipcode"
-
-        # Enter city and press ENTER, or enter postal code and just TAB three times
+        active_input = driver.switch_to.active_element
+        value = city if field_type == "city" else zipcode
+        active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+        type_by_keystrokes(active_input, value)
         if field_type == "city":
-            active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-            type_by_keystrokes(active_input, city)
-            time.sleep(0.5)
             active_input.send_keys(Keys.ENTER)
-            print(f"Entered City: {city}")
-            # Move to the next input point (TAB three times to the "weight" input field)
-            active_input.send_keys(Keys.TAB)
-            time.sleep(0.5)
-            active_input.send_keys(Keys.TAB)
-            time.sleep(0.5)
-            active_input.send_keys(Keys.TAB)
+        time.sleep(0.5)
 
-        elif field_type == "zipcode":
-            active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-            type_by_keystrokes(active_input, zipcode)
-            time.sleep(0.5)
-            # Move to the next input point (TAB three times to the "weight" input field) without pressing ENTER
+        for _ in range(3):
             active_input.send_keys(Keys.TAB)
             time.sleep(0.5)
-            active_input.send_keys(Keys.TAB)
-            time.sleep(0.5)
-            active_input.send_keys(Keys.TAB)
-            print(f"Entered Zip Code: {zipcode}")
 
-        else:
-            print("Could not determine input type from labels.")
-
-        # Focus on the "weight" input field after 3 tabs to ensure it's ready for input
         weight_input = driver.find_element(By.NAME, "weight")
-        weight_input.click()  # Focus the field
-        time.sleep(1)  # Make sure it's ready
+        weight_input.click()
+        time.sleep(1)
 
-        # Enter each weight value from ll_lbs one by one by keystrokes
+        # Iterate weights
         for weight in ll_lbs:
-            print(f"Entering Weight: {weight} lbs")
-            weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)  # Clear the field before entering new value
-            time.sleep(0.5)
-
-            # Simulate typing the weight value character by character
+            weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             type_by_keystrokes(weight_input, str(weight))
-            time.sleep(1)  # Wait for a second after typing the value
+            time.sleep(1)
 
-            # Click the submit button after each weight entry
-            submit_button = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
-            submit_button.click()
-            print(f"Clicked the submit button after entering weight {weight} lbs.")
+            submit = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
+            submit.click()
+            print(f"Submitted weight: {weight}")
+            time.sleep(4)
 
-            time.sleep(2)  # Wait for the form to process the weight
+            # New: Click all $ elements inside the specified divs
+            try:
+                price_containers = WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
+                )
+                for container in price_containers:
+                    try:
+                        dollar_elements = container.find_elements(By.TAG_NAME, "b")
+                        for elem in dollar_elements:
+                            if "$" in elem.text:
+                                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+                                time.sleep(0.3)
+                                elem.click()
+                                print(f"Clicked: {elem.text}")
+                                time.sleep(0.5)
+                    except Exception as click_err:
+                        print(f"Click error in container: {click_err}")
+            except Exception as e:
+                print(f"Price container error: {e}")
 
-            # Move to the next input field after each weight entry
             weight_input.send_keys(Keys.TAB)
             time.sleep(0.5)
 
-        time.sleep(2)  # Wait a bit before moving to the next country
-
     except Exception as e:
-        print(f"Error on row {index}: {e}")
+        print(f"Error at index {index}: {e}")
 
-input("Press Enter to close the browser...")
+input("Press Enter to exit...")
 driver.quit()
