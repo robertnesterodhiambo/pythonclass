@@ -106,6 +106,13 @@ for index, row in entries.iterrows():
             type_by_keystrokes(weight_input, str(weight))
             time.sleep(1)  # Wait for a second after typing the value
 
+            # Click the submit button after each weight entry
+            submit_button = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
+            submit_button.click()
+            print(f"Clicked the submit button after entering weight {weight} lbs.")
+
+            time.sleep(2)  # Wait for the form to process the weight
+
             # Move to the next input field after each weight entry
             weight_input.send_keys(Keys.TAB)
             time.sleep(0.5)
