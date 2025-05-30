@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
+#chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 import time
@@ -86,4 +86,4 @@ for index, row in df[0:].iterrows():
             print(final_output[-1])
 
 final_df=pd.DataFrame(final_output,columns=["Recieving Country","Recieving City","Recieving Zipcode","Weight in (LBS)","Shipping Method","Estimated Delivery Time","Price","Maximum weight","Dimensional weight","Maximum Size","Tracking","Frequency of departure","Insurance"])
-final_df.to_excel("fishisfast.xlsx",index=False)
+final_df.to_excel("fishisfast2.xlsx",index=False)
