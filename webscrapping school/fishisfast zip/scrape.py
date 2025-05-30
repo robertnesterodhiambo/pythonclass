@@ -6,59 +6,81 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Setup file path and read CSV
+# Load CSV
 csv_path = os.path.join(os.path.dirname(__file__), "100 Country list 20180621.csv")
-
-# Load the CSV into a DataFrame
 try:
     df = pd.read_csv(csv_path)
-    country_names = df['countryname'].dropna().tolist()[:5]  # First 5 country names
+    data_rows = df[['countryname', 'city']].dropna().head(5)
 except Exception as e:
-    print(f"Error reading CSV file: {e}")
+    print(f"Error reading CSV: {e}")
     exit()
 
-# Set up Chrome options
+# Setup Chrome options
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
-# chrome_options.add_argument("--headless")  # Uncomment if you want headless mode
+# chrome_options.add_argument("--headless")  # Uncomment if you don't need GUI
 chrome_options.binary_location = "/usr/bin/chromium-browser"
 
-# Setup driver service
+# Set up ChromeDriver
 service = Service("/usr/lib/chromium-browser/chromedriver")  # Adjust if needed
-
-# Launch browser
 driver = webdriver.Chrome(service=service, options=chrome_options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 
-# Wait for page to load
-time.sleep(5)
+# Wait until the country input is interactable
+wait = WebDriverWait(driver, 15)
 
-# Loop through the first 5 countries
-for country in country_names:
-    print(f"Typing country: {country}")
+for index, row in data_rows.iterrows():
+    country = row['countryname']
+    city = row['city']
+    print(f"Processing: {country}, {city}")
+
     try:
-        input_elem = driver.find_element(By.ID, "react-select-country-input")
-        input_elem.click()
+        # Wait for and focus country input (React select)
+        country_input = wait.until(EC.presence_of_element_located((By.ID, "react-select-country-input")))
+        country_input.click()
+        time.sleep(0.3)
+
+        # Type country letter by letter
+        for letter in country:
+            country_input.send_keys(letter)
+            time.sleep(0.1)
+
+        time.sleep(1.0)  # Allow React suggestions to show
+
+        # Dismiss dropdown if present (press ESC)
+        country_input.send_keys(Keys.ESCAPE)
+        time.sleep(0.3)
+
+        # Clear the input
+        country_input.send_keys(Keys.CONTROL + "a")
+        country_input.send_keys(Keys.BACKSPACE)
         time.sleep(0.5)
 
-        # Type the country name letter by letter
-        for letter in country:
-            input_elem.send_keys(letter)
-            time.sleep(0.1)  # Delay between keystrokes
+        # Find city input by XPath
+        city_input = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='city']")))
+        driver.execute_script("arguments[0].scrollIntoView(true);", city_input)  # Scroll to the input
+        city_input.click()
+        city_input.clear()
 
-        time.sleep(1)  # Wait for dropdown suggestion (if needed)
+        # Type city letter by letter
+        for letter in str(city):
+            city_input.send_keys(letter)
+            time.sleep(0.1)
 
-        # Clear input: send BACKSPACE repeatedly or Ctrl+A + Delete
-        input_elem.send_keys(Keys.CONTROL + "a")
-        input_elem.send_keys(Keys.BACKSPACE)
+        time.sleep(1.5)
+
+        # Clear city input
+        city_input.send_keys(Keys.CONTROL + "a")
+        city_input.send_keys(Keys.BACKSPACE)
         time.sleep(0.5)
 
     except Exception as e:
-        print(f"Error processing '{country}': {e}")
+        print(f"Error at row {index}: {e}")
 
-# Done
-print("Done typing countries.")
-input("Press Enter to close browser...")
+print("Finished processing.")
+input("Press Enter to exit...")
 driver.quit()
