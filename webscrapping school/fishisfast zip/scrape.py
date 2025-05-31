@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import csv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -21,84 +22,104 @@ driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
 
-def type_by_keystrokes(element, text):
-    for char in text:
-        element.send_keys(char)
-        time.sleep(0.1)
+# Setup a CSV writer to store the collected data
+with open('shipping_data.csv', mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Text'])  # Add headers
 
-# Process each entry
-for index, row in entries.iterrows():
-    try:
-        country, city, zipcode = row['countryname'], row['city'], str(row['zipcode'])
+    def type_by_keystrokes(element, text):
+        for char in text:
+            element.send_keys(char)
+            time.sleep(0.1)
 
-        # Country input
-        country_input = driver.find_element(By.ID, "react-select-country-input")
-        country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-        type_by_keystrokes(country_input, country)
-        time.sleep(1)
-        country_input.send_keys(Keys.ENTER)
-        time.sleep(1)
-        country_input.send_keys(Keys.TAB)
-        time.sleep(1)
+    # Process each entry
+    for index, row in entries.iterrows():
+        try:
+            country, city, zipcode = row['countryname'], row['city'], str(row['zipcode'])
 
-        # Determine next field type
-        form = driver.find_element(By.TAG_NAME, "form")
-        labels = form.find_elements(By.CLASS_NAME, "form-label")
-        label_texts = [label.text.lower() for label in labels]
-        field_type = "city" if any("city" in text for text in label_texts) else "zipcode"
-
-        active_input = driver.switch_to.active_element
-        value = city if field_type == "city" else zipcode
-        active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-        type_by_keystrokes(active_input, value)
-        if field_type == "city":
-            active_input.send_keys(Keys.ENTER)
-        time.sleep(0.5)
-
-        for _ in range(3):
-            active_input.send_keys(Keys.TAB)
-            time.sleep(0.5)
-
-        weight_input = driver.find_element(By.NAME, "weight")
-        weight_input.click()
-        time.sleep(1)
-
-        # Iterate weights
-        for weight in ll_lbs:
-            weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
-            type_by_keystrokes(weight_input, str(weight))
+            # Country input
+            country_input = driver.find_element(By.ID, "react-select-country-input")
+            country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            type_by_keystrokes(country_input, country)
+            time.sleep(1)
+            country_input.send_keys(Keys.ENTER)
+            time.sleep(1)
+            country_input.send_keys(Keys.TAB)
             time.sleep(1)
 
-            submit = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
-            submit.click()
-            print(f"Submitted weight: {weight}")
-            time.sleep(4)
+            # Determine next field type
+            form = driver.find_element(By.TAG_NAME, "form")
+            labels = form.find_elements(By.CLASS_NAME, "form-label")
+            label_texts = [label.text.lower() for label in labels]
+            field_type = "city" if any("city" in text for text in label_texts) else "zipcode"
 
-            # New: Click all $ elements inside the specified divs
-            try:
-                price_containers = WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
-                )
-                for container in price_containers:
-                    try:
-                        dollar_elements = container.find_elements(By.TAG_NAME, "b")
-                        for elem in dollar_elements:
-                            if "$" in elem.text:
-                                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
-                                time.sleep(0.3)
-                                elem.click()
-                                print(f"Clicked: {elem.text}")
-                                time.sleep(0.5)
-                    except Exception as click_err:
-                        print(f"Click error in container: {click_err}")
-            except Exception as e:
-                print(f"Price container error: {e}")
-
-            weight_input.send_keys(Keys.TAB)
+            active_input = driver.switch_to.active_element
+            value = city if field_type == "city" else zipcode
+            active_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+            type_by_keystrokes(active_input, value)
+            if field_type == "city":
+                active_input.send_keys(Keys.ENTER)
             time.sleep(0.5)
 
-    except Exception as e:
-        print(f"Error at index {index}: {e}")
+            for _ in range(3):
+                active_input.send_keys(Keys.TAB)
+                time.sleep(0.5)
+
+            weight_input = driver.find_element(By.NAME, "weight")
+            weight_input.click()
+            time.sleep(1)
+
+            # Iterate weights
+            for weight in ll_lbs:
+                weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+                type_by_keystrokes(weight_input, str(weight))
+                time.sleep(1)
+
+                submit = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
+                submit.click()
+                print(f"Submitted weight: {weight}")
+                time.sleep(4)
+
+                # Find all containers with the class `col-12 col-sm-6 col-md-7 col-lg-8`
+                try:
+                    price_containers = WebDriverWait(driver, 10).until(
+                        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
+                    )
+                    for container in price_containers:
+                        try:
+                            # Click all $ elements inside the container
+                            dollar_elements = container.find_elements(By.TAG_NAME, "b")
+                            for elem in dollar_elements:
+                                if "$" in elem.text:
+                                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+                                    time.sleep(0.3)
+                                    elem.click()
+                                    print(f"Clicked: {elem.text}")
+                                    time.sleep(0.5)
+
+                            # Now, collect text from card.mt-0 and card.false divs
+                            card_mt_0_divs = container.find_elements(By.CLASS_NAME, 'card.mt-0')
+                            card_false_divs = container.find_elements(By.CLASS_NAME, 'card.false')
+
+                            # Collect the text from each of the selected divs
+                            all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
+
+                            # Write each piece of text in its own row under the 'Text' column
+                            for text in all_texts:
+                                writer.writerow([country, city, zipcode, weight, text])
+                                print(f"Collected text: {text}")
+
+                        except Exception as div_err:
+                            print(f"Error collecting div data: {div_err}")
+
+                except Exception as e:
+                    print(f"Price container error: {e}")
+
+                weight_input.send_keys(Keys.TAB)
+                time.sleep(0.5)
+
+        except Exception as e:
+            print(f"Error at index {index}: {e}")
 
 input("Press Enter to exit...")
 driver.quit()
