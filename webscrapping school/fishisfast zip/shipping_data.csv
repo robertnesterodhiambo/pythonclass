@@ -1,5 +1,5 @@
-Country,City,Zipcode,Weight,Text
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Country,City,Zipcode,Weight,Box Width,Box Depth,Box Height,Text
+Saudi Arabia,RIYADH,11526,1,6,6,6,"Aramex
 8-15 days
 $32.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -17,7 +17,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,6,6,6,"DHL Express Worldwide
 2-12 days
 $53.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -34,7 +34,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,6,6,6,"FedEx International Economy
 ⚡ 3-10 days
 $65.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -51,7 +51,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,6,6,6,"FedEx International Priority
 ⚡ 2-7 days
 $90.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -68,7 +68,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,8,6,4,"Aramex
 8-15 days
 $32.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -86,7 +86,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,8,6,4,"DHL Express Worldwide
 2-12 days
 $53.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -103,7 +103,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,8,6,4,"FedEx International Economy
 ⚡ 3-10 days
 $65.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -120,7 +120,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,8,6,4,"FedEx International Priority
 ⚡ 2-7 days
 $90.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -137,7 +137,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,10,8,6,"Aramex
 8-15 days
 $43.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -155,7 +155,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,10,8,6,"DHL Express Worldwide
 2-12 days
 $65.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -172,7 +172,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,10,8,6,"FedEx International Economy
 ⚡ 3-10 days
 $79.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -189,7 +189,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,10,8,6,"FedEx International Priority
 ⚡ 2-7 days
 $110.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -206,7 +206,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,12,12,8,"Aramex
 8-15 days
 $71.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -224,7 +224,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,12,12,8,"FedEx International Economy
 ⚡ 3-10 days
 $89.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -241,7 +241,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,12,12,8,"DHL Express Worldwide
 2-12 days
 $102.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -258,7 +258,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,12,12,8,"FedEx International Priority
 ⚡ 2-7 days
 $109.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -275,7 +275,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,14,10,6,"Aramex
 8-15 days
 $63.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -293,7 +293,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,14,10,6,"FedEx International Economy
 ⚡ 3-10 days
 $79.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -310,7 +310,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,14,10,6,"DHL Express Worldwide
 2-12 days
 $89.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -327,7 +327,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,14,10,6,"FedEx International Priority
 ⚡ 2-7 days
 $109.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -344,7 +344,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,16,12,8,"Aramex
 8-15 days
 $95.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -362,7 +362,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,16,12,8,"FedEx International Economy
 ⚡ 3-10 days
 $117.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -379,7 +379,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,16,12,8,"FedEx International Priority
 ⚡ 2-7 days
 $125.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -396,7 +396,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,16,12,8,"DHL Express Worldwide
 2-12 days
 $137.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -413,7 +413,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"Aramex
+Saudi Arabia,RIYADH,11526,1,18,14,10,"Aramex
 8-15 days
 $135.00
 Delivery to your door by Aramex local office in your country. Aramex is a fast and reliable option.
@@ -431,7 +431,7 @@ No restrictions
 Daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Economy
+Saudi Arabia,RIYADH,11526,1,18,14,10,"FedEx International Economy
 ⚡ 3-10 days
 $154.00
 Cost-effective delivery to your door. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.
@@ -448,7 +448,7 @@ Applicable
 Daily, on weekdays
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"DHL Express Worldwide
+Saudi Arabia,RIYADH,11526,1,18,14,10,"DHL Express Worldwide
 2-12 days
 $191.00
 Express delivery to your door by DHL. DHL is present in over 220 countries and territories across the globe, making it the most international company in the world.
@@ -465,7 +465,7 @@ No restrictions
 daily
  Insurance
 $3 for every $100"
-Saudi Arabia,RIYADH,11526,1,"FedEx International Priority
+Saudi Arabia,RIYADH,11526,1,18,14,10,"FedEx International Priority
 ⚡ 2-7 days
 $194.00
 Our fastest method, provided there are no delays in customs. Tracking information is typically updated daily and is very accurate. Package is handled by a private courier for the entire trip so this method is very secure. Full customs descriptions are typically required for most countries.

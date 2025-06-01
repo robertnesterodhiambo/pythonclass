@@ -41,7 +41,7 @@ time.sleep(5)
 # Setup a CSV writer to store the collected data
 with open('shipping_data.csv', mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Text'])  # Add headers
+    writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Width', 'Box Depth', 'Box Height', 'Text'])  # Add box dimensions to the header
 
     def type_by_keystrokes(element, text):
         for char in text:
@@ -136,7 +136,7 @@ with open('shipping_data.csv', mode='w', newline='') as file:
                                 all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
 
                                 for text in all_texts:
-                                    writer.writerow([country, city, zipcode, weight, text])
+                                    writer.writerow([country, city, zipcode, weight, width, depth, height, text])  # Include box size in the row
                                     print(f"Collected text: {text}")
 
                             except Exception as div_err:
