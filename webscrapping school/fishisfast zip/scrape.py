@@ -10,6 +10,22 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Weights to test
 ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
+common_box_sizes = [
+    (6, 6, 6),
+    (8, 6, 4),
+    (10, 8, 6),
+    (12, 12, 8),
+    (14, 10, 6),
+    (16, 12, 8),
+    (18, 14, 10),
+    (20, 16, 12),
+    (22, 18, 12),
+    (24, 18, 18),
+    (26, 20, 20),
+    (28, 20, 20),
+    (30, 20, 20),
+    (36, 24, 24)
+]
 
 # Load countries
 df = pd.read_csv("100 Country list 20180621.csv")
