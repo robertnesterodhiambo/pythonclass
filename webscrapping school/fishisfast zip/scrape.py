@@ -48,7 +48,7 @@ with open('shipping_data.csv', mode='w', newline='') as file:
             element.send_keys(char)
             time.sleep(0.1)
 
-    # Process each entry
+    # Process each entry (Country, City, Zipcode)
     for index, row in entries.iterrows():
         try:
             country, city, zipcode = row['countryname'], row['city'], str(row['zipcode'])
@@ -91,49 +91,68 @@ with open('shipping_data.csv', mode='w', newline='') as file:
                 type_by_keystrokes(weight_input, str(weight))
                 time.sleep(1)
 
-                submit = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
-                submit.click()
-                print(f"Submitted weight: {weight}")
-                time.sleep(4)
+                # Iterate through common box sizes
+                for box_size in common_box_sizes:
+                    width, depth, height = box_size
 
-                # Find all containers with the class `col-12 col-sm-6 col-md-7 col-lg-8`
-                try:
-                    price_containers = WebDriverWait(driver, 10).until(
-                        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
-                    )
-                    for container in price_containers:
-                        try:
-                            # Click all $ elements inside the container
-                            dollar_elements = container.find_elements(By.TAG_NAME, "b")
-                            for elem in dollar_elements:
-                                if "$" in elem.text:
-                                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
-                                    time.sleep(0.3)
-                                    elem.click()
-                                    print(f"Clicked: {elem.text}")
-                                    time.sleep(0.5)
+                    # Enter dimensions for each box size
+                    driver.find_element(By.NAME, "width").send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+                    driver.find_element(By.NAME, "width").send_keys(str(width))
+                    time.sleep(0.5)
 
-                            # Now, collect text from card.mt-0 and card.false divs
-                            card_mt_0_divs = container.find_elements(By.CLASS_NAME, 'card.mt-0')
-                            card_false_divs = container.find_elements(By.CLASS_NAME, 'card.false')
+                    driver.find_element(By.NAME, "depth").send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+                    driver.find_element(By.NAME, "depth").send_keys(str(depth))
+                    time.sleep(0.5)
 
-                            # Collect the text from each of the selected divs
-                            all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
+                    driver.find_element(By.NAME, "height").send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
+                    driver.find_element(By.NAME, "height").send_keys(str(height))
+                    time.sleep(0.5)
 
-                            # Write each piece of text in its own row under the 'Text' column
-                            for text in all_texts:
-                                writer.writerow([country, city, zipcode, weight, text])
-                                print(f"Collected text: {text}")
+                    # Click the "collect" button
+                    collect_button = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
+                    collect_button.click()
+                    print(f"Submitted weight: {weight} and box size: {box_size}")
+                    time.sleep(4)
 
-                        except Exception as div_err:
-                            print(f"Error collecting div data: {div_err}")
+                    # Collect data from the container
+                    try:
+                        price_containers = WebDriverWait(driver, 10).until(
+                            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
+                        )
+                        for container in price_containers:
+                            try:
+                                dollar_elements = container.find_elements(By.TAG_NAME, "b")
+                                for elem in dollar_elements:
+                                    if "$" in elem.text:
+                                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+                                        time.sleep(0.3)
+                                        elem.click()
+                                        print(f"Clicked: {elem.text}")
+                                        time.sleep(0.5)
 
-                except Exception as e:
-                    print(f"Price container error: {e}")
+                                card_mt_0_divs = container.find_elements(By.CLASS_NAME, 'card.mt-0')
+                                card_false_divs = container.find_elements(By.CLASS_NAME, 'card.false')
 
+                                all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
+
+                                for text in all_texts:
+                                    writer.writerow([country, city, zipcode, weight, text])
+                                    print(f"Collected text: {text}")
+
+                            except Exception as div_err:
+                                print(f"Error collecting div data: {div_err}")
+
+                    except Exception as e:
+                        print(f"Price container error: {e}")
+
+                    # Move to next box size
+                    time.sleep(1)
+
+                # After completing all box sizes, move to the next weight
                 weight_input.send_keys(Keys.TAB)
                 time.sleep(0.5)
 
+            # After completing all weights, move to the next country, city, and zipcode
         except Exception as e:
             print(f"Error at index {index}: {e}")
 
