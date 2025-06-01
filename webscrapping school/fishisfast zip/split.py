@@ -54,3 +54,7 @@ result_df = pd.concat([df.drop(columns=["Text"]), parsed_df], axis=1)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
 print(result_df.head())
+# Save to Excel
+result_df.to_excel("fishifast_clean.xlsx", index=False)
+print("Saved to fishifast_clean.xlsx")
+
