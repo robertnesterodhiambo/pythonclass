@@ -1,6 +1,7 @@
 import pandas as pd
 import time
 import csv
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -38,10 +39,16 @@ driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
 
+# Check if the file exists and write the header only if it's the first time
+file_exists = os.path.isfile('shipping_data.csv')
+
 # Setup a CSV writer to store the collected data
-with open('shipping_data.csv', mode='w', newline='') as file:
+with open('shipping_data.csv', mode='a', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Width', 'Box Depth', 'Box Height', 'Text'])  # Add box dimensions to the header
+    
+    # Write header if the file doesn't exist
+    if not file_exists:
+        writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Width', 'Box Depth', 'Box Height', 'Text'])  # Add box dimensions to the header
 
     def type_by_keystrokes(element, text):
         for char in text:
