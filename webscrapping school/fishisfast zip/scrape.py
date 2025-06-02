@@ -19,7 +19,7 @@ common_box_sizes = [
 
 # Load destination data
 df = pd.read_csv("100 Country list 20180621.csv")
-entries = df[['countryname', 'city', 'zipcode']].dropna().head(5)
+entries = df[['countryname', 'city', 'zipcode']].dropna()
 
 # Output file and existing entry check
 output_file = 'shipping_data.csv'
@@ -60,16 +60,23 @@ if not todo_combinations:
 
 # Begin scraping only if there is new data
 options = Options()
-options.add_argument("--start-maximized")
+#options.add_argument("--headless")
+options.add_argument("--window-size=2560,1440")  # Ensure full page rendering in headless mode
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
+
+# Save screenshot to verify loading
+driver.save_screenshot("page_load_confirm.png")
+print("📸 Screenshot saved: page_load_confirm.png")
 
 # CSV writer setup
 with open(output_file, mode='a', newline='') as file:
     writer = csv.writer(file)
     if not file_exists:
-        writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Width', 'Box Depth', 'Box Height', 'Text'])
+        writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Width', 'Box Depth', 'Box Height',
+                         'Method', 'Price', 'Estimated Delivery', 'Max Weight', 'Dimensional Weight',
+                         'Tracking', 'Size', 'Insurance'])
 
     def type_by_keystrokes(element, text):
         for char in text:
@@ -80,19 +87,16 @@ with open(output_file, mode='a', newline='') as file:
     for combo in todo_combinations:
         country, city, zipcode, weight, width, depth, height = combo
         try:
-            # If location changes
             if (country, city, zipcode) != current_location:
-                # Fill country
                 country_input = driver.find_element(By.ID, "react-select-country-input")
                 country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
                 type_by_keystrokes(country_input, country)
                 time.sleep(1)
                 country_input.send_keys(Keys.ENTER)
-                time.sleep(1)
+                time.sleep(2)
                 country_input.send_keys(Keys.TAB)
                 time.sleep(1)
 
-                # Determine field type
                 form = driver.find_element(By.TAG_NAME, "form")
                 labels = form.find_elements(By.CLASS_NAME, "form-label")
                 label_texts = [label.text.lower() for label in labels]
@@ -115,13 +119,11 @@ with open(output_file, mode='a', newline='') as file:
                 weight_input.click()
                 time.sleep(1)
 
-            # Fill weight
             weight_input = driver.find_element(By.NAME, "weight")
             weight_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             type_by_keystrokes(weight_input, str(weight))
             time.sleep(1)
 
-            # Fill dimensions
             driver.find_element(By.NAME, "width").send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             driver.find_element(By.NAME, "width").send_keys(str(width))
             time.sleep(0.5)
@@ -134,40 +136,50 @@ with open(output_file, mode='a', newline='') as file:
             driver.find_element(By.NAME, "height").send_keys(str(height))
             time.sleep(0.5)
 
-            # Submit
             collect_button = driver.find_element(By.CSS_SELECTOR, 'div.d-grid input.btn.btn-success.btn-block[type="submit"]')
             collect_button.click()
-            print(f"🚀 Submitted: {country}, {city}, {zipcode}, {weight} lbs, Box: {width}x{depth}x{height}")
             time.sleep(4)
+            print(f"🚀 Submitted: {country}, {city}, {zipcode}, {weight} lbs, Box: {width}x{depth}x{height}")
+            time.sleep(12)
 
-            # Scrape modal
+            error_detected = False
             try:
-                price_containers = WebDriverWait(driver, 10).until(
-                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
-                )
-                for container in price_containers:
-                    try:
-                        dollar_elements = container.find_elements(By.TAG_NAME, "b")
-                        for elem in dollar_elements:
-                            if "$" in elem.text:
-                                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
-                                time.sleep(0.3)
-                                elem.click()
-                                print(f"💲 Clicked: {elem.text}")
-                                time.sleep(0.5)
+                error_div = driver.find_element(By.CLASS_NAME, "alert-danger")
+                if "there are no valid shipping methods" in error_div.text.lower():
+                    writer.writerow([country, city, zipcode, weight, width, depth, height] + ["No Data"] * 8)
+                    print(f"⚠️ No valid shipping methods for {country}, {city}, {zipcode}, {weight} lbs, Box: {width}x{depth}x{height}")
+                    error_detected = True
+            except:
+                pass
 
-                        card_mt_0_divs = container.find_elements(By.CLASS_NAME, 'card.mt-0')
-                        card_false_divs = container.find_elements(By.CLASS_NAME, 'card.false')
-                        all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
+            if not error_detected:
+                try:
+                    price_containers = WebDriverWait(driver, 10).until(
+                        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.col-12.col-sm-6.col-md-7.col-lg-8'))
+                    )
+                    for container in price_containers:
+                        try:
+                            dollar_elements = container.find_elements(By.TAG_NAME, "b")
+                            for elem in dollar_elements:
+                                if "$" in elem.text:
+                                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", elem)
+                                    time.sleep(0.3)
+                                    elem.click()
+                                    print(f"💲 Clicked: {elem.text}")
+                                    time.sleep(0.5)
 
-                        for text in all_texts:
-                            writer.writerow([country, city, zipcode, weight, width, depth, height, text])
-                            print(f"📦 Collected text for {weight} lbs, {width}x{depth}x{height}")
+                            card_mt_0_divs = container.find_elements(By.CLASS_NAME, 'card.mt-0')
+                            card_false_divs = container.find_elements(By.CLASS_NAME, 'card.false')
+                            all_texts = [card.text for card in card_mt_0_divs] + [card.text for card in card_false_divs]
 
-                    except Exception as div_err:
-                        print(f"❌ Modal error: {div_err}")
-            except Exception as e:
-                print(f"❌ Price container error: {e}")
+                            for text in all_texts:
+                                writer.writerow([country, city, zipcode, weight, width, depth, height, text])
+                                print(f"📦 Collected text for {weight} lbs, {width}x{depth}x{height}")
+
+                        except Exception as div_err:
+                            print(f"❌ Modal error: {div_err}")
+                except Exception as e:
+                    print(f"❌ Price container error: {e}")
 
             time.sleep(1)
 
