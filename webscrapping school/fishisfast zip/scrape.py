@@ -22,7 +22,7 @@ df = pd.read_csv("100 Country list 20180621.csv")
 entries = df[['countryname', 'city', 'zipcode']].dropna()
 
 # Output file and existing entry check
-output_file = 'shipping_data.csv'
+output_file = '/home/dragon/DATA/shipping_data.csv'
 file_exists = os.path.isfile(output_file)
 
 # Load previously collected entries

@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Step 1: Use your specific import line
-df = pd.read_csv("/home/dragon/shipping_data.csv", quotechar='"', encoding='utf-8', engine='python')
+df = pd.read_csv("/home/dragon/DATA/shipping_data.csv", quotechar='"', encoding='utf-8', engine='python')
 
 # Step 2: Function to parse the `Text` column
 def parse_text(text):
