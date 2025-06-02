@@ -1,26 +1,36 @@
 import pandas as pd
 
-# Load CSV
-df = pd.read_csv("shipping_data.csv")
+# Step 1: Use your specific import line
+df = pd.read_csv("/home/dragon/shipping_data.csv", quotechar='"', encoding='utf-8', engine='python')
 
-# Function to parse the `Text` field
+# Step 2: Function to parse the `Text` column
 def parse_text(text):
-    lines = [line.strip() for line in text.strip().split('\n') if line.strip()]
-    
-    # Create a dictionary for the extracted fields
+    if isinstance(text, str) and text.strip().lower() == "no data":
+        return {
+            "name": "No Data",
+            "price": "No Data",
+            "Estimated delivery time": "No Data",
+            "Maximum weight": "No Data",
+            "Dimensional weight": "No Data",
+            "Maximum Size": "No Data",
+            "Tracking": "No Data",
+            "Frequency of departure": "No Data",
+            "Insurance": "No Data"
+        }
+
+    lines = [line.strip() for line in str(text).strip().split('\n') if line.strip()]
     parsed = {
-        "name": lines[0] if len(lines) > 0 else "",
-        "price": lines[2] if len(lines) > 2 else "",
-        "Estimated delivery time": "",
-        "Maximum weight": "",
-        "Dimensional weight": "",
-        "Maximum Size": "",
-        "Tracking": "Yes",  # Always Yes as per instruction
-        "Frequency of departure": "",
-        "Insurance": ""
+        "name": lines[0] if len(lines) > 0 else "No Data",
+        "price": lines[2] if len(lines) > 2 else "No Data",
+        "Estimated delivery time": "No Data",
+        "Maximum weight": "No Data",
+        "Dimensional weight": "No Data",
+        "Maximum Size": "No Data",
+        "Tracking": "Yes",  # Always Yes
+        "Frequency of departure": "No Data",
+        "Insurance": "No Data"
     }
 
-    # Map expected headers to dictionary keys
     keys_map = {
         "Estimated delivery time": "Estimated delivery time",
         "Maximum weight": "Maximum weight",
@@ -32,8 +42,7 @@ def parse_text(text):
 
     for i, line in enumerate(lines):
         for key in keys_map:
-            if line.strip().startswith(key):
-                # Pick the next non-empty line
+            if line.startswith(key):
                 j = i + 1
                 while j < len(lines) and lines[j].strip() == "":
                     j += 1
@@ -43,18 +52,17 @@ def parse_text(text):
 
     return parsed
 
-# Apply the parsing to each row
+# Step 3: Apply parsing
 parsed_data = df["Text"].apply(parse_text)
 parsed_df = pd.DataFrame(parsed_data.tolist())
 
-# Optionally, merge with original df or save/export
+# Step 4: Combine original and parsed data
 result_df = pd.concat([df.drop(columns=["Text"]), parsed_df], axis=1)
 
-# Print full result
+# Step 5: Display and export
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
 print(result_df.head())
-# Save to Excel
-result_df.to_excel("fishifast_clean.xlsx", index=False)
-print("Saved to fishifast_clean.xlsx")
 
+result_df.to_excel("fishifast_clean.xlsx", index=False)
+print("✅ Saved to fishifast_clean.xlsx")
