@@ -60,14 +60,14 @@ if not todo_combinations:
 
 # Begin scraping only if there is new data
 options = Options()
-#options.add_argument("--headless")
+options.add_argument("--headless")
 options.add_argument("--window-size=2560,1440")  # Ensure full page rendering in headless mode
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
 
 # Save screenshot to verify loading
-driver.save_screenshot("page_load_confirm.png")
+driver.save_screenshot("/home/dragon/page_load_confirm.png")
 print("📸 Screenshot saved: page_load_confirm.png")
 
 # CSV writer setup
