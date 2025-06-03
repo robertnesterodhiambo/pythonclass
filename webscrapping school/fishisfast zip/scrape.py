@@ -61,12 +61,11 @@ if not todo_combinations:
 # Begin scraping only if there is new data
 options = Options()
 options.add_argument("--headless")
-options.add_argument("--window-size=2560,1440")  # Ensure full page rendering in headless mode
+options.add_argument("--window-size=2560,1440")
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
 
-# Save screenshot to verify loading
 driver.save_screenshot("/home/dragon/page_load_confirm.png")
 print("📸 Screenshot saved: page_load_confirm.png")
 
@@ -84,6 +83,8 @@ with open(output_file, mode='a', newline='') as file:
             time.sleep(0.1)
 
     current_location = (None, None, None)
+    collection_counter = 0  # ← Added: Counter for refreshing driver
+
     for combo in todo_combinations:
         country, city, zipcode, weight, width, depth, height = combo
         try:
@@ -175,6 +176,17 @@ with open(output_file, mode='a', newline='') as file:
                             for text in all_texts:
                                 writer.writerow([country, city, zipcode, weight, width, depth, height, text])
                                 print(f"📦 Collected text for {weight} lbs, {width}x{depth}x{height}")
+                                collection_counter += 1  # ← Added: Increment after collection
+
+                                # ← Added: Refresh logic after 100 collections
+                                if collection_counter >= 100:
+                                    print("🔁 Refreshing browser after 100 collections to clear memory...")
+                                    driver.quit()
+                                    driver = webdriver.Chrome(options=options)
+                                    driver.get("https://www.fishisfast.com/en/shipping_calculator")
+                                    time.sleep(5)
+                                    collection_counter = 0
+                                    current_location = (None, None, None)
 
                         except Exception as div_err:
                             print(f"❌ Modal error: {div_err}")
