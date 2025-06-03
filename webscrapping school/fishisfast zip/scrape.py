@@ -140,7 +140,7 @@ with open(output_file, mode='a', newline='') as file:
             collect_button.click()
             time.sleep(4)
             print(f"🚀 Submitted: {country}, {city}, {zipcode}, {weight} lbs, Box: {width}x{depth}x{height}")
-            time.sleep(12)
+            time.sleep(6)
 
             error_detected = False
             try:
