@@ -58,14 +58,13 @@ if not todo_combinations:
     print("🎉 All data has already been collected. Exiting.")
     exit()
 
-# Begin scraping only if there is new data
+# Setup options and start browser
 options = Options()
 options.add_argument("--headless")
 options.add_argument("--window-size=2560,1440")
 driver = webdriver.Chrome(options=options)
 driver.get("https://www.fishisfast.com/en/shipping_calculator")
 time.sleep(5)
-
 driver.save_screenshot("/home/dragon/page_load_confirm.png")
 print("📸 Screenshot saved: page_load_confirm.png")
 
@@ -83,7 +82,7 @@ with open(output_file, mode='a', newline='') as file:
             time.sleep(0.1)
 
     current_location = (None, None, None)
-    collection_counter = 0  # ← Added: Counter for refreshing driver
+    restart_counter = 0  # Track how many combos processed
 
     for combo in todo_combinations:
         country, city, zipcode, weight, width, depth, height = combo
@@ -176,22 +175,24 @@ with open(output_file, mode='a', newline='') as file:
                             for text in all_texts:
                                 writer.writerow([country, city, zipcode, weight, width, depth, height, text])
                                 print(f"📦 Collected text for {weight} lbs, {width}x{depth}x{height}")
-                                collection_counter += 1  # ← Added: Increment after collection
-
-                                # ← Added: Refresh logic after 100 collections
-                                if collection_counter >= 100:
-                                    print("🔁 Refreshing browser after 100 collections to clear memory...")
-                                    driver.quit()
-                                    driver = webdriver.Chrome(options=options)
-                                    driver.get("https://www.fishisfast.com/en/shipping_calculator")
-                                    time.sleep(5)
-                                    collection_counter = 0
-                                    current_location = (None, None, None)
 
                         except Exception as div_err:
                             print(f"❌ Modal error: {div_err}")
                 except Exception as e:
                     print(f"❌ Price container error: {e}")
+
+            restart_counter += 1
+            if restart_counter >= 100:
+                print("🔁 Restarting browser to clear memory...")
+                driver.quit()
+                time.sleep(2)
+                driver = webdriver.Chrome(options=options)
+                driver.get("https://www.fishisfast.com/en/shipping_calculator")
+                time.sleep(5)
+                driver.save_screenshot("/home/dragon/page_load_confirm_after_restart.png")
+                print("📸 Screenshot saved after restart")
+                current_location = (None, None, None)
+                restart_counter = 0
 
             time.sleep(1)
 
