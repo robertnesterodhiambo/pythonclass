@@ -42,16 +42,32 @@ if file_exists:
 
 # Pre-check and skip already fully processed locations
 todo_combinations = []
+completed_countries = set()
+
 for _, row in entries.iterrows():
     country, city, zipcode = row['countryname'], row['city'], str(row['zipcode'])
     for weight in ll_lbs:
         for width, depth, height in common_box_sizes:
             key = (country, city, zipcode, float(weight), int(width), int(depth), int(height))
-            if key not in existing_entries:
+            if key in existing_entries:
+                completed_countries.add(country)  # Track countries that have completed entries
+            else:
                 todo_combinations.append((country, city, zipcode, weight, width, depth, height))
 
+# Print completed countries
+print(f"\n✅ Countries with all processed entries:")
+for country in completed_countries:
+    print(f"✔️ {country}")
+
+# Print remaining entries to process
+print(f"\n📦 Entries remaining to be processed: {len(todo_combinations)}")
+for entry in todo_combinations[:10]:
+    print("➡️ ", entry)
+if len(todo_combinations) > 10:
+    print("...and more.")
+
 if not todo_combinations:
-    print("🎉 All data has already been collected. Exiting.")
+    print("\n🎉 All data has already been collected. Exiting.")
     exit()
 
 # Queue for multithreading
@@ -70,6 +86,9 @@ def scraper_worker(thread_id):
         except:
             break
 
+        country, city, zipcode, weight, width, depth, height = combo
+        print(f"🔄 Thread-{thread_id} processing: {combo}")
+
         try:
             options = Options()
             options.add_argument("--headless")
@@ -83,7 +102,6 @@ def scraper_worker(thread_id):
                     element.send_keys(char)
                     time.sleep(0.1)
 
-            country, city, zipcode, weight, width, depth, height = combo
             country_input = driver.find_element(By.ID, "react-select-country-input")
             country_input.send_keys(Keys.CONTROL + "a", Keys.BACKSPACE)
             type_by_keystrokes(country_input, country)
@@ -138,7 +156,7 @@ def scraper_worker(thread_id):
                         with open(output_file, mode='a', newline='') as f:
                             writer = csv.writer(f)
                             writer.writerow([country, city, zipcode, weight, width, depth, height] + ["No Data"] * 8)
-                            print("📦 Collected:", [country, city, zipcode, weight, width, depth, height] + ["No Data"] * 8)
+                            print("📦 Collected (no data):", [country, city, zipcode, weight, width, depth, height])
                     error_detected = True
             except:
                 pass
@@ -204,4 +222,4 @@ def start_monitored_threads(num_threads):
 # Start monitored threads
 start_monitored_threads(5)
 
-print("✅ Scraping complete.")
+print("\n✅ Scraping complete.")
