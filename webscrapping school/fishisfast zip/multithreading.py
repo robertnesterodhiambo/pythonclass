@@ -40,6 +40,9 @@ if file_exists:
             except:
                 continue
 
+# Select only the last 20 entries from the dataframe
+entries = entries.tail(20)
+
 # Pre-check and skip already fully processed locations
 todo_combinations = []
 completed_countries = set()
