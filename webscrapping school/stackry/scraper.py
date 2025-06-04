@@ -46,6 +46,17 @@ try:
     except Exception as e:
         print(f"Failed to click lb label via JavaScript: {e}")
 
+    # Click "in" label for size unit (inches)
+    try:
+        in_label = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "label[for='boxes.[0].sizeUnit-in']"))
+        )
+        driver.execute_script("arguments[0].click();", in_label)
+        print("Clicked 'in' label for size unit (inches).")
+        time.sleep(1)
+    except Exception as e:
+        print(f"Failed to click 'in' label: {e}")
+
     # Loop through each country row
     for _, row in rows.iterrows():
         country = row['countryname']
