@@ -8,27 +8,46 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Read the CSV file and get the first 5 rows
-df = pd.read_csv('100 Country list 20180621.csv')  # Ensure correct file path
-rows = df[['countryname', 'city', 'zipcode']].head(5)  # Extract only needed columns
+# Read the first 5 countries from the CSV
+df = pd.read_csv('100 Country list 20180621.csv')
+rows = df[['countryname', 'city', 'zipcode']].head(5)
 
-# Set up the Chrome WebDriver
+# List of weights in pounds
+ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
+
+# Set up Chrome WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 try:
-    # Navigate to the Stackry shipping calculator page
+    # Open Stackry's shipping calculator
     driver.get("https://www.stackry.com/shipping-calculator")
 
-    # Wait until the iframe is present and switch to it
-    iframe = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "myIframe")))
+    # Wait and switch to iframe
+    iframe = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "myIframe"))
+    )
     driver.switch_to.frame(iframe)
 
+    # Select "lb" unit by clicking the visible label using JavaScript
+    try:
+        lb_label = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "label[for='boxes.[0].weightUnit-lb']"))
+        )
+        driver.execute_script("arguments[0].click();", lb_label)
+        print("Clicked 'lb' label via JavaScript.")
+        time.sleep(1)
+    except Exception as e:
+        print(f"Failed to click lb label via JavaScript: {e}")
+
+    # Loop through each country row
     for _, row in rows.iterrows():
         country = row['countryname']
         city = str(row['city']) if not pd.isna(row['city']) else ""
         zipcode = str(row['zipcode']) if not pd.isna(row['zipcode']) else ""
 
-        # Wait for the country input field
+        print(f"\nProcessing {country} — City: {city}, Zipcode: {zipcode}")
+
+        # Select the country
         country_input = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "react-select-4-input"))
         )
@@ -38,7 +57,7 @@ try:
         country_input.send_keys(Keys.RETURN)
         time.sleep(2)
 
-        # Try to enter city if field appears
+        # Fill city input if present
         try:
             city_input = WebDriverWait(driver, 2).until(
                 EC.presence_of_element_located((By.ID, "shipToCity"))
@@ -49,7 +68,7 @@ try:
         except:
             print("City input not present.")
 
-        # Try to enter zipcode if field appears
+        # Fill zipcode input if present
         try:
             zip_input = WebDriverWait(driver, 2).until(
                 EC.presence_of_element_located((By.ID, "shipToZip"))
@@ -60,7 +79,21 @@ try:
         except:
             print("Zipcode input not present.")
 
-        # Wait a bit before next iteration
+        # Loop through weights
+        for w in ll_lbs:
+            try:
+                weight_input = WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located((By.ID, "weight"))
+                )
+                weight_input.clear()
+                weight_input.send_keys(str(w))
+                print(f"Entered weight: {w} lbs")
+                time.sleep(1)
+            except Exception as e:
+                print(f"Failed to enter weight {w} for {country}: {e}")
+
+        print(f"✅ Finished weights for {country}")
+        print("=" * 50)
         time.sleep(2)
 
 finally:
