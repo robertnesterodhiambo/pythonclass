@@ -15,6 +15,13 @@ rows = df[['countryname', 'city', 'zipcode']].head(5)
 # List of weights in pounds
 ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
 
+# List of common box sizes (length, width, height)
+common_box_sizes = [
+    (6, 6, 6), (8, 6, 4), (10, 8, 6), (12, 12, 8), (14, 10, 6),
+    (16, 12, 8), (18, 14, 10), (20, 16, 12), (22, 18, 12),
+    (24, 18, 18), (26, 20, 20), (28, 20, 20), (30, 20, 20), (36, 24, 24)
+]
+
 # Set up Chrome WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
@@ -81,6 +88,7 @@ try:
 
         # Loop through weights
         for w in ll_lbs:
+            # Enter the weight
             try:
                 weight_input = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.ID, "weight"))
@@ -92,7 +100,37 @@ try:
             except Exception as e:
                 print(f"Failed to enter weight {w} for {country}: {e}")
 
-        print(f"✅ Finished weights for {country}")
+            # Loop through each box size (length, width, height)
+            for length, width, height in common_box_sizes:
+                try:
+                    # Enter the box dimensions (length, width, height)
+                    length_input = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.ID, "length"))
+                    )
+                    width_input = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.ID, "width"))
+                    )
+                    height_input = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.ID, "height"))
+                    )
+
+                    # Clear and input values
+                    length_input.clear()
+                    length_input.send_keys(str(length))
+                    width_input.clear()
+                    width_input.send_keys(str(width))
+                    height_input.clear()
+                    height_input.send_keys(str(height))
+
+                    print(f"Entered box size: {length} x {width} x {height}")
+
+                    time.sleep(1)
+                except Exception as e:
+                    print(f"Failed to enter box size {length} x {width} x {height} for {country}: {e}")
+            
+            print(f"✅ Finished weight and box sizes for {country}")
+        
+        print(f"✅ Finished all combinations for {country}")
         print("=" * 50)
         time.sleep(2)
 
