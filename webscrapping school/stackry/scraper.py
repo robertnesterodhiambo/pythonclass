@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
+import csv
 
 # Read the first 5 countries from the CSV
 df = pd.read_csv('100 Country list 20180621.csv')
@@ -18,6 +19,20 @@ ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75,
 # Set up Chrome WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
+# Path to save the CSV
+csv_file_path = '/home/dragon/DATA/fishifast.csv'
+
+# Initialize CSV file with headers if not exists
+def initialize_csv():
+    try:
+        # Check if the file exists, and if not, create it with headers
+        with open(csv_file_path, mode='x', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Country', 'City', 'Zipcode', 'Weight', 'Box Size', 'Delivery Service', 'Delivery Days', 'Price'])
+    except FileExistsError:
+        pass  # If the file already exists, don't do anything
+
+# Function to simulate typing
 def simulate_typing(element, text, delay=0.1):
     """Simulate human-like typing by entering each character with a delay"""
     for char in text:
@@ -35,7 +50,15 @@ def initialize_page():
 
     time.sleep(1)  # Skip the "in" (dimension unit) click
 
+# Collect results and save to CSV
+def save_to_csv(country, city, zipcode, weight, box_size, delivery_service, delivery_days, price):
+    with open(csv_file_path, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([country, city, zipcode, weight, box_size, delivery_service, delivery_days, price])
+
 try:
+    initialize_csv()  # Initialize the CSV file with headers
+
     initialize_page()
 
     for _, row in rows.iterrows():
@@ -108,6 +131,8 @@ try:
                         days = spans[0].text.strip() if spans else ""
                         price = res.find_element(By.TAG_NAME, "strong").text.strip()
                         print(f"💸 {name} | {days} | {price}")
+                        # Save the result to CSV
+                        save_to_csv(country, city, zipcode, w, "N/A", name, days, price)
                     except:
                         print("⚠️ Skipped a result block due to structure mismatch.")
                 
