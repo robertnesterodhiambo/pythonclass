@@ -18,6 +18,12 @@ ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75,
 # Set up Chrome WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
+def simulate_typing(element, text, delay=0.1):
+    """Simulate human-like typing by entering each character with a delay"""
+    for char in text:
+        element.send_keys(char)
+        time.sleep(delay)
+
 def initialize_page():
     driver.get("https://www.stackry.com/shipping-calculator")
     iframe = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "myIframe")))
@@ -43,10 +49,10 @@ try:
 
             print(f"\nProcessing {country} — City: {city}, Zipcode: {zipcode}")
 
-            # Input the country, city, and zip code
+            # Input the country, city, and zip code with human-like typing
             country_input = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "react-select-4-input")))
             country_input.clear()
-            country_input.send_keys(country)
+            simulate_typing(country_input, country)
             time.sleep(1)
             country_input.send_keys(Keys.RETURN)
             time.sleep(2)
