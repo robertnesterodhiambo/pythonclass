@@ -135,9 +135,12 @@ try:
 
                     print(f"Entered box size: {length} x {width} x {height}")
 
-                    time.sleep(1)
+                    # Press Enter after entering box dimensions and weight to submit
+                    height_input.send_keys(Keys.RETURN)  # Press Enter after entering the last dimension
+                    print(f"Pressed Enter after entering box size and weight for {country}")
+                    time.sleep(3)  # Wait for the rates to be fetched
                 except Exception as e:
-                    print(f"Failed to enter box size {length} x {width} x {height} for {country}: {e}")
+                    print(f"Failed to enter box size {length} x {width} x {height} or press Enter for {country}: {e}")
             
             print(f"✅ Finished weight and box sizes for {country}")
         
