@@ -15,145 +15,104 @@ rows = df[['countryname', 'city', 'zipcode']].head(5)
 # List of weights in pounds
 ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
 
-# List of common box sizes (length, width, height)
-common_box_sizes = [
-    (6, 6, 6), (8, 6, 4), (10, 8, 6), (12, 12, 8), (14, 10, 6),
-    (16, 12, 8), (18, 14, 10), (20, 16, 12), (22, 18, 12),
-    (24, 18, 18), (26, 20, 20), (28, 20, 20), (30, 20, 20), (36, 24, 24)
-]
-
 # Set up Chrome WebDriver
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-try:
-    # Open Stackry's shipping calculator
+def initialize_page():
     driver.get("https://www.stackry.com/shipping-calculator")
-
-    # Wait and switch to iframe
-    iframe = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "myIframe"))
-    )
+    iframe = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "myIframe")))
     driver.switch_to.frame(iframe)
 
-    # Select "lb" unit by clicking the visible label using JavaScript
-    try:
-        lb_label = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "label[for='boxes.[0].weightUnit-lb']"))
-        )
-        driver.execute_script("arguments[0].click();", lb_label)
-        print("Clicked 'lb' label via JavaScript.")
-        time.sleep(1)
-    except Exception as e:
-        print(f"Failed to click lb label via JavaScript: {e}")
+    lb_label = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "label[for='boxes.[0].weightUnit-lb']")))
+    driver.execute_script("arguments[0].click();", lb_label)  # Click the "lb" weight unit
+    time.sleep(1)
 
-    # Click "in" label for size unit (inches)
-    try:
-        in_label = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "label[for='boxes.[0].sizeUnit-in']"))
-        )
-        driver.execute_script("arguments[0].click();", in_label)
-        print("Clicked 'in' label for size unit (inches).")
-        time.sleep(1)
-    except Exception as e:
-        print(f"Failed to click 'in' label: {e}")
+    time.sleep(1)  # Skip the "in" (dimension unit) click
 
-    # Loop through each country row
+try:
+    initialize_page()
+
     for _, row in rows.iterrows():
-        country = row['countryname']
-        city = str(row['city']) if not pd.isna(row['city']) else ""
-        zipcode = str(row['zipcode']) if not pd.isna(row['zipcode']) else ""
+        retry_country = True
+        weight_idx = 0  # Track the current weight index
+        while retry_country:
+            retry_country = False
+            country = row['countryname']
+            city = str(row['city']) if not pd.isna(row['city']) else ""
+            zipcode = str(row['zipcode']) if not pd.isna(row['zipcode']) else ""
 
-        print(f"\nProcessing {country} — City: {city}, Zipcode: {zipcode}")
+            print(f"\nProcessing {country} — City: {city}, Zipcode: {zipcode}")
 
-        # Select the country
-        country_input = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "react-select-4-input"))
-        )
-        country_input.clear()
-        country_input.send_keys(country)
-        time.sleep(1)
-        country_input.send_keys(Keys.RETURN)
-        time.sleep(2)
+            # Input the country, city, and zip code
+            country_input = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "react-select-4-input")))
+            country_input.clear()
+            country_input.send_keys(country)
+            time.sleep(1)
+            country_input.send_keys(Keys.RETURN)
+            time.sleep(2)
 
-        # Fill city input if present
-        try:
-            city_input = WebDriverWait(driver, 2).until(
-                EC.presence_of_element_located((By.ID, "shipToCity"))
-            )
-            city_input.clear()
-            city_input.send_keys(city)
-            print(f"Entered city: {city}")
-        except:
-            print("City input not present.")
-
-        # Fill zipcode input if present
-        try:
-            zip_input = WebDriverWait(driver, 2).until(
-                EC.presence_of_element_located((By.ID, "shipToZip"))
-            )
-            zip_input.clear()
-            zip_input.send_keys(zipcode)
-            print(f"Entered zipcode: {zipcode}")
-        except:
-            print("Zipcode input not present.")
-
-        # Loop through weights
-        for w in ll_lbs:
             try:
-                weight_input = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.ID, "weight"))
-                )
-                weight_input.clear()
-                weight_input.send_keys(str(w))
-                print(f"Entered weight: {w} lbs")
-                time.sleep(1)
-            except Exception as e:
-                print(f"Failed to enter weight {w} for {country}: {e}")
+                city_input = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "shipToCity")))
+                city_input.clear()
+                city_input.send_keys(city)
+                print(f"Entered city: {city}")
+            except:
+                print("City input not present.")
 
-            for length, width, height in common_box_sizes:
+            try:
+                zip_input = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "shipToZip")))
+                zip_input.clear()
+                zip_input.send_keys(zipcode)
+                print(f"Entered zipcode: {zipcode}")
+            except:
+                print("Zipcode input not present.")
+
+            # Loop through weights starting from the last processed weight (if any)
+            for w in ll_lbs[weight_idx:]:
                 try:
-                    # Get and clear dimension fields one by one
-                    length_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "length")))
-                    length_input.click()
-                    length_input.send_keys(Keys.CONTROL + "a")
-                    length_input.send_keys(Keys.DELETE)
-                    length_input.send_keys(str(length))
-
-                    width_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "width")))
-                    width_input.click()
-                    width_input.send_keys(Keys.CONTROL + "a")
-                    width_input.send_keys(Keys.DELETE)
-                    width_input.send_keys(str(width))
-
-                    height_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "height")))
-                    height_input.click()
-                    height_input.send_keys(Keys.CONTROL + "a")
-                    height_input.send_keys(Keys.DELETE)
-                    height_input.send_keys(str(height))
-
-                    print(f"📦 Box: {length}x{width}x{height}")
-
-                    height_input.send_keys(Keys.RETURN)
-                    time.sleep(3)
-
-                    results = driver.find_elements(By.CSS_SELECTOR, "#rateEstimateContent > div[style*='justify-content: space-between']")
-                    for res in results:
-                        try:
-                            name = res.find_element(By.TAG_NAME, "p").text.strip()
-                            spans = res.find_elements(By.TAG_NAME, "span")
-                            days = spans[0].text.strip() if spans else ""
-                            price = res.find_element(By.TAG_NAME, "strong").text.strip()
-                            print(f"💸 {name} | {days} | {price}")
-                        except:
-                            print("⚠️ Skipped a result block due to structure mismatch.")
+                    weight_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "weight")))
+                    weight_input.click()
+                    weight_input.send_keys(Keys.CONTROL + "a")
+                    weight_input.send_keys(Keys.DELETE)
+                    weight_input.send_keys(str(w))
+                    print(f"Entered weight: {w} lbs")
+                    time.sleep(1)
+                    weight_input.send_keys(Keys.RETURN)  # Press Enter after entering the weight
+                    time.sleep(3)  # Wait for the page to update
                 except Exception as e:
-                    print(f"❌ Box input or rate extraction failed: {e}")
+                    print(f"Failed to enter weight {w} for {country}: {e}")
 
-            print(f"✅ Finished weight and box sizes for {country}")
+                # Skip box size entry and move to the next step if needed
 
-        print(f"✅ Finished all combinations for {country}")
-        print("=" * 50)
-        time.sleep(2)
+                error_elements = driver.find_elements(By.CSS_SELECTOR, "p.text-red-450.mt-2")
+                if any("Try again later" in e.text for e in error_elements):
+                    print("⚠️ 'Try again later' message appeared. Refreshing and retrying...")
+                    driver.refresh()
+                    time.sleep(5)
+                    initialize_page()
+                    weight_idx = ll_lbs.index(w)  # Restart from current weight
+                    retry_country = True
+                    break
+
+                results = driver.find_elements(By.CSS_SELECTOR, "#rateEstimateContent > div[style*='justify-content: space-between']")
+                for res in results:
+                    try:
+                        name = res.find_element(By.TAG_NAME, "p").text.strip()
+                        spans = res.find_elements(By.TAG_NAME, "span")
+                        days = spans[0].text.strip() if spans else ""
+                        price = res.find_element(By.TAG_NAME, "strong").text.strip()
+                        print(f"💸 {name} | {days} | {price}")
+                    except:
+                        print("⚠️ Skipped a result block due to structure mismatch.")
+                
+                # After processing one weight, stop the loop and proceed to the next weight
+                if retry_country:
+                    break
+
+            if not retry_country:
+                print(f"✅ Finished all combinations for {country}")
+                print("=" * 50)
+                time.sleep(2)
 
 finally:
     time.sleep(5)
