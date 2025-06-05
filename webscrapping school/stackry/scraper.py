@@ -14,7 +14,8 @@ df = pd.read_csv('100 Country list 20180621.csv')
 rows = df[['countryname', 'city', 'zipcode']].head(5)
 
 # Weights in pounds
-ll_lbs = [1, 2, 3, 4, 5, 10]
+ll_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
+
 
 # Path to save results
 csv_path = '/home/dragon/DATA/fishisfast.csv'
@@ -30,6 +31,9 @@ wait = WebDriverWait(driver, 10)
 
 # Declare iframe globally
 iframe = None
+
+# Initialize a set to track processed (country, weight) combinations
+processed_combinations = set()
 
 def initialize_page():
     global iframe
@@ -58,6 +62,7 @@ try:
 
             print(f"\nProcessing {country} — City: {city}, Zipcode: {zipcode}")
 
+            # Re-enter country (this is necessary after a refresh)
             country_input = wait.until(EC.presence_of_element_located((By.ID, "react-select-4-input")))
             country_input.clear()
             for ch in country:
@@ -66,6 +71,7 @@ try:
             country_input.send_keys(Keys.RETURN)
             time.sleep(2)
 
+            # Re-enter city and zipcode after page refresh
             try:
                 city_input = WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, "shipToCity")))
                 city_input.clear()
@@ -82,8 +88,14 @@ try:
             except:
                 print("Zipcode input not present.")
 
+            # Start the weight loop from the beginning for this country
             for weight in ll_lbs:
                 try:
+                    # If we've already processed this weight for the current country, skip it
+                    if (country, weight) in processed_combinations:
+                        print(f"Skipping already processed weight {weight} lbs for {country}")
+                        continue
+
                     weight_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "weight")))
                     weight_input.click()
                     weight_input.send_keys(Keys.CONTROL + "a")
@@ -115,6 +127,9 @@ try:
 
                             print(f"💸 {service_name} | {delivery_days} | {price}")
                             save_result(row, weight, service_name, delivery_days, price)
+
+                            # Mark this (country, weight) combination as processed
+                            processed_combinations.add((country, weight))
 
                         except Exception as e:
                             print(f"⚠️ Failed to parse result block: {e}")
