@@ -99,7 +99,6 @@ try:
 
         # Loop through weights
         for w in ll_lbs:
-            # Enter the weight
             try:
                 weight_input = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.ID, "weight"))
@@ -111,39 +110,47 @@ try:
             except Exception as e:
                 print(f"Failed to enter weight {w} for {country}: {e}")
 
-            # Loop through each box size (length, width, height)
             for length, width, height in common_box_sizes:
                 try:
-                    # Enter the box dimensions (length, width, height)
-                    length_input = WebDriverWait(driver, 5).until(
-                        EC.presence_of_element_located((By.ID, "length"))
-                    )
-                    width_input = WebDriverWait(driver, 5).until(
-                        EC.presence_of_element_located((By.ID, "width"))
-                    )
-                    height_input = WebDriverWait(driver, 5).until(
-                        EC.presence_of_element_located((By.ID, "height"))
-                    )
-
-                    # Clear and input values
-                    length_input.clear()
+                    # Get and clear dimension fields one by one
+                    length_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "length")))
+                    length_input.click()
+                    length_input.send_keys(Keys.CONTROL + "a")
+                    length_input.send_keys(Keys.DELETE)
                     length_input.send_keys(str(length))
-                    width_input.clear()
+
+                    width_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "width")))
+                    width_input.click()
+                    width_input.send_keys(Keys.CONTROL + "a")
+                    width_input.send_keys(Keys.DELETE)
                     width_input.send_keys(str(width))
-                    height_input.clear()
+
+                    height_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "height")))
+                    height_input.click()
+                    height_input.send_keys(Keys.CONTROL + "a")
+                    height_input.send_keys(Keys.DELETE)
                     height_input.send_keys(str(height))
 
-                    print(f"Entered box size: {length} x {width} x {height}")
+                    print(f"📦 Box: {length}x{width}x{height}")
 
-                    # Press Enter after entering box dimensions and weight to submit
-                    height_input.send_keys(Keys.RETURN)  # Press Enter after entering the last dimension
-                    print(f"Pressed Enter after entering box size and weight for {country}")
-                    time.sleep(3)  # Wait for the rates to be fetched
+                    height_input.send_keys(Keys.RETURN)
+                    time.sleep(3)
+
+                    results = driver.find_elements(By.CSS_SELECTOR, "#rateEstimateContent > div[style*='justify-content: space-between']")
+                    for res in results:
+                        try:
+                            name = res.find_element(By.TAG_NAME, "p").text.strip()
+                            spans = res.find_elements(By.TAG_NAME, "span")
+                            days = spans[0].text.strip() if spans else ""
+                            price = res.find_element(By.TAG_NAME, "strong").text.strip()
+                            print(f"💸 {name} | {days} | {price}")
+                        except:
+                            print("⚠️ Skipped a result block due to structure mismatch.")
                 except Exception as e:
-                    print(f"Failed to enter box size {length} x {width} x {height} or press Enter for {country}: {e}")
-            
+                    print(f"❌ Box input or rate extraction failed: {e}")
+
             print(f"✅ Finished weight and box sizes for {country}")
-        
+
         print(f"✅ Finished all combinations for {country}")
         print("=" * 50)
         time.sleep(2)
