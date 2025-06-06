@@ -3,109 +3,113 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 import pandas as pd
+import time
+import os
 
-# Set up the Chrome WebDriver with headless options
+# Setup Chrome
 chrome_options = Options()
-#chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--headless')  # Uncomment to run headless
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
-
 driver = webdriver.Chrome(options=chrome_options)
 driver.maximize_window()
 
-# Read the CSV file containing country details
+# Load input
 df = pd.read_csv("100 Country list 20180621.csv")
-
-# Open the Shipito shipping calculator page
-driver.get("https://www.shipito.com/en/shipping-calculator")
-
-# Weight values to loop through
+output_file = "shipto.xlsx"
+fail_file = "fail.xlsx"
 all_lbs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25, 30, 40, 50, 75, 100, 125, 150, 200, 250]
-
-# Final output and fail lists to store results
 final_output = []
 fail = []
 
-# Loop through the rows in the DataFrame (each row represents a country)
+# Resume logic
+if os.path.exists(output_file):
+    existing = pd.read_excel(output_file)
+    processed = set(zip(existing["Receiving Country"], existing["Receiving City"], existing["Receiving Zipcode"]))
+else:
+    processed = set()
+
+# Open Shipito
+driver.get("https://www.shipito.com/en/shipping-calculator")
+
+# Main loop
 for index, row in df.iterrows():
-    try:
-        print(f"Processing: {index} - {row['countryname']}")
-
-        # Scroll down to make sure elements are visible
-        driver.execute_script("window.scrollTo(0, 400)")
-
-        # Click on the warehouse dropdown and select the warehouse
-        driver.find_element(By.XPATH, "//button[@class='btn dropdown-toggle']").click()
-        driver.find_element(By.XPATH, "//a[@data-value='7']").click()  # Select Torrance warehouse
-        time.sleep(5)
-
-        # Scroll further to make the country dropdown visible
-        driver.execute_script("window.scrollTo(0, 950)")
-        driver.find_element(By.XPATH, "//li[@class='dropdown st-selected-country']").click()
-
-        # Type the country name into the filter input
-        country_filter_input = driver.find_elements(By.XPATH, "//input[@class='form-control st-country-filter']")[1]
-        country_filter_input.send_keys(str(row["countryname"]).strip())
-
-        # Input city and zip code
-        driver.find_element(By.XPATH, "//input[@name='shippingcalculator.city']").clear()
-        driver.find_element(By.XPATH, "//input[@name='shippingcalculator.city']").send_keys(str(row["city"]).strip())
-        driver.find_element(By.XPATH, "//input[@name='shippingcalculator.postalcode']").clear()
-        driver.find_element(By.XPATH, "//input[@name='shippingcalculator.postalcode']").send_keys(str(row["zipcode"]).strip())
-
-        # Print the selected country name
-        print(driver.find_elements(By.XPATH, "//span[@class='st-selected-country-name']")[0].text)
-
-        # Iterate over the weight list
-        for el in all_lbs:
-            # Clear and input weight value
-            weight_input = driver.find_element(By.XPATH, "//input[@name='shippingcalculator.scaleweight_val']")
-            weight_input.clear()
-            weight_input.send_keys(str(el))
-
-            # Click the calculate button
-            driver.find_element(By.XPATH, "//button[@class='btn btn-secondary btn-calculator']").click()
-
-            # Wait for the results table to appear
-            wait1 = WebDriverWait(driver, 10)
-            tb1 = wait1.until(EC.presence_of_element_located((By.XPATH, "//table[@class='table quotes-table']")))
-
-            # If the table is empty, log it
-            if len(tb1.text) == 0:
-                final_output.append(["California USA", row["countryname"], row["city"], row["zipcode"], el])
-                print("** No results:", ["California USA", row["countryname"], row["city"], row["zipcode"], el])
-            else:
-                # Extract the table rows and append the data to the final output
-                for eachbody in tb1.find_elements(By.XPATH, "tbody"):
-                    for eachtr in eachbody.find_elements(By.XPATH, "tr"):
-                        if len(eachtr.text) != 0:
-                            etbl = []
-                            for td in eachtr.find_elements(By.XPATH, "td"):
-                                etbl.append(str(td.text).strip())
-
-                            final_output.append(
-                                ["California USA", row["countryname"], row["city"], row["zipcode"], el, etbl[0],
-                                 etbl[1].split(" ")[0], etbl[1].split(" ")[1]] + etbl[2:])
-                            print(["California USA", row["countryname"], row["city"], row["zipcode"], el, etbl[0],
-                                   etbl[1].split(" ")[0], etbl[1].split(" ")[1]] + etbl[2:])
-
-        # Save the final output to Excel file
-        final_df = pd.DataFrame(final_output,
-                                columns=["Sending Warehouse", "Receiving Country", "Receiving City", "Receiving Zipcode",
-                                         "Weight in (LBS)", "Shipping Method", "Postage", "Postage Currency", "Estimated Delivery Time",
-                                         "Insurance", "Tracking", "Weight", "Limits"])
-        final_df.to_excel("shipto.xlsx", index=False)
-
-    except Exception as e:
-        # Log failed attempts
-        print(f"Failed for {index}: {e}")
-        fail.append(index)
+    key = (str(row["countryname"]).strip(), str(row["city"]).strip(), str(row["zipcode"]).strip())
+    if key in processed:
+        print(f"✅ Already processed: {key}")
         continue
 
-# Final cleanup: Export fail data to Excel
-fail_df = pd.DataFrame(fail, columns=["Failed Indexes"])
-fail_df.to_excel("fail.xlsx", index=False)
+    for attempt in range(1, 4):
+        print(f"\nProcessing {index}: {key} | Attempt {attempt}")
+        try:
+            driver.get("https://www.shipito.com/en/shipping-calculator")
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[@class='btn dropdown-toggle']")))
+
+            # Select warehouse
+            driver.execute_script("window.scrollTo(0, 400)")
+            driver.find_element(By.XPATH, "//button[@class='btn dropdown-toggle']").click()
+            driver.find_element(By.XPATH, "//a[@data-value='7']").click()
+            time.sleep(2)
+
+            # Type country (no selection logic)
+            driver.execute_script("window.scrollTo(0, 950)")
+            driver.find_element(By.XPATH, "//li[@class='dropdown st-selected-country']").click()
+            time.sleep(1)
+            country_input = driver.find_elements(By.XPATH, "//input[@class='form-control st-country-filter']")[1]
+            country_input.clear()
+            time.sleep(0.5)
+            country_input.send_keys(str(row["countryname"]).strip())
+            time.sleep(1)  # Give time for dropdown to auto-select silently
+
+            # Fill city and zip
+            driver.find_element(By.NAME, "shippingcalculator.city").clear()
+            driver.find_element(By.NAME, "shippingcalculator.city").send_keys(str(row["city"]).strip())
+            driver.find_element(By.NAME, "shippingcalculator.postalcode").clear()
+            driver.find_element(By.NAME, "shippingcalculator.postalcode").send_keys(str(row["zipcode"]).strip())
+
+            # Weights
+            for weight in all_lbs:
+                weight_input = driver.find_element(By.NAME, "shippingcalculator.scaleweight_val")
+                weight_input.clear()
+                weight_input.send_keys(str(weight))
+
+                driver.find_element(By.XPATH, "//button[@class='btn btn-secondary btn-calculator']").click()
+                wait = WebDriverWait(driver, 15)
+                wait.until(EC.presence_of_element_located((By.XPATH, "//table[@class='table quotes-table']")))
+
+                table = driver.find_element(By.XPATH, "//table[@class='table quotes-table']")
+                if len(table.text.strip()) == 0:
+                    final_output.append(["California USA", *key, weight])
+                    print("⚠️ No result for:", key, weight)
+                else:
+                    for row_body in table.find_elements(By.XPATH, "tbody"):
+                        for tr in row_body.find_elements(By.XPATH, "tr"):
+                            if tr.text.strip():
+                                tds = tr.find_elements(By.TAG_NAME, "td")
+                                data = [td.text.strip() for td in tds]
+                                if len(data) >= 6:
+                                    final_output.append(["California USA", *key, weight, data[0], *data[1].split(" ", 1), *data[2:]])
+                                    print(["California USA", *key, weight, data[0], *data[1].split(" ", 1), *data[2:]])
+
+            # Save
+            df_out = pd.DataFrame(final_output, columns=[
+                "Sending Warehouse", "Receiving Country", "Receiving City", "Receiving Zipcode", "Weight in (LBS)",
+                "Shipping Method", "Postage", "Postage Currency", "Estimated Delivery Time", "Insurance",
+                "Tracking", "Weight", "Limits"
+            ])
+            df_out.to_excel(output_file, index=False)
+            break
+
+        except Exception as e:
+            print(f"❌ Error: {e}")
+            if attempt == 3:
+                print(f"⛔ Skipping: {key}")
+                fail.append(index)
+            time.sleep(2)
+
+# Save failures
+if fail:
+    pd.DataFrame(fail, columns=["Failed Indexes"]).to_excel(fail_file, index=False)
 
 driver.quit()
