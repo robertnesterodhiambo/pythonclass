@@ -2,6 +2,8 @@ import pandas as pd
 import csv
 import time
 import os
+import random
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -11,14 +13,57 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
+# -------------------- LOAD PROXIES --------------------
+def fetch_proxies():
+    urls = [
+        "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt",
+        "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt",
+        "https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/http.txt"
+    ]
+    proxies = []
+    for url in urls:
+        try:
+            resp = requests.get(url, timeout=10)
+            proxies += resp.text.strip().split('\n')
+        except:
+            continue
+    print(f"🧩 Loaded {len(proxies)} proxies.")
+    return proxies
 
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-options.add_argument('--window-size=1920,1080')
+proxy_list = fetch_proxies()
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+# -------------------- SELENIUM WITH PROXY --------------------
+def get_driver_with_proxy(proxy=None):
+    chrome_options = Options()
+#    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--window-size=1920,1080')
+    if proxy:
+        chrome_options.add_argument(f'--proxy-server={proxy}')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    return driver
+
+def get_working_driver():
+    for attempt in range(10):
+        proxy = random.choice(proxy_list)
+        print(f"🌐 Trying proxy: {proxy}")
+        try:
+            driver = get_driver_with_proxy(proxy)
+            driver.set_page_load_timeout(20)
+            driver.get("https://www.stackry.com/shipping-calculator")
+            if "Shipping Calculator" in driver.page_source:
+                print("✅ Proxy works!")
+                return driver
+            else:
+                driver.quit()
+        except Exception as e:
+            print(f"❌ Proxy failed: {e}")
+            try:
+                driver.quit()
+            except:
+                pass
+    raise Exception("No working proxy found.")
 
 # -------------------- CONFIG --------------------
 input_csv = '100 Country list 20180621.csv'
@@ -55,10 +100,9 @@ for _, row in rows.iterrows():
 
 print(f"🚀 {len(pending_tasks)} new combinations to scrape.")
 
-# -------------------- SETUP SELENIUM --------------------
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+# -------------------- SCRAPER --------------------
+driver = get_working_driver()
 wait = WebDriverWait(driver, 10)
-
 iframe = None
 last_input = None
 
@@ -75,9 +119,7 @@ def enter_location(country, city, zipcode):
     global last_input
     if last_input == (country, city, zipcode):
         return
-
     print(f"\n🌍 {country} | City: {city} | Zip: {zipcode}")
-
     country_input = wait.until(EC.presence_of_element_located((By.ID, "react-select-4-input")))
     country_input.clear()
     for ch in country:
@@ -89,7 +131,6 @@ def enter_location(country, city, zipcode):
     country_input.send_keys(Keys.RETURN)
     print(f"🏁 Selected country: {country}")
     time.sleep(2)
-
     try:
         city_input = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, "shipToCity")))
         city_input.clear()
@@ -100,7 +141,6 @@ def enter_location(country, city, zipcode):
         time.sleep(1)
     except:
         print("⚠️ City input missing.")
-
     try:
         zip_input = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.ID, "shipToZip")))
         zip_input.clear()
@@ -111,7 +151,6 @@ def enter_location(country, city, zipcode):
         time.sleep(1)
     except:
         print("⚠️ Zipcode input missing.")
-
     last_input = (country, city, zipcode)
 
 def save_result(row, weight, service_name, delivery_days, price):
@@ -119,24 +158,19 @@ def save_result(row, weight, service_name, delivery_days, price):
         writer = csv.writer(f)
         writer.writerow([row['countryname'], row['city'], row['zipcode'], weight, service_name, delivery_days, price])
 
-# -------------------- SCRAPING --------------------
+# -------------------- MAIN LOOP --------------------
 try:
     initialize_page()
-
     for idx, (row, weight) in enumerate(pending_tasks):
         country = row['countryname']
         city = str(row['city']) if not pd.isna(row['city']) else ""
         zipcode = str(row['zipcode']) if not pd.isna(row['zipcode']) else ""
-
-        # Pause every 20 entries
         if idx % 20 == 0 and idx > 0:
             print("⏳ Sleeping to avoid rate-limiting...")
             time.sleep(15)
-
         while True:
             try:
                 enter_location(country, city, zipcode)
-
                 weight_input = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "weight")))
                 weight_input.click()
                 weight_input.send_keys(Keys.CONTROL + "a")
@@ -145,20 +179,8 @@ try:
                 print(f"⚖️ {weight} lbs")
                 weight_input.send_keys(Keys.RETURN)
                 time.sleep(5)
-
-                # Check for error message
-                error_elements = driver.find_elements(By.CSS_SELECTOR, "p.text-red-450.mt-2")
-                if any("Try again later" in e.text for e in error_elements):
-                    print("🔁 'Try again later' - refreshing and retrying...")
-                    driver.refresh()
-                    time.sleep(5)
-                    initialize_page()
-                    last_input = None
-                    continue
-
                 driver.switch_to.default_content()
                 time.sleep(2)
-
                 result_blocks = driver.find_elements(By.CSS_SELECTOR, "div[style*='justify-content: space-between; padding: 0.75rem;']")
                 found = False
                 for res in result_blocks:
@@ -171,13 +193,10 @@ try:
                         found = True
                     except Exception as e:
                         print(f"⚠️ Error parsing result: {e}")
-
                 driver.switch_to.frame(iframe)
-
                 if not found:
                     print("⚠️ No shipping results found.")
                 break
-
             except Exception as e:
                 print(f"❌ Error for {country}, {city}, {zipcode}, {weight} lbs: {e}")
                 driver.refresh()
@@ -185,7 +204,6 @@ try:
                 initialize_page()
                 last_input = None
                 continue
-
 finally:
     time.sleep(5)
     driver.quit()
