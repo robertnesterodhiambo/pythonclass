@@ -24,11 +24,11 @@ MAKATI CITY,1231,PH,Philippines
 Mumbai,400050,IN,India
 Kuala Lumpur,50480,MY,Malaysia
 Bandar Seri Begawan,bs8711,BN,Brunei
-Providenciales,0,TC,Turks & Caicos
+Providenciales,0,TC,Turks and Caicos
 Mexico,11000,MX,Mexico
 Berlin,10551,DE,Germany
 Beirut,961,LB,Lebanon
-PAPEETE,98713,PF,Tahiti (French Polynesia)
+PAPEETE,98713,PF,French Polynesia
 Reykjavik,101,IS,Iceland
 Chingola,10101,ZM,Zambia
 Jakarta,12410,ID,Indonesia
@@ -39,27 +39,25 @@ Paris,75008,FR,France
 Bangkok,10110,TH,Thailand
 Amsterdam,1098,NL,Netherlands
 Victoria,248,SC,Seychelles
-Port Moresby,121,PG,Papua New G.
+Port Moresby,121,PG,Papua New G
 Rome,198,IT,Italy
 Stockholm,114 31,SE,Sweden
 George Town,KY1-1108,KY,Cayman Isl.
 Windhoek,9000,NA,Namibia
 Sao Paulo,04508-031,BR,Brazil
 Phnom Penh,855,KH,Cambodia
-Oslo,476,NO,Norway
-Guaynabo,966,PR,Puerto Rico
+Oslo,4760,NO,Norway
 Accra,233,GH,Ghana
-SEOUL,137-860,KR,South Korea
+SEOUL,137-86,KR,South Korea
 Maputo,1100,MZ,Mozambique
 CAIRO,11211,EG,Egypt
 Port Vila,0,VU,Vanuatu
-Sanaa,967,YE,Yemen
 Lahore,54000,PK,Pakistan
-Helsinki,100,FI,Finland
+Helsinki,10000,FI,Finland
 Istanbul ,34000,TR,Turkey
 Dublin,15,IE,Ireland
 Madrid,28016,ES,Spain
-Tortola,VG1110,VG,British Virgin Isl.
+Tortola,VG1110,VG,British V
 Oranjestad,0,AW,Aruba
 Monrovia,1000,LR,Liberia
 Port Louis,742CU001,MU,Mauritius
@@ -74,23 +72,21 @@ Buenos Aires,1062,AR,Argentina
 AMMAN,11118,JO,Jordan
 Santiago,7500996,CL,Chile
 Suva,679,FJ,Fiji
-Dili,0,TP,East Timor
+Dili,0,TP,Timor
 Lima,lima 33,PE,Peru
 Vienna,1010,AT,Austria
 Charlestown,0,XN,Nevis
 Rarotonga,0,CK,Cook Islands
-Vientiane,1000,LA,Laos
+Vientiane,1000,LA,Lao
 Belgrade,11000,RS,Serbia
-Macau,278-366,MO,Macau
-Ho Chi Minh,70000,VN,Vietnam
-Juba,P O Box 29,SS,South Sudan
-Willemstad,0,XC,Curacao
+Macao,278-366,MO,Macao
+Ho Chi Minh,70000,VN,Viet nam
 Prague,12000,CZ,Czech Republic
 Copenhagen,2100,DK,Denmark
 Nassau,PO BOX N4875,BS,Bahamas
 Nuuk,3900,GL,Greenland
-Kinshasa,243,CD,"Congo, DRC"
-St. Johns,0,AG,Antigua & Barb.
+Kinshasa,243,CD,"Congo"
+St. Johns,0,AG,Antigua
 Bucharest,11391,RO,Romania
 Nicosia,1010,CY,Cyprus
 Colombo,600,LK,Sri Lanka

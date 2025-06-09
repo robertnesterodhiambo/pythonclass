@@ -22,7 +22,7 @@ df = pd.read_csv("100 Country list 20180621.csv")
 entries = df[['countryname', 'city', 'zipcode']].dropna()
 
 # Process the bottom 10 entries
-entries = entries.tail(10)
+entries = entries.tail(24)
 
 # Output file and existing entry check
 output_file = '/home/dragon/DATA/shipping_data.csv'
@@ -185,7 +185,7 @@ with open(output_file, mode='a', newline='') as file:
                     print(f"❌ Price container error: {e}")
 
             restart_counter += 1
-            if restart_counter >= 100:
+            if restart_counter >= 1000:
                 print("🔁 Restarting browser to clear memory...")
                 driver.quit()
                 time.sleep(2)

@@ -182,7 +182,7 @@ with open(output_file, mode='a', newline='') as file:
                     print(f"❌ Price container error: {e}")
 
             restart_counter += 1
-            if restart_counter >= 100:
+            if restart_counter >= 10000:
                 print("🔁 Restarting browser to clear memory...")
                 driver.quit()
                 time.sleep(2)

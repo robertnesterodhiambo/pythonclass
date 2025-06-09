@@ -22,7 +22,7 @@ df = pd.read_csv("100 Country list 20180621.csv")
 entries = df[['countryname', 'city', 'zipcode']].dropna()
 
 # Find the middle index
-middle_index = len(entries) // 2
+middle_index = 72
 
 # Process from the middle to the end
 entries = entries.iloc[middle_index:]
