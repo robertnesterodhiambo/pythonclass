@@ -63,7 +63,7 @@ def init_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     options.add_argument('--disable-notifications')
-#    options.add_argument("--headless")  # Run in headless mode if needed
+    options.add_argument("--headless")  # Run in headless mode if needed
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
@@ -327,7 +327,7 @@ def get_data(driver, state_name):
         #
         solver = recaptchaV2Proxyless()
         solver.set_verbose(1)
-        solver.set_key('dd32a7594766a876e1a80ebcdf16f840')
+        solver.set_key('c58a5f5ba4eaa2d40075df4a715fe09d')
         solver.set_website_url(url)
         solver.set_website_key(sitekey_clean)
 
