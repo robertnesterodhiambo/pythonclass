@@ -63,7 +63,7 @@ def init_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     options.add_argument('--disable-notifications')
-    options.add_argument("--headless")  # Run in headless mode if needed
+#    options.add_argument("--headless")  # Run in headless mode if needed
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
