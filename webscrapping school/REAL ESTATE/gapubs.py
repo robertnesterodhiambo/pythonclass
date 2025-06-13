@@ -21,6 +21,7 @@ import os
 import random
 import logging
 from utilities import update_logger, start_logger, filter_notice
+import traceback  #
 
 global dev
 dev = False
@@ -63,7 +64,7 @@ def init_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     options.add_argument('--disable-notifications')
-    options.add_argument("--headless")  # Run in headless mode if needed
+#    options.add_argument("--headless")  # Run in headless mode if needed
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
@@ -142,7 +143,7 @@ def get_all_pages(link, driver, limited, database, source, env):
     pages = list()
 
     print_log("Page Loaded...")
-    keyword_field = WebDriverWait(driver, 30).until(lambda x: x.find_element(By.ID,'ctl00_ContentPlaceHolder1_as1_txtSearch'))
+    keyword_field = WebDriverWait(driver, 30).until(lambda x: x.find_element(By.ID, 'ctl00_ContentPlaceHolder1_as1_txtSearch'))
     keyword_field.send_keys('fore')
     w = random.randint(2, 5)
     time.sleep(w)
@@ -151,7 +152,7 @@ def get_all_pages(link, driver, limited, database, source, env):
     select_tag = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
     select_PerPage = Select(select_tag)
 
-    options = select_tag.find_elements(By.TAG_NAME,"option")
+    options = select_tag.find_elements(By.TAG_NAME, "option")
     all_options = [opt.get_property("value") for opt in options]
     num_str = all_options[-1]
     w = random.randint(1, 3)
@@ -172,22 +173,23 @@ def get_all_pages(link, driver, limited, database, source, env):
         page_current = 0
         num_records = 0
 
-        # # Get loggers information
         date_now, r_starts, r_finish = start_logger(limited, database, source)
 
-        curr_tot_tag = WebDriverWait(search_grid, 30).until(EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblTotalPages")))
+        curr_tot_tag = WebDriverWait(search_grid, 30).until(
+            EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblTotalPages")))
         current_total_str = curr_tot_tag.text.strip()
         page_last = int(current_total_str.split()[1])
         print_log("There are {} Total Search Pages...\n".format(page_last))
 
         while not page_current == page_last:
-            curr_tag = WebDriverWait(search_grid, 30).until(EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage")))
+            curr_tag = WebDriverWait(search_grid, 30).until(
+                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage")))
             page_current = int(curr_tag.text)
             print_log("Working on Page # {}".format(page_current))
 
-            WebDriverWait(search_grid, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")))
-            button_list = search_grid.find_elements(By.XPATH,"//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")
-
+            WebDriverWait(search_grid, 30).until(
+                EC.presence_of_element_located((By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")))
+            button_list = search_grid.find_elements(By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")
 
             for x in range(1, len(button_list) + 1):
                 if not env and num_records >= limited:
@@ -198,14 +200,12 @@ def get_all_pages(link, driver, limited, database, source, env):
                 id = 2 + x
                 if id < 10:
                     id = f'0{id}'
-                # t = driver.find_element(By.XPATH,f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]')
                 print(f"+++++++++++++++++START++++++++++++++++++ {id}\n")
                 try:
                     try:
                         t = WebDriverWait(driver, 30).until(
                             EC.element_to_be_clickable(
-                                (By.XPATH,f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
-                                # Element filtration
+                                (By.XPATH, f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
                             )
                         )
                         driver.execute_script("arguments[0].scrollIntoView();", t)
@@ -216,12 +216,10 @@ def get_all_pages(link, driver, limited, database, source, env):
                             EC.element_to_be_clickable(
                                 (By.XPATH,
                                  f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
-                                # Element filtration
                             )
                         )
                         driver.execute_script("arguments[0].scrollIntoView();", t)
                         t.click()
-                    # driver, data = get_data(driver, 'GA')
                     has_data = False
                     try:
                         driver, data = get_data(driver, 'GA')
@@ -229,57 +227,46 @@ def get_all_pages(link, driver, limited, database, source, env):
                         has_data = True
                     except:
                         print_log("Data Saved With Url -: {}".format(page_url), True)
-                        # print_log("Cannot Parse: {}".format(page_url), True)
 
                     if has_data:
                         try:
                             database.gapub(data)
                         except:
                             print_log("Unable to insert: {}".format(page_url), True)
+                            print_log(traceback.format_exc(), True)
+
+                    # Updated Back button logic
                     try:
-                        back = WebDriverWait(driver, 30).until(
+                        back = WebDriverWait(driver, 10).until(
                             EC.element_to_be_clickable(
-                                (By.XPATH, '//*[@id="ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop"]'),
-                                # Element filtration
+                                (By.ID, "ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop")
                             )
                         )
                         driver.execute_script(
                             "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});",
-                            back)
-                    except:
-                        driver.refresh()
-                        back = WebDriverWait(driver, 30).until(
-                            EC.element_to_be_clickable(
-                                (By.XPATH,
-                                 '//*[@id="ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop"]'),
-                                # Element filtration
-                            )
+                            back
                         )
-                        driver.execute_script(
-                            "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});",
-                            back)
-                    print(back.text)
-                    back.click()
+                        print_log("Back button found by ID, clicking.")
+                        back.click()
+                    except Exception as e:
+                        print_log(f"[WARNING] Back button not clickable: {e}", True)
+                        try:
+                            print_log("Using window.history.back() as fallback.")
+                            driver.execute_script("window.history.go(-1);")
+                            WebDriverWait(driver, 20).until(
+                                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch"))
+                            )
+                        except Exception as e2:
+                            print_log(f"[ERROR] Fallback navigation failed: {e2}", True)
+                            print_log("Reloading page URL as final fallback.")
+                            driver.get(page_url)
+                            wait_loader(driver)
+
                 except:
                     driver.get(page_url)
                 num_records += 1
                 print("+++++++++++++++++FINISH++++++++++++++++++\n")
             database.Close_db()
-            # for b1, view_button in enumerate(button_list):
-            #     print("_________+++++++++View Button", view_button.text)
-            #     view_button.click()
-            #     get_data(driver, 'GA')
-            #     driver.find_element(By.XPATH,
-            #         '//*[@id="ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_btnViewNotice"]').click()
-
-                # html_button = view_button.get_attribute("outerHTML")
-                # btn = soup(html_button, "html.parser")
-                # btn_inp = btn.find('input')
-                # url_str = btn_inp['onclick'].replace('\';return false;', '')
-                # page_href = url_str.replace('javascript:location.href=\'', '')
-                # page_url = template.format(page_href)
-                # pages.append(page_url)
-                # num_records += 1
 
             if not env and num_records >= limited:
                 break
@@ -287,13 +274,46 @@ def get_all_pages(link, driver, limited, database, source, env):
             if page_current == page_last:
                 break
 
-            next_button = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_btnNext")))
-            print("Click Next Page...")
-            next_button.click()
+            try:
+                next_button = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_btnNext"))
+                )
+                print("Click Next Page...")
+                driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+                next_button.click()
+            except Exception as e:
+                print_log(f"[WARNING] Next button not clickable or missing: {e}", True)
+                last_url = driver.current_url
+                print_log(f"[INFO] Reloading current page: {last_url}", True)
+                driver.get(last_url)
+                wait_loader(driver)
+
+                try:
+                    current_page_elem = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located(
+                            (By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage"))
+                    )
+                    current_page_number = int(current_page_elem.text.strip())
+                    next_page_number = current_page_number + 1
+
+                    next_page_btn = WebDriverWait(driver, 10).until(
+                        EC.element_to_be_clickable((
+                            By.XPATH,
+                            f"//input[contains(@onclick, \"__doPostBack('ctl00$ContentPlaceHolder1$WSExtendedGridNP1$GridView1$ctl01$ctl{next_page_number:02d}$btnPage')\")]"
+                        ))
+                    )
+
+                    driver.execute_script("arguments[0].scrollIntoView(true);", next_page_btn)
+                    print_log(f"[INFO] Fallback click to page {next_page_number}", True)
+                    next_page_btn.click()
+                except Exception as e2:
+                    print_log(f"[ERROR] Fallback navigation to next page failed: {e2}", True)
+                    break
 
             wait_loader(driver)
 
-            search_grid = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
+            search_grid = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
             w = wait_time()
             print_log("-" * 80)
             print_log("Waiting {} seconds for Search Grid...".format(w))
@@ -303,6 +323,8 @@ def get_all_pages(link, driver, limited, database, source, env):
         pages = update_logger(database, source, date_now, limited, r_starts, r_finish, total_return, pages)
 
     return driver, pages
+
+
 
 def get_data(driver, state_name):
 # def get_data(driver, url, state_name):
@@ -411,6 +433,8 @@ def get_data(driver, state_name):
     print("webscrape",driver)
     print("webdata",web_data)
     return driver, web_scrape
+
+
 def main(param):
     print_log("--Starts--")
     starts = time.time()
@@ -432,9 +456,10 @@ def main(param):
 
     try:
         db = Mysql(not dev)
-    except:
+    except Exception as e:
         parse = False
-        print_log("Unable to Connect Database Connected.", True)
+        print_log(f"Unable to connect to the database: {e}", True)
+        print_log(traceback.format_exc(), True)
 
     if parse:
         browser, all_pages = get_all_pages(site_link, browser, limit, db, "GaPub", prod)
@@ -444,28 +469,34 @@ def main(param):
         message = "Parsing Limited {} Page(s)...".format(limit) if n > limit else "Parsing {} Page(s)...".format(n)
         print_log("\n" + message)
         web_data = list()
+
         for i, page_url in enumerate(all_pages):
             index = i + 1
             if index > limit:
                 break
+
             print_log("-" * 40)
             print_log("Row # {}".format(index))
             has_data = False
+
             try:
                 driver, data = get_data(browser, page_url, 'GA')
-                print("Hello ,",data)
+                print("Hello ,", data)
                 web_data.append(data)
                 has_data = True
-            except:
-                print_log("Cannot Parse: {}".format(page_url), True)
+            except Exception as e:
+                print_log(f"Cannot Parse: {page_url} - {e}", True)
+                print_log(traceback.format_exc(), True)
 
             if has_data:
                 try:
                     db.gapub(data)
-                except:
-                    print_log("Unable to insert: {}".format(page_url), True)
+                except Exception as e:
+                    print_log(f"Unable to insert: {page_url} - {e}", True)
+                    print_log(traceback.format_exc(), True)
                     continue
-        print("This is all data",web_data)
+
+        print("This is all data", web_data)
         db.Close_db()
 
     browser.quit()
@@ -475,6 +506,7 @@ def main(param):
     print_log("--Finish--")
     elapsed = time_elapsed_str(starts, ends)
     print_log(elapsed)
+
 
 if __name__ == '__main__':
     args = dict(limit=2000, env=True, prod=False)

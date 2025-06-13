@@ -409,6 +409,7 @@ class Mysql:
 
 		print("+++DB FUNCTION COMPLETED+++")
 
+
 	def v3mls(self, data):
 		self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS V3Mls (
