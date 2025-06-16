@@ -9,6 +9,20 @@ import mysql.connector
 import logging
 
 
+def reconnect(instance):
+    try:
+        if not instance.connection.is_connected():
+            instance.print_log("Connection lost. Reconnecting...", True)
+            instance.connection.reconnect(attempts=3, delay=5)
+            instance.cursor = instance.connection.cursor()
+            instance.print_log("Reconnected to MySQL server.")
+        else:
+            instance.print_log("Connection is already active.")
+    except Exception as e:
+        instance.print_log(f"Reconnection failed: {e}", True)
+        raise
+
+
 class Mysql:
 	def __init__(self, dev=True):
 		self.dev = dev
@@ -38,6 +52,7 @@ class Mysql:
 				logging.info(text.strip())
 
 	def njpub(self, data):
+		reconnect(self)
 		table_name = "NjPub"
 		data = {
 			**data,
@@ -112,6 +127,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def ctpub(self, data):
+		reconnect(self)
 		table_name = "CtPub"
 		data = {
 			**data,
@@ -187,6 +203,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def papub(self, data):
+		reconnect(self)
 		table_name = "PaPub"
 		data = {
 			**data,
@@ -260,6 +277,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def nypub(self, data):
+		reconnect(self)
 		table_name = "NyPub"
 		data = {
 			**data,
@@ -335,6 +353,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def gapub(self, data):
+		reconnect(self)
 		table_name = "GaPub"
 		data = {
 			**data,
@@ -411,6 +430,7 @@ class Mysql:
 
 
 	def v3mls(self, data):
+		reconnect(self)
 		self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS V3Mls (
                 Table_Index INT,
@@ -465,6 +485,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def nymls(self, data):
+		reconnect(self)
 		table_name = "NyStateMLS"
 
 		keys = list()
@@ -535,6 +556,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def zillow(self, data):
+		reconnect(self)
 		table_name = "Zillow"
 		count_row = self.get_count(table_name, 'Table_Index') + 1
 		data = {
@@ -602,6 +624,7 @@ class Mysql:
 				self.print_log(error_sql, True)
 
 	def ussearch(self, data, dest_data):
+		reconnect(self)
 		table_name = "UsSearch"
 		values = None
 		key_list = list()
@@ -681,6 +704,7 @@ class Mysql:
 				self.print_log(error_sql, True)
 
 	def batchfind(self, data, dest_data):
+		reconnect(self)
 		table_name = "Batchfind"
 		values = None
 		key_list = list()
@@ -757,6 +781,7 @@ class Mysql:
 				self.print_log(error_sql, True)
 
 	def batchleads_log(self, data):
+		reconnect(self)
 		table_name = "Batchleads_log"
 		values = None
 		key_list = list()
@@ -811,6 +836,7 @@ class Mysql:
 			self.print_log(error_sql, True)
 
 	def zestimate(self, data, dest_data=False):
+		reconnect(self)
 		table_name = "Zestimate"
 		values = None
 		key_list = list()
@@ -891,6 +917,7 @@ class Mysql:
 					self.print_log(error_sql, True)
 
 	def show_data(self, name, extra=False):
+		reconnect(self)
 		stmt = 'SELECT * FROM {};'.format(name)
 		if extra:
 			if isinstance(extra, list):
@@ -907,6 +934,7 @@ class Mysql:
 			# print("++++++++",row)
 
 	def get_count(self, name, max_column=False):
+		reconnect(self)
 		stmt = 'SELECT COUNT(1) FROM {};'.format(name)
 		if max_column:
 			stmt = 'SELECT MAX({}) FROM {};'.format(max_column, name)
@@ -987,6 +1015,7 @@ class Mysql:
 
 
 def db_remove_dups():
+	reconnect(self)
 	db = Mysql()
 	table_name = "CtPub"
 	column_names = ['Street', 'City', 'State', 'Zip_Code', 'Publisher', 'Id', 'Notice', 'Address', 'Date_Added',

@@ -148,6 +148,7 @@ def get_all_pages(link, driver, limited, database, source, env):
     w = random.randint(2, 5)
     time.sleep(w)
     keyword_field.send_keys('closure\n')
+    time.sleep(15)
 
     select_tag = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
     select_PerPage = Select(select_tag)
