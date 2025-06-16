@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 
 # Start and end dates
 
-start_date = datetime(2025, 5, 20)
-end_date = datetime(2025, 5, 21)
+start_date = datetime(2025, 6, 12)
+end_date = datetime(2025, 6, 15)
 
 
 # Path to the text file
