@@ -42,14 +42,14 @@ def RepresentsInt(s):
     return isInt
 
 def parse_address(address):
-    zip_code = re.findall('\d{4,5}', address)
+    zip_code = re.findall(r'\d{4,5}', address)
     address = address.split('.')[0]
     if len(zip_code) > 0:
         zip_code = zip_code[0]
 
     if len(address.split(',')) > 3:
         new_add = address.split(',')[:3]
-        zip_part = re.findall('\d{4,5}', " ".join(new_add[1:]))
+        zip_part = re.findall(r'\d{4,5}', " ".join(new_add[1:]))
         sec_elm = new_add[1]
         num_center = len(sec_elm.split())
         if not RepresentsInt(sec_elm) and bool(zip_part) and num_center <= 3:
@@ -163,23 +163,45 @@ def parse_usaddress(address):
 
 def filter_notice(notice):
     content = notice.lower().strip()
-
     address = ''
     address_list = dict()
     us_addr_list = dict()
-    search_strings = ['property is more commonly known as', 'said property being known as:',
-        'said property is known as', 'property known a/s', 'known as located at', 'known as address', ' k/a',
+
+    # Expanded search phrases
+    search_strings = [
+        'property is more commonly known as', 'said property being known as:', 'said property is known as',
+        'property known a/s', 'known as located at', 'known as address', 'k/a',
         'located at', 'property address:', 'following parcels', 'commonly known as',
-        'property located at', 'street address:', 'property location:', ':property location:', ": Location:", "Location:", " Location: "]
+        'property located at', 'street address:', 'property location:', ':property location:',
+        ": location:", "location:", " location:", 
+        "at the location indicated:", "on "
+    ]
 
     for find_str in search_strings:
         if find_str in content:
-            address = content.split(find_str)[1].strip()
+            part = content.split(find_str, 1)[1].strip()
+            # Try to get only the part before the date
+            match = re.match(r"([0-9]{3,5}.+? ga [0-9]{5})", part)
+            if match:
+                address = match.group(1)
+            else:
+                address = part.split(" on ")[0].strip()
+
             nr_parsed = parse_address(address)
             us_parsed = gets_usaddress(address)
 
             address_list[find_str] = nr_parsed
             us_addr_list[find_str] = us_parsed
+
+    # Additional fallback: try raw regex search if no match
+    if not address_list:
+        raw_matches = re.findall(r"(\d{3,5} [^\n,]+(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?Ga ?\d{5})", content, re.IGNORECASE)
+        if raw_matches:
+            address = raw_matches[0]
+            nr_parsed = parse_address(address)
+            us_parsed = gets_usaddress(address)
+            address_list["regex_fallback"] = nr_parsed
+            us_addr_list["regex_fallback"] = us_parsed
 
     parsed_us = parse_usaddress(us_addr_list)
 
@@ -189,32 +211,26 @@ def filter_notice(notice):
     vals = list(address_list.values())
     if num_addresses == 1:
         parse = True
-    elif num_addresses > 1:
-        if not bool(parsed_us):
-            parse = True
-            vals = [dict(t) for t in {tuple(d.items()) for d in vals}]
+    elif num_addresses > 1 and not bool(parsed_us):
+        parse = True
+        vals = [dict(t) for t in {tuple(d.items()) for d in vals}]
 
     if parse:
         dump = vals.pop()
         if dump['City'] == str(datetime.today().year):
             dump['City'] = ''
 
-        street = dump['Street']
-        city = dump['City']
-
-        if bool(street) and bool(city):
+        if dump.get('Street') and dump.get('City'):
             zip_code = dump['Zip_Code']
-            if zip_code == str(datetime.today().year) or street.startswith(zip_code):
+            if zip_code == str(datetime.today().year) or dump['Street'].startswith(zip_code):
                 dump['Zip_Code'] = ''
+            if len(dump['City'].split()) > 3 or len(dump['Street'].split()) > 8:
+                parser_nr = dict()
+            else:
                 parser_nr = dump.copy()
 
-            if len(city.split()) > 3:
-                parser_nr = dict()
-
-            if len(street.split()) > 8:
-                parser_nr = dict()
-
     return parsed_us, parser_nr
+
 
 def start_logger(limited, database, source):
     r_starts = 1
