@@ -27,7 +27,7 @@ truth_email = "cashpro@cashprohomebuyers.com"
 truth_pwd = "tech6491"
 
 propstream_email = "jewelercart@gmail.com"
-propstream_pwd = "Taqwah79@@"
+propstream_pwd = "Goodlife2025@@"
 
 propstream_session = requests.Session()
 truthfinder_session = requests.Session()
@@ -491,40 +491,34 @@ def report_truthfinder(address, jwt, scrapped_data):
 
     return scrapped_data
 
+
 def login_truthfinder_jwt_refresh():
-    url = "https://api2.truthfinder.com/v1/authenticate"
+    url = "https://api2.truthfinder.com/v1/auth/login"
 
     payload = json.dumps({
         "email": "cashpro@cashprohomebuyers.com",
-        "password": "tech6491",
-        "sessionId": "1d565c79",
-        "sessionCreated": "1695449537"
+        "password": "tech6491"
     })
+
     headers = {
         'authority': 'api2.truthfinder.com',
-        'accept': '*/*',
-        'accept-language': 'en-US,en;q=0.9',
-        'api-key': 'B7QbTIt3PtAID67cRtfQwrgzL0H3qU5buaxp17PoZ98',
-        'app-id': 'tf-web',
+        'accept': 'application/json',
         'content-type': 'application/json',
-        'device-id': 'ba3be71b-83f8-4b43-bdcb-aa9d52eb8367',
         'origin': 'https://www.truthfinder.com',
         'referer': 'https://www.truthfinder.com/login',
-        'sec-ch-ua': '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Linux"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-site',
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-        'Cookie': '__cf_bm=Ha6rl_lgi9_ykeTFajsG8MsCR9cX8XjlwiMoSim4Jlw-1695461085-0-AWaMc2g2Ov5Yq1cE/OQnxDikV26HN3oqwugWO6Akbv5kCH/Mt2kVMSDTt4N5yfscEh5oSzDZDTreRy21F7IsT56YSeg7zUd55YU6DPWpuWw4'
+        'api-key': 'B7QbTIt3PtAID67cRtfQwrgzL0H3qU5buaxp17PoZ98',
+        'app-id': 'tf-web',
+        'device-id': 'ba3be71b-83f8-4b43-bdcb-aa9d52eb8367'
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    response = requests.post(url, headers=headers, data=payload)
     print("token response", response)
+
     r = response.json()
-    token = r['accessToken']
+    token = r.get('accessToken') or r.get('authToken')
     return token
+
 def names_match(text_words, name_words):
     name_word_count = sum(1 for word in name_words if word in text_words)
     return name_word_count >= 2

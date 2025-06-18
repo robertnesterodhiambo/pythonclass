@@ -167,20 +167,19 @@ def filter_notice(notice):
     address_list = dict()
     us_addr_list = dict()
 
-    # Expanded search phrases
     search_strings = [
         'property is more commonly known as', 'said property being known as:', 'said property is known as',
         'property known a/s', 'known as located at', 'known as address', 'k/a',
         'located at', 'property address:', 'following parcels', 'commonly known as',
         'property located at', 'street address:', 'property location:', ':property location:',
-        ": location:", "location:", " location:", 
-        "at the location indicated:", "on "
+        ": location:", "location:", " location:", "Executor Address: ",
+        "at the location indicated:", "on ",
+        "last known address", "scheduled at", "meeting held at", "mail a copy to"
     ]
 
     for find_str in search_strings:
         if find_str in content:
             part = content.split(find_str, 1)[1].strip()
-            # Try to get only the part before the date
             match = re.match(r"([0-9]{3,5}.+? ga [0-9]{5})", part)
             if match:
                 address = match.group(1)
@@ -193,9 +192,25 @@ def filter_notice(notice):
             address_list[find_str] = nr_parsed
             us_addr_list[find_str] = us_parsed
 
-    # Additional fallback: try raw regex search if no match
     if not address_list:
-        raw_matches = re.findall(r"(\d{3,5} [^\n,]+(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?Ga ?\d{5})", content, re.IGNORECASE)
+        raw_matches = re.findall(
+            r"(\d{3,5} [^\n,]+?(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?GA ?\d{5})",
+            content,
+            re.IGNORECASE
+        )
+        if not raw_matches:
+            raw_matches = re.findall(
+                r"(\d{3,5} [^\n,]+?(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?\d{5} ?GA)",
+                content,
+                re.IGNORECASE
+            )
+        if not raw_matches:
+            raw_matches = re.findall(
+                r"(\d{3,5}\s[\w\s.'-]+,\s*[\w\s]+,\s*GA\s*\d{5})",
+                content,
+                re.IGNORECASE
+            )
+
         if raw_matches:
             address = raw_matches[0]
             nr_parsed = parse_address(address)
@@ -230,7 +245,6 @@ def filter_notice(notice):
                 parser_nr = dump.copy()
 
     return parsed_us, parser_nr
-
 
 def start_logger(limited, database, source):
     r_starts = 1
