@@ -144,7 +144,7 @@ def get_all_pages(link, driver, limited, database, source, env):
 
     print_log("Page Loaded...")
     keyword_field = WebDriverWait(driver, 30).until(lambda x: x.find_element(By.ID, 'ctl00_ContentPlaceHolder1_as1_txtSearch'))
-    keyword_field.send_keys('')
+    keyword_field.send_keys('\n')
     w = random.randint(2, 5)
     time.sleep(w)
     #keyword_field.send_keys()
