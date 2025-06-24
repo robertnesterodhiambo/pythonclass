@@ -129,7 +129,7 @@ def select_city(driver, city_name):
     except Exception as e:
         print_log(f"[ERROR] Failed to select city: {city_name} ({e})", True)
 
-def get_all_pages(driver, limited, state_name='GA'):
+def get_all_pages(driver, limited, state_name='GA', db=None):
     count = 0
     while True:
         try:
@@ -149,13 +149,16 @@ def get_all_pages(driver, limited, state_name='GA'):
                     row = rows[row_idx]
                     try:
                         btn = row.find_element(By.XPATH, ".//input[contains(@id,'btnView2')]")
+                        if not btn.is_displayed() or not btn.is_enabled():
+                            row_idx += 1
+                            continue
                     except Exception:
                         row_idx += 1
                         continue
                     driver.execute_script("arguments[0].scrollIntoView();", btn)
                     btn.click()
                     wait_loader(driver)
-                    get_notice_details(driver, state_name)
+                    get_notice_details(driver, state_name, db=db)
                     count += 1
                     back_btn = WebDriverWait(driver, 10).until(
                         EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop"))
@@ -188,8 +191,31 @@ def get_all_pages(driver, limited, state_name='GA'):
         except Exception:
             break
 
-def get_notice_details(driver, state_name):
-    result = {}
+def get_notice_details(driver, state_name, db=None):
+    result = {
+        'Id': -1,
+        'Street': '',
+        'City': '',
+        'State': '',
+        'Zip_Code': '',
+        'Publisher': '',
+        'Notice': '',
+        'Address': '',
+        'Date_Added': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'Reiskip_ID': -1,
+        'UsSearch_ID': -1,
+        'Infofree_ID': -1,
+        'Oasis_ID': -1,
+        'Facebook_ID': -1,
+        'Linkedin_ID': -1,
+        'zpid': -1,
+        'Batchfind': -1,
+        'Date_Published': '',
+        'County': '',
+        'Notice_Authentication_Number': '',
+        'Url_of_page': ''
+    }
+    
     # Only try to solve captcha if present
     try:
         if driver.find_elements(By.XPATH, '//*[@id="recaptcha"]'):
@@ -243,33 +269,30 @@ def get_notice_details(driver, state_name):
     except Exception:
         auth_num = ''
 
+    # Update result with collected data
     result.update({
-        'Notice': notice_text.replace("'", ""),
-        'Date_Published': date_sql,
-        'County': county_name,
-        'Publisher': publisher,
-        'State': state_name,
-        'Notice_Authentication_Number': auth_num
+        'Notice': notice_text.replace("'", "") if notice_text else "",
+        'Date_Published': date_sql if date_sql else "",
+        'County': county_name if county_name else "",
+        'City': address_info.get('City', ''),
+        'State': state_name if state_name else "",
+        'Zip_Code': address_info.get('Zip_Code', ''),
+        'Address': address_info.get('Address', ''),
+        'Publisher': publisher if publisher else "",
+        'Notice_Authentication_Number': auth_num if auth_num else "",
+        'Url_of_page': driver.current_url if driver.current_url else "",
+        'Street': address_info.get('Address', '')  # Map Address to Street for db compatibility
     })
-    result.update(address_info)
-    print_log(f"Attempting to save: {result}")
-    save_to_csv(result)
-    return result
 
-def save_to_csv(data, filename="data.csv"):
-    fieldnames = [
-        'Notice', 'Date_Published', 'County', 'City', 'State', 'Zip_Code',
-        'Address', 'Publisher', 'Notice_Authentication_Number'
-    ]
-    file_exists = os.path.isfile(filename)
-    with open(filename, 'a', newline='', encoding='utf-8') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        if not file_exists:
-            writer.writeheader()
-        # Use "null" for any missing or empty field
-        row = {k: (data.get(k) if data.get(k) not in [None, ''] else "null") for k in fieldnames}
-        writer.writerow(row)
-        print_log(f"Saved row to CSV: {row}")
+    if db:
+        db.gapub(result)
+    
+    # Print each field on a new line
+    print_log("Collected Notice Data:")
+    for k, v in result.items():
+        print_log(f"{k}: {v}")
+    print_log("-" * 40)
+    return result
 
 def click_search_button(driver):
     try:
@@ -331,6 +354,7 @@ def main(param):
     browser = init_driver()
     print_log(f'Loading: "{site_link}"')
     browser.get(site_link)
+    time.sleep(15)
     try:
         db = Mysql(not dev)
     except Exception as e:
@@ -345,7 +369,7 @@ def main(param):
             select_city(browser, city)
             time.sleep(0.5)
             click_search_button(browser)
-            get_all_pages(browser, limit)
+            get_all_pages(browser, limit, db=db)
     if db:
         db.Close_db()
     print_log("--Finish--")
