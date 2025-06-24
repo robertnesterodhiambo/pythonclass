@@ -166,25 +166,39 @@ def get_all_pages(link, driver, limited, database, source, env):
         print_log(f"[ERROR] Could not find city list: {e}", True)
         return driver, pages
 
+    previous_city = None  # Track previously selected city <li>
+
     # Step 3: Loop through each city <li>
     for index in range(len(city_lis)):
         try:
-            # Click city dropdown again in case it's collapsed
+            # Click city dropdown again to expand
             city_dropdown = WebDriverWait(driver, 30).until(
                 EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
             )
             city_dropdown.click()
             time.sleep(1)
 
-            # Refresh the list and click the current <li>
+            # Refresh city list and get current li elements
             ul_city_list = WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
             )
             city_lis = ul_city_list.find_elements(By.TAG_NAME, "li")
+
+            # Unselect previously selected city (if any)
+            if previous_city:
+                try:
+                    print_log(f"[INFO] Deselecting previous city: {previous_city.text}")
+                    previous_city.click()
+                    time.sleep(4)  # wait after deselection
+                except Exception as deselect_e:
+                    print_log(f"[WARNING] Could not deselect previous city: {deselect_e}", True)
+
+            # Now select the new city
             target_city = city_lis[index]
             city_name = target_city.text
             print_log(f"[INFO] Selecting city: {city_name}")
             target_city.click()
+            previous_city = target_city  # store reference to deselect later
             time.sleep(3)
 
             # Click outside to collapse dropdown (prevents double selection)
@@ -197,12 +211,10 @@ def get_all_pages(link, driver, limited, database, source, env):
             except:
                 pass
 
-            # Send search
             keyword_field.send_keys('\n')
             time.sleep(random.randint(2, 5))
             time.sleep(15)
 
-            # Set per page
             select_tag = WebDriverWait(driver, 30).until(
                 EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
             select_PerPage = Select(select_tag)
@@ -213,7 +225,6 @@ def get_all_pages(link, driver, limited, database, source, env):
             select_PerPage.select_by_value(num_str)
             wait_loader(driver)
 
-            # Check if search grid loads
             try:
                 search_grid = WebDriverWait(driver, 30).until(
                     EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
@@ -225,7 +236,6 @@ def get_all_pages(link, driver, limited, database, source, env):
                 print_log(f"[WARNING] No data for city: {city_name}")
                 continue
 
-            # Begin scraping for this city
             page_current = 0
             num_records = 0
             date_now, r_starts, r_finish = start_logger(limited, database, source)
