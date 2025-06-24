@@ -163,60 +163,23 @@ def parse_usaddress(address):
 
 def filter_notice(notice):
     content = notice.lower().strip()
+
     address = ''
     address_list = dict()
     us_addr_list = dict()
-
-    search_strings = [
-        'property is more commonly known as', 'said property being known as:', 'said property is known as',
-        'property known a/s', 'known as located at', 'known as address', 'k/a',
+    search_strings = ['property is more commonly known as', 'said property being known as:',
+        'said property is known as', 'property known a/s', 'known as located at', 'known as address', ' k/a',
         'located at', 'property address:', 'following parcels', 'commonly known as',
-        'property located at', 'street address:', 'property location:', ':property location:',
-        ": location:", "location:", " location:", "Executor Address: ",
-        "at the location indicated:", "on ",
-        "last known address", "scheduled at", "meeting held at", "mail a copy to"
-    ]
+        'property located at', 'street address:', 'property location:', ':property location:', ": Location:", "Location:", " Location: "]
 
     for find_str in search_strings:
         if find_str in content:
-            part = content.split(find_str, 1)[1].strip()
-            match = re.match(r"([0-9]{3,5}.+? ga [0-9]{5})", part)
-            if match:
-                address = match.group(1)
-            else:
-                address = part.split(" on ")[0].strip()
-
+            address = content.split(find_str)[1].strip()
             nr_parsed = parse_address(address)
             us_parsed = gets_usaddress(address)
 
             address_list[find_str] = nr_parsed
             us_addr_list[find_str] = us_parsed
-
-    if not address_list:
-        raw_matches = re.findall(
-            r"(\d{3,5} [^\n,]+?(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?GA ?\d{5})",
-            content,
-            re.IGNORECASE
-        )
-        if not raw_matches:
-            raw_matches = re.findall(
-                r"(\d{3,5} [^\n,]+?(?:Blvd|Road|Rd|Drive|Dr|Ave|Avenue|Street|St)?[, ]+[\w ]+,? ?\d{5} ?GA)",
-                content,
-                re.IGNORECASE
-            )
-        if not raw_matches:
-            raw_matches = re.findall(
-                r"(\d{3,5}\s[\w\s.'-]+,\s*[\w\s]+,\s*GA\s*\d{5})",
-                content,
-                re.IGNORECASE
-            )
-
-        if raw_matches:
-            address = raw_matches[0]
-            nr_parsed = parse_address(address)
-            us_parsed = gets_usaddress(address)
-            address_list["regex_fallback"] = nr_parsed
-            us_addr_list["regex_fallback"] = us_parsed
 
     parsed_us = parse_usaddress(us_addr_list)
 
@@ -226,23 +189,30 @@ def filter_notice(notice):
     vals = list(address_list.values())
     if num_addresses == 1:
         parse = True
-    elif num_addresses > 1 and not bool(parsed_us):
-        parse = True
-        vals = [dict(t) for t in {tuple(d.items()) for d in vals}]
+    elif num_addresses > 1:
+        if not bool(parsed_us):
+            parse = True
+            vals = [dict(t) for t in {tuple(d.items()) for d in vals}]
 
     if parse:
         dump = vals.pop()
         if dump['City'] == str(datetime.today().year):
             dump['City'] = ''
 
-        if dump.get('Street') and dump.get('City'):
+        street = dump['Street']
+        city = dump['City']
+
+        if bool(street) and bool(city):
             zip_code = dump['Zip_Code']
-            if zip_code == str(datetime.today().year) or dump['Street'].startswith(zip_code):
+            if zip_code == str(datetime.today().year) or street.startswith(zip_code):
                 dump['Zip_Code'] = ''
-            if len(dump['City'].split()) > 3 or len(dump['Street'].split()) > 8:
-                parser_nr = dict()
-            else:
                 parser_nr = dump.copy()
+
+            if len(city.split()) > 3:
+                parser_nr = dict()
+
+            if len(street.split()) > 8:
+                parser_nr = dict()
 
     return parsed_us, parser_nr
 
