@@ -141,10 +141,9 @@ def count_total_records(driver):
 def get_all_pages(link, driver, limited, database, source, env):
     template = link + "{}"
     pages = list()
-
     print_log("Page Loaded...")
 
-    # Click the City dropdown before search
+    # Step 1: Click city dropdown
     try:
         city_dropdown = WebDriverWait(driver, 30).until(
             EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
@@ -154,184 +153,228 @@ def get_all_pages(link, driver, limited, database, source, env):
         print_log("City dropdown clicked.")
     except Exception as e:
         print_log(f"[ERROR] Unable to click city dropdown: {e}", True)
+        return driver, pages
 
-    keyword_field = WebDriverWait(driver, 30).until(lambda x: x.find_element(By.ID, 'ctl00_ContentPlaceHolder1_as1_txtSearch'))
-    keyword_field.send_keys('\n')
-    w = random.randint(2, 5)
-    time.sleep(w)
-    time.sleep(15)
-
-    select_tag = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
-    select_PerPage = Select(select_tag)
-
-    options = select_tag.find_elements(By.TAG_NAME, "option")
-    all_options = [opt.get_property("value") for opt in options]
-    num_str = all_options[-1]
-    w = random.randint(1, 3)
-    time.sleep(w)
-    select_PerPage.select_by_value(num_str)
-    wait_loader(driver)
-
+    # Step 2: Wait for city list <ul> and collect all <li> elements
     try:
-        search_grid = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
-        w = wait_time()
-        print_log("\nWaiting {} seconds for Search Grid...".format(w))
-        time.sleep(w)
-    except:
-        search_grid = None
-        pass
+        ul_city_list = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
+        )
+        city_lis = ul_city_list.find_elements(By.TAG_NAME, "li")
+        print_log(f"Found {len(city_lis)} city options.")
+    except Exception as e:
+        print_log(f"[ERROR] Could not find city list: {e}", True)
+        return driver, pages
 
-    if bool(search_grid):
-        page_current = 0
-        num_records = 0
+    # Step 3: Loop through each city <li>
+    for index in range(len(city_lis)):
+        try:
+            # Click city dropdown again in case it's collapsed
+            city_dropdown = WebDriverWait(driver, 30).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
+            )
+            city_dropdown.click()
+            time.sleep(1)
 
-        date_now, r_starts, r_finish = start_logger(limited, database, source)
+            # Refresh the list and click the current <li>
+            ul_city_list = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
+            )
+            city_lis = ul_city_list.find_elements(By.TAG_NAME, "li")
+            target_city = city_lis[index]
+            city_name = target_city.text
+            print_log(f"[INFO] Selecting city: {city_name}")
+            target_city.click()
+            time.sleep(3)
 
-        curr_tot_tag = WebDriverWait(search_grid, 30).until(
-            EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblTotalPages")))
-        current_total_str = curr_tot_tag.text.strip()
-        page_last = int(current_total_str.split()[1])
-        print_log("There are {} Total Search Pages...\n".format(page_last))
+            # Click outside to collapse dropdown (prevents double selection)
+            try:
+                keyword_field = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, 'ctl00_ContentPlaceHolder1_as1_txtSearch'))
+                )
+                keyword_field.click()
+                time.sleep(1)
+            except:
+                pass
 
-        while not page_current == page_last:
-            curr_tag = WebDriverWait(search_grid, 30).until(
-                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage")))
-            page_current = int(curr_tag.text)
-            print_log("Working on Page # {}".format(page_current))
+            # Send search
+            keyword_field.send_keys('\n')
+            time.sleep(random.randint(2, 5))
+            time.sleep(15)
 
-            WebDriverWait(search_grid, 30).until(
-                EC.presence_of_element_located((By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")))
-            button_list = search_grid.find_elements(By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")
+            # Set per page
+            select_tag = WebDriverWait(driver, 30).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
+            select_PerPage = Select(select_tag)
+            options = select_tag.find_elements(By.TAG_NAME, "option")
+            all_options = [opt.get_property("value") for opt in options]
+            num_str = all_options[-1]
+            time.sleep(random.randint(1, 3))
+            select_PerPage.select_by_value(num_str)
+            wait_loader(driver)
 
-            for x in range(1, len(button_list) + 1):
+            # Check if search grid loads
+            try:
+                search_grid = WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
+                time.sleep(wait_time())
+            except:
+                search_grid = None
+
+            if not search_grid:
+                print_log(f"[WARNING] No data for city: {city_name}")
+                continue
+
+            # Begin scraping for this city
+            page_current = 0
+            num_records = 0
+            date_now, r_starts, r_finish = start_logger(limited, database, source)
+
+            curr_tot_tag = WebDriverWait(search_grid, 30).until(
+                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblTotalPages")))
+            current_total_str = curr_tot_tag.text.strip()
+            page_last = int(current_total_str.split()[1])
+            print_log(f"There are {page_last} Total Search Pages for city: {city_name}\n")
+
+            while not page_current == page_last:
+                curr_tag = WebDriverWait(search_grid, 30).until(
+                    EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage")))
+                page_current = int(curr_tag.text)
+                print_log("Working on Page # {}".format(page_current))
+
+                WebDriverWait(search_grid, 30).until(
+                    EC.presence_of_element_located((By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")))
+                button_list = search_grid.find_elements(By.XPATH, "//input[@class='viewButton' and starts-with(@onclick, 'javascript')]")
+
+                for x in range(1, len(button_list) + 1):
+                    if not env and num_records >= limited:
+                        break
+
+                    page_url = driver.current_url
+                    web_data = list()
+                    id = 2 + x
+                    if id < 10:
+                        id = f'0{id}'
+                    print(f"+++++++++++++++++START++++++++++++++++++ {id}\n")
+                    try:
+                        try:
+                            t = WebDriverWait(driver, 30).until(
+                                EC.element_to_be_clickable(
+                                    (By.XPATH, f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
+                                )
+                            )
+                            driver.execute_script("arguments[0].scrollIntoView();", t)
+                            t.click()
+                        except:
+                            driver.refresh()
+                            t = WebDriverWait(driver, 30).until(
+                                EC.element_to_be_clickable(
+                                    (By.XPATH, f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
+                                )
+                            )
+                            driver.execute_script("arguments[0].scrollIntoView();", t)
+                            t.click()
+                        has_data = False
+                        try:
+                            driver, data = get_data(driver, 'GA')
+                            web_data.append(data)
+                            has_data = True
+                        except:
+                            print_log("Data Saved With Url -: {}".format(page_url), True)
+
+                        if has_data:
+                            try:
+                                database.gapub(data)
+                            except:
+                                print_log("Unable to insert: {}".format(page_url), True)
+                                print_log(traceback.format_exc(), True)
+
+                        try:
+                            back = WebDriverWait(driver, 10).until(
+                                EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop"))
+                            )
+                            driver.execute_script(
+                                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", back
+                            )
+                            print_log("Back button found by ID, clicking.")
+                            back.click()
+                        except Exception as e:
+                            print_log(f"[WARNING] Back button not clickable: {e}", True)
+                            try:
+                                print_log("Using window.history.back() as fallback.")
+                                driver.execute_script("window.history.go(-1);")
+                                WebDriverWait(driver, 20).until(
+                                    EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch"))
+                                )
+                            except Exception as e2:
+                                print_log(f"[ERROR] Fallback navigation failed: {e2}", True)
+                                print_log("Reloading page URL as final fallback.")
+                                driver.get(page_url)
+                                wait_loader(driver)
+
+                    except:
+                        driver.get(page_url)
+                    num_records += 1
+                    print("+++++++++++++++++FINISH++++++++++++++++++\n")
+                database.Close_db()
+
                 if not env and num_records >= limited:
                     break
 
-                page_url = driver.current_url
-                web_data = list()
-                id = 2 + x
-                if id < 10:
-                    id = f'0{id}'
-                print(f"+++++++++++++++++START++++++++++++++++++ {id}\n")
-                try:
-                    try:
-                        t = WebDriverWait(driver, 30).until(
-                            EC.element_to_be_clickable(
-                                (By.XPATH, f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
-                            )
-                        )
-                        driver.execute_script("arguments[0].scrollIntoView();", t)
-                        t.click()
-                    except:
-                        driver.refresh()
-                        t = WebDriverWait(driver, 30).until(
-                            EC.element_to_be_clickable(
-                                (By.XPATH,
-                                 f'//*[@id="ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl{id}_btnView2"]'),
-                            )
-                        )
-                        driver.execute_script("arguments[0].scrollIntoView();", t)
-                        t.click()
-                    has_data = False
-                    try:
-                        driver, data = get_data(driver, 'GA')
-                        web_data.append(data)
-                        has_data = True
-                    except:
-                        print_log("Data Saved With Url -: {}".format(page_url), True)
-
-                    if has_data:
-                        try:
-                            database.gapub(data)
-                        except:
-                            print_log("Unable to insert: {}".format(page_url), True)
-                            print_log(traceback.format_exc(), True)
-
-                    try:
-                        back = WebDriverWait(driver, 10).until(
-                            EC.element_to_be_clickable(
-                                (By.ID, "ctl00_ContentPlaceHolder1_PublicNoticeDetailsBody1_hlBackFromBodyTop")
-                            )
-                        )
-                        driver.execute_script(
-                            "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});",
-                            back
-                        )
-                        print_log("Back button found by ID, clicking.")
-                        back.click()
-                    except Exception as e:
-                        print_log(f"[WARNING] Back button not clickable: {e}", True)
-                        try:
-                            print_log("Using window.history.back() as fallback.")
-                            driver.execute_script("window.history.go(-1);")
-                            WebDriverWait(driver, 20).until(
-                                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch"))
-                            )
-                        except Exception as e2:
-                            print_log(f"[ERROR] Fallback navigation failed: {e2}", True)
-                            print_log("Reloading page URL as final fallback.")
-                            driver.get(page_url)
-                            wait_loader(driver)
-
-                except:
-                    driver.get(page_url)
-                num_records += 1
-                print("+++++++++++++++++FINISH++++++++++++++++++\n")
-            database.Close_db()
-
-            if not env and num_records >= limited:
-                break
-
-            if page_current == page_last:
-                break
-
-            try:
-                next_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_btnNext"))
-                )
-                print("Click Next Page...")
-                driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
-                next_button.click()
-            except Exception as e:
-                print_log(f"[WARNING] Next button not clickable or missing: {e}", True)
-                last_url = driver.current_url
-                print_log(f"[INFO] Reloading current page: {last_url}", True)
-                driver.get(last_url)
-                wait_loader(driver)
-
-                try:
-                    current_page_elem = WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located(
-                            (By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage"))
-                    )
-                    current_page_number = int(current_page_elem.text.strip())
-                    next_page_number = current_page_number + 1
-
-                    next_page_btn = WebDriverWait(driver, 10).until(
-                        EC.element_to_be_clickable((
-                            By.XPATH,
-                            f"//input[contains(@onclick, \"__doPostBack('ctl00$ContentPlaceHolder1$WSExtendedGridNP1$GridView1$ctl01$ctl{next_page_number:02d}$btnPage')\")]"
-                        ))
-                    )
-
-                    driver.execute_script("arguments[0].scrollIntoView(true);", next_page_btn)
-                    print_log(f"[INFO] Fallback click to page {next_page_number}", True)
-                    next_page_btn.click()
-                except Exception as e2:
-                    print_log(f"[ERROR] Fallback navigation to next page failed: {e2}", True)
+                if page_current == page_last:
                     break
 
-            wait_loader(driver)
+                try:
+                    next_button = WebDriverWait(driver, 10).until(
+                        EC.element_to_be_clickable((By.CSS_SELECTOR, "#ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_btnNext"))
+                    )
+                    print("Click Next Page...")
+                    driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+                    next_button.click()
+                except Exception as e:
+                    print_log(f"[WARNING] Next button not clickable or missing: {e}", True)
+                    last_url = driver.current_url
+                    print_log(f"[INFO] Reloading current page: {last_url}", True)
+                    driver.get(last_url)
+                    wait_loader(driver)
 
-            search_grid = WebDriverWait(driver, 30).until(
-                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
-            w = wait_time()
-            print_log("-" * 80)
-            print_log("Waiting {} seconds for Search Grid...".format(w))
-            time.sleep(w)
+                    try:
+                        current_page_elem = WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located(
+                                (By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_lblCurrentPage"))
+                        )
+                        current_page_number = int(current_page_elem.text.strip())
+                        next_page_number = current_page_number + 1
 
-        total_return = len(pages)
-        pages = update_logger(database, source, date_now, limited, r_starts, r_finish, total_return, pages)
+                        next_page_btn = WebDriverWait(driver, 10).until(
+                            EC.element_to_be_clickable((
+                                By.XPATH,
+                                f"//input[contains(@onclick, \"__doPostBack('ctl00$ContentPlaceHolder1$WSExtendedGridNP1$GridView1$ctl01$ctl{next_page_number:02d}$btnPage')\")]"
+                            ))
+                        )
+
+                        driver.execute_script("arguments[0].scrollIntoView(true);", next_page_btn)
+                        print_log(f"[INFO] Fallback click to page {next_page_number}", True)
+                        next_page_btn.click()
+                    except Exception as e2:
+                        print_log(f"[ERROR] Fallback navigation to next page failed: {e2}", True)
+                        break
+
+                wait_loader(driver)
+
+                search_grid = WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_upSearch")))
+                w = wait_time()
+                print_log("-" * 80)
+                print_log("Waiting {} seconds for Search Grid...".format(w))
+                time.sleep(w)
+
+            total_return = len(pages)
+            pages = update_logger(database, source, date_now, limited, r_starts, r_finish, total_return, pages)
+
+        except Exception as city_e:
+            print_log(f"[ERROR] City scraping failed at index {index}: {city_e}", True)
+            continue
 
     return driver, pages
 
