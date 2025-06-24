@@ -143,11 +143,22 @@ def get_all_pages(link, driver, limited, database, source, env):
     pages = list()
 
     print_log("Page Loaded...")
+
+    # Click the City dropdown before search
+    try:
+        city_dropdown = WebDriverWait(driver, 30).until(
+            EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
+        )
+        city_dropdown.click()
+        time.sleep(2)
+        print_log("City dropdown clicked.")
+    except Exception as e:
+        print_log(f"[ERROR] Unable to click city dropdown: {e}", True)
+
     keyword_field = WebDriverWait(driver, 30).until(lambda x: x.find_element(By.ID, 'ctl00_ContentPlaceHolder1_as1_txtSearch'))
     keyword_field.send_keys('\n')
     w = random.randint(2, 5)
     time.sleep(w)
-    #keyword_field.send_keys()
     time.sleep(15)
 
     select_tag = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_WSExtendedGridNP1_GridView1_ctl01_ddlPerPage")))
@@ -236,7 +247,6 @@ def get_all_pages(link, driver, limited, database, source, env):
                             print_log("Unable to insert: {}".format(page_url), True)
                             print_log(traceback.format_exc(), True)
 
-                    # Updated Back button logic
                     try:
                         back = WebDriverWait(driver, 10).until(
                             EC.element_to_be_clickable(
