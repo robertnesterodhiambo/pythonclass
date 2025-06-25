@@ -174,7 +174,7 @@ def get_all_pages(link, driver, limited, database, source, env):
                 EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
             )
             city_dropdown.click()
-            time.sleep(1)
+            time.sleep(2)
 
             ul_city_list = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
@@ -188,13 +188,38 @@ def get_all_pages(link, driver, limited, database, source, env):
             target_city = city_lis[city_index]
             city_name = target_city.text.strip()
 
+            # Step A: Unselect any currently selected city
             try:
-                span = target_city.find_element(By.CLASS_NAME, "checked")
-                print_log(f"[INFO] City already selected, skipping: {city_name}")
-                continue  # already processed
-            except:
-                pass  # not selected yet
+                for li in city_lis:
+                    try:
+                        li.find_element(By.CLASS_NAME, "checked")
+                        prev_city_name = li.text.strip()
+                        print_log(f"[INFO] Unchecking previously selected city: {prev_city_name}")
+                        li.click()
+                        time.sleep(1)
+                        break
+                    except:
+                        continue
+            except Exception as e:
+                print_log(f"[WARNING] Failed to uncheck previous city: {e}")
 
+            # Step B: Reopen dropdown again to select target city
+            city_dropdown = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
+            )
+            city_dropdown.click()
+            time.sleep(2)
+
+            ul_city_list = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
+            )
+            city_lis = ul_city_list.find_elements(By.TAG_NAME, "li")
+
+            if city_index >= len(city_lis):
+                print_log(f"[INFO] City index {city_index} no longer exists (recheck).")
+                break
+
+            target_city = city_lis[city_index]
             print_log(f"[INFO] Selecting city: {city_name}")
             target_city.click()
             time.sleep(2)
@@ -210,7 +235,7 @@ def get_all_pages(link, driver, limited, database, source, env):
             except:
                 pass
 
-            time.sleep(15)  # Let search load
+            time.sleep(15)
 
             # Set "Per page"
             try:
@@ -330,25 +355,6 @@ def get_all_pages(link, driver, limited, database, source, env):
                 time.sleep(wait_time())
 
             pages = update_logger(database, source, date_now, limited, r_starts, r_finish, len(pages), pages)
-
-            # Unselect current city before continuing
-            try:
-                city_dropdown = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.ID, "ctl00_ContentPlaceHolder1_as1_divCity"))
-                )
-                city_dropdown.click()
-                time.sleep(1)
-                ul_city_list = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, "ctl00_ContentPlaceHolder1_as1_lstCity"))
-                )
-                city_lis = ul_city_list.find_elements(By.TAG_NAME, "li")
-                li = city_lis[city_index]
-                li.find_element(By.CLASS_NAME, "checked")  # confirm it's selected
-                print_log(f"[INFO] Unselecting city: {city_name}")
-                li.click()
-                time.sleep(2)
-            except:
-                print_log(f"[WARNING] Could not unselect city: {city_name}")
 
         except Exception as e:
             print_log(f"[ERROR] City scraping failed at index {city_index}: {e}", True)
