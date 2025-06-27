@@ -33,29 +33,46 @@ link = first_wrapper.find_element(By.TAG_NAME, "a")
 driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", link)
 time.sleep(1)
 
-# Get the actual PDF URL
+# Get the PDF URL
 pdf_url = link.get_attribute("href")
-print("PDF URL:", pdf_url)
 
-# Generate filename from link text
+# Generate clean filename
 bulletin_title = link.text.strip().replace(" ", "_").replace(":", "-")
 filename = f"{bulletin_title}.pdf"
 
-# Download the PDF into current script directory
-print("Downloading PDF...")
-response = requests.get(pdf_url)
-with open(filename, "wb") as f:
-    f.write(response.content)
-print(f"✅ PDF downloaded as: {filename}")
+# Check if any PDF already exists
+existing_pdfs = [f for f in os.listdir() if f.endswith(".pdf")]
 
-# Optional: Open PDF in new tab
+# Decide whether to download
+download = False
+
+if not existing_pdfs:
+    print("[INFO] No PDF exists. Will download new one.")
+    download = True
+elif filename in existing_pdfs:
+    print("[INFO] PDF already exists and is up to date. Skipping download.")
+    download = False
+else:
+    print(f"[INFO] New PDF '{filename}' differs from existing file(s): {existing_pdfs}")
+    download = True
+
+# Download the PDF if needed
+if download:
+    print("Downloading PDF...")
+    response = requests.get(pdf_url)
+    with open(filename, "wb") as f:
+        f.write(response.content)
+    print(f"✅ PDF downloaded as: {filename}")
+else:
+    print("✅ Nothing to download.")
+
+# Optional: Open the link in browser
 link.click()
 WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
 driver.switch_to.window(driver.window_handles[1])
 
-# Wait for new tab content
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
 print("New tab title:", driver.title)
+
 time.sleep(5)
 driver.quit()
