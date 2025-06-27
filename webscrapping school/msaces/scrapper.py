@@ -5,8 +5,10 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import requests
+import os
 
-# Install matching chromedriver
+# Auto-install matching chromedriver
 chromedriver_autoinstaller.install()
 
 # Chrome setup
@@ -31,14 +33,27 @@ link = first_wrapper.find_element(By.TAG_NAME, "a")
 driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", link)
 time.sleep(1)
 
-# Click the link (opens in new tab)
-link.click()
+# Get the actual PDF URL
+pdf_url = link.get_attribute("href")
+print("PDF URL:", pdf_url)
 
-# Wait for the new tab and switch to it
+# Generate filename from link text
+bulletin_title = link.text.strip().replace(" ", "_").replace(":", "-")
+filename = f"{bulletin_title}.pdf"
+
+# Download the PDF into current script directory
+print("Downloading PDF...")
+response = requests.get(pdf_url)
+with open(filename, "wb") as f:
+    f.write(response.content)
+print(f"✅ PDF downloaded as: {filename}")
+
+# Optional: Open PDF in new tab
+link.click()
 WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) > 1)
 driver.switch_to.window(driver.window_handles[1])
 
-# Wait for new tab content to load
+# Wait for new tab content
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
 print("New tab title:", driver.title)
