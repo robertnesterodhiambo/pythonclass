@@ -33,7 +33,7 @@ if 'Titular' not in input_df.columns:
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
 else:
-    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF'])
+    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF', 'Morada'])
 
 # Selenium Setup
 options = Options()
@@ -83,10 +83,18 @@ for idx, row in input_df.iterrows():
                     except:
                         nif = ""
 
-                    # Combine original row with link and NIF
+                    # Extract Morada
+                    try:
+                        morada_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.t--d-blue")))
+                        morada = morada_element.text.strip()
+                    except:
+                        morada = ""
+
+                    # Combine original row with link, NIF, and Morada
                     output_row = row.to_dict()
                     output_row['Link'] = current_link
                     output_row['NIF'] = nif
+                    output_row['Morada'] = morada
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
 
                     # Save immediately
@@ -122,4 +130,4 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
 driver.quit()
-print(f"\n✅ Finished. All links and NIFs saved in: {output_path}")
+print(f"\n✅ Finished. All links, NIFs, and Moradas saved in: {output_path}")
