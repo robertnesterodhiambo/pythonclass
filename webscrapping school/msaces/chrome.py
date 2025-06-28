@@ -1,5 +1,6 @@
 import os
 import time
+import re
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -33,7 +34,7 @@ if 'Titular' not in input_df.columns:
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
 else:
-    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF', 'Morada'])
+    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF', 'Morada', 'CodigoPostal'])
 
 # Selenium Setup
 options = Options()
@@ -90,11 +91,16 @@ for idx, row in input_df.iterrows():
                     except:
                         morada = ""
 
-                    # Combine original row with link, NIF, and Morada
+                    # Extract CodigoPostal from Morada using regex
+                    match = re.search(r'\b\d{4}-\d{3}\b', morada)
+                    codigo_postal = match.group() if match else ""
+
+                    # Combine original row with link, NIF, Morada, and CodigoPostal
                     output_row = row.to_dict()
                     output_row['Link'] = current_link
                     output_row['NIF'] = nif
                     output_row['Morada'] = morada
+                    output_row['CodigoPostal'] = codigo_postal
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
 
                     # Save immediately
@@ -130,4 +136,4 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
 driver.quit()
-print(f"\n✅ Finished. All links, NIFs, and Moradas saved in: {output_path}")
+print(f"\n✅ Finished. All links, NIFs, Moradas, and CódigoPostal saved in: {output_path}")
