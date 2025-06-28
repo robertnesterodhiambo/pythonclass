@@ -33,7 +33,7 @@ if 'Titular' not in input_df.columns:
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
 else:
-    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link'])
+    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF'])
 
 # Selenium Setup
 options = Options()
@@ -76,9 +76,17 @@ for idx, row in input_df.iterrows():
                     current_link = driver.current_url
                     print(f"✅ Got link: {current_link}")
 
-                    # Combine original row with link
+                    # Extract NIF
+                    try:
+                        nif_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.company__loc h3.company-info__data")))
+                        nif = nif_element.text.strip()
+                    except:
+                        nif = ""
+
+                    # Combine original row with link and NIF
                     output_row = row.to_dict()
                     output_row['Link'] = current_link
+                    output_row['NIF'] = nif
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
 
                     # Save immediately
@@ -114,4 +122,4 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
 driver.quit()
-print(f"\n✅ Finished. All links saved in: {output_path}")
+print(f"\n✅ Finished. All links and NIFs saved in: {output_path}")
