@@ -12,7 +12,7 @@ import chromedriver_autoinstaller
 # Auto-install ChromeDriver
 chromedriver_autoinstaller.install()
 
-# Load first .xlsx file
+# Load Excel file
 current_folder = os.path.dirname(os.path.abspath(__file__))
 xlsx_files = [f for f in os.listdir(current_folder) if f.endswith('.xlsx')]
 
@@ -23,61 +23,71 @@ if not xlsx_files:
 xlsx_path = os.path.join(current_folder, xlsx_files[0])
 df = pd.read_excel(xlsx_path)
 
-# Ensure 'Titular' column exists
 if 'Titular' not in df.columns:
     print("Missing 'Titular' column.")
     exit()
 
 titulars = df['Titular'].dropna().astype(str).tolist()[:5]
 
-# Set up Chrome
+# Set up Selenium
 options = Options()
 options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
 wait = WebDriverWait(driver, 20)
 
-# Go to main page
 driver.get("https://www.racius.com/")
 
-# Begin loop over names
+# Loop through each Titular
 for name in titulars:
     try:
-        print(f"\n[SEARCH] {name}")
+        print(f"\n[SEARCHING] {name}")
         
-        # Wait for input
         search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
         search_input.clear()
         search_input.send_keys(name)
         search_input.send_keys(Keys.ENTER)
 
-        # Wait for results div
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
-        time.sleep(2)  # Small delay to allow links to fully load
+        time.sleep(2)
 
-        # Get all result links
-        result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
-        print(f"[FOUND] {len(result_links)} links")
+        # Scroll until no new results load
+        print("[SCROLLING] Loading all search results...")
+        last_count = 0
+        scroll_attempts = 0
+        max_scroll_attempts = 1  # Prevent infinite scroll
 
-        links = [link.get_attribute('href') for link in result_links]
+        while scroll_attempts < max_scroll_attempts:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(2)
+            results = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+            if len(results) > last_count:
+                last_count = len(results)
+                scroll_attempts = 0  # Reset if more results appear
+            else:
+                scroll_attempts += 1
+
+        print(f"[FOUND] {last_count} links")
+
+        # Collect links
+        links = [link.get_attribute('href') for link in results]
 
         for i, link in enumerate(links, start=1):
             try:
                 print(f"  [OPENING {i}/{len(links)}] {link}")
                 driver.get(link)
-                time.sleep(3)  # Wait while on company page
+                time.sleep(3)
 
                 driver.back()
                 wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
-                time.sleep(1)  # Allow links to reload
+                time.sleep(1)
 
             except Exception as e:
                 print(f"  [ERROR opening link {i}]: {e}")
-        
-        # Go back to home for the next search
+
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
     except Exception as e:
-        print(f"[ERROR] Failed search for '{name}': {e}")
+        print(f"[ERROR] Problem with '{name}': {e}")
 
-# driver.quit()  # Uncomment to close browser when done
+# driver.quit()
