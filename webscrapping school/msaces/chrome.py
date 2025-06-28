@@ -9,61 +9,75 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
 
-# Step 1: Auto-install chromedriver
+# Auto-install ChromeDriver
 chromedriver_autoinstaller.install()
 
-# Step 2: Read the first .xlsx file
+# Load first .xlsx file
 current_folder = os.path.dirname(os.path.abspath(__file__))
 xlsx_files = [f for f in os.listdir(current_folder) if f.endswith('.xlsx')]
 
 if not xlsx_files:
-    print("No .xlsx file found in the folder.")
+    print("No .xlsx file found.")
     exit()
 
 xlsx_path = os.path.join(current_folder, xlsx_files[0])
 df = pd.read_excel(xlsx_path)
 
-# Check for 'Titular' column
+# Ensure 'Titular' column exists
 if 'Titular' not in df.columns:
-    print("The 'Titular' column was not found in the Excel file.")
+    print("Missing 'Titular' column.")
     exit()
 
 titulars = df['Titular'].dropna().astype(str).tolist()[:5]
 
-# Step 3: Set up Selenium
+# Set up Chrome
 options = Options()
 options.add_argument("--start-maximized")
-# options.add_argument("--headless")  # Uncomment for headless mode
-
 driver = webdriver.Chrome(options=options)
+wait = WebDriverWait(driver, 20)
 
-# Step 4: Visit racius.com
+# Go to main page
 driver.get("https://www.racius.com/")
 
-wait = WebDriverWait(driver, 30)
-
-# Step 5: Interact with search
+# Begin loop over names
 for name in titulars:
     try:
-        # Wait for search input
+        print(f"\n[SEARCH] {name}")
+        
+        # Wait for input
         search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
-
-        # Clear and type name
         search_input.clear()
         search_input.send_keys(name)
         search_input.send_keys(Keys.ENTER)
 
-        print(f"[INFO] Searched: {name}")
+        # Wait for results div
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+        time.sleep(2)  # Small delay to allow links to fully load
 
-        # Wait for results to load (you can adjust this condition to something smarter if needed)
-        time.sleep(4)  # or wait for a result element
+        # Get all result links
+        result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+        print(f"[FOUND] {len(result_links)} links")
 
-        # Optionally, go back to home to reset everything
+        links = [link.get_attribute('href') for link in result_links]
+
+        for i, link in enumerate(links, start=1):
+            try:
+                print(f"  [OPENING {i}/{len(links)}] {link}")
+                driver.get(link)
+                time.sleep(3)  # Wait while on company page
+
+                driver.back()
+                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+                time.sleep(1)  # Allow links to reload
+
+            except Exception as e:
+                print(f"  [ERROR opening link {i}]: {e}")
+        
+        # Go back to home for the next search
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
     except Exception as e:
-        print(f"[ERROR] Failed on '{name}': {e}")
+        print(f"[ERROR] Failed search for '{name}': {e}")
 
-# Uncomment to close the browser after done
-# driver.quit()
+# driver.quit()  # Uncomment to close browser when done
