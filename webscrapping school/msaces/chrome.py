@@ -27,7 +27,7 @@ if 'Titular' not in df.columns:
     print("Missing 'Titular' column.")
     exit()
 
-titulars = df['Titular'].dropna().astype(str).tolist()[:5]
+titulars = df['Titular'].dropna().astype(str).tolist()[:5]  # Limit to first 5 for testing
 
 # Set up Selenium
 options = Options()
@@ -50,44 +50,75 @@ for name in titulars:
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
         time.sleep(2)
 
-        # Scroll until no new results load
-        print("[SCROLLING] Loading all search results...")
-        last_count = 0
-        scroll_attempts = 0
-        max_scroll_attempts = 1  # Prevent infinite scroll
+        while True:
+            # Wait for results
+            wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+            time.sleep(1)
 
-        while scroll_attempts < max_scroll_attempts:
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
-            results = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
-            if len(results) > last_count:
-                last_count = len(results)
-                scroll_attempts = 0  # Reset if more results appear
-            else:
-                scroll_attempts += 1
+            result_cards = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+            print(f"  [PAGE] Found {len(result_cards)} results")
 
-        print(f"[FOUND] {last_count} links")
+            for i in range(len(result_cards)):
+                try:
+                    # Re-fetch fresh elements to avoid stale reference
+                    result_cards = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+                    result = result_cards[i]
 
-        # Collect links
-        links = [link.get_attribute('href') for link in results]
+                    name_text = result.text.strip()
+                    print(f"  [OPENING {i+1}/{len(result_cards)}] {name_text}")
 
-        for i, link in enumerate(links, start=1):
+                    # Scroll into view
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result)
+                    time.sleep(1)
+
+                    # Use JS click to avoid interception
+                    driver.execute_script("arguments[0].click();", result)
+
+                    # Wait for company page to load
+                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "body")))
+                    time.sleep(2)
+
+                    # (Optional) Extract company data here...
+
+                    driver.back()
+                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+                    time.sleep(1)
+
+                except Exception as e:
+                    print(f"  [ERROR opening result {i+1}]: {e}")
+                    # Recover by restarting the search
+                    driver.get("https://www.racius.com/")
+                    search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
+                    search_input.clear()
+                    search_input.send_keys(name)
+                    search_input.send_keys(Keys.ENTER)
+                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+                    time.sleep(2)
+                    break  # Skip current page if fail
+
+            # Try to click the paginator "Next" button
             try:
-                print(f"  [OPENING {i}/{len(links)}] {link}")
-                driver.get(link)
-                time.sleep(3)
+                next_li = driver.find_element(By.CSS_SELECTOR, 'li.paginator__nav.btn.btn--round.ml--1')
+                next_a = next_li.find_element(By.TAG_NAME, 'a')
+                next_href = next_a.get_attribute("href")
 
-                driver.back()
-                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
-                time.sleep(1)
+                if next_href:
+                    print(f"  [→] Next page: {next_href}")
+                    driver.get(next_href)
+                    time.sleep(2)
+                else:
+                    print("  [×] Next button inactive. Done with pages.")
+                    break
+            except:
+                print("  [×] No Next button found. Done with pages.")
+                break
 
-            except Exception as e:
-                print(f"  [ERROR opening link {i}]: {e}")
-
+        # Return to homepage for next titular
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
     except Exception as e:
         print(f"[ERROR] Problem with '{name}': {e}")
 
-# driver.quit()
+# Done
+driver.quit()
