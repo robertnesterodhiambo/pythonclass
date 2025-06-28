@@ -9,27 +9,33 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
 
-# Auto-install ChromeDriver
+# Auto-install compatible ChromeDriver
 chromedriver_autoinstaller.install()
 
-# Load Excel file
+# Paths
 current_folder = os.path.dirname(os.path.abspath(__file__))
-xlsx_files = [f for f in os.listdir(current_folder) if f.endswith('.xlsx')]
+xlsx_files = [f for f in os.listdir(current_folder) if f.endswith('.xlsx') and not f.startswith("~$")]
 
 if not xlsx_files:
-    print("No .xlsx file found.")
+    print("❌ No .xlsx file found in the folder.")
     exit()
 
-xlsx_path = os.path.join(current_folder, xlsx_files[0])
-df = pd.read_excel(xlsx_path)
+input_path = os.path.join(current_folder, xlsx_files[0])
+output_path = os.path.join(current_folder, "racius_links_output.xlsx")
 
-if 'Titular' not in df.columns:
-    print("Missing 'Titular' column.")
+# Load full input Excel
+input_df = pd.read_excel(input_path).dropna(how='all')
+if 'Titular' not in input_df.columns:
+    print("❌ 'Titular' column missing in Excel.")
     exit()
 
-titulars = df['Titular'].dropna().astype(str).tolist()[:5]  # Limit to first 5 for testing
+# Prepare output DataFrame
+if os.path.exists(output_path):
+    output_df = pd.read_excel(output_path)
+else:
+    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link'])
 
-# Set up Selenium
+# Selenium Setup
 options = Options()
 options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
@@ -37,88 +43,75 @@ wait = WebDriverWait(driver, 20)
 
 driver.get("https://www.racius.com/")
 
-# Loop through each Titular
-for name in titulars:
+# Iterate through each row
+for idx, row in input_df.iterrows():
+    name = str(row['Titular']).strip()
+    print(f"\n🔍 Searching for: {name}")
+
     try:
-        print(f"\n[SEARCHING] {name}")
-        
+        # Search
         search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
         search_input.clear()
         search_input.send_keys(name)
         search_input.send_keys(Keys.ENTER)
-
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
         time.sleep(2)
 
         while True:
-            # Wait for results
-            wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
-            time.sleep(1)
+            result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
 
-            result_cards = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
-            print(f"  [PAGE] Found {len(result_cards)} results")
-
-            for i in range(len(result_cards)):
+            for i in range(len(result_links)):
                 try:
-                    # Re-fetch fresh elements to avoid stale reference
-                    result_cards = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
-                    result = result_cards[i]
-
-                    name_text = result.text.strip()
-                    print(f"  [OPENING {i+1}/{len(result_cards)}] {name_text}")
-
-                    # Scroll into view
+                    # Refresh the list to avoid stale elements
+                    result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+                    result = result_links[i]
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result)
-                    time.sleep(1)
-
-                    # Use JS click to avoid interception
+                    time.sleep(0.5)
                     driver.execute_script("arguments[0].click();", result)
 
-                    # Wait for company page to load
+                    # Wait for navigation
                     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "body")))
                     time.sleep(2)
 
-                    # (Optional) Extract company data here...
+                    current_link = driver.current_url
+                    print(f"✅ Got link: {current_link}")
 
+                    # Combine original row with link
+                    output_row = row.to_dict()
+                    output_row['Link'] = current_link
+                    output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
+
+                    # Save immediately
+                    output_df.to_excel(output_path, index=False)
+
+                    # Go back to results
                     driver.back()
                     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
                     time.sleep(1)
 
                 except Exception as e:
-                    print(f"  [ERROR opening result {i+1}]: {e}")
-                    # Recover by restarting the search
+                    print(f"⚠️ Error opening result {i+1}: {e}")
                     driver.get("https://www.racius.com/")
-                    search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
-                    search_input.clear()
-                    search_input.send_keys(name)
-                    search_input.send_keys(Keys.ENTER)
-                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
                     time.sleep(2)
-                    break  # Skip current page if fail
-
-            # Try to click the paginator "Next" button
-            try:
-                next_li = driver.find_element(By.CSS_SELECTOR, 'li.paginator__nav.btn.btn--round.ml--1')
-                next_a = next_li.find_element(By.TAG_NAME, 'a')
-                next_href = next_a.get_attribute("href")
-
-                if next_href:
-                    print(f"  [→] Next page: {next_href}")
-                    driver.get(next_href)
-                    time.sleep(2)
-                else:
-                    print("  [×] Next button inactive. Done with pages.")
                     break
+
+            # Check for next button
+            try:
+                next_button = driver.find_element(By.CSS_SELECTOR, "li.paginator__nav.btn.btn--round.ml--1 a")
+                driver.execute_script("arguments[0].click();", next_button)
+                time.sleep(2)
             except:
-                print("  [×] No Next button found. Done with pages.")
+                print("⛔ No more pages.")
                 break
 
-        # Return to homepage for next titular
+        # Back to home page
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
     except Exception as e:
-        print(f"[ERROR] Problem with '{name}': {e}")
+        print(f"🚫 Error with search '{name}': {e}")
+        driver.get("https://www.racius.com/")
+        time.sleep(2)
 
-# Done
 driver.quit()
+print(f"\n✅ Finished. All links saved in: {output_path}")
