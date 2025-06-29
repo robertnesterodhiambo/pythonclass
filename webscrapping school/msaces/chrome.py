@@ -2,6 +2,8 @@ import os
 import time
 import re
 import pandas as pd
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -31,10 +33,17 @@ if 'Titular' not in input_df.columns:
     exit()
 
 # Prepare output DataFrame
+extra_cols = ['Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento']
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
 else:
-    output_df = pd.DataFrame(columns=list(input_df.columns) + ['Link', 'NIF', 'Morada', 'CodigoPostal'])
+    output_df = pd.DataFrame(columns=list(input_df.columns) + extra_cols)
+
+# Get current date info
+now = datetime.now()
+validade_inicio = now.strftime("%m/%Y")
+validade_fim = (now + relativedelta(years=10)).strftime("%m/%Y")
+data_documento = now.strftime("%Y-%m-%d")
 
 # Selenium Setup
 options = Options()
@@ -95,12 +104,16 @@ for idx, row in input_df.iterrows():
                     match = re.search(r'\b\d{4}-\d{3}\b', morada)
                     codigo_postal = match.group() if match else ""
 
-                    # Combine original row with link, NIF, Morada, and CodigoPostal
+                    # Combine original row with all collected data
                     output_row = row.to_dict()
                     output_row['Link'] = current_link
                     output_row['NIF'] = nif
                     output_row['Morada'] = morada
                     output_row['CodigoPostal'] = codigo_postal
+                    output_row['ValidadeInicio'] = validade_inicio
+                    output_row['ValidadeFim'] = validade_fim
+                    output_row['DataDocumento'] = data_documento
+
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
 
                     # Save immediately
@@ -136,4 +149,4 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
 driver.quit()
-print(f"\n✅ Finished. All links, NIFs, Moradas, and CódigoPostal saved in: {output_path}")
+print(f"\n✅ Finished. All links and data saved in: {output_path}")
