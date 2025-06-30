@@ -28,10 +28,14 @@ def extract_boletim_data(pdf_path, output_excel_path):
         marca_text = all_marca[-1].strip() if all_marca else ""
         marca_imagem = all_marca[0].strip() if len(all_marca) > 1 else ""
 
+        # === Clean Titular (remove leading country code like "PT ", "BR ", etc.) ===
+        titular_text = titular.group(1).strip() if titular else ""
+        titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)
+
         parsed_data.append({
             "NumeroPedido": numero_pedido.group(1) if numero_pedido else "",
             "DataPedido": data_pedido.group(1) if data_pedido else "",
-            "Titular": titular.group(1).strip() if titular else "",
+            "Titular": titular_text,
             "ClasseProdutos": classe_produtos.group(1) if classe_produtos else "",
             "Marca": marca_text,
             "MarcaIM": marca_imagem if marca_imagem != marca_text else "",
