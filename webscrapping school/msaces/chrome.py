@@ -106,16 +106,16 @@ for idx, row in input_df.iterrows():
                     except:
                         nif = ""
 
-                    # Extract Morada
+                    # Extract Morada and Postal Code
                     try:
                         morada_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.t--d-blue")))
-                        morada = morada_element.text.strip()
+                        full_address = morada_element.text.strip()
+                        morada = re.split(r'\b\d{4}-\d{3}\b', full_address)[0].strip(', ')
+                        match = re.search(r'\b\d{4}-\d{3}\b', full_address)
+                        codigo_postal = match.group() if match else ""
                     except:
                         morada = ""
-
-                    # Extract postal code
-                    match = re.search(r'\b\d{4}-\d{3}\b', morada)
-                    codigo_postal = match.group() if match else ""
+                        codigo_postal = ""
 
                     # Extract ValorImportancia
                     try:
