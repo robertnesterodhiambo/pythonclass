@@ -54,7 +54,7 @@ entidade_start = 12345
 next_ref = ref_start + len(output_df)
 next_ent = entidade_start + len(output_df)
 
-# Selenium setup
+# Selenium
 options = Options()
 options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
@@ -76,28 +76,22 @@ for idx, row in input_df.iterrows():
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
         time.sleep(2)
 
-        matched = False
-        result_divs = driver.find_elements(By.CSS_SELECTOR, "div.col--one")
+        while True:
+            result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
 
-        for div in result_divs:
-            try:
-                name_tags = div.find_elements(By.CSS_SELECTOR, "p.results__name")
-                if not name_tags:
-                    continue  # Skip if no name tag found
-                name_text = name_tags[0].text.strip().lower()
-
-                if name_text == name.lower():
-                    matched = True
-                    result_link = div.find_element(By.CSS_SELECTOR, "a.results__col-link")
-                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result_link)
+            for i in range(len(result_links)):
+                try:
+                    result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
+                    result = result_links[i]
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result)
                     time.sleep(0.5)
-                    driver.execute_script("arguments[0].click();", result_link)
+                    driver.execute_script("arguments[0].click();", result)
 
                     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "body")))
                     time.sleep(2)
 
                     current_link = driver.current_url
-                    print(f"✅ Matched and got link: {current_link}")
+                    print(f"✅ Got link: {current_link}")
 
                     # Extract NIF
                     try:
@@ -133,11 +127,13 @@ for idx, row in input_df.iterrows():
                     valor_total = round(valor_importancia + iva, 2)
                     montante_mb = valor_total
 
+                    # Auto-increment values
                     referencia_mb = str(next_ref).zfill(9)
                     entidade_mb = str(next_ent).zfill(5)
                     next_ref += 1
                     next_ent += 1
 
+                    # Build row
                     output_row = row.to_dict()
                     output_row.update({
                         'Link': current_link,
@@ -157,18 +153,26 @@ for idx, row in input_df.iterrows():
 
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
                     output_df.to_excel(output_path, index=False)
-                    break
-            except Exception as e:
-                print(f"⚠️ Error checking result: {e}")
-                continue
 
-        if not matched:
-            print(f"❌ No exact match for: {name}")
-            output_row = row.to_dict()
-            for col in extra_cols:
-                output_row[col] = "Not Found"
-            output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
-            output_df.to_excel(output_path, index=False)
+                    # Go back
+                    driver.back()
+                    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
+                    time.sleep(1)
+
+                except Exception as e:
+                    print(f"⚠️ Error opening result {i+1}: {e}")
+                    driver.get("https://www.racius.com/")
+                    time.sleep(2)
+                    break
+
+            # Pagination
+            try:
+                next_button = driver.find_element(By.CSS_SELECTOR, "li.paginator__nav.btn.btn--round.ml--1 a")
+                driver.execute_script("arguments[0].click();", next_button)
+                time.sleep(2)
+            except:
+                print("⛔ No more pages.")
+                break
 
         driver.get("https://www.racius.com/")
         time.sleep(2)
