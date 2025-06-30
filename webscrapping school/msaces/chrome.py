@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
 
-# Auto-install compatible ChromeDriver
+# Auto-install ChromeDriver
 chromedriver_autoinstaller.install()
 
 # Paths
@@ -26,26 +26,35 @@ if not xlsx_files:
 input_path = os.path.join(current_folder, xlsx_files[0])
 output_path = os.path.join(current_folder, "racius_links_output.xlsx")
 
-# Load full input Excel
+# Load input Excel
 input_df = pd.read_excel(input_path).dropna(how='all')
 if 'Titular' not in input_df.columns:
     print("❌ 'Titular' column missing in Excel.")
     exit()
 
 # Prepare output DataFrame
-extra_cols = ['Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento']
+extra_cols = [
+    'Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento',
+    'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB'
+]
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
 else:
     output_df = pd.DataFrame(columns=list(input_df.columns) + extra_cols)
 
-# Get current date info
+# Set up dates
 now = datetime.now()
 validade_inicio = now.strftime("%m/%Y")
 validade_fim = (now + relativedelta(years=10)).strftime("%m/%Y")
 data_documento = now.strftime("%Y-%m-%d")
 
-# Selenium Setup
+# Start auto-increment values
+ref_start = 123456789
+entidade_start = 12345
+next_ref = ref_start + len(output_df)
+next_ent = entidade_start + len(output_df)
+
+# Selenium
 options = Options()
 options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
@@ -53,7 +62,7 @@ wait = WebDriverWait(driver, 20)
 
 driver.get("https://www.racius.com/")
 
-# Iterate through each row
+# Iterate rows
 for idx, row in input_df.iterrows():
     name = str(row['Titular']).strip()
     print(f"\n🔍 Searching for: {name}")
@@ -72,14 +81,12 @@ for idx, row in input_df.iterrows():
 
             for i in range(len(result_links)):
                 try:
-                    # Refresh the list to avoid stale elements
                     result_links = driver.find_elements(By.CSS_SELECTOR, "div.col--one a.results__col-link")
                     result = result_links[i]
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result)
                     time.sleep(0.5)
                     driver.execute_script("arguments[0].click();", result)
 
-                    # Wait for navigation
                     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "body")))
                     time.sleep(2)
 
@@ -100,26 +107,54 @@ for idx, row in input_df.iterrows():
                     except:
                         morada = ""
 
-                    # Extract CodigoPostal from Morada using regex
+                    # Extract postal code
                     match = re.search(r'\b\d{4}-\d{3}\b', morada)
                     codigo_postal = match.group() if match else ""
 
-                    # Combine original row with all collected data
+                    # Extract ValorImportancia
+                    try:
+                        li_elements = driver.find_elements(By.CSS_SELECTOR, "li.d--flex.detail__detail.py-md--1.align--center")
+                        if len(li_elements) >= 2:
+                            valor_tag = li_elements[1].find_element(By.CSS_SELECTOR, "p.t--d-blue")
+                            valor_text = valor_tag.text.strip().replace("€", "").replace(",", ".")
+                            valor_importancia = float(re.search(r'[\d.]+', valor_text).group())
+                        else:
+                            valor_importancia = 0.0
+                    except:
+                        valor_importancia = 0.0
+
+                    iva = round(valor_importancia * 0.23, 2)
+                    valor_total = round(valor_importancia + iva, 2)
+                    montante_mb = valor_total
+
+                    # Auto-increment values
+                    referencia_mb = str(next_ref).zfill(9)
+                    entidade_mb = str(next_ent).zfill(5)
+                    next_ref += 1
+                    next_ent += 1
+
+                    # Build row
                     output_row = row.to_dict()
-                    output_row['Link'] = current_link
-                    output_row['NIF'] = nif
-                    output_row['Morada'] = morada
-                    output_row['CodigoPostal'] = codigo_postal
-                    output_row['ValidadeInicio'] = validade_inicio
-                    output_row['ValidadeFim'] = validade_fim
-                    output_row['DataDocumento'] = data_documento
+                    output_row.update({
+                        'Link': current_link,
+                        'NIF': nif,
+                        'Morada': morada,
+                        'CodigoPostal': codigo_postal,
+                        'ValidadeInicio': validade_inicio,
+                        'ValidadeFim': validade_fim,
+                        'DataDocumento': data_documento,
+                        'ValorImportancia': valor_importancia,
+                        'IVA': iva,
+                        'ValorTotal': valor_total,
+                        'MontanteMB': montante_mb,
+                        'ReferenciaMB': referencia_mb,
+                        'EntidadeMB': entidade_mb
+                    })
 
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
-
-                    # Save immediately
                     output_df.to_excel(output_path, index=False)
 
-                    # Go back to results
+                    # Go back
                     driver.back()
                     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
                     time.sleep(1)
@@ -130,7 +165,7 @@ for idx, row in input_df.iterrows():
                     time.sleep(2)
                     break
 
-            # Check for next button
+            # Pagination
             try:
                 next_button = driver.find_element(By.CSS_SELECTOR, "li.paginator__nav.btn.btn--round.ml--1 a")
                 driver.execute_script("arguments[0].click();", next_button)
@@ -139,7 +174,6 @@ for idx, row in input_df.iterrows():
                 print("⛔ No more pages.")
                 break
 
-        # Back to home page
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
