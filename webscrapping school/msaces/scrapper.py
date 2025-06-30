@@ -21,16 +21,30 @@ def extract_boletim_data(pdf_path, output_excel_path):
         entry = "(210)" + entry
         numero_pedido = re.search(r"\(210\)\s*(\S+)", entry)
         data_pedido = re.search(r"\(220\)\s*(\S+)", entry)
-        titular = re.search(r"\(730\)\s*(.+?)(?:\n|\()", entry)
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
         all_marca = re.findall(r"\(540\)\s*(.+?)(?:\n|\(5|\(3|\(7|\(6)", entry)
 
+        # ✅ Extract all lines under (730) until next field or footer junk
+        titular_text = ""
+        titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\))", entry, re.DOTALL)
+        if titular_block:
+            lines = titular_block.group(1).strip().splitlines()
+            collected = []
+            for line in lines:
+                line = line.strip()
+                if not line:
+                    continue
+                # Stop if footer or junk detected
+                if re.search(r"(BOLETIM|N\.º|de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
+                    break
+                if re.match(r"\(\d{3}\)", line):  # a new field
+                    break
+                collected.append(line)
+            titular_text = " ".join(collected)
+            titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)  # Remove PT, BR, etc.
+
         marca_text = all_marca[-1].strip() if all_marca else ""
         marca_imagem = all_marca[0].strip() if len(all_marca) > 1 else ""
-
-        # === Clean Titular (remove leading country code like "PT ", "BR ", etc.) ===
-        titular_text = titular.group(1).strip() if titular else ""
-        titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)
 
         parsed_data.append({
             "NumeroPedido": numero_pedido.group(1) if numero_pedido else "",
@@ -41,7 +55,14 @@ def extract_boletim_data(pdf_path, output_excel_path):
             "MarcaIM": marca_imagem if marca_imagem != marca_text else "",
         })
 
+    # ✅ Clean illegal Excel characters
+    def sanitize(value):
+        if isinstance(value, str):
+            return re.sub(r"[\x00-\x1F\x7F]", " ", value)
+        return value
+
     df = pd.DataFrame(parsed_data)
+    df = df.applymap(sanitize)
     df.to_excel(output_excel_path, index=False)
     print(f"✅ Extracted {len(df)} entries to Excel: {output_excel_path}")
 
