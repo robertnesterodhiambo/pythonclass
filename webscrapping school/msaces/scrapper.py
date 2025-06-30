@@ -26,7 +26,7 @@ def extract_boletim_data(pdf_path, output_excel_path):
 
         # ✅ Extract all lines under (730) until next field or footer junk
         titular_text = ""
-        titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\))", entry, re.DOTALL)
+        titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
         if titular_block:
             lines = titular_block.group(1).strip().splitlines()
             collected = []
@@ -34,8 +34,7 @@ def extract_boletim_data(pdf_path, output_excel_path):
                 line = line.strip()
                 if not line:
                     continue
-                # Stop if footer or junk detected
-                if re.search(r"(BOLETIM|N\.º|de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
+                if re.search(r"(BOLETIM|N\.º|\d+\s+de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
                     break
                 if re.match(r"\(\d{3}\)", line):  # a new field
                     break
