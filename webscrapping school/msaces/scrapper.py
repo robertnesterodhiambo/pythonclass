@@ -22,7 +22,16 @@ def extract_boletim_data(pdf_path, output_excel_path):
         numero_pedido = re.search(r"\(210\)\s*(\S+)", entry)
         data_pedido = re.search(r"\(220\)\s*(\S+)", entry)
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
-        all_marca = re.findall(r"\(540\)\s*(.+?)(?:\n|\(5|\(3|\(7|\(6)", entry)
+
+        # ✅ Extract (540) brand value exactly from its line
+        marca_text, marca_imagem = "", ""
+        marca_match = re.search(r"\(540\)\s*(.+?)(?=\n|\(\d{3}\))", entry, re.DOTALL)
+        if marca_match:
+            marca_value = marca_match.group(1).strip()
+            if re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
+                marca_imagem = marca_value
+            else:
+                marca_text = marca_value
 
         # ✅ Extract all lines under (730) until next field or footer junk
         titular_text = ""
@@ -36,14 +45,11 @@ def extract_boletim_data(pdf_path, output_excel_path):
                     continue
                 if re.search(r"(BOLETIM|N\.º|\d+\s+de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
                     break
-                if re.match(r"\(\d{3}\)", line):  # a new field
+                if re.match(r"\(\d{3}\)", line):  # another field
                     break
                 collected.append(line)
             titular_text = " ".join(collected)
             titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)  # Remove PT, BR, etc.
-
-        marca_text = all_marca[-1].strip() if all_marca else ""
-        marca_imagem = all_marca[0].strip() if len(all_marca) > 1 else ""
 
         parsed_data.append({
             "NumeroPedido": numero_pedido.group(1) if numero_pedido else "",
@@ -51,7 +57,7 @@ def extract_boletim_data(pdf_path, output_excel_path):
             "Titular": titular_text,
             "ClasseProdutos": classe_produtos.group(1) if classe_produtos else "",
             "Marca": marca_text,
-            "MarcaIM": marca_imagem if marca_imagem != marca_text else "",
+            "MarcaIM": marca_imagem,
         })
 
     # ✅ Clean illegal Excel characters
