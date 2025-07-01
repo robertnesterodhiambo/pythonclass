@@ -9,41 +9,69 @@ import requests
 import os
 import re
 import pandas as pd
-
-from pdfminer.high_level import extract_text
-from pdf2image import convert_from_path
-import pytesseract
+from pathlib import Path
+import fitz  # PyMuPDF
 
 
-def convert_pdf_to_txt_with_ocr(pdf_path, txt_path):
-    print("🔍 Converting PDF to text with OCR fallback...")
+def convert_pdf_to_txt_with_images(pdf_path, txt_path):
+    print("🔍 Extracting text and embedded images near (540)...")
 
-    try:
-        text = extract_text(pdf_path).strip()
-    except Exception as e:
-        print("⚠️ extract_text failed:", e)
-        text = ""
+    image_dir = Path("images")
+    image_dir.mkdir(exist_ok=True)
 
-    if len(text) < 100:
-        print("⚠️ Low text detected, applying OCR...")
-        ocr_text = []
-        images = convert_from_path(pdf_path)
-        for i, image in enumerate(images):
-            page_text = pytesseract.image_to_string(image, lang='eng')
-            ocr_text.append(f"\n\n--- PAGE {i + 1} ---\n\n" + page_text.strip())
-        text = "\n".join(ocr_text)
-    else:
-        print("✅ PDF text extracted normally.")
+    doc = fitz.open(pdf_path)
+    text_lines = []
+    image_counter = 1
+
+    for page in doc:
+        rect = page.rect
+        mid_x = rect.width / 2
+
+        # Extract left and right columns
+        left_text = page.get_text(clip=fitz.Rect(0, 0, mid_x, rect.height))
+        right_text = page.get_text(clip=fitz.Rect(mid_x, 0, rect.width, rect.height))
+
+        # Combine column text in reading order
+        lines = (left_text + "\n" + right_text).splitlines()
+        new_lines = []
+        image_inserted = False
+
+        image_list = page.get_images(full=True)
+
+        for line in lines:
+            if "(540)" in line and not image_inserted and image_list:
+                # Save first image on page
+                xref = image_list[0][0]
+                image_data = doc.extract_image(xref)
+                image_bytes = image_data["image"]
+                ext = image_data["ext"]
+                image_filename = image_dir / f"540_{image_counter}.{ext}"
+
+                with open(image_filename, "wb") as f:
+                    f.write(image_bytes)
+
+                # Inject image path right after the line
+                new_lines.append(line)
+                new_lines.append(f"[IMAGE: {image_filename.as_posix()}]")
+                image_inserted = True
+                image_counter += 1
+            else:
+                new_lines.append(line)
+
+        text_lines.append("\n".join(new_lines))
+
+    full_text = "\n\n".join(text_lines)
 
     with open(txt_path, "w", encoding="utf-8") as f:
-        f.write(text)
-    print(f"✅ Text written to: {txt_path}")
-    return text
+        f.write(full_text)
+
+    print(f"✅ Text saved: {txt_path}")
+    print(f"✅ Images saved to: {image_dir}")
+    return full_text
 
 
 def extract_boletim_data_from_string(pdf_text, output_excel_path):
     entries = re.split(r"\(210\)", pdf_text)[1:]
-
     parsed_data = []
 
     for entry in entries:
@@ -56,7 +84,9 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         marca_match = re.search(r"\(540\)\s*(.+?)(?=\n|\(\d{3}\))", entry, re.DOTALL)
         if marca_match:
             marca_value = marca_match.group(1).strip()
-            if re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
+            if "[IMAGE:" in marca_value:
+                marca_imagem = marca_value
+            elif re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
                 marca_imagem = marca_value
             else:
                 marca_text = marca_value
@@ -151,10 +181,10 @@ if download:
 else:
     print("Using existing PDF:", filename)
 
-# Step 1: Convert PDF to .txt
-convert_pdf_to_txt_with_ocr(filename, txt_filename)
+# Convert PDF to .txt and extract embedded images
+convert_pdf_to_txt_with_images(filename, txt_filename)
 
-# Step 2: Extract data from .txt
+# Extract structured fields from .txt
 extract_boletim_data_from_txt(txt_filename, excel_filename)
 
 driver.quit()
