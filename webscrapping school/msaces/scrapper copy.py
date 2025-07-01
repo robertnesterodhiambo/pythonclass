@@ -9,10 +9,39 @@ import requests
 import os
 import re
 import pandas as pd
-from pdfminer.high_level import extract_text
 
-def extract_boletim_data(pdf_path, output_excel_path):
-    pdf_text = extract_text(pdf_path)
+from pdfminer.high_level import extract_text
+from pdf2image import convert_from_path
+import pytesseract
+
+
+def convert_pdf_to_txt_with_ocr(pdf_path, txt_path):
+    print("🔍 Converting PDF to text with OCR fallback...")
+
+    try:
+        text = extract_text(pdf_path).strip()
+    except Exception as e:
+        print("⚠️ extract_text failed:", e)
+        text = ""
+
+    if len(text) < 100:
+        print("⚠️ Low text detected, applying OCR...")
+        ocr_text = []
+        images = convert_from_path(pdf_path)
+        for i, image in enumerate(images):
+            page_text = pytesseract.image_to_string(image, lang='eng')
+            ocr_text.append(f"\n\n--- PAGE {i + 1} ---\n\n" + page_text.strip())
+        text = "\n".join(ocr_text)
+    else:
+        print("✅ PDF text extracted normally.")
+
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(text)
+    print(f"✅ Text written to: {txt_path}")
+    return text
+
+
+def extract_boletim_data_from_string(pdf_text, output_excel_path):
     entries = re.split(r"\(210\)", pdf_text)[1:]
 
     parsed_data = []
@@ -23,7 +52,6 @@ def extract_boletim_data(pdf_path, output_excel_path):
         data_pedido = re.search(r"\(220\)\s*(\S+)", entry)
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
 
-        # ✅ Extract (540) brand value exactly from its line
         marca_text, marca_imagem = "", ""
         marca_match = re.search(r"\(540\)\s*(.+?)(?=\n|\(\d{3}\))", entry, re.DOTALL)
         if marca_match:
@@ -33,7 +61,6 @@ def extract_boletim_data(pdf_path, output_excel_path):
             else:
                 marca_text = marca_value
 
-        # ✅ Extract all lines under (730) until next field or footer junk
         titular_text = ""
         titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
         if titular_block:
@@ -45,11 +72,11 @@ def extract_boletim_data(pdf_path, output_excel_path):
                     continue
                 if re.search(r"(BOLETIM|N\.º|\d+\s+de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
                     break
-                if re.match(r"\(\d{3}\)", line):  # another field
+                if re.match(r"\(\d{3}\)", line):
                     break
                 collected.append(line)
             titular_text = " ".join(collected)
-            titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)  # Remove PT, BR, etc.
+            titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)
 
         parsed_data.append({
             "NumeroPedido": numero_pedido.group(1) if numero_pedido else "",
@@ -60,7 +87,6 @@ def extract_boletim_data(pdf_path, output_excel_path):
             "MarcaIM": marca_imagem,
         })
 
-    # ✅ Clean illegal Excel characters
     def sanitize(value):
         if isinstance(value, str):
             return re.sub(r"[\x00-\x1F\x7F]", " ", value)
@@ -70,6 +96,12 @@ def extract_boletim_data(pdf_path, output_excel_path):
     df = df.applymap(sanitize)
     df.to_excel(output_excel_path, index=False)
     print(f"✅ Extracted {len(df)} entries to Excel: {output_excel_path}")
+
+
+def extract_boletim_data_from_txt(txt_path, output_excel_path):
+    with open(txt_path, "r", encoding="utf-8") as f:
+        pdf_text = f.read()
+    extract_boletim_data_from_string(pdf_text, output_excel_path)
 
 
 # === Selenium logic to detect/download PDF ===
@@ -94,6 +126,7 @@ time.sleep(1)
 pdf_url = link.get_attribute("href")
 bulletin_title = link.text.strip().replace(" ", "_").replace(":", "-")
 filename = f"{bulletin_title}.pdf"
+txt_filename = f"{bulletin_title}.txt"
 excel_filename = f"{bulletin_title}.xlsx"
 
 existing_pdfs = [f for f in os.listdir() if f.endswith(".pdf")]
@@ -109,7 +142,6 @@ else:
     print(f"[INFO] New PDF '{filename}' differs from existing file(s): {existing_pdfs}")
     download = True
 
-# Download or reuse PDF
 if download:
     print("Downloading PDF...")
     response = requests.get(pdf_url)
@@ -119,7 +151,10 @@ if download:
 else:
     print("Using existing PDF:", filename)
 
-# Extract to Excel regardless
-extract_boletim_data(filename, excel_filename)
+# Step 1: Convert PDF to .txt
+convert_pdf_to_txt_with_ocr(filename, txt_filename)
+
+# Step 2: Extract data from .txt
+extract_boletim_data_from_txt(txt_filename, excel_filename)
 
 driver.quit()
