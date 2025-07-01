@@ -112,11 +112,11 @@ for idx, row in input_df.iterrows():
                         full_address = morada_element.text.strip()
 
                         # Extract full postal code + city name
-                        match = re.search(r'\b\d{4}-\d{3}(?:\s+\w[\w\s\-]*)?', full_address)
+                        match = re.search(r'\d{4}-\d{3}(.*?)$', full_address)
                         codigo_postal = match.group().strip() if match else ""
 
                         # Extract Morada before postal code
-                        morada = full_address.split(codigo_postal)[0].strip(', ') if codigo_postal else full_address
+                        morada = full_address.split(match.group())[0].strip(', ') if match else full_address
                     except:
                         morada = ""
                         codigo_postal = ""
