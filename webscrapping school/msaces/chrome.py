@@ -64,14 +64,15 @@ driver.get("https://www.racius.com/")
 
 # Iterate rows
 for idx, row in input_df.iterrows():
-    name = str(row['Titular']).strip()
-    print(f"\n🔍 Searching for: {name}")
+    name_full = str(row['Titular']).strip()
+    titular_full_lower = name_full.lower()
+    print(f"\n🔍 Searching for: {name_full}")
 
     try:
         # Search
         search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
         search_input.clear()
-        search_input.send_keys(name)
+        search_input.send_keys(name_full)
         search_input.send_keys(Keys.ENTER)
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.row.results")))
         time.sleep(2)
@@ -83,10 +84,14 @@ for idx, row in input_df.iterrows():
             try:
                 name_tags = div.find_elements(By.CSS_SELECTOR, "p.results__name")
                 if not name_tags:
-                    continue  # Skip if no name tag found
-                name_text = name_tags[0].text.strip().lower()
+                    continue
+                name_text = name_tags[0].text.strip()
 
-                if name_text == name.lower():
+                # Clean website name by removing after comma, period, or dash
+                website_clean = re.split(r'[,\.-]', name_text)[0].strip().lower()
+
+                # Match if website_clean is in Titular full name
+                if website_clean and website_clean in titular_full_lower:
                     matched = True
                     result_link = div.find_element(By.CSS_SELECTOR, "a.results__col-link")
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result_link)
@@ -111,11 +116,8 @@ for idx, row in input_df.iterrows():
                         morada_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.t--d-blue")))
                         full_address = morada_element.text.strip()
 
-                        # Extract full postal code + city name
                         match = re.search(r'\d{4}-\d{3}(.*?)$', full_address)
                         codigo_postal = match.group().strip() if match else ""
-
-                        # Extract Morada before postal code
                         morada = full_address.split(match.group())[0].strip(', ') if match else full_address
                     except:
                         morada = ""
@@ -167,7 +169,7 @@ for idx, row in input_df.iterrows():
                 continue
 
         if not matched:
-            print(f"❌ No exact match for: {name}")
+            print(f"❌ No exact match for: {name_full}")
             output_row = row.to_dict()
             for col in extra_cols:
                 output_row[col] = "Not Found"
@@ -178,7 +180,7 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
     except Exception as e:
-        print(f"🚫 Error with search '{name}': {e}")
+        print(f"🚫 Error with search '{name_full}': {e}")
         driver.get("https://www.racius.com/")
         time.sleep(2)
 
