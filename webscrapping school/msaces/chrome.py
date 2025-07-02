@@ -11,6 +11,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
+from unidecode import unidecode  # ✅ Import unidecode
 
 # Auto-install ChromeDriver
 chromedriver_autoinstaller.install()
@@ -65,7 +66,6 @@ driver.get("https://www.racius.com/")
 # Iterate rows
 for idx, row in input_df.iterrows():
     name_full = str(row['Titular']).strip()
-    titular_full_lower = name_full.lower()
     print(f"\n🔍 Searching for: {name_full}")
 
     try:
@@ -87,11 +87,14 @@ for idx, row in input_df.iterrows():
                     continue
                 name_text = name_tags[0].text.strip()
 
-                # Clean website name by removing after comma, period, or dash
-                website_clean = re.split(r'[,\.-]', name_text)[0].strip().lower()
+                # ✅ Normalize and clean both Titular and Website text
+                titular_cleaned = re.sub(r'[,.]', '', name_full).strip().lower()
+                titular_full_normalized = unidecode(titular_cleaned)
 
-                # Match if website_clean is in Titular full name
-                if website_clean and website_clean in titular_full_lower:
+                website_cleaned = re.split(r'[,\.-]', name_text)[0].strip().lower()
+                website_clean_normalized = unidecode(website_cleaned)
+
+                if website_clean_normalized and website_clean_normalized in titular_full_normalized:
                     matched = True
                     result_link = div.find_element(By.CSS_SELECTOR, "a.results__col-link")
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result_link)
