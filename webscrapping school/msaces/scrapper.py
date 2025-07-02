@@ -91,15 +91,25 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
 
         marca_text, marca_imagem = "", ""
-        marca_match = re.search(r"\(540\)\s*(.+?)(?=\n|\(\d{3}\))", entry, re.DOTALL)
+        marca_match = re.search(r"\(540\)(.*?)(?=\(\d{3}\)|\n{2,}|$)", entry, re.DOTALL)
         if marca_match:
-            marca_value = marca_match.group(1).strip()
-            if "[IMAGE:" in marca_value:
-                marca_imagem = marca_value
-            elif re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
-                marca_imagem = marca_value
+            marca_block = marca_match.group(1).strip()
+            marca_lines = [
+                line.strip()
+                for line in marca_block.splitlines()
+                if line.strip()
+                and "BOLETIM DA PROPRIEDADE INDUSTRIAL" not in line.upper()
+                and "E INDUSTRIAL N.º" not in line.upper()
+            ]
+
+            if marca_lines and marca_lines[0].startswith("[IMAGE:"):
+                marca_imagem = marca_lines[0]  # Just the image line
             else:
-                marca_text = marca_value
+                marca_value = " ".join(marca_lines)
+                if re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
+                    marca_imagem = marca_value
+                else:
+                    marca_text = marca_value
 
         titular_text = ""
         titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
@@ -114,6 +124,10 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
                     break
                 if re.match(r"\(\d{3}\)", line):
                     break
+                if "BOLETIM DA PROPRIEDADE INDUSTRIAL" in line.upper():
+                    continue
+                if "E INDUSTRIAL N.º" in line.upper():
+                    continue
                 collected.append(line)
             titular_text = " ".join(collected)
             titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)
