@@ -890,7 +890,7 @@ DIGITAL.
 E DESIGN GRÁFICO;  SERVIÇOS DE DESIGN.  
 (591) PRETO, BRANCO, VERDE. 
 (540)  
-[IMAGE: images/540_1.jpeg]
+[IMAGE: images/746235.jpeg]
  
  
 (531) 26.1.3 ; 26.11.8 
@@ -1071,7 +1071,7 @@ MNA
 (511) 12 VEÍCULOS.  
 (591)  
 (540)  
-[IMAGE: images/540_2.jpeg]
+[IMAGE: images/746978.jpeg]
 KAIZEN 
  
  
@@ -1362,7 +1362,7 @@ DA SILVA
 (511) 12 AUTOMÓVEIS.  
 (591)  
 (540)  
-[IMAGE: images/540_3.jpeg]
+[IMAGE: images/747113.jpeg]
 KN MOTORS 
  
  
@@ -1516,7 +1516,7 @@ PARA
 PESSOAS.  
 (591)  
 (540)  
-[IMAGE: images/540_4.jpeg]
+[IMAGE: images/747642.jpeg]
 SAÚDE PRIME 
  
  
@@ -1674,7 +1674,7 @@ DIVERTIMENTO;
 ATIVIDADES DESPORTIVAS E CULTURAIS.  
 (591)  
 (540)  
-[IMAGE: images/540_5.jpeg]
+[IMAGE: images/747725.jpeg]
 OURO DA CASA 
  
  
@@ -1894,7 +1894,7 @@ SERVIÇOS CIENTÍFICOS E TECNOLÓGICOS.
 BOLETIM DA PROPRIEDADE
 (591)  
 (540)  
-[IMAGE: images/540_6.jpeg]
+[IMAGE: images/747731.jpeg]
 HACKAI 
  
  
@@ -2065,7 +2065,7 @@ ALCOÓLICAS;  PREPARAÇÕES ALCOÓLICAS PARA
 FAZER BEBIDAS.  
 (591)  
 (540)  
-[IMAGE: images/540_7.jpeg]
+[IMAGE: images/747743.jpeg]
 AMEZTOY & ALMEIDA 
 CANADA DA MOURA 
  
@@ -2237,7 +2237,7 @@ RETALHO RELATIVOS A DOÇARIAS;  SERVIÇOS DE
 VENDA POR GROSSO RELATIVOS A DOÇARIAS.  
 (591)  
 (540)  
-[IMAGE: images/540_8.jpeg]
+[IMAGE: images/747751.jpeg]
  
  
 (531) 27.5.17 
@@ -2597,7 +2597,7 @@ LARGA,
 WIRELESS E SERVIÇOS ONLINE.  
 (591)  
 (540)  
-[IMAGE: images/540_9.jpeg]
+[IMAGE: images/747752.jpeg]
 CABRA DO MONTE 
  
  
@@ -2848,7 +2848,7 @@ DE
 CHEGADAS E PARTIDAS].  
 (591)  
 (540)  
-[IMAGE: images/540_10.jpeg]
+[IMAGE: images/747755.jpeg]
 ALENTEJO UNVEILED 
  
  
@@ -3096,7 +3096,7 @@ SERVIÇOS JURÍDICOS RELACIONADOS COM A
 CONDUÇÃO DOS NEGÓCIOS.  
 (591)  
 (540)  
-[IMAGE: images/540_11.jpeg]
+[IMAGE: images/747757.jpeg]
 PARABELLUM 
  
  
@@ -3319,7 +3319,7 @@ EMPRESARIAL;
 SERVIÇOS DE ENSINO À DISTÂNCIA VIA ONLINE.  
 (591)  
 (540)  
-[IMAGE: images/540_12.jpeg]
+[IMAGE: images/747760.jpeg]
  
  
 (531) 5.5.16 
@@ -3518,7 +3518,7 @@ HAMBURGERS NO PÃO;  HAMBÚRGUERES DE
 QUEIJO [SANDUÍCHES];  HAMBÚRGUERES NO PÃO.  
 (591)  
 (540)  
-[IMAGE: images/540_13.jpeg]
+[IMAGE: images/747766.jpeg]
  
  
 (531) 3.7.3 ; 3.7.25 ; 8.7.10 ; 11.3.9 
@@ -3665,7 +3665,7 @@ SERVIÇOS DE DEMOLIÇÃO;  SUPERVISÃO DE
 DEMOLIÇÃO DE CONSTRUÇÕES.  
 (591) R: 0 G:0 B:0; R: 255 G: 255 B: 255; R: 255 G: 194 B: 14. 
 (540)  
-[IMAGE: images/540_14.jpeg]
+[IMAGE: images/747772.jpeg]
  
  
 (531) 26.4.5 ; 26.4.18 ; 27.5.4 ; 27.5.17 ; 29.1.2 
@@ -3788,7 +3788,7 @@ RESTAURANTES TAKE AWAY;  SERVIÇOS DE
 RESTAURANTES TAKE-AWAY.  
 (591)  
 (540)  
-[IMAGE: images/540_15.jpeg]
+[IMAGE: images/747837.jpeg]
  
  
 (531) 3.1.1 ; 3.1.25 
@@ -4332,7 +4332,7 @@ CONCEITOS DE MEIOS DE COMUNICAÇÃO E DE
 PUBLICIDADE.  
 (591)  
 (540)  
-[IMAGE: images/540_16.jpeg]
+[IMAGE: images/747978.jpeg]
  
  
 (531) 1.1.3 ; 2.1.23 ; 5.1.5 ; 5.13.4 ; 18.3.2 ; 24.1.5 ; 24.1.99 ; 24.9.2 ; 
@@ -5203,7 +5203,7 @@ EXPLORAÇÃO TURÍSTICA. CAE 68110; 68321; 41000;
 71110; 71120; 79900 
 (591)  
 (540)  
-[IMAGE: images/540_17.jpeg]
+[IMAGE: images/58204.jpeg]
  
  
 (531) 1.3.2 ; 26.11.13 

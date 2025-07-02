@@ -22,8 +22,16 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
     doc = fitz.open(pdf_path)
     text_lines = []
     image_counter = 1
+    numero_pedido_for_page = {}
 
-    for page in doc:
+    # Map each page to its first (210) NumeroPedido if available
+    for i, page in enumerate(doc):
+        text = page.get_text()
+        match = re.search(r"\(210\)\s*(\S+)", text)
+        if match:
+            numero_pedido_for_page[i] = match.group(1)
+
+    for i, page in enumerate(doc):
         rect = page.rect
         mid_x = rect.width / 2
 
@@ -45,7 +53,9 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
                 image_data = doc.extract_image(xref)
                 image_bytes = image_data["image"]
                 ext = image_data["ext"]
-                image_filename = image_dir / f"540_{image_counter}.{ext}"
+
+                numero_pedido = numero_pedido_for_page.get(i, f"540_{image_counter}")
+                image_filename = image_dir / f"{numero_pedido}.jpeg"
 
                 with open(image_filename, "wb") as f:
                     f.write(image_bytes)
