@@ -91,7 +91,12 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
 
         marca_text, marca_imagem = "", ""
-        marca_match = re.search(r"\(540\)\s*(.+?)(?=\n|\(\d{3}\))", entry, re.DOTALL)
+        # Updated Marca regex to capture multiline until next field or footer
+        marca_match = re.search(
+            r"\(540\)\s*((?:.|\n)*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+|$)",
+            entry,
+            re.IGNORECASE
+        )
         if marca_match:
             marca_value = marca_match.group(1).strip()
 
@@ -101,11 +106,18 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
                 marca_value = ""
 
             if "[IMAGE:" in marca_value:
-                marca_imagem = marca_value
-            elif re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
-                marca_imagem = marca_value
+                # Split image and any text after it
+                image_part_match = re.search(r"(\[IMAGE:[^\]]+\])\s*(.*)", marca_value, re.DOTALL)
+                if image_part_match:
+                    marca_imagem = image_part_match.group(1).strip()
+                    text_after_image = image_part_match.group(2).strip()
+                    marca_text = text_after_image if text_after_image else ""
+                else:
+                    marca_imagem = marca_value
+                    marca_text = ""
             else:
                 marca_text = marca_value
+                marca_imagem = ""
 
         titular_text = ""
         titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
