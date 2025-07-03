@@ -14,64 +14,75 @@ import fitz  # PyMuPDF
 
 
 def convert_pdf_to_txt_with_images(pdf_path, txt_path):
-    print("🔍 Extracting text and embedded images near (540)...")
+    print("🔍 Extracting text and images per NumeroPedido...")
 
     image_dir = Path("images")
     image_dir.mkdir(exist_ok=True)
 
     doc = fitz.open(pdf_path)
     text_lines = []
-    image_counter = 1
-    numero_pedido_for_page = {}
+    numero_pedido_map = {}
 
-    # Map each page to its first (210) NumeroPedido if available
-    for i, page in enumerate(doc):
-        text = page.get_text()
-        match = re.search(r"\(210\)\s*(\S+)", text)
-        if match:
-            numero_pedido_for_page[i] = match.group(1)
+    for page_num, page in enumerate(doc):
+        text = page.get_text("text")
+        blocks = re.split(r"\(210\)", text)
+        if len(blocks) <= 1:
+            continue  # no entries
 
-    for i, page in enumerate(doc):
-        rect = page.rect
-        mid_x = rect.width / 2
+        blocks = blocks[1:]  # skip header
+        page_entries = ["(210)" + block for block in blocks]
 
-        # Extract left and right columns
-        left_text = page.get_text(clip=fitz.Rect(0, 0, mid_x, rect.height))
-        right_text = page.get_text(clip=fitz.Rect(mid_x, 0, rect.width, rect.height))
+        for block in page_entries:
+            lines = block.splitlines()
+            entry_lines = []
+            numero_pedido = ""
+            images_added = []
 
-        # Combine column text in reading order
-        lines = (left_text + "\n" + right_text).splitlines()
-        new_lines = []
-        image_inserted = False
+            for i, line in enumerate(lines):
+                if "(210)" in line:
+                    match = re.search(r"\(210\)\s*(\S+)", line)
+                    if match:
+                        numero_pedido = match.group(1)
+                    entry_lines.append(line)
 
-        image_list = page.get_images(full=True)
+                elif "(540)" in line:
+                    entry_lines.append(line)
+                    marca_text_lines = []
+                    j = i + 1
+                    while j < len(lines) and not re.match(r"\(\d{3}\)", lines[j]):
+                        marca_text_lines.append(lines[j].strip())
+                        j += 1
 
-        for line in lines:
-            if "(540)" in line and not image_inserted and image_list:
-                # Save first image on page
-                xref = image_list[0][0]
-                image_data = doc.extract_image(xref)
-                image_bytes = image_data["image"]
-                ext = image_data["ext"]
+                    # Clean and filter Marca text
+                    marca_text_lines = [
+                        ln for ln in marca_text_lines
+                        if ln and "BOLETIM" not in ln.upper()
+                    ]
+                    entry_lines.extend(marca_text_lines)
 
-                numero_pedido = numero_pedido_for_page.get(i, f"540_{image_counter}")
-                image_filename = image_dir / f"{numero_pedido}.jpeg"
+                    # Extract images on this page
+                    img_list = page.get_images(full=True)
+                    for idx, img in enumerate(img_list):
+                        xref = img[0]
+                        image_data = doc.extract_image(xref)
+                        ext = image_data["ext"]
+                        img_bytes = image_data["image"]
+                        img_path = image_dir / f"{numero_pedido}.{ext}"
+                        with open(img_path, "wb") as f:
+                            f.write(img_bytes)
+                        entry_lines.append(f"[IMAGE: {img_path.as_posix()}]")
+                        images_added.append(img_path.as_posix())
+                        break  # only one per NumeroPedido
 
-                with open(image_filename, "wb") as f:
-                    f.write(image_bytes)
+                    break  # skip to next block after (540)
 
-                # Inject image path right after the line
-                new_lines.append(line)
-                new_lines.append(f"[IMAGE: {image_filename.as_posix()}]")
-                image_inserted = True
-                image_counter += 1
-            else:
-                new_lines.append(line)
+                else:
+                    entry_lines.append(line)
 
-        text_lines.append("\n".join(new_lines))
+            numero_pedido_map[numero_pedido] = "\n".join(entry_lines)
+            text_lines.append("\n".join(entry_lines))
 
     full_text = "\n\n".join(text_lines)
-
     with open(txt_path, "w", encoding="utf-8") as f:
         f.write(full_text)
 
@@ -94,22 +105,18 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         marca_match = re.search(r"\(540\)(.*?)(?=\(\d{3}\)|\n{2,}|$)", entry, re.DOTALL)
         if marca_match:
             marca_block = marca_match.group(1).strip()
-            marca_lines = [
+            marca_lines = marca_block.splitlines()
+            img_lines = [line for line in marca_lines if line.strip().startswith("[IMAGE:")]
+            text_lines = [
                 line.strip()
-                for line in marca_block.splitlines()
+                for line in marca_lines
                 if line.strip()
+                and not line.strip().startswith("[IMAGE:")
                 and "BOLETIM DA PROPRIEDADE INDUSTRIAL" not in line.upper()
                 and "E INDUSTRIAL N.º" not in line.upper()
             ]
-
-            if marca_lines and marca_lines[0].startswith("[IMAGE:"):
-                marca_imagem = marca_lines[0]  # Just the image line
-            else:
-                marca_value = " ".join(marca_lines)
-                if re.search(r"(imagem|figura|logo|gráfico)", marca_value, re.IGNORECASE) or not re.search(r"[a-zA-Z]", marca_value):
-                    marca_imagem = marca_value
-                else:
-                    marca_text = marca_value
+            marca_text = " ".join(text_lines)
+            marca_imagem = "\n".join(img_lines)
 
         titular_text = ""
         titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
@@ -124,13 +131,8 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
                     break
                 if re.match(r"\(\d{3}\)", line):
                     break
-                if "BOLETIM DA PROPRIEDADE INDUSTRIAL" in line.upper():
-                    continue
-                if "E INDUSTRIAL N.º" in line.upper():
-                    continue
                 collected.append(line)
             titular_text = " ".join(collected)
-            titular_text = re.sub(r"^[A-Z]{2}\s+", "", titular_text)
 
         parsed_data.append({
             "NumeroPedido": numero_pedido.group(1) if numero_pedido else "",
