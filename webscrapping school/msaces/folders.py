@@ -51,10 +51,13 @@ if os.path.exists(excel_path):
     # === Step 4: Process rows and generate per-row PDFs ===
     df = pd.read_excel(excel_path)
 
-    # Drop rows with any 'Not Found' in any cell
+    # Step 4.1: Drop rows with any 'Not Found' in any cell
     df_cleaned = df[~df.apply(lambda row: row.astype(str).str.contains("Not Found").any(), axis=1)]
 
-    # Generate PDF from each row
+    # Step 4.2: Drop rows with missing values only in 'Morada' and 'CodigoPostal'
+    df_cleaned = df_cleaned.dropna(subset=['Morada', 'CodigoPostal'])
+
+    # Generate PDF from each cleaned row
     for _, row in df_cleaned.iterrows():
         pdf = FPDF()
         pdf.add_page()
