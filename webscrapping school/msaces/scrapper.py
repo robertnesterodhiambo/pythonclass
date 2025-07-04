@@ -39,6 +39,19 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
         new_lines = []
 
         for line in lines:
+            line = line.strip()
+
+            # Skip empty or unwanted lines
+            if not line:
+                continue
+            if (
+                "BOLETIM DA PROPRIEDADE INDUSTRIAL" in line.upper() or
+                re.match(r"^\d+\s+de\s+\d+$", line) or
+                re.match(r"^E\s+INDUSTRIAL$", line) or
+                re.search(r"N\.º\s+\d{4}/\d{2}/\d{2}", line)
+            ):
+                continue
+
             new_lines.append(line)
 
         text_lines.append("\n".join(new_lines))
@@ -63,7 +76,6 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
 
         marca_text = ""
-        # Updated Marca regex to capture multiline until next field or footer
         marca_match = re.search(
             r"\(540\)\s*((?:.|\n)*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+|$)",
             entry,
@@ -71,12 +83,9 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         )
         if marca_match:
             marca_value = marca_match.group(1).strip()
-
-            # Filter out header/footer-like lines
             header_footer_pattern = re.compile(r"^E\s+INDUSTRIAL\s+N\.º\s+\d{4}/\d{2}/\d{2}$")
             if header_footer_pattern.match(marca_value):
                 marca_value = ""
-
             marca_text = marca_value
 
         titular_text = ""
@@ -168,7 +177,7 @@ if download:
 else:
     print("Using existing PDF:", filename)
 
-# Convert PDF to .txt (text only, no image saving)
+# Convert PDF to .txt (filtered clean text only)
 convert_pdf_to_txt_with_images(filename, txt_filename)
 
 # Extract structured fields from .txt
