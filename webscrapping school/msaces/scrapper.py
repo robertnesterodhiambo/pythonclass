@@ -9,19 +9,14 @@ import requests
 import os
 import re
 import pandas as pd
-from pathlib import Path
 import fitz  # PyMuPDF
 
 
 def convert_pdf_to_txt_with_images(pdf_path, txt_path):
-    print("🔍 Extracting text and embedded images near (540)...")
-
-    image_dir = Path("images")
-    image_dir.mkdir(exist_ok=True)
+    print("🔍 Extracting text from PDF...")
 
     doc = fitz.open(pdf_path)
     text_lines = []
-    image_counter = 1
     numero_pedido_for_page = {}
 
     # Map each page to its first (210) NumeroPedido if available
@@ -42,31 +37,9 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
         # Combine column text in reading order
         lines = (left_text + "\n" + right_text).splitlines()
         new_lines = []
-        image_inserted = False
-
-        image_list = page.get_images(full=True)
 
         for line in lines:
-            if "(540)" in line and not image_inserted and image_list:
-                # Save first image on page
-                xref = image_list[0][0]
-                image_data = doc.extract_image(xref)
-                image_bytes = image_data["image"]
-                ext = image_data["ext"]
-
-                numero_pedido = numero_pedido_for_page.get(i, f"540_{image_counter}")
-                image_filename = image_dir / f"{numero_pedido}.jpeg"
-
-                with open(image_filename, "wb") as f:
-                    f.write(image_bytes)
-
-                # Inject image path right after the line
-                new_lines.append(line)
-                new_lines.append(f"[IMAGE: {image_filename.as_posix()}]")
-                image_inserted = True
-                image_counter += 1
-            else:
-                new_lines.append(line)
+            new_lines.append(line)
 
         text_lines.append("\n".join(new_lines))
 
@@ -76,7 +49,6 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
         f.write(full_text)
 
     print(f"✅ Text saved: {txt_path}")
-    print(f"✅ Images saved to: {image_dir}")
     return full_text
 
 
@@ -90,7 +62,7 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         data_pedido = re.search(r"\(220\)\s*(\S+)", entry)
         classe_produtos = re.search(r"\(511\)\s*(\d+)", entry)
 
-        marca_text, marca_imagem = "", ""
+        marca_text = ""
         # Updated Marca regex to capture multiline until next field or footer
         marca_match = re.search(
             r"\(540\)\s*((?:.|\n)*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+|$)",
@@ -105,19 +77,7 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
             if header_footer_pattern.match(marca_value):
                 marca_value = ""
 
-            if "[IMAGE:" in marca_value:
-                # Split image and any text after it
-                image_part_match = re.search(r"(\[IMAGE:[^\]]+\])\s*(.*)", marca_value, re.DOTALL)
-                if image_part_match:
-                    marca_imagem = image_part_match.group(1).strip()
-                    text_after_image = image_part_match.group(2).strip()
-                    marca_text = text_after_image if text_after_image else ""
-                else:
-                    marca_imagem = marca_value
-                    marca_text = ""
-            else:
-                marca_text = marca_value
-                marca_imagem = ""
+            marca_text = marca_value
 
         titular_text = ""
         titular_block = re.search(r"\(730\)(.*?)(?=\(\d{3}\)|BOLETIM|N\.º|\d+\s+de\s+\d+)", entry, re.DOTALL | re.IGNORECASE)
@@ -142,7 +102,6 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
             "Titular": titular_text,
             "ClasseProdutos": classe_produtos.group(1) if classe_produtos else "",
             "Marca": marca_text,
-            "MarcaIM": marca_imagem,
         })
 
     def sanitize(value):
@@ -209,7 +168,7 @@ if download:
 else:
     print("Using existing PDF:", filename)
 
-# Convert PDF to .txt and extract embedded images
+# Convert PDF to .txt (text only, no image saving)
 convert_pdf_to_txt_with_images(filename, txt_filename)
 
 # Extract structured fields from .txt
