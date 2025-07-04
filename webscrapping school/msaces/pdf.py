@@ -1,6 +1,7 @@
 import os
+import re
 import pandas as pd
-import pdfkit  # Make sure wkhtmltopdf is installed
+import pdfkit
 
 # === Step 1: Find latest Excel file ===
 excel_folder = 'excel'
@@ -19,10 +20,15 @@ df = pd.read_excel(latest_file, usecols=columns_needed)
 with open("Report.html", "r", encoding="utf-8") as file:
     base_html = file.read()
 
-# === Step 4: Generate PDF per row ===
+# === Step 4: Setup output folder and wkhtmltopdf config ===
 output_dir = "PDF"
 os.makedirs(output_dir, exist_ok=True)
 
+# Specify path to wkhtmltopdf binary
+path_wkhtmltopdf = "/usr/bin/wkhtmltopdf"  # Adjust if needed
+config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+
+# === Step 5: Generate PDF per row ===
 for idx, row in df.iterrows():
     filled_html = base_html
     values = [
@@ -42,10 +48,15 @@ for idx, row in df.iterrows():
         row.get("MontanteMB", "")
     ]
 
-    # Replace each #Name? occurrence with a value
+    # Replace each #Name? with actual value
     for value in values:
         filled_html = filled_html.replace("#Name?", str(value), 1)
 
-    output_path = os.path.join(output_dir, f"filled_form_{idx + 1}.pdf")
-    pdfkit.from_string(filled_html, output_path)
+    # Generate a safe filename from NumeroPedido
+    numero_pedido = str(row.get("NumeroPedido", f"pedido_{idx+1}")).strip()
+    safe_name = re.sub(r'[^\w\-_.]', '_', numero_pedido)  # sanitize filename
+    output_path = os.path.join(output_dir, f"{safe_name}.pdf")
+
+    # Convert to PDF
+    pdfkit.from_string(filled_html, output_path, configuration=config)
     print(f"Generated: {output_path}")
