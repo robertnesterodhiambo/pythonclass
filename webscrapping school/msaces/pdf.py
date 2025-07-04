@@ -12,7 +12,8 @@ print(f"Using latest Excel file: {latest_file}")
 # === Step 2: Read Excel file ===
 columns_needed = [
     "NumeroPedido", "Titular", "Morada", "CodigoPostal", "ClasseProdutos",
-    "ValorImportancia", "IVA", "ValorTotal", "MontanteMB", "ReferenciaMB", "EntidadeMB"
+    "ValorImportancia", "IVA", "ValorTotal", "MontanteMB", "ReferenciaMB", "EntidadeMB",
+    "DataPedido", "ValidadeInicio"
 ]
 df = pd.read_excel(latest_file, usecols=columns_needed)
 
@@ -36,10 +37,10 @@ for idx, row in df.iterrows():
         row.get("Morada", ""),
         row.get("CodigoPostal", ""),
         row.get("NumeroPedido", ""),
-        "",  # Data do Pedido de Registo
+        row.get("DataPedido", ""),       # Data do Pedido de Registo
         row.get("ClasseProdutos", ""),
-        "",  # Validade da Vigilância
-        "",  # Data
+        row.get("ValidadeInicio", ""),   # Validade da Vigilância
+        row.get("DataPedido", ""),       # Data
         row.get("ValorImportancia", ""),
         row.get("IVA", ""),
         row.get("ValorTotal", ""),

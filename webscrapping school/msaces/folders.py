@@ -3,7 +3,7 @@ import re
 import shutil
 from datetime import datetime
 import pandas as pd
-from fpdf import FPDF
+from fpdf import FPDF  # still imported but not used, you can remove if you want
 
 # === Step 1: Setup paths ===
 source_folder = '.'
@@ -48,7 +48,7 @@ if os.path.exists(excel_path):
     shutil.copy2(excel_path, excel_target_path)
     print(f"Copied Excel '{excel_name}' to '{excel_target_path}'")
 
-    # === Step 4: Process rows and generate per-row PDFs ===
+    # === Step 4: Process rows (no PDF generation) ===
     df = pd.read_excel(excel_path)
 
     # Step 4.1: Drop rows with any 'Not Found' in any cell
@@ -57,22 +57,10 @@ if os.path.exists(excel_path):
     # Step 4.2: Drop rows with missing values only in 'Morada' and 'CodigoPostal'
     df_cleaned = df_cleaned.dropna(subset=['Morada', 'CodigoPostal'])
 
-    # Generate PDF from each cleaned row
-    for _, row in df_cleaned.iterrows():
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_auto_page_break(auto=True, margin=15)
-        pdf.set_font("Arial", size=12)
-
-        for col in df.columns:
-            value = str(row[col])
-            pdf.multi_cell(0, 10, f"{col}: {value}", border=0)
-
-        numero_pedido = str(row['NumeroPedido'])
-        row_pdf_path = os.path.join(row_pdf_folder, f"{numero_pedido}.pdf")
-        pdf.output(row_pdf_path)
-
-    print(f"Generated {len(df_cleaned)} row PDFs in '{row_pdf_folder}'")
+    # Save cleaned DataFrame to Excel file named with today’s date in excel folder
+    cleaned_excel_path = os.path.join(excel_folder, f"{current_date_str}.xlsx")
+    df_cleaned.to_excel(cleaned_excel_path, index=False)
+    print(f"Saved cleaned DataFrame to '{cleaned_excel_path}'")
 
 else:
     print("Excel file 'racius_links_output.xlsx' not found.")
