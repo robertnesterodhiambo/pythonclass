@@ -2,6 +2,7 @@ import os
 import glob
 import pandas as pd
 import fitz  # PyMuPDF
+import numpy as np
 
 # === Step 1: Locate Template PDF ===
 pdf_path = "Template.pdf"
@@ -32,6 +33,9 @@ for idx, row in df.iterrows():
 
         # Helper to insert text after label
         def insert_after_label(label, value, skip_line=False, dollar_sign=False):
+            if pd.isna(value):
+                print(f"Skipping '{label}' insertion because value is NaN")
+                return
             instances = page.search_for(label)
             for inst in instances:
                 x1, y1, x2, y2 = inst
@@ -70,6 +74,39 @@ for idx, row in df.iterrows():
 
         # Insert TOTAL: beneath label, skip line, with dollar sign
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
+
+        # === Insert Marca values along given coordinates ===
+        coords_list = [
+            (42.47, 393.80),
+            (48.96, 393.80),
+            (63.95, 393.80),
+            (72.95, 393.80),
+            (93.43, 394.80),
+            (148.89, 398.30),
+            (213.35, 398.30),
+            (252.32, 396.30),
+            (286.29, 396.30),
+        ]
+
+        marca_value = row['Marca']
+        if not pd.isna(marca_value):
+            marca_values = str(marca_value).split(',')
+            if len(marca_values) > len(coords_list):
+                print(f"Warning: Too many Marca values ({len(marca_values)}), only first {len(coords_list)} will be inserted.")
+
+            for i, (x, y) in enumerate(coords_list):
+                if i < len(marca_values):
+                    text_value = marca_values[i].strip()
+                    page.insert_text(
+                        (x, y),
+                        text_value,
+                        fontname="helvetica-bold",
+                        fontsize=20,
+                        color=(0, 0, 0)
+                    )
+                    print(f"Inserted Marca value '{text_value}' at ({x}, {y})")
+        else:
+            print("Marca is missing or NaN; skipping Marca insertion.")
 
     # Save PDF with NumeroPedido filename in PDF folder
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
