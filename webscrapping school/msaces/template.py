@@ -24,7 +24,8 @@ numero_pedido_value = df.loc[0, 'NumeroPedido']
 data_pedido_value = df.loc[0, 'DataPedido']
 classe_produtos_value = df.loc[0, 'ClasseProdutos']
 validade_inicio_value = df.loc[0, 'ValidadeInicio']
-data_documento_value = df.loc[0, 'DataDocumento']  # New value extracted here
+data_documento_value = df.loc[0, 'DataDocumento']
+valor_importancia_value = df.loc[0, 'ValorImportancia']
 
 # === Step 5: Open PDF with PyMuPDF ===
 doc = fitz.open(pdf_path)
@@ -147,6 +148,24 @@ for page_num in range(len(doc)):
         page.insert_text(
             (insert_x, insert_y),
             str(data_documento_value),
+            fontname="helvetica-bold",
+            fontsize=11,
+            color=(0, 0, 0)
+        )
+    
+    # === Insert Importância: (beneath with € sign, with extra space) ===
+    importancia_instances = page.search_for("Importância:")
+    for inst in importancia_instances:
+        x1, y1, x2, y2 = inst
+        print(f"'Importância:' found on page {page_num+1} at {inst}")
+        insert_x = x1  # left aligned with label
+        insert_y = y2 + 15  # bigger vertical gap to skip one line
+        
+        valor_importancia_text = str(valor_importancia_value) + " $"
+        
+        page.insert_text(
+            (insert_x, insert_y),
+            valor_importancia_text,
             fontname="helvetica-bold",
             fontsize=11,
             color=(0, 0, 0)
