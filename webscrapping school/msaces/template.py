@@ -20,6 +20,7 @@ print(df.head())  # View to confirm your columns
 titular_value = df.loc[0, 'Titular']
 morada_value = df.loc[0, 'Morada']
 codigo_postal_value = df.loc[0, 'CodigoPostal']
+numero_pedido_value = df.loc[0, 'NumeroPedido']
 
 # === Step 5: Open PDF with PyMuPDF ===
 doc = fitz.open(pdf_path)
@@ -67,6 +68,21 @@ for page_num in range(len(doc)):
         page.insert_text(
             (insert_x, insert_y),
             str(codigo_postal_value),
+            fontname="helvetica-bold",
+            fontsize=11,
+            color=(0, 0, 0)
+        )
+    
+    # === Insert Número do pedido de Registo ===
+    numero_pedido_instances = page.search_for("Número do pedido de Registo:")
+    for inst in numero_pedido_instances:
+        x1, y1, x2, y2 = inst
+        print(f"'Número do pedido de Registo:' found on page {page_num+1} at {inst}")
+        insert_x = x2 + 5
+        insert_y = y2 - 2
+        page.insert_text(
+            (insert_x, insert_y),
+            str(numero_pedido_value),
             fontname="helvetica-bold",
             fontsize=11,
             color=(0, 0, 0)
