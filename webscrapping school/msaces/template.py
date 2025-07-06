@@ -16,205 +16,66 @@ print(f"Latest Excel file found: {latest_excel}")
 df = pd.read_excel(latest_excel)
 print(df.head())  # View to confirm your columns
 
-# === Step 4: Extract values from first row ===
-titular_value = df.loc[0, 'Titular']
-morada_value = df.loc[0, 'Morada']
-codigo_postal_value = df.loc[0, 'CodigoPostal']
-numero_pedido_value = df.loc[0, 'NumeroPedido']
-data_pedido_value = df.loc[0, 'DataPedido']
-classe_produtos_value = df.loc[0, 'ClasseProdutos']
-validade_inicio_value = df.loc[0, 'ValidadeInicio']
-data_documento_value = df.loc[0, 'DataDocumento']
-valor_importancia_value = df.loc[0, 'ValorImportancia']
-iva_value = df.loc[0, 'IVA']
-valor_total_value = df.loc[0, 'ValorTotal']
-
-# === Step 5: Open PDF with PyMuPDF ===
-doc = fitz.open(pdf_path)
-
-for page_num in range(len(doc)):
-    page = doc[page_num]
-    
-    # === Insert Titular ===
-    titular_instances = page.search_for("Titular:")
-    for inst in titular_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Titular:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(titular_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Morada ===
-    morada_instances = page.search_for("Morada:")
-    for inst in morada_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Morada:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(morada_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Código Postal ===
-    codigo_postal_instances = page.search_for("Código Postal:")
-    for inst in codigo_postal_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Código Postal:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(codigo_postal_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Número do pedido de Registo ===
-    numero_pedido_instances = page.search_for("Número do pedido de Registo:")
-    for inst in numero_pedido_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Número do pedido de Registo:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(numero_pedido_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Data do Pedido de Registo ===
-    data_pedido_instances = page.search_for("Data do Pedido de Registo:")
-    for inst in data_pedido_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Data do Pedido de Registo:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(data_pedido_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Classes de Produtos/Serviços ===
-    classe_produtos_instances = page.search_for("Classes de Produtos/Serviços:")
-    for inst in classe_produtos_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Classes de Produtos/Serviços:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(classe_produtos_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-
-    # === Insert Validade da Vigilância ===
-    validade_vigilancia_instances = page.search_for("Validade da Vigilância:")
-    for inst in validade_vigilancia_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Validade da Vigilância:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(validade_inicio_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-        
-    # === Insert Data: ===
-    data_instances = page.search_for("Data:")
-    for inst in data_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Data:' found on page {page_num+1} at {inst}")
-        insert_x = x2 + 5
-        insert_y = y2 - 2
-        page.insert_text(
-            (insert_x, insert_y),
-            str(data_documento_value),
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-    
-    # === Insert Importância: (beneath with $ sign, with extra space) ===
-    importancia_instances = page.search_for("Importância:")
-    for inst in importancia_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'Importância:' found on page {page_num+1} at {inst}")
-        insert_x = x1  # left aligned with label
-        insert_y = y2 + 15  # bigger vertical gap to skip one line
-        
-        valor_importancia_text = str(valor_importancia_value) + " $"
-        
-        page.insert_text(
-            (insert_x, insert_y),
-            valor_importancia_text,
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-        
-    # === Insert IVA (23%): (beneath, skip line, with $ sign) ===
-    iva_instances = page.search_for("IVA (23%):")
-    for inst in iva_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'IVA (23%):' found on page {page_num+1} at {inst}")
-        insert_x = x1  # left aligned with label
-        insert_y = y2 + 15  # move down to skip one line
-        
-        iva_text = str(iva_value) + " $"
-        
-        page.insert_text(
-            (insert_x, insert_y),
-            iva_text,
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-        
-    # === Insert TOTAL: (beneath with $ sign, skipping a line) ===
-    total_instances = page.search_for("TOTAL:")
-    for inst in total_instances:
-        x1, y1, x2, y2 = inst
-        print(f"'TOTAL:' found on page {page_num+1} at {inst}")
-        insert_x = x1  # left aligned with label
-        insert_y = y2 + 15  # skip one line beneath
-        
-        valor_total_text = str(valor_total_value) + " $"
-        
-        page.insert_text(
-            (insert_x, insert_y),
-            valor_total_text,
-            fontname="helvetica-bold",
-            fontsize=11,
-            color=(0, 0, 0)
-        )
-
-# === Step 6: Save edited PDF with NumeroPedido as filename inside PDF folder ===
+# === Step 4: Prepare output folder ===
 output_folder = "PDF"
-os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
-output_path = os.path.join(output_folder, f"{numero_pedido_value}.pdf")
+os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
 
-doc.save(output_path)
-doc.close()
+# === Step 5: Loop through all rows ===
+for idx, row in df.iterrows():
+    print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']}")
 
-print(f"PDF updated and saved to {output_path}")
+    # Open fresh PDF for each row
+    doc = fitz.open(pdf_path)
+
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+
+        # Helper to insert text after label
+        def insert_after_label(label, value, skip_line=False, dollar_sign=False):
+            instances = page.search_for(label)
+            for inst in instances:
+                x1, y1, x2, y2 = inst
+                print(f"'{label}' found on page {page_num+1} at {inst}")
+                insert_x = x2 + 5
+                insert_y = y2 - 2
+                if skip_line:
+                    insert_y = y2 + 15
+                    insert_x = x1  # left aligned with label
+                text_value = str(value)
+                if dollar_sign:
+                    text_value += " $"
+                page.insert_text(
+                    (insert_x, insert_y),
+                    text_value,
+                    fontname="helvetica-bold",
+                    fontsize=11,
+                    color=(0, 0, 0)
+                )
+
+        # Insert fields without skip line or dollar sign
+        insert_after_label("Titular:", row['Titular'])
+        insert_after_label("Morada:", row['Morada'])
+        insert_after_label("Código Postal:", row['CodigoPostal'])
+        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'])
+        insert_after_label("Data do Pedido de Registo:", row['DataPedido'])
+        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'])
+        insert_after_label("Validade da Vigilância:", row['ValidadeInicio'])
+        insert_after_label("Data:", row['DataDocumento'])
+
+        # Insert Importância: beneath label, skip line, with dollar sign
+        insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
+
+        # Insert IVA (23%): beneath label, skip line, with dollar sign
+        insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
+
+        # Insert TOTAL: beneath label, skip line, with dollar sign
+        insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
+
+    # Save PDF with NumeroPedido filename in PDF folder
+    output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
+    doc.save(output_path)
+    doc.close()
+
+    print(f"Saved PDF: {output_path}")
+
+print("All rows processed.")
