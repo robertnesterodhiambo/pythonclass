@@ -209,8 +209,11 @@ for page_num in range(len(doc)):
             color=(0, 0, 0)
         )
 
-# === Step 6: Save edited PDF with NumeroPedido as filename ===
-output_path = f"{numero_pedido_value}.pdf"
+# === Step 6: Save edited PDF with NumeroPedido as filename inside PDF folder ===
+output_folder = "PDF"
+os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
+output_path = os.path.join(output_folder, f"{numero_pedido_value}.pdf")
+
 doc.save(output_path)
 doc.close()
 
