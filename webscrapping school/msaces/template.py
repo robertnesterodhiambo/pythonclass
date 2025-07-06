@@ -26,6 +26,7 @@ classe_produtos_value = df.loc[0, 'ClasseProdutos']
 validade_inicio_value = df.loc[0, 'ValidadeInicio']
 data_documento_value = df.loc[0, 'DataDocumento']
 valor_importancia_value = df.loc[0, 'ValorImportancia']
+iva_value = df.loc[0, 'IVA']
 
 # === Step 5: Open PDF with PyMuPDF ===
 doc = fitz.open(pdf_path)
@@ -166,6 +167,24 @@ for page_num in range(len(doc)):
         page.insert_text(
             (insert_x, insert_y),
             valor_importancia_text,
+            fontname="helvetica-bold",
+            fontsize=11,
+            color=(0, 0, 0)
+        )
+        
+    # === Insert IVA (23%): (beneath, skip line, with $ sign) ===
+    iva_instances = page.search_for("IVA (23%):")
+    for inst in iva_instances:
+        x1, y1, x2, y2 = inst
+        print(f"'IVA (23%):' found on page {page_num+1} at {inst}")
+        insert_x = x1  # left aligned with label
+        insert_y = y2 + 15  # move down to skip one line
+        
+        iva_text = str(iva_value) + " $"
+        
+        page.insert_text(
+            (insert_x, insert_y),
+            iva_text,
             fontname="helvetica-bold",
             fontsize=11,
             color=(0, 0, 0)
