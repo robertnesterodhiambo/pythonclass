@@ -189,6 +189,24 @@ for page_num in range(len(doc)):
             fontsize=11,
             color=(0, 0, 0)
         )
+    
+    # === Insert TOTAL: (beneath with $ sign, skipping a line) ===
+total_instances = page.search_for("TOTAL:")
+for inst in total_instances:
+    x1, y1, x2, y2 = inst
+    print(f"'TOTAL:' found on page {page_num+1} at {inst}")
+    insert_x = x1  # left aligned with label
+    insert_y = y2 + 15  # skip one line beneath
+    
+    valor_total_text = str(df.loc[0, 'ValorTotal']) + " $"
+    
+    page.insert_text(
+        (insert_x, insert_y),
+        valor_total_text,
+        fontname="helvetica-bold",
+        fontsize=11,
+        color=(0, 0, 0)
+    )
 
 # === Step 6: Save edited PDF ===
 output_path = "Edited_Template.pdf"
