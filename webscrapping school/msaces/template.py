@@ -75,7 +75,7 @@ for idx, row in df.iterrows():
         # Insert TOTAL: beneath label, skip line, with dollar sign
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
 
-        # === Insert Marca values along given coordinates ===
+        # === Insert Marca values centered within provided bounds ===
         coords_list = [
             (42.47, 393.80),
             (48.96, 393.80),
@@ -88,6 +88,14 @@ for idx, row in df.iterrows():
             (286.29, 396.30),
         ]
 
+        # Provided bounding box for centering
+        box_left = 37.97
+        box_right = 297.28
+        box_top = 293.35
+        box_bottom = 530.23
+        box_width = box_right - box_left
+        box_height = box_bottom - box_top
+
         marca_value = row['Marca']
         if not pd.isna(marca_value):
             marca_values = str(marca_value).split(',')
@@ -97,14 +105,24 @@ for idx, row in df.iterrows():
             for i, (x, y) in enumerate(coords_list):
                 if i < len(marca_values):
                     text_value = marca_values[i].strip()
+                    font_size = 16
+                    font_name = "Times-Roman"
+
+                    # Calculate text width for horizontal centering
+                    text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
+                    centered_x = box_left + (box_width - text_width) / 2
+
+                    # Calculate vertical center and adjust for baseline
+                    centered_y = box_top + (box_height / 2) + (font_size / 2.8)
+
                     page.insert_text(
-                        (x, y),
+                        (centered_x, centered_y),
                         text_value,
-                        fontname="helvetica-bold",
-                        fontsize=20,
+                        fontname=font_name,
+                        fontsize=font_size,
                         color=(0, 0, 0)
                     )
-                    print(f"Inserted Marca value '{text_value}' at ({x}, {y})")
+                    print(f"Inserted Marca value '{text_value}' at centered ({centered_x}, {centered_y}) within box")
         else:
             print("Marca is missing or NaN; skipping Marca insertion.")
 
