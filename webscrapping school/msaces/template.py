@@ -64,7 +64,7 @@ for idx, row in df.iterrows():
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'])
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'])
         insert_after_label("Validade da Vigilância:", row['ValidadeInicio'])
-        insert_after_label("Data:", row['DataDocumento'])
+        insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         # Insert Importância: beneath label, skip line, with dollar sign
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
