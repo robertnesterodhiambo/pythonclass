@@ -32,7 +32,7 @@ for idx, row in df.iterrows():
         page = doc[page_num]
 
         # Helper to insert text after label
-        def insert_after_label(label, value, skip_line=False, dollar_sign=False):
+        def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
                 return
@@ -40,26 +40,26 @@ for idx, row in df.iterrows():
             for inst in instances:
                 x1, y1, x2, y2 = inst
                 print(f"'{label}' found on page {page_num+1} at {inst}")
-                insert_x = x2 + 5
+                insert_x = x2 + 5 - shift_left  # apply shift left if needed
                 insert_y = y2 - 2
                 if skip_line:
                     insert_y = y2 + 15
-                    insert_x = x1  # left aligned with label
+                    insert_x = x1 - shift_left  # maintain shift left on skip_line too
                 text_value = str(value)
                 if dollar_sign:
                     text_value += " $"
                 page.insert_text(
                     (insert_x, insert_y),
                     text_value,
-                    fontname="helvetica-bold",
+                    fontname="helvetica" if not bold else "helvetica-bold",
                     fontsize=11,
                     color=(0, 0, 0)
                 )
 
-        # Insert fields without skip line or dollar sign
-        insert_after_label("Titular:", row['Titular'])
-        insert_after_label("Morada:", row['Morada'])
-        insert_after_label("Código Postal:", row['CodigoPostal'])
+        # Insert fields with required formatting
+        insert_after_label("Titular:", row['Titular'], shift_left=2, bold=False)
+        insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
+        insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'])
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'])
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'])
