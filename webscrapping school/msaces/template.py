@@ -61,7 +61,7 @@ for idx, row in df.iterrows():
         insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'])
-        insert_after_label("Data do Pedido de Registo:", row['DataPedido'])
+        insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'])
         insert_after_label("Validade da Vigilância:", row['ValidadeInicio'])
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
