@@ -112,10 +112,10 @@ for idx, row in df.iterrows():
         # Insert other fields with required formatting
         insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
-        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'])
+        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
-        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'])
-        insert_after_label("Validade da Vigilância:", row['ValidadeInicio'])
+        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
+        insert_after_label("Validade da Vigilância:", row['ValidadeInicio'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         # Insert Importância: beneath label, skip line, with dollar sign
