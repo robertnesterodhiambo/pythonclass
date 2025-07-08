@@ -56,7 +56,7 @@ for idx, row in df.iterrows():
                     color=(0, 0, 0)
                 )
 
-        # === Modified insertion for "Titular" to wrap into two lines without centering ===
+        # === NEW: Better wrapping for "Titular" ===
         def insert_titular_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
@@ -66,50 +66,41 @@ for idx, row in df.iterrows():
                 x1, y1, x2, y2 = inst
                 print(f"'{label}' found on page {page_num+1} at {inst}")
 
-                # Split text roughly into two lines if too long
                 text_value = str(value)
-                if len(text_value) > max_line_length:
-                    # Try to split on space near middle
-                    mid = len(text_value) // 2
-                    split_pos = text_value.rfind(' ', 0, mid)
-                    if split_pos == -1:
-                        split_pos = mid
-                    line1 = text_value[:split_pos].strip()
-                    line2 = text_value[split_pos:].strip()
-                else:
-                    line1 = text_value
-                    line2 = None
+                words = text_value.split()
+                lines = []
+                current_line = ""
+
+                for word in words:
+                    if len(current_line + " " + word) <= max_line_length:
+                        if current_line:
+                            current_line += " " + word
+                        else:
+                            current_line = word
+                    else:
+                        lines.append(current_line)
+                        current_line = word
+
+                if current_line:
+                    lines.append(current_line)
 
                 font_name = "helvetica-bold" if bold else "helvetica"
-                insert_x1 = x2 + 5 - shift_left
-                insert_y1 = y2 - 2
+                insert_x = x2 + 5 - shift_left
+                insert_y = y2 - 2
 
-                # Insert first line without centering
-                page.insert_text(
-                    (insert_x1, insert_y1),
-                    line1,
-                    fontname=font_name,
-                    fontsize=font_size,
-                    color=(0, 0, 0)
-                )
-
-                if line2:
-                    insert_x2 = x2 + 5 - shift_left
-                    insert_y2 = insert_y1 + 15
-
-                    # Insert second line without centering
+                for i, line in enumerate(lines):
                     page.insert_text(
-                        (insert_x2, insert_y2),
-                        line2,
+                        (insert_x, insert_y + i * (font_size + 4)),  # vertical spacing
+                        line,
                         fontname=font_name,
                         fontsize=font_size,
                         color=(0, 0, 0)
                     )
 
-        # Insert wrapped Titular without centering
+        # Insert wrapped Titular with new line logic
         insert_titular_wrapped("Titular:", row['Titular'], shift_left=2, bold=False)
 
-        # Insert other fields with required formatting
+        # Insert other fields
         insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
@@ -118,13 +109,8 @@ for idx, row in df.iterrows():
         insert_after_label("Validade da Vigilância:", row['ValidadeInicio'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        # Insert Importância: beneath label, skip line, with dollar sign
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
-
-        # Insert IVA (23%): beneath label, skip line, with dollar sign
         insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
-
-        # Insert TOTAL: beneath label, skip line, with dollar sign
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
 
         # === Insert Marca values centered within provided bounds ===
