@@ -56,8 +56,60 @@ for idx, row in df.iterrows():
                     color=(0, 0, 0)
                 )
 
-        # Insert fields with required formatting
-        insert_after_label("Titular:", row['Titular'], shift_left=2, bold=False)
+        # === Modified insertion for "Titular" to wrap into two lines without centering ===
+        def insert_titular_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False):
+            if pd.isna(value):
+                print(f"Skipping '{label}' insertion because value is NaN")
+                return
+            instances = page.search_for(label)
+            for inst in instances:
+                x1, y1, x2, y2 = inst
+                print(f"'{label}' found on page {page_num+1} at {inst}")
+
+                # Split text roughly into two lines if too long
+                text_value = str(value)
+                if len(text_value) > max_line_length:
+                    # Try to split on space near middle
+                    mid = len(text_value) // 2
+                    split_pos = text_value.rfind(' ', 0, mid)
+                    if split_pos == -1:
+                        split_pos = mid
+                    line1 = text_value[:split_pos].strip()
+                    line2 = text_value[split_pos:].strip()
+                else:
+                    line1 = text_value
+                    line2 = None
+
+                font_name = "helvetica-bold" if bold else "helvetica"
+                insert_x1 = x2 + 5 - shift_left
+                insert_y1 = y2 - 2
+
+                # Insert first line without centering
+                page.insert_text(
+                    (insert_x1, insert_y1),
+                    line1,
+                    fontname=font_name,
+                    fontsize=font_size,
+                    color=(0, 0, 0)
+                )
+
+                if line2:
+                    insert_x2 = x2 + 5 - shift_left
+                    insert_y2 = insert_y1 + 15
+
+                    # Insert second line without centering
+                    page.insert_text(
+                        (insert_x2, insert_y2),
+                        line2,
+                        fontname=font_name,
+                        fontsize=font_size,
+                        color=(0, 0, 0)
+                    )
+
+        # Insert wrapped Titular without centering
+        insert_titular_wrapped("Titular:", row['Titular'], shift_left=2, bold=False)
+
+        # Insert other fields with required formatting
         insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'])
@@ -88,7 +140,6 @@ for idx, row in df.iterrows():
             (286.29, 396.30),
         ]
 
-        # Provided bounding box for centering
         box_left = 37.97
         box_right = 297.28
         box_top = 293.35
@@ -108,11 +159,8 @@ for idx, row in df.iterrows():
                     font_size = 16
                     font_name = "Times-Roman"
 
-                    # Calculate text width for horizontal centering
                     text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
                     centered_x = box_left + (box_width - text_width) / 2
-
-                    # Calculate vertical center and adjust for baseline
                     centered_y = box_top + (box_height / 2) + (font_size / 2.8)
 
                     page.insert_text(
