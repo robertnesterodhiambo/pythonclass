@@ -157,7 +157,7 @@ for idx, row in df.iterrows():
                 if i < len(marca_values):
                     text_value = marca_values[i].strip()
                     font_size = 16
-                    font_name = "Times-Roman"
+                    font_name = "Times-Bold"
 
                     text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
                     centered_x = box_left + (box_width - text_width) / 2
