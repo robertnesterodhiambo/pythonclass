@@ -123,8 +123,18 @@ for idx, row in df.iterrows():
 
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
+
+        # === Insert Validade da Vigilância with ValidadeInicio and ValidadeFim combined ===
+        validade_inicio = row['ValidadeInicio']
+        validade_fim = row['ValidadeFim']
+
+        if pd.notna(validade_inicio) and pd.notna(validade_fim):
+            validade_text = f"De {validade_inicio} até {validade_fim}"
+            insert_after_label("Validade da Vigilância:", validade_text, skip_line=True, bold=True)
+        else:
+            print(f"Skipping Validade da Vigilância insertion because ValidadeInicio or ValidadeFim is missing for NumeroPedido {row['NumeroPedido']}")
+
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
-        insert_after_label("Validade da Vigilância:", row['ValidadeFim'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
