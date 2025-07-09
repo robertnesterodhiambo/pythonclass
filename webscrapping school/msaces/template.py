@@ -124,7 +124,7 @@ for idx, row in df.iterrows():
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
-        insert_after_label("Validade da Vigilância:", row['ValidadeInicio'],  skip_line=True, bold=True)
+        insert_after_label("Validade da Vigilância:", row['ValidadeFim'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
