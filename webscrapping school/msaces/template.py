@@ -4,7 +4,7 @@ import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
 
-# === Step 1: Locate Template PDF ===
+# === Step 1: Locate Template PDF === 
 pdf_path = "Template.pdf"
 
 # === Step 2: Locate latest Excel file ===
@@ -20,6 +20,10 @@ print(df.head())  # View to confirm your columns
 # === Step 4: Prepare output folder ===
 output_folder = "PDF"
 os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
+# =========================================
+# +254765763610
+# Reach me in case of any issue.
+# =========================================
 
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
@@ -34,6 +38,38 @@ for idx, row in df.iterrows():
 
     for page_num in range(len(doc)):
         page = doc[page_num]
+
+        # === Overlay white rectangles on all sides to cover black borders ===
+        border_thickness = 20  # adjust as needed
+
+        # Top
+        page.draw_rect(
+            fitz.Rect(0, 0, page.rect.width, border_thickness),
+            color=(1, 1, 1),
+            fill=(1, 1, 1),
+            overlay=True
+        )
+        # Bottom
+        page.draw_rect(
+            fitz.Rect(0, page.rect.height - border_thickness, page.rect.width, page.rect.height),
+            color=(1, 1, 1),
+            fill=(1, 1, 1),
+            overlay=True
+        )
+        # Left
+        page.draw_rect(
+            fitz.Rect(0, 0, border_thickness, page.rect.height),
+            color=(1, 1, 1),
+            fill=(1, 1, 1),
+            overlay=True
+        )
+        # Right
+        page.draw_rect(
+            fitz.Rect(page.rect.width - border_thickness, 0, page.rect.width, page.rect.height),
+            color=(1, 1, 1),
+            fill=(1, 1, 1),
+            overlay=True
+        )
 
         def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True, leading_spaces=0):
             if pd.isna(value):
