@@ -23,6 +23,12 @@ os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
 
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
+    marca_value = row['Marca']
+    # Check if Marca is missing or empty (after stripping)
+    if pd.isna(marca_value) or not any(mv.strip() for mv in str(marca_value).split(',')):
+        print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because Marca is missing or empty")
+        continue  # Skip this row entirely
+
     print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']}")
 
     # Open fresh PDF for each row
@@ -32,7 +38,7 @@ for idx, row in df.iterrows():
         page = doc[page_num]
 
         # Helper to insert text after label
-        def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True):
+        def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
                 return
@@ -48,6 +54,8 @@ for idx, row in df.iterrows():
                 text_value = str(value)
                 if dollar_sign:
                     text_value += " $"
+                # Add leading spaces if any
+                text_value = (" " * leading_spaces) + text_value
                 page.insert_text(
                     (insert_x, insert_y),
                     text_value,
@@ -56,8 +64,8 @@ for idx, row in df.iterrows():
                     color=(0, 0, 0)
                 )
 
-        # === NEW: Better wrapping for "Titular" ===
-        def insert_titular_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False):
+        # === UPDATED: Titular wrapping limited to 2 lines max, no ellipsis, pad 2nd line to length of 1st line, with leading spaces ===
+        def insert_titular_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
                 return
@@ -72,7 +80,8 @@ for idx, row in df.iterrows():
                 current_line = ""
 
                 for word in words:
-                    if len(current_line + " " + word) <= max_line_length:
+                    # Check length if word added, else start new line
+                    if len(current_line + " " + word) <= max_line_length if current_line else len(word) <= max_line_length:
                         if current_line:
                             current_line += " " + word
                         else:
@@ -80,29 +89,47 @@ for idx, row in df.iterrows():
                     else:
                         lines.append(current_line)
                         current_line = word
+                        if len(lines) == 2:  # Stop after 2 lines
+                            break
 
-                if current_line:
+                if current_line and len(lines) < 2:
                     lines.append(current_line)
+
+                # Make sure lines has exactly 2 lines for consistent vertical spacing
+                if len(lines) == 1:
+                    lines.append("")
+
+                # Pad second line with spaces to roughly match first line length (monospace approximation)
+                len_first = len(lines[0])
+                len_second = len(lines[1])
+                if len_second < len_first:
+                    padding = " " * (len_first - len_second)
+                    lines[1] += padding
 
                 font_name = "helvetica-bold" if bold else "helvetica"
                 insert_x = x2 + 5 - shift_left
                 insert_y = y2 - 2
 
+                # Add leading spaces on each line
+                space_prefix = " " * leading_spaces
+
                 for i, line in enumerate(lines):
                     page.insert_text(
                         (insert_x, insert_y + i * (font_size + 4)),  # vertical spacing
-                        line,
+                        space_prefix + line,
                         fontname=font_name,
                         fontsize=font_size,
                         color=(0, 0, 0)
                     )
 
-        # Insert wrapped Titular with new line logic
-        insert_titular_wrapped("Titular:", row['Titular'], shift_left=2, bold=False)
+        # Insert wrapped Titular with leading spaces (3 spaces)
+        insert_titular_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
 
-        # Insert other fields
-        insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False)
-        insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False)
+        # Insert other fields with 3 leading spaces where requested
+        insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False, leading_spaces=3)
+        insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False, leading_spaces=3)
+
+        # Insert other fields normally (no leading spaces)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
@@ -133,32 +160,30 @@ for idx, row in df.iterrows():
         box_width = box_right - box_left
         box_height = box_bottom - box_top
 
-        marca_value = row['Marca']
-        if not pd.isna(marca_value):
-            marca_values = str(marca_value).split(',')
-            if len(marca_values) > len(coords_list):
-                print(f"Warning: Too many Marca values ({len(marca_values)}), only first {len(coords_list)} will be inserted.")
+        # marca_value already checked for missing above, but filter here too for safety
+        marca_values = [mv.strip() for mv in str(marca_value).split(',') if mv.strip()]
 
-            for i, (x, y) in enumerate(coords_list):
-                if i < len(marca_values):
-                    text_value = marca_values[i].strip()
-                    font_size = 16
-                    font_name = "Times-Bold"
+        if len(marca_values) > len(coords_list):
+            print(f"Warning: Too many Marca values ({len(marca_values)}), only first {len(coords_list)} will be inserted.")
 
-                    text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
-                    centered_x = box_left + (box_width - text_width) / 2
-                    centered_y = box_top + (box_height / 2) + (font_size / 2.8)
+        for i, (x, y) in enumerate(coords_list):
+            if i < len(marca_values):
+                text_value = marca_values[i]
+                font_size = 16
+                font_name = "Times-Bold"
 
-                    page.insert_text(
-                        (centered_x, centered_y),
-                        text_value,
-                        fontname=font_name,
-                        fontsize=font_size,
-                        color=(0, 0, 0)
-                    )
-                    print(f"Inserted Marca value '{text_value}' at centered ({centered_x}, {centered_y}) within box")
-        else:
-            print("Marca is missing or NaN; skipping Marca insertion.")
+                text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
+                centered_x = box_left + (box_width - text_width) / 2
+                centered_y = box_top + (box_height / 2) + (font_size / 2.8)
+
+                page.insert_text(
+                    (centered_x, centered_y),
+                    text_value,
+                    fontname=font_name,
+                    fontsize=font_size,
+                    color=(0, 0, 0)
+                )
+                print(f"Inserted Marca value '{text_value}' at centered ({centered_x}, {centered_y}) within box")
 
     # Save PDF with NumeroPedido filename in PDF folder
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
