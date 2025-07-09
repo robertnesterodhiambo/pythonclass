@@ -24,20 +24,17 @@ os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
     marca_value = row['Marca']
-    # Check if Marca is missing or empty (after stripping)
     if pd.isna(marca_value) or not any(mv.strip() for mv in str(marca_value).split(',')):
         print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because Marca is missing or empty")
-        continue  # Skip this row entirely
+        continue
 
     print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']}")
 
-    # Open fresh PDF for each row
     doc = fitz.open(pdf_path)
 
     for page_num in range(len(doc)):
         page = doc[page_num]
 
-        # Helper to insert text after label
         def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
@@ -46,15 +43,14 @@ for idx, row in df.iterrows():
             for inst in instances:
                 x1, y1, x2, y2 = inst
                 print(f"'{label}' found on page {page_num+1} at {inst}")
-                insert_x = x2 + 5 - shift_left  # apply shift left if needed
+                insert_x = x2 + 5 - shift_left
                 insert_y = y2 - 2
                 if skip_line:
                     insert_y = y2 + 15
-                    insert_x = x1 - shift_left  # maintain shift left on skip_line too
+                    insert_x = x1 - shift_left
                 text_value = str(value)
                 if dollar_sign:
                     text_value += " $"
-                # Add leading spaces if any
                 text_value = (" " * leading_spaces) + text_value
                 page.insert_text(
                     (insert_x, insert_y),
@@ -64,8 +60,7 @@ for idx, row in df.iterrows():
                     color=(0, 0, 0)
                 )
 
-        # === UPDATED: Titular wrapping limited to 2 lines max, no ellipsis, pad 2nd line to length of 1st line, with leading spaces ===
-        def insert_titular_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False, leading_spaces=0):
+        def insert_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
                 return
@@ -80,7 +75,6 @@ for idx, row in df.iterrows():
                 current_line = ""
 
                 for word in words:
-                    # Check length if word added, else start new line
                     if len(current_line + " " + word) <= max_line_length if current_line else len(word) <= max_line_length:
                         if current_line:
                             current_line += " " + word
@@ -89,17 +83,15 @@ for idx, row in df.iterrows():
                     else:
                         lines.append(current_line)
                         current_line = word
-                        if len(lines) == 2:  # Stop after 2 lines
+                        if len(lines) == 2:
                             break
 
                 if current_line and len(lines) < 2:
                     lines.append(current_line)
 
-                # Make sure lines has exactly 2 lines for consistent vertical spacing
                 if len(lines) == 1:
                     lines.append("")
 
-                # Pad second line with spaces to roughly match first line length (monospace approximation)
                 len_first = len(lines[0])
                 len_second = len(lines[1])
                 if len_second < len_first:
@@ -109,27 +101,26 @@ for idx, row in df.iterrows():
                 font_name = "helvetica-bold" if bold else "helvetica"
                 insert_x = x2 + 5 - shift_left
                 insert_y = y2 - 2
-
-                # Add leading spaces on each line
                 space_prefix = " " * leading_spaces
 
                 for i, line in enumerate(lines):
                     page.insert_text(
-                        (insert_x, insert_y + i * (font_size + 4)),  # vertical spacing
+                        (insert_x, insert_y + i * (font_size + 4)),
                         space_prefix + line,
                         fontname=font_name,
                         fontsize=font_size,
                         color=(0, 0, 0)
                     )
 
-        # Insert wrapped Titular with leading spaces (3 spaces)
-        insert_titular_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
+        # === Insert wrapped Titular ===
+        insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
 
-        # Insert other fields with 3 leading spaces where requested
-        insert_after_label("Morada:", row['Morada'], shift_left=2, bold=False, leading_spaces=3)
+        # === Insert wrapped Morada ===
+        insert_wrapped("Morada:", row['Morada'], shift_left=2, bold=False, leading_spaces=3)
+
+        # === Insert Código Postal with leading spaces ===
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False, leading_spaces=3)
 
-        # Insert other fields normally (no leading spaces)
         insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
@@ -140,17 +131,10 @@ for idx, row in df.iterrows():
         insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
 
-        # === Insert Marca values centered within provided bounds ===
         coords_list = [
-            (42.47, 393.80),
-            (48.96, 393.80),
-            (63.95, 393.80),
-            (72.95, 393.80),
-            (93.43, 394.80),
-            (148.89, 398.30),
-            (213.35, 398.30),
-            (252.32, 396.30),
-            (286.29, 396.30),
+            (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
+            (72.95, 393.80), (93.43, 394.80), (148.89, 398.30),
+            (213.35, 398.30), (252.32, 396.30), (286.29, 396.30),
         ]
 
         box_left = 37.97
@@ -160,7 +144,6 @@ for idx, row in df.iterrows():
         box_width = box_right - box_left
         box_height = box_bottom - box_top
 
-        # marca_value already checked for missing above, but filter here too for safety
         marca_values = [mv.strip() for mv in str(marca_value).split(',') if mv.strip()]
 
         if len(marca_values) > len(coords_list):
@@ -185,7 +168,6 @@ for idx, row in df.iterrows():
                 )
                 print(f"Inserted Marca value '{text_value}' at centered ({centered_x}, {centered_y}) within box")
 
-    # Save PDF with NumeroPedido filename in PDF folder
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
     doc.close()
