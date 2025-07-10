@@ -21,6 +21,26 @@ print(df.head())  # View to confirm your columns
 output_folder = "PDF"
 os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
 
+# === Helper function to wrap text to width ===
+def wrap_text_to_width(text, fontname, fontsize, max_width):
+    words = text.split()
+    lines = []
+    current_line = ""
+
+    for word in words:
+        test_line = current_line + (" " if current_line else "") + word
+        test_width = fitz.get_text_length(test_line, fontname=fontname, fontsize=fontsize)
+        if test_width <= max_width:
+            current_line = test_line
+        else:
+            if current_line:
+                lines.append(current_line)
+            current_line = word
+
+    if current_line:
+        lines.append(current_line)
+
+    return lines
 
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
@@ -114,11 +134,6 @@ for idx, row in df.iterrows():
                         else:
                             current_line = word
                     else:
-                        
-                        # =========================================
-                        # +254765763610
-                        # Reach me in case of any issue.
-                        # =========================================
                         lines.append(current_line)
                         current_line = word
                         if len(lines) == 2:
@@ -185,7 +200,7 @@ for idx, row in df.iterrows():
             (213.35, 398.30), (252.32, 396.30), (286.29, 396.30),
         ]
 
-        box_left = 37.97
+        box_left = 36.97
         box_right = 297.28
         box_top = 293.35
         box_bottom = 530.23
@@ -200,21 +215,27 @@ for idx, row in df.iterrows():
         for i, (x, y) in enumerate(coords_list):
             if i < len(marca_values):
                 text_value = marca_values[i]
-                font_size = 16
+                font_size = 15
                 font_name = "Times-Bold"
 
-                text_width = fitz.get_text_length(text_value, fontname=font_name, fontsize=font_size)
-                centered_x = box_left + (box_width - text_width) / 2
-                centered_y = box_top + (box_height / 2) + (font_size / 2.8)
+                wrapped_lines = wrap_text_to_width(text_value, font_name, font_size, box_width)
 
-                page.insert_text(
-                    (centered_x, centered_y),
-                    text_value,
-                    fontname=font_name,
-                    fontsize=font_size,
-                    color=(0, 0, 0)
-                )
-                print(f"Inserted Marca value '{text_value}' at centered ({centered_x}, {centered_y}) within box")
+                total_height = len(wrapped_lines) * (font_size + 2)
+                start_y = box_top + (box_height - total_height) / 2
+
+                for j, line in enumerate(wrapped_lines):
+                    line_width = fitz.get_text_length(line, fontname=font_name, fontsize=font_size)
+                    centered_x = box_left + (box_width - line_width) / 2
+                    insert_y = start_y + j * (font_size + 2)
+
+                    page.insert_text(
+                        (centered_x, insert_y),
+                        line,
+                        fontname=font_name,
+                        fontsize=font_size,
+                        color=(0, 0, 0)
+                    )
+                print(f"Inserted wrapped Marca value '{text_value}' in {len(wrapped_lines)} lines within box")
 
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
