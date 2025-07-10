@@ -20,10 +20,7 @@ print(df.head())  # View to confirm your columns
 # === Step 4: Prepare output folder ===
 output_folder = "PDF"
 os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
-# =========================================
-# +254765763610
-# Reach me in case of any issue.
-# =========================================
+
 
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
@@ -117,6 +114,11 @@ for idx, row in df.iterrows():
                         else:
                             current_line = word
                     else:
+                        
+                        # =========================================
+                        # +254765763610
+                        # Reach me in case of any issue.
+                        # =========================================
                         lines.append(current_line)
                         current_line = word
                         if len(lines) == 2:

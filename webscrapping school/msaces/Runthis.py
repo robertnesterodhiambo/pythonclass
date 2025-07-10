@@ -1,6 +1,6 @@
 import subprocess
 
-scripts = ['scrapper.py', 'chrome.py', 'folders.py', 'pdf.py']
+scripts = ['scrapper.py', 'chrome.py', 'folders.py', 'template.py']
 
 for script in scripts:
     print(f"Running {script}...")
