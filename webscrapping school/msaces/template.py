@@ -101,7 +101,13 @@ for idx, row in df.iterrows():
                 if skip_line:
                     insert_y = y2 + 15
                     insert_x = x1 - shift_left
-                text_value = str(value)
+
+                # Convert float ending with .0 to int
+                if isinstance(value, float) and value.is_integer():
+                    text_value = str(int(value))
+                else:
+                    text_value = str(value)
+
                 if dollar_sign:
                     text_value += " $"
                 text_value = (" " * leading_spaces) + text_value
