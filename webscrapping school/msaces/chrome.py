@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller
-from unidecode import unidecode  # ✅ Import unidecode
+from unidecode import unidecode
 
 # Auto-install ChromeDriver
 chromedriver_autoinstaller.install()
@@ -87,15 +87,27 @@ for idx, row in input_df.iterrows():
                     continue
                 name_text = name_tags[0].text.strip()
 
-                # ✅ Normalize and clean both Titular and Website text
-                titular_cleaned = re.sub(r'[,.]', '', name_full).strip().lower()
-                titular_full_normalized = unidecode(titular_cleaned)
+                # ✅ Clean Excel text
+                titular_cleaned = re.sub(r'[,.]', '', name_full).strip()
+                titular_cleaned = re.sub(r'\blda\b$', '', titular_cleaned, flags=re.IGNORECASE).strip()
+                titular_normalized = unidecode(titular_cleaned).lower()
 
-                website_cleaned = re.split(r'[,\.-]', name_text)[0].strip().lower()
-                website_clean_normalized = unidecode(website_cleaned)
+                # ✅ Clean website text
+                website_cleaned = re.sub(r'[,.]', '', name_text).strip()
+                website_cleaned = re.sub(r'\blda\b$', '', website_cleaned, flags=re.IGNORECASE).strip()
+                website_normalized = unidecode(website_cleaned).lower()
 
-                if website_clean_normalized and website_clean_normalized in titular_full_normalized:
+                # ✅ Check exact match
+                if website_normalized == titular_normalized:
                     matched = True
+
+                # ✅ Exception handling: Excel has no dash but website has
+                elif '-' in website_normalized and '-' not in titular_normalized:
+                    website_no_dash = website_normalized.replace('-', '').replace('  ', ' ').strip()
+                    if website_no_dash == titular_normalized:
+                        matched = True
+
+                if matched:
                     result_link = div.find_element(By.CSS_SELECTOR, "a.results__col-link")
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", result_link)
                     time.sleep(0.5)
