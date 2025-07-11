@@ -114,7 +114,7 @@ for idx, row in df.iterrows():
                 page.insert_text(
                     (insert_x, insert_y),
                     text_value,
-                    fontname="helvetica" if not bold else "helvetica-bold",
+                    fontname="Times-Roman" if not bold else "Times-Bold",
                     fontsize=11,
                     color=(0, 0, 0)
                 )
@@ -170,6 +170,20 @@ for idx, row in df.iterrows():
                         fontsize=font_size,
                         color=(0, 0, 0)
                     )
+        # === Insert 11683 beneath Entidade ===
+        entidade_instances = page.search_for("Entidade")
+        for inst in entidade_instances:
+            x1, y1, x2, y2 = inst
+            insert_x = x1  # aligned with Entidade
+            insert_y = y2 + 15  # beneath Entidade with spacing
+            page.insert_text(
+                (insert_x, insert_y),
+                "11683",
+                fontname="Times-Bold",
+                fontsize=11,
+                color=(0, 0, 0)
+                )
+            print(f"Inserted '11683' beneath Entidade at ({insert_x}, {insert_y})")
 
         # === Insert wrapped Titular ===
         insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
@@ -199,7 +213,9 @@ for idx, row in df.iterrows():
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
         insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
-
+        
+        
+        
         coords_list = [
             (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
             (72.95, 393.80), (93.43, 394.80), (148.89, 398.30),
