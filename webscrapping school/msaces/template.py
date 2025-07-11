@@ -109,7 +109,7 @@ for idx, row in df.iterrows():
                     text_value = str(value)
 
                 if dollar_sign:
-                    text_value += " $"
+                    text_value += " €"
                 text_value = (" " * leading_spaces) + text_value
                 page.insert_text(
                     (insert_x, insert_y),
