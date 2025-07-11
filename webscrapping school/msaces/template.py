@@ -184,6 +184,38 @@ for idx, row in df.iterrows():
                 color=(0, 0, 0)
                 )
             print(f"Inserted '11683' beneath Entidade at ({insert_x}, {insert_y})")
+            
+        # === Insert 367098190 beneath Referência ===
+        referencia_instances = page.search_for("Referência")
+        for inst in referencia_instances:
+            x1, y1, x2, y2 = inst
+            insert_x = x1  # aligned with Referência
+            insert_y = y2 + 15  # beneath Referência with spacing
+            page.insert_text(
+                (insert_x, insert_y),
+                "367098190",
+                fontname="Times-Bold",
+                fontsize=11,
+                color=(0, 0, 0)
+                )
+            print(f"Inserted '367098190' beneath Referência at ({insert_x}, {insert_y})")
+
+
+        # === Insert 34,44€ beneath Montante ===
+        montante_instances = page.search_for("Montante")
+        for inst in montante_instances:
+            x1, y1, x2, y2 = inst
+            insert_x = x1  # aligned with Montante
+            insert_y = y2 + 15  # beneath Montante with spacing
+            page.insert_text(
+                (insert_x, insert_y),
+                "34,44€",
+                fontname="Times-Bold",
+                fontsize=11,
+                color=(0, 0, 0)
+                )
+            print(f"Inserted '34,44€' beneath Montante at ({insert_x}, {insert_y})")
+
 
         # === Insert wrapped Titular ===
         insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
