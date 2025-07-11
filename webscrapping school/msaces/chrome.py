@@ -146,9 +146,10 @@ for idx, row in input_df.iterrows():
                     except:
                         valor_importancia = 0.0
 
-                    iva = round(valor_importancia * 0.23, 2)
-                    valor_total = round(valor_importancia + iva, 2)
-                    montante_mb = valor_total
+                    # Fixed values with euro signs as requested
+                    iva = "28€"
+                    valor_total = "6,44€"
+                    montante_mb = "34,44€"
 
                     referencia_mb = str(next_ref).zfill(9)
                     entidade_mb = str(next_ent).zfill(5)
