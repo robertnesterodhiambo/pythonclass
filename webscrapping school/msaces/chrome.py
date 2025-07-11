@@ -89,23 +89,19 @@ for idx, row in input_df.iterrows():
 
                 # ✅ Clean Excel text
                 titular_cleaned = re.sub(r'[,.]', '', name_full).strip()
-                titular_cleaned = re.sub(r'\blda\b$', '', titular_cleaned, flags=re.IGNORECASE).strip()
-                titular_normalized = unidecode(titular_cleaned).lower()
+                titular_cleaned = re.sub(r'\b(unipessoal )?lda\b$', '', titular_cleaned, flags=re.IGNORECASE).strip()
+                titular_cleaned = re.sub(r'\s+', ' ', titular_cleaned)
+                titular_normalized = unidecode(titular_cleaned).lower().replace('-', '').replace(' ', '')
 
                 # ✅ Clean website text
                 website_cleaned = re.sub(r'[,.]', '', name_text).strip()
-                website_cleaned = re.sub(r'\blda\b$', '', website_cleaned, flags=re.IGNORECASE).strip()
-                website_normalized = unidecode(website_cleaned).lower()
+                website_cleaned = re.sub(r'\b(unipessoal )?lda\b$', '', website_cleaned, flags=re.IGNORECASE).strip()
+                website_cleaned = re.sub(r'\s+', ' ', website_cleaned)
+                website_normalized = unidecode(website_cleaned).lower().replace('-', '').replace(' ', '')
 
-                # ✅ Check exact match
+                # ✅ Final comparison ignoring dashes and spaces
                 if website_normalized == titular_normalized:
                     matched = True
-
-                # ✅ Exception handling: Excel has no dash but website has
-                elif '-' in website_normalized and '-' not in titular_normalized:
-                    website_no_dash = website_normalized.replace('-', '').replace('  ', ' ').strip()
-                    if website_no_dash == titular_normalized:
-                        matched = True
 
                 if matched:
                     result_link = div.find_element(By.CSS_SELECTOR, "a.results__col-link")
