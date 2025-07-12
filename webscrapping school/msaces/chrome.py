@@ -147,8 +147,8 @@ for idx, row in input_df.iterrows():
                         valor_importancia = "28 "
 
                     # Fixed values with euro signs as requested
-                    iva = "28"
-                    valor_total = "6,44"
+                    iva = "6,44"
+                    valor_total = "34,44"
                     montante_mb = "34,44"
 
                     referencia_mb = str(next_ref).zfill(9)

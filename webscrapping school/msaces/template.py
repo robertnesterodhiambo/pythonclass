@@ -3,7 +3,9 @@ import glob
 import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
+import unicodedata
 
+# -- coding: utf-8 --
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template.pdf"
 
@@ -109,7 +111,9 @@ for idx, row in df.iterrows():
                     text_value = str(value)
 
                 if dollar_sign:
-                    text_value += " €"
+                    euro_sign = unicodedata.lookup("EURO SIGN")
+                    text_value += f" {euro_sign}"
+
                 text_value = (" " * leading_spaces) + text_value
                 page.insert_text(
                     (insert_x, insert_y),
@@ -170,6 +174,7 @@ for idx, row in df.iterrows():
                         fontsize=font_size,
                         color=(0, 0, 0)
                     )
+
         # === Insert 11683 beneath Entidade ===
         entidade_instances = page.search_for("Entidade")
         for inst in entidade_instances:
@@ -245,9 +250,7 @@ for idx, row in df.iterrows():
         insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
         insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
         insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
-        
-        
-        
+
         coords_list = [
             (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
             (72.95, 393.80), (93.43, 394.80), (148.89, 398.30),
