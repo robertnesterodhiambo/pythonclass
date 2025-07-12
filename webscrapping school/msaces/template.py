@@ -7,7 +7,7 @@ import unicodedata
 
 # -- coding: utf-8 --
 # === Step 1: Locate Template PDF === 
-pdf_path = "Template.pdf"
+pdf_path = "Template2.pdf"
 
 # === Step 2: Locate latest Excel file ===
 excel_folder = "excel"
@@ -110,9 +110,10 @@ for idx, row in df.iterrows():
                 else:
                     text_value = str(value)
 
-                if dollar_sign:
-                    euro_sign = unicodedata.lookup("EURO SIGN")
-                    text_value += f" {euro_sign}"
+                # === Omit typing of EUR sign ===
+                # if dollar_sign:
+                #     euro_sign = unicodedata.lookup("EURO SIGN")
+                #     text_value += f" {euro_sign}"
 
                 text_value = (" " * leading_spaces) + text_value
                 page.insert_text(
@@ -176,50 +177,50 @@ for idx, row in df.iterrows():
                     )
 
         # === Insert 11683 beneath Entidade ===
-        entidade_instances = page.search_for("Entidade")
-        for inst in entidade_instances:
-            x1, y1, x2, y2 = inst
-            insert_x = x1  # aligned with Entidade
-            insert_y = y2 + 15  # beneath Entidade with spacing
-            page.insert_text(
-                (insert_x, insert_y),
-                "11683",
-                fontname="Times-Bold",
-                fontsize=11,
-                color=(0, 0, 0)
-                )
-            print(f"Inserted '11683' beneath Entidade at ({insert_x}, {insert_y})")
+        # entidade_instances = page.search_for("Entidade")
+        # for inst in entidade_instances:
+        #     x1, y1, x2, y2 = inst
+        #     insert_x = x1  # aligned with Entidade
+        #     insert_y = y2 + 15  # beneath Entidade with spacing
+        #     page.insert_text(
+        #         (insert_x, insert_y),
+        #         "11683",
+        #         fontname="Times-Bold",
+        #         fontsize=11,
+        #         color=(0, 0, 0)
+        #         )
+        #     print(f"Inserted '11683' beneath Entidade at ({insert_x}, {insert_y})")
             
         # === Insert 367098190 beneath Referência ===
-        referencia_instances = page.search_for("Referência")
-        for inst in referencia_instances:
-            x1, y1, x2, y2 = inst
-            insert_x = x1  # aligned with Referência
-            insert_y = y2 + 15  # beneath Referência with spacing
-            page.insert_text(
-                (insert_x, insert_y),
-                "367098190",
-                fontname="Times-Bold",
-                fontsize=11,
-                color=(0, 0, 0)
-                )
-            print(f"Inserted '367098190' beneath Referência at ({insert_x}, {insert_y})")
+        # referencia_instances = page.search_for("Referência")
+        # for inst in referencia_instances:
+        #     x1, y1, x2, y2 = inst
+        #     insert_x = x1  # aligned with Referência
+        #     insert_y = y2 + 15  # beneath Referência with spacing
+        #     page.insert_text(
+        #         (insert_x, insert_y),
+        #         "367098190",
+        #         fontname="Times-Bold",
+        #         fontsize=11,
+        #         color=(0, 0, 0)
+        #         )
+        #     print(f"Inserted '367098190' beneath Referência at ({insert_x}, {insert_y})")
 
 
         # === Insert 34,44€ beneath Montante ===
-        montante_instances = page.search_for("Montante")
-        for inst in montante_instances:
-            x1, y1, x2, y2 = inst
-            insert_x = x1  # aligned with Montante
-            insert_y = y2 + 15  # beneath Montante with spacing
-            page.insert_text(
-                (insert_x, insert_y),
-                "34,44€",
-                fontname="Times-Bold",
-                fontsize=11,
-                color=(0, 0, 0)
-                )
-            print(f"Inserted '34,44€' beneath Montante at ({insert_x}, {insert_y})")
+        # montante_instances = page.search_for("Montante")
+        # for inst in montante_instances:
+        #     x1, y1, x2, y2 = inst
+        #     insert_x = x1  # aligned with Montante
+        #     insert_y = y2 + 15  # beneath Montante with spacing
+        #     page.insert_text(
+        #         (insert_x, insert_y),
+        #         "34,44€",
+        #         fontname="Times-Bold",
+        #         fontsize=11,
+        #         color=(0, 0, 0)
+        #         )
+        #     print(f"Inserted '34,44€' beneath Montante at ({insert_x}, {insert_y})")
 
 
         # === Insert wrapped Titular ===
@@ -247,9 +248,10 @@ for idx, row in df.iterrows():
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
-        insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
-        insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
+        # === Omit typing into Importância, IVA (23%), TOTAL ===
+        # insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
+        # insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
+        # insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
 
         coords_list = [
             (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
