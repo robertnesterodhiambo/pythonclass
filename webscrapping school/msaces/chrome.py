@@ -142,14 +142,14 @@ for idx, row in input_df.iterrows():
                             valor_text = valor_tag.text.strip().replace("€", "").replace(",", ".")
                             valor_importancia = float(re.search(r'[\d.]+', valor_text).group())
                         else:
-                            valor_importancia = "28"
+                            valor_importancia = "28 "
                     except:
-                        valor_importancia = "28"
+                        valor_importancia = "28 "
 
                     # Fixed values with euro signs as requested
-                    iva = "28€"
-                    valor_total = "6,44€"
-                    montante_mb = "34,44€"
+                    iva = "28"
+                    valor_total = "6,44"
+                    montante_mb = "34,44"
 
                     referencia_mb = str(next_ref).zfill(9)
                     entidade_mb = str(next_ent).zfill(5)
