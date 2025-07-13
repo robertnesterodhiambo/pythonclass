@@ -116,10 +116,14 @@ for idx, row in df.iterrows():
                 #     text_value += f" {euro_sign}"
 
                 text_value = (" " * leading_spaces) + text_value
+
+                # === Make Código Postal Helvetica ===
+                font_name = "helvetica" if label == "Código Postal:" else ("Times-Roman" if not bold else "Times-Bold")
+
                 page.insert_text(
                     (insert_x, insert_y),
                     text_value,
-                    fontname="Times-Roman" if not bold else "Times-Bold",
+                    fontname=font_name,
                     fontsize=11,
                     color=(0, 0, 0)
                 )
