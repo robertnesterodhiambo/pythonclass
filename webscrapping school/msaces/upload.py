@@ -29,7 +29,7 @@ chrome_options = Options()
 chrome_options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=chrome_options)
 
-wait = WebDriverWait(driver, 20)
+wait = WebDriverWait(driver, 30)
 
 try:
     # === Step 3: Navigate to Xodo site ===
@@ -41,16 +41,25 @@ try:
         file_input.send_keys(latest_pdf)
         print("File uploaded via input[type='file'].")
 
-    except Exception as inner_e:
-        print("input[type='file'] not accessible directly. Upload failed.")
-        print("Error details:", inner_e)
+        # === Step 5: Wait explicitly for 5 seconds before clicking Convert ===
+        time.sleep(5)
 
-    # === Optional: wait for conversion to complete or manual actions ===
-    time.sleep(30)
+        # === Step 6: Wait for "Convert" button to be clickable and click it ===
+        convert_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Convert')]")))
+        convert_button.click()
+        print("Clicked Convert button.")
+
+        # === Step 7: Wait for conversion to complete (adjust time or implement result detection) ===
+        time.sleep(60)
+        print("Waited for conversion to complete.")
+
+    except Exception as inner_e:
+        print("Upload or convert button interaction failed.")
+        print("Error details:", inner_e)
 
 except Exception as e:
     print("Automation error:", e)
 
 finally:
-    # === Step 5: Close browser ===
+    # === Step 8: Close browser ===
     driver.quit()
