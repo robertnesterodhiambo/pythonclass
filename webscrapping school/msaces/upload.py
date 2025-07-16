@@ -56,7 +56,7 @@ try:
         convert_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Convert')]")))
         convert_button.click()
         print("Clicked Convert button.")
-        time.sleep(15)
+        time.sleep(25)
         # === Step 7: Wait for "Download" button by data-testid and click it ===
         download_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[data-testid='side-button']")))
         download_button.click()
