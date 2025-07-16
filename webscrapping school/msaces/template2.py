@@ -166,7 +166,19 @@ for idx, row in df.iterrows():
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        # No Marca box filling since it's empty
+        # === Insert image for this NumeroPedido ===
+        image_filename = f"{row['NumeroPedido']}.jpeg"
+        image_path = os.path.join("extracted_image", image_filename)
+
+        if os.path.exists(image_path):
+            image_rect = fitz.Rect(36.97, 294.35, 298.78, 531.23)
+            try:
+                page.insert_image(image_rect, filename=image_path)
+                print(f"Inserted image for NumeroPedido {row['NumeroPedido']}")
+            except Exception as e:
+                print(f"Failed to insert image for NumeroPedido {row['NumeroPedido']}: {e}")
+        else:
+            print(f"Image not found for NumeroPedido {row['NumeroPedido']} at {image_path}")
 
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
