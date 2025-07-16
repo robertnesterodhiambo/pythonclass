@@ -10,6 +10,10 @@ if not pdf_files:
     raise FileNotFoundError("No Boletim_da_PI_-_*.pdf files found.")
 latest_pdf = max(pdf_files, key=os.path.getctime)
 
+# === Create folder for extracted images ===
+output_folder = "extracted_image"
+os.makedirs(output_folder, exist_ok=True)
+
 def extract_images_columnwise_fixed(pdf_path):
     doc = fitz.open(pdf_path)
     total_saved = 0
@@ -50,28 +54,23 @@ def extract_images_columnwise_fixed(pdf_path):
                 left_codes, right_codes = all_codes_per_page[page_num]
 
                 if img_x < mid_x:  # Left column
-                    # Find 210 above image in left column
                     for x, y, code in left_codes:
                         if y < img_y:
                             matched_code = code
                             break
-                    # Fallback: bottom-most 210 from previous page's right column
                     if matched_code is None and page_num > 0:
                         prev_right_codes = all_codes_per_page[page_num - 1][1]
                         if prev_right_codes:
                             matched_code = prev_right_codes[0][2]
 
                 else:  # Right column
-                    # Find 210 above image in right column
                     for x, y, code in right_codes:
                         if y < img_y:
                             matched_code = code
                             break
-                    # Fallback: bottom-most left column 210 from same page
                     if matched_code is None and left_codes:
                         matched_code = left_codes[0][2]
 
-                # Final fallback
                 if matched_code is None:
                     matched_code = f"page{page_num+1}_img{xref_index+1}"
 
@@ -91,10 +90,11 @@ def extract_images_columnwise_fixed(pdf_path):
                     image_counts[matched_code] += 1
                     filename = f"{matched_code}_{image_counts[matched_code]}.{ext}"
 
-                with open(filename, "wb") as f:
+                full_path = os.path.join(output_folder, filename)
+                with open(full_path, "wb") as f:
                     f.write(img_bytes)
 
-                print(f"✅ Saved {filename}")
+                print(f"✅ Saved {full_path}")
                 total_saved += 1
 
     print(f"\n🎉 Done! Extracted {total_saved} image(s) with enhanced image-to-(210) logic.")
