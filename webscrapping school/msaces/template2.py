@@ -4,8 +4,10 @@ import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
+from PIL import Image  # Added for image size calculations
 
 # -- coding: utf-8 --
+
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template2.pdf"
 
@@ -166,15 +168,29 @@ for idx, row in df.iterrows():
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        # === Insert image for this NumeroPedido ===
+        # === Insert centered image ===
         image_filename = f"{row['NumeroPedido']}.jpeg"
         image_path = os.path.join("extracted_image", image_filename)
 
         if os.path.exists(image_path):
             image_rect = fitz.Rect(36.97, 294.35, 298.78, 531.23)
             try:
-                page.insert_image(image_rect, filename=image_path)
-                print(f"Inserted image for NumeroPedido {row['NumeroPedido']}")
+                with Image.open(image_path) as img:
+                    img_width, img_height = img.size
+                    rect_width = image_rect.width
+                    rect_height = image_rect.height
+
+                    scale = min(rect_width / img_width, rect_height / img_height)
+                    new_width = img_width * scale
+                    new_height = img_height * scale
+
+                    x0 = image_rect.x0 + (rect_width - new_width) / 2
+                    y0 = image_rect.y0 + (rect_height - new_height) / 2
+                    x1 = x0 + new_width
+                    y1 = y0 + new_height
+
+                    doc[page_num].insert_image(fitz.Rect(x0, y0, x1, y1), filename=image_path)
+                    print(f"Inserted centered image for NumeroPedido {row['NumeroPedido']}")
             except Exception as e:
                 print(f"Failed to insert image for NumeroPedido {row['NumeroPedido']}: {e}")
         else:
