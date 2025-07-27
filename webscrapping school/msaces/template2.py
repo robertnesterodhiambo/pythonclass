@@ -180,7 +180,7 @@ for idx, row in df.iterrows():
                     rect_width = image_rect.width
                     rect_height = image_rect.height
 
-                    scale = min(rect_width / img_width, rect_height / img_height)
+                    scale = 0.75* min(rect_width / img_width, rect_height / img_height)
                     new_width = img_width * scale
                     new_height = img_height * scale
 
