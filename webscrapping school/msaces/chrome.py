@@ -36,7 +36,8 @@ if 'Titular' not in input_df.columns:
 # Prepare output DataFrame
 extra_cols = [
     'Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento',
-    'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB', 'CapitalSocial'
+    'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB',
+    'CapitalSocial', 'Forma Jurídica'
 ]
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
@@ -160,6 +161,20 @@ for idx, row in input_df.iterrows():
                     except:
                         capital_social = ""
 
+                    # Extract Forma Jurídica
+                    try:
+                        juridica_sections = driver.find_elements(By.CSS_SELECTOR, "div.px-md--2.detail__line.f--grow")
+                        forma_juridica = ""
+                        for section in juridica_sections:
+                            if "Forma Jurídica" in section.text:
+                                try:
+                                    forma_juridica = section.find_element(By.CSS_SELECTOR, "p.t--d-blue").text.strip()
+                                    break
+                                except:
+                                    forma_juridica = ""
+                    except:
+                        forma_juridica = ""
+
                     # Fixed values with euro signs as requested
                     iva = "6,44"
                     valor_total = "34,44"
@@ -185,7 +200,8 @@ for idx, row in input_df.iterrows():
                         'MontanteMB': montante_mb,
                         'ReferenciaMB': referencia_mb,
                         'EntidadeMB': entidade_mb,
-                        'CapitalSocial': capital_social
+                        'CapitalSocial': capital_social,
+                        'Forma Jurídica': forma_juridica
                     })
 
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
