@@ -54,7 +54,20 @@ for idx, row in df.iterrows():
         print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because Marca is NOT empty")
         continue
 
-    print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']} (Marca is empty)")
+    # === CapitalSocial check: Only proceed if between 5€ and 6100€ ===
+    capital_raw = str(row['CapitalSocial'])
+    try:
+        capital_cleaned = capital_raw.replace("€", "").replace(".", "").replace(",", ".").strip()
+        capital_value = float(capital_cleaned)
+    except Exception as e:
+        print(f"Skipping row {idx+1} due to CapitalSocial parse error: {e}")
+        continue
+
+    if not (5 < capital_value < 6100):
+        print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because CapitalSocial ({capital_value} €) is not in range (5€, 6100€)")
+        continue
+
+    print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']} (Marca is empty and CapitalSocial is {capital_value} €)")
 
     doc = fitz.open(pdf_path)
 
@@ -180,7 +193,7 @@ for idx, row in df.iterrows():
                     rect_width = image_rect.width
                     rect_height = image_rect.height
 
-                    scale = 0.75* min(rect_width / img_width, rect_height / img_height)
+                    scale = 0.75 * min(rect_width / img_width, rect_height / img_height)
                     new_width = img_width * scale
                     new_height = img_height * scale
 
