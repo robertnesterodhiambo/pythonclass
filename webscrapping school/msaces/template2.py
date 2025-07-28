@@ -5,6 +5,7 @@ import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
 from PIL import Image  # Added for image size calculations
+from datetime import datetime  
 
 # -- coding: utf-8 --
 
@@ -21,9 +22,12 @@ print(f"Latest Excel file found: {latest_excel}")
 df = pd.read_excel(latest_excel)
 print(df.head())  # View to confirm your columns
 
-# === Step 4: Prepare output folder ===
-output_folder = "PDF"
-os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
+
+# === Step 4: Prepare dynamic output folder ===
+today_str = datetime.today().strftime('%Y-%m-%d')
+output_folder = f"PDF_{today_str}"
+os.makedirs(output_folder, exist_ok=True)
+
 
 # === Helper function to wrap text to width ===
 def wrap_text_to_width(text, fontname, fontsize, max_width):
