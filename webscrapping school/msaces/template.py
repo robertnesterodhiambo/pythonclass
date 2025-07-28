@@ -4,7 +4,7 @@ import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
-
+from datetime import datetime  
 # -- coding: utf-8 --
 
 # === Step 1: Locate Template PDF === 
@@ -20,9 +20,18 @@ print(f"Latest Excel file found: {latest_excel}")
 df = pd.read_excel(latest_excel)
 print(df.head())  # View to confirm your columns
 
-# === Step 4: Prepare output folder ===
-output_folder = "PDF"
-os.makedirs(output_folder, exist_ok=True)  # Create if doesn't exist
+from datetime import datetime  # Add this to your imports at the top
+
+# === Step 4: Prepare dynamic output folder based on date ===
+today_str = datetime.today().strftime('%Y-%m-%d')
+output_folder = f"PDF_{today_str}"
+
+if os.path.exists(output_folder):
+    print(f"⚠️ Output folder '{output_folder}' already exists. Files may be overwritten.")
+else:
+    os.makedirs(output_folder)
+    print(f"✅ Created output folder: {output_folder}")
+
 
 # === Helper function to wrap text to width ===
 def wrap_text_to_width(text, fontname, fontsize, max_width):
