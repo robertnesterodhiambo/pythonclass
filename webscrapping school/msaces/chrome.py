@@ -36,7 +36,7 @@ if 'Titular' not in input_df.columns:
 # Prepare output DataFrame
 extra_cols = [
     'Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento',
-    'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB'
+    'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB', 'CapitalSocial'
 ]
 if os.path.exists(output_path):
     output_df = pd.read_excel(output_path)
@@ -146,6 +146,20 @@ for idx, row in input_df.iterrows():
                     except:
                         valor_importancia = "28 "
 
+                    # Extract Capital Social
+                    try:
+                        detail_sections = driver.find_elements(By.CSS_SELECTOR, "div.t-md--right.detail__line")
+                        capital_social = ""
+                        for section in detail_sections:
+                            if "Capital Social" in section.text:
+                                try:
+                                    capital_social = section.find_element(By.CSS_SELECTOR, "p.t--d-blue").text.strip()
+                                    break
+                                except:
+                                    capital_social = ""
+                    except:
+                        capital_social = ""
+
                     # Fixed values with euro signs as requested
                     iva = "6,44"
                     valor_total = "34,44"
@@ -170,7 +184,8 @@ for idx, row in input_df.iterrows():
                         'ValorTotal': valor_total,
                         'MontanteMB': montante_mb,
                         'ReferenciaMB': referencia_mb,
-                        'EntidadeMB': entidade_mb
+                        'EntidadeMB': entidade_mb,
+                        'CapitalSocial': capital_social
                     })
 
                     output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)

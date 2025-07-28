@@ -1,0 +1,5427 @@
+Sum
+Aviso ........................................................................................
+Códigos ...................................................................................
+PATENTES DE INVENÇÃO ....................................................
+Pedidos - BBCA/1A ............................................................
+Concessões - FG4A .............................................................
+Patentes europeias vigentes em Portugal - FG4A ............
+Recusas - FC4A ..................................................................
+Requerimentos indeferidos - HZ4A ..................................
+Requerimentos indeferidos - Patente internacional - HZ
+MODELOS DE UTILIDADE .....................................................
+Concessões - FG4K ............................................................
+Recusas - FC4K ..................................................................
+DESENHOS OU MODELOS ....................................................
+Concessões - FG4Y .............................................................
+REGISTO NACIONAL DE MARCAS .......................................
+Pedidos ................................................................................
+Concessões ..........................................................................
+Recusas ................................................................................
+Renovações .........................................................................
+Averbamentos .....................................................................
+Declarações de caducidade ................................................
+Requerimentos indeferidos ................................................
+Pedidos e Avisos de Deferimento de Revalidação............
+Declarações de Invalidade .................................................
+REGISTO INTERNACIONAL DE MARCAS ............................
+Concessões ..........................................................................
+REGISTO DE LOGÓTIPOS .....................................................
+Pedidos ................................................................................
+Renovações .........................................................................
+Averbamentos .....................................................................
+AGENTES OFICIAIS DE PROPRIEDADE INDUSTRIAL ........
+PROCURADORES AUTORIZADOS .......................................
+BOLETIM DA PROPR
+Nº 2025/07/28 (143/2025)
+mário
+............................................................................................... 2
+............................................................................................... 2
+............................................................................................... 6
+............................................................................................... 6
+............................................................................................... 7
+............................................................................................... 8
+............................................................................................... 9
+............................................................................................. 10
+Z4A ....................................................................................... 11
+............................................................................................. 12
+............................................................................................. 12
+............................................................................................. 13
+............................................................................................. 14
+............................................................................................. 14
+............................................................................................. 15
+............................................................................................. 15
+............................................................................................. 31
+............................................................................................. 34
+............................................................................................. 35
+............................................................................................. 36
+............................................................................................. 37
+............................................................................................. 38
+............................................................................................. 39
+............................................................................................. 40
+............................................................................................. 41
+............................................................................................. 41
+............................................................................................. 42
+............................................................................................. 42
+............................................................................................. 43
+............................................................................................. 44
+............................................................................................. 45
+............................................................................................. 67
+RIEDADE INDUSTRIAL
+28 de julho de 2025
+
+BOLETIM DA PROPRIEDADE
+Avi
+À matéria publicada no presente Boletim são aplicáveis
+——
+Cód
+Códigos das rubricas (St. 17 OMPI)
+Títulos de propriedade industrial:
+A — Patente de invenção.
+K — Modelo de utilidade.
+L — Modelo industrial.
+Q — Desenho industrial.
+Y – Desenho ou modelo.
+1 — Pedido não examinado.
+3 — Pedido examinado sem pesquisa.
+4 — Pedido examinado com pesquisa.
+Publicação:
+BB — Publicação de pedidos e correspondente
+disponibilização dos documentos ao público, para consulta
+ou fornecimento de cópias, a pedido.
+Oposição:
+CA — Fase de oposição.
+Procedimento de concessão:
+FA — Desistências.
+FC — Recusas.
+FF — Concessão provisória.
+FG — Concessão; Registo; Estatuto legal; Licenças.
+GA — Transformação de pedido de título de
+propriedade industrial.
+PC — Transmissão.
+PD — Mudanças de identidade/sede.
+QB — Licenças concedidas e registadas.
+Correções; outros:
+HK — Retificações.
+HZ — Requerimentos indeferidos.
+Caducidade dos direitos de propriedade industrial:
+MA — Renúncias.
+MM — Caducidades.
+Manutenção dos direitos de propriedade industrial:
+NF — Revalidações.
+Outras decisões:
+RL — Despachos proferidos por sentença alterando
+despacho anterior.
+iso
+as disposições do Código da Propriedade Industrial.
+——
+igos
+Lista dos Códigos INID — Identificação
+Numérica Internacional de Dados Bibliográficos
+(Normas St. 9, St. 60, St. 80 OMPI)
+Patentes, Modelos de Utilidade, Certificados
+Complementares de Proteção, Desenhos ou Modelos:
+(11) Número de pedido.
+(19) Organismo emissor, país.
+(22) Data do pedido.
+(28) Número de objetos de um pedido múltiplo.
+(30) Data, país e número de prioridade.
+(43) Data de publicação de pedido não examinado.
+(44) Data de publicação de pedido examinado.
+(51) Classificação internacional:
+A, U — Int. Cl. 7;
+L, Q, Y — LOC (8).
+(54) Título em português.
+(55) Reprodução fotográfica do desenho ou modelo.
+(57) Resumo e desenho da invenção/descrição do
+desenho ou modelo.
+(71) Requerente, nacionalidade, profissão, morada.
+(72) Inventor(es)/autor(es).
+Marcas, Nomes e Insígnias de Estabelecimento, Logótipos,
+Denominações de Origem e Indicações Geográficas,
+Recompensas:
+(210) Número de pedido.
+(220) Data do pedido.
+(300) Data, país e número de prioridade.
+(441) Data de publicação do pedido não examinado.
+(442) Data de publicação do pedido examinado.
+(511) Lista de produtos ou serviços segundo a
+Classificação Internacional de Nice [NCL (8)].
+(512) Classificação Nacional e/ou lista de produtos ou
+serviços.
+(531) Descrição dos elementos figurativos das marcas
+segundo a Classificação Internacional de Viena [CFE (5)].
+(540) Reprodução do sinal.
+(550) Indicação do tipo de marca
+(551) Indicação de que a marca é coletiva, de
+certificação ou de associação.
+(561) Transliteração da marca.
+(566) Tradução da marca ou das palavras nela contidas.
+(591) Informações de cores reivindicadas.
+(730) Nome do requerente, nacionalidade, profissão,
+morada.
+
+BOLETIM DA PROPRIEDADE
+Outros códigos
+MNA — Marca nacional.
+MCA — Marca Coletiva.
+MCC — Marca de Certificação ou de Garantia.
+NOM — Nome de estabelecimento.
+INS — Insígnia de estabelecimento.
+LOG — Logótipo.
+DNO — Denominação de Origem Nacional.
+DOI — Denominação de Origem Internacional.
+IGR — Indicação Geográfica.
+RCS — Recompensa.
+Lista alfabética dos códigos de países,
+organizações intergovernamentais
+e outras entidades
+(Norma St. 3 OMPI)
+AD — Andorra.
+AE — Emirados Árabes Unidos.
+AF — Afeganistão.
+AG — Antígua e Barbuda.
+AI — Anguila.
+AL — Albânia.
+AM — Arménia.
+AN — Antilhas Holandesas.
+AO — Angola.
+AP — ARIPO — Organização Regional Africana da
+Propriedade Industrial.
+AR — Argentina.
+AT — Áustria.
+AU — Austrália.
+AW — Aruba.
+AZ — Azerbaijão.
+BA — Bósnia-Herzegovina.
+BB — Barbados.
+BD — Bangladesh.
+BE — Bélgica.
+BF — Burquina Faso.
+BG — Bulgária.
+BH — Barém.
+BI — Burundi.
+BJ — Benin.
+BM — Bermudas.
+BN — Brunei Darussalam.
+BO — Bolívia.
+BOIP — Office da Propriedade Intelectual do
+Benelux.
+BR — Brasil.
+BS — Baamas.
+BT — Butão.
+BV — Ilha Bouvet.
+BW — Botswana.
+BY — Bielo-Rússia.
+BZ — Belize.
+CA — Canadá.
+CD — República Democrática do Congo.
+CF — República Centro-Africana.
+CG — Congo.
+CH — Suíça.
+CI — Costa do Marfim.
+CK — Ilhas Cook.
+CL — Chile.
+CM — Camarões.
+CN — China.
+CO — Colômbia.
+CR — Costa Rica.
+CU — Cuba.
+CV — Cabo Verde.
+CY — Chipre.
+CZ — República Checa.
+DE — Alemanha.
+DJ — Djibuti.
+DK — Dinamarca.
+DM — Dominica.
+DO — República Dominicana.
+DZ — Argélia.
+EA — EAPO — Organização Euro-Asiática de
+Patentes.
+EC — Equador.
+EE — Estónia.
+EG — Egipto.
+EH — Sara Ocidental.
+EM — EUIPO — Instituto da Propriedade Intelectual
+da União Europeia.
+EP — IEP — Instituto Europeu de Patentes.
+ER — Eritreia.
+ES — Espanha.
+ET — Etiópia.
+FI — Finlândia.
+FJ — Fiji.
+FK — Ilhas Malvinas.
+FO — Ilhas Faroé.
+FR — França.
+GA — Gabão.
+GB — Reino Unido.
+GC — Instituto de Patentes do Conselho de
+Cooperação dos Estados Árabes do Golfo (GCC).
+GD — Granada.
+GE — Geórgia.
+GG – Guernsey.
+GH — Gana.
+GI — Gibraltar.
+GL — Gronelândia.
+GM — Gâmbia.
+GN — Guiné.
+GQ — Guiné Equatorial.
+GR — Grécia.
+GS — Geórgia do Sul e as ilhas Sandwich do Sul.
+GT — Guatemala.
+GW — Guiné-Bissau.
+GY — Guiana.
+HK — Hong-Kong/China.
+HN — Honduras.
+HR — Croácia.
+HT — Haiti.
+HU — Hungria.
+IB — Secretaria Internacional da Organização
+Mundial da Propriedade Intelectual (OMPI).
+ID — Indonésia.
+IE — Irlanda.
+
+BOLETIM DA PROPRIEDADE
+IL — Israel.
+IM — Ilha de Man.
+IN — Índia.
+IQ — Iraque.
+IR — República Islâmica do Irão.
+IS — Islândia.
+IT — Itália.
+JE — Jersey.
+JM — Jamaica.
+JO — Jordânia.
+JP — Japão.
+KE — Quénia.
+KG — Quirguistão.
+KH — Camboja.
+KI — Quiribáti.
+KM — Comores.
+KN — S. Kitts e Nevis.
+KP — República Popular Democrática da Coreia.
+KR — República da Coreia.
+KW — Koweit.
+KY — Ilhas Caimão.
+KZ — Cazaquistão.
+LA — República Popular Democrática do Laos.
+LB — Líbano.
+LC — Santa Lúcia.
+LI — Listenstaina.
+LK — Sri Lanka.
+LR — Libéria.
+LS — Lesoto.
+LT — Lituânia.
+LU — Luxemburgo.
+LV — Letónia.
+LY — Líbia.
+MA — Marrocos.
+MC — Mónaco.
+MD — República da Moldávia.
+ME — Montenegro.
+MG — Madagáscar.
+MK — Ex-República Jugoslava da Macedónia.
+ML — Mali.
+MM — Myanmar (Birmânia).
+MN — Mongólia.
+MO — Macau.
+MP — Ilhas Marianas do Norte.
+MR — Mauritânia.
+MS — Montserrate.
+MT — Malta.
+MU — Maurícias.
+MV — Ilhas Maldivas.
+MW — Malavi.
+MX — México.
+MY — Malásia.
+MZ — Moçambique.
+NA — Namíbia.
+NE — Níger.
+NG — Nigéria.
+NI — Nicarágua.
+NL — Holanda.
+NO — Noruega.
+NP — Nepal.
+NPI — Instituto Nórdico de Patentes.
+NR — Nauru.
+NZ — Nova Zelândia.
+OA — OAPI — Organização Africana da Propriedade
+Intelectual.
+OM — Omã.
+PA — Panamá.
+PE — Peru.
+PG — Papua Nova Guiné.
+PH — Filipinas.
+PK — Paquistão.
+PL — Polónia.
+PT — Portugal.
+PW — Palau.
+PY — Paraguai.
+QA — Quatar.
+QZ — Instituto Comunitário de Variedades Vegetais
+(CPVO).
+RO — Roménia.
+RS — Sérvia.
+RU — Federação Russa.
+RW — Ruanda.
+SA — Arábia Saudita.
+SB — Ilhas Salomão.
+SC — Seychelles.
+SD — Sudão.
+SE — Suécia.
+SG — Singapura.
+SH — Santa Helena.
+SI — Eslovénia.
+SK — Eslováquia.
+SL — Serra Leoa.
+SM — São Marinho.
+SN — Senegal.
+SO — Somália.
+SR — Suriname.
+ST — São Tomé e Príncipe.
+SV — El Salvador.
+SY — República Árabe da Síria.
+SZ — Suazilândia.
+TC — Ilhas Turcas e Caicos.
+TD — Chade.
+TG — Togo.
+TH — Tailândia.
+TJ — Tajiquistão.
+TL — Timor-Leste.
+TM — Turquemenistão.
+TN — Tunísia.
+TO — Tonga.
+TR — Turquia.
+TT — Trinidade e Tobago.
+TV — Tuvalu.
+TW — Taiwan/China.
+TZ — República Unida da Tanzânia.
+UA — Ucrânia.
+UG — Uganda.
+US — Estados Unidos da América.
+UY — Uruguai.
+UZ — Uzbequistão.
+VA — Vaticano.
+VC — São Vicente e Granadinas.
+VE — Venezuela.
+VG — Ilhas Virgens (GB).
+VN — Vietname.
+
+BOLETIM DA PROPRIEDADE
+VU — Vanuatu.
+WO
+—
+OMPI
+—
+Organização
+Mundial
+da
+Propriedade Intelectual.
+WS — Samoa.
+YE — Iémen.
+YU — Jugoslávia. (1)
+ZA — África do Sul.
+ZM — Zâmbia.
+ZW — Zimbabwe.
+(1) O código YU foi retirado da lista, em Novembro de 2006. Até essa
+data identifica a ex-Jugoslávia, a Sérvia e o Montenegro.
+
+BOLETIM DA PROPRIEDADE
+PATENTES DE
+Pedidos - B
+A publicação dos pedidos de patentes de invenção a s
+69.º do Código da Propriedade Industrial; da data de public
+meses para a apresentação de reclamações de quem se julgar p
+do artigo 17.º do mesmo Código.
+(11)
+119228
+(13) A
+(22)
+2024.01.26
+(30)
+(71)  PT ALERTAPLATEIA, LDA
+(72)
+ANTÓNIO TEIXEIRA FERREIRA
+(51)
+Int. Cl.
+C08J 11/10 (2006.01)  B29B 13/10 (2006.01)
+(54)
+PROCESSO DE PRODUÇÃO DE GRÃOS
+EXTRUDADOS
+PARA
+FUSÃO
+E
+CONFORMAÇÃO,
+COMPOSIÇÃO,
+PROCESSO DE CONFORMAÇÃO E OBJETO
+TRIDIMENSIONAL PRODUZIDO
+(57)
+A
+INVENÇÃO REFERE-SE A UM PROCESSO DE
+PRODUÇÃO DE GRÃOS EXTRUDADOS PARA FUSÃO E
+CONFORMAÇÃO QUE UTILIZA RESÍDUOS COMPREENDENDO
+PELO MENOS UM ELASTÓMERO E PELO MENOS UM RESÍDUO
+ADICIONAL, POR EXEMPLO, SAPATOS VELHOS, PELES,
+COUROS, TÊXTEIS, MATERIAIS TERMOPLÁSTICOS, EM QUE O
+PROCESSO COMPREENDE ETAPAS DE TRITURAÇÃO, MISTURA
+COM
+PELO
+MENOS
+UM
+ADITIVO,
+DESVULCANIZAÇÃO,
+EXTRUSÃO.
+A
+INVENÇÃO
+REFERE-SE
+AINDA
+A
+UMA
+COMPOSIÇÃO DE GRÃOS EXTRUDADOS OBTIDOS PELO
+REFERIDO PROCESSO, A UM PROCESSO DE FUSÃO DOS GRÃOS
+EXTRUDADOS
+E
+CONFORMAÇÃO
+DE
+UM
+OBJETO
+TRIDIMENSIONAL (40) INCORPORANDO PELO MENOS 30% DE
+RESÍDUOS,
+E
+A
+INVENÇÃO
+REFERE-SE
+AO
+OBJETO
+TRIDIMENSIONAL (40).
+Ver Fascículo Completo
+E INVENÇÃO
+BBCA/1A
+seguir indicados é efetuada nos termos do disposto no artigo
+ação do presente aviso começa a contar-se o prazo de dois
+prejudicado pela eventual concessão dos mesmos, nos termos
+
+BOLETIM DA PROPRIEDADE
+Concessõe
+Processo
+Início
+de
+vigência
+Data
+do
+despacho
+Nome do 1º reque
+118132
+2022.07.28
+2025.07.24 RAIZ - INSTITUTO DE
+DA FLORESTA E PAPE
+es - FG4A
+erente/titular
+País
+resid.
+Classificação principal
+Observações
+INVESTIGAÇÃO
+EL
+PT
+B41M 5/50
+(2006.01)
+nos termos do nº 1
+do artigo 72.º do
+código da
+propriedade
+industrial, informa-se
+que o pedido sofreu
+alterações durante a
+fase de exame.
+
+BOLETIM DA PROPRIEDADE
+Patentes europeias vigen
+Processo
+Início
+de
+vigência
+Data
+do
+despacho
+Nome do 1º reque
+3717646
+2018.11.30
+2025.07.21 THE TEXAS A&M UNI
+3868929
+2018.01.15
+2025.07.21 LENZING AKTIENGES
+3943491
+2020.03.19
+2025.07.21 VORONOI INC.
+3946743
+2020.03.30
+2025.07.22 SEPAMATIC GMBH
+4127614
+2021.03.30
+2025.07.22 SOCIÉTÉ DES PRODUI
+ntes em Portugal - FG4A
+erente/titular
+País
+resid.
+Classificação principal
+Observações
+VERSITY SYSTEM
+US
+C12N 15/11
+(2020.01)
+ART. 84º DO C.P.I.:
+SELLSCHAFT
+AT
+D01F 2/00
+(2021.01)
+ART. 84º DO C.P.I.:
+KR
+C07D 413/04
+(2022.01)
+ART. 84º DO C.P.I.:
+DE
+B02C 18/30
+(2022.01)
+ART. 84º DO C.P.I.:
+ITS NESTLÉ S.A.
+CH
+G01F 19/00
+(2023.01)
+ART. 84º DO C.P.I.:
+
+BOLETIM DA PROPRIEDADE
+Recusas
+Processo
+Data
+do
+pedido
+Data
+da
+recusa
+Nome do 1º requ
+117994
+2022.05.24
+2025.07.23 UNIVERSIDADE DE AVE
+118820
+2023.07.14
+2025.07.23 GIL PIRES CASTELO
+118853
+2023.08.01
+2025.07.23 MANUEL DA SILVA E S
+- FC4A
+uerente/titular
+País
+resid.
+Classificação
+principal
+Observações
+EIRO
+PT
+H02K 35/02
+(2006.01)
+recusado nos
+termos do nº 9 do
+artigo 70º, com
+referência à alínea
+a) do nº 1 do
+artigo 75º, do
+código da
+propriedade
+industrial
+PT
+B27L 1/00
+(2006.01)
+recusado nos
+termos do n.º 9 do
+artigo 70º e da
+alínea a) do nº1
+do artigo 75º, do
+código da
+propriedade
+industrial.
+OUSA LOBO
+PT
+F03B 13/14
+(2006.01)
+recusado nos
+termos do n.º 9 do
+artigo 70º e da
+alínea a) do nº1
+do artigo 75º, do
+código da
+propriedade
+industrial.
+
+BOLETIM DA PROPRIEDADE
+Requerimentos ind
+Processo
+Número
+do
+documento
+Data
+de
+apresentação
+Data
+do
+despacho
+120317
+00000184
+65
+2025.07.01
+2025.07.23 CLÁUDIA ALE
+JARIMBA
+deferidos - HZ4A
+Nome do titular
+País
+resid.
+Observações
+EXANDRA GONÇALVES
+PT
+REQUERIMENTO DE
+RESTITUIÇÃO DE
+TAXAS INDEFERIDO,
+POR NÃO SE APURAR
+QUALQUER
+PAGAMENTO
+INDEVIDO.
+
+BOLETIM DA PROPRIEDADE
+Requerimentos indeferidos - P
+Processo
+Número
+do
+documento
+Data
+de
+apresentação
+Data
+do
+despacho
+20171772
+93
+20069825
+18
+2025.03.31
+2025.07.23 ARNALDO AM
+Patente internacional - HZ4A
+Nome do titular
+País
+resid.
+Observações
+MARO
+BR  INDEFERIDO POR
+INCUMPRIMENTO DO
+ART.º 369º N.º 2 DO BPI.
+
+BOLETIM DA PROPRIEDADE
+MODELOS DE
+Concessõe
+Processo
+Início
+de
+vigência
+Data
+do
+despacho
+Nome do 1º reque
+12347
+2024.10.28
+2025.07.23 ERNESTO SÃO SIMÃO
+E UTILIDADE
+es - FG4K
+erente/titular
+País
+resid.
+Classificação principal
+Observações
+O, LDA
+PT
+A01G 31/00
+(2018.01)
+
+BOLETIM DA PROPRIEDADE
+Recusas
+Processo
+Data
+do
+pedido
+Data
+da
+recusa
+Nome do 1º requ
+12381
+2025.03.19
+2025.07.23 DAVID DE MENDONÇA
+- FC4K
+uerente/titular
+País
+resid.
+Classificação
+principal
+Observações
+A EIRÓ FERNANDES
+PT
+recusado nos
+termos do nº 5 do
+artigo 129º do cpi.
+
+BOLETIM DA PROPRIEDADE
+DESENHOS O
+Concessõe
+Processo
+Início
+de
+vigência
+Data
+do
+despacho
+Nome do 1º requer
+7309
+2025.04.14
+2025.07.23 AMARYLLIS STORE U
+7318
+2025.04.16
+2025.07.23 RICARDO PEREIRA VI
+7319
+2025.04.16
+2025.07.23 RICARDO PEREIRA VI
+7320
+2025.04.17
+2025.07.23 AMARYLLIS STORE U
+OU MODELOS
+es - FG4Y
+rente/titular
+País
+resid.
+Classificação
+principal
+Observações
+UNIPESSOAL LDA
+PT
+32-01
+IEIRA DE MELO
+PT
+25-04
+IEIRA DE MELO
+PT
+13-99
+UNIPESSOAL LDA
+PT
+32-01
+
+BOLETIM DA PROPRIEDADE
+REGISTO NACION
+Pedi
+De acordo com o artigo 226.º do Código da Proprieda
+marcas; da data de publicação do presente aviso começa a
+reclamações de quem se julgar prejudicado pela eventual con
+mesmo Código.
+(210) 749025
+MNA
+(220) 2025.07.07
+(300)
+(730)  AO
+GILDA MANUEL
+(511) 21 UTENSÍLIOS PARA SERVIR BEBIDAS;  UTENSÍLIOS
+DE MESA;  CHÁVENAS;  JARROS;  TRAVESSAS
+PARA
+SERVIR;
+RECIPIENTES
+PARA
+USO
+DOMÉSTICO.
+24 TOALHAS
+DE
+MESA,
+EXCETO
+DE
+PAPEL;
+GUARDANAPOS
+DE
+TECIDO
+PARA
+MESA;
+CAMINHOS DE MESA;  TECIDOS PARA USO
+DOMÉSTICO.
+35 COMÉRCIO A RETALHO DE ARTIGOS PARA O LAR;
+SERVIÇOS DE VENDA A RETALHO ONLINE PARA
+COMERCIALIZAÇÃO DE ARTIGOS PARA O LAR,
+INCLUINDO ROUPA DE MESA, UTENSÍLIOS DE
+MESA E RECIPIENTES DE
+USO DOMÉSTICO;
+GESTÃO DE LOJAS DE VENDA A RETALHO;
+SERVIÇOS DE PROMOÇÃO DE VENDAS PARA
+TERCEIROS;  PUBLICIDADE E MARKETING DE
+PRODUTOS PRÓPRIOS.
+43 ALUGUER DE ROUPA DE MESA;  ALUGUER DE
+MOBILIÁRIO PARA EVENTOS;  ALUGUER DE
+UTENSÍLIOS DE MESA PARA FESTAS;  SERVIÇOS
+DE DECORAÇÃO DE MESA PARA EVENTOS.
+(591)
+(540)
+CASA DE SEDA
+(210) 749028
+MNA
+(220) 2025.07.07
+(300)
+(730)  PT DINIS RIBEIRO ANTUNES
+(511) 32 BEBIDAS SEM ÁLCOOL;  ÁGUAS;  ÁGUA DE
+NASCENTE;  ÁGUA ENGARRAFADA.
+(591)
+(540)
+AGUA DOM DINIS
+NAL DE MARCAS
+idos
+ade Industrial, a seguir se publicam os pedidos de registo de
+a contar-se o prazo de dois meses para a apresentação de
+ncessão dos mesmos, em conformidade com o artigo 17.º do
+(210) 749030
+MNA
+(220) 2025.07.07
+(300)
+(730)  PT MÓNICA ALEXANDRA MARTINS DE
+ALMEIDA
+(511) 25 VESTUÁRIO BORDADO.
+40 SERVIÇOS DE BORDADOS DE VESTUÁRIO.
+(591) Pantone 871C, C41, M40, Y68, K28, R133, G117, B78,
+#85754E
+(540)
+(531) 9.1.6 ; 9.5.2 ; 26.11.14
+(210) 749154
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT AGROVINAZ - SOCIEDADE AGRÍCOLA,
+LDA
+(511) 33 BEBIDAS ALCOÓLICAS EXCETO CERVEJA.
+(591) vermelho, verde, branco azul
+(540)
+
+BOLETIM DA PROPRIEDADE
+(531) 2.1.15
+(210) 749162
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT DIOGO CARLOS DOMINGUES CABELO
+(511) 35 SERVIÇOS DE VENDA A RETALHO E A GROSSO DE
+EQUIPAMENTOS DESPORTIVOS;  RAQUETES DE
+PADEL;  BOLAS DE PADEL;  EQUIPAMENTOS DE
+PADEL;  SAPATILHAS DE PADEL;  VESTUÁRIO DE
+PADEL.
+(591) (R3.G60.B137) e (R218.G159.B20)
+(540)
+(531) 21.3.5 ; 24.9.7
+(210) 749165
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT CENÁRIO PROMISSOR, LDA.
+(511) 43 BARES.
+(591)
+(540)
+(531) 2.9.1 ; 27.5.25 ; 27.99.23
+(210) 749167
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT REBELSKETCH PROJETOS E
+CONTRUÇÃO LDA
+(511) 37 CONSTRUÇÃO.
+42 SERVIÇOS
+DE
+GESTÃO
+DE
+PROJETOS
+DE
+ENGENHARIA;  ARQUITETURA;  SERVIÇOS DE
+PROJETOS DE ENGENHARIA;  ENGENHARIA.
+(591) AZUL; COR DE LARANJA; CINZENTO; PRETO
+(540)
+(531) 27.5.9 ; 27.5.22 ; 27.5.25 ; 27.99.2 ; 27.99.19
+(210) 749169
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT GEODOURO - CONSULTORIA E
+TOPOGRAFIA, LDA
+(511) 09 PROGRAMAS DE SOFTWARE PARA GESTÃO DE
+BASES DE DADOS;  PLATAFORMAS DE SOFTWARE
+COLABORATIVO [SOFTWARE];  PLATAFORMAS
+PARA SOFTWARE DE GESTÃO COLABORATIVA;
+SOFTWARE DE APLICAÇÃO PARA COMPUTADORES
+PARA TELEMÓVEIS;  SOFTWARE APLICATIVO
+PARA TELEMÓVEIS;  SOFTWARE PARA PERMITIR A
+TRANSMISSÃO DE FOTOGRAFIAS A TELEMÓVEIS;
+
+BOLETIM DA PROPRIEDADE
+PROGRAMAS
+E
+SOFTWARE
+PARA
+PROCESSAMENTO
+DE
+IMAGENS
+USADOS
+EM
+TELEMÓVEIS;  SOFTWARE DE MAPAS;  SOFTWARE
+DE DETEÇÃO DE RISCOS;  SOFTWARE PARA
+GESTÃO DE BASES DE DADOS;  SOFTWARE
+APLICATIVO PARA SERVIÇOS DE COMPUTAÇÃO
+EM NUVEM;  SOFTWARE DE AGRIMENSURA;
+SOFTWARE DE APLICAÇÕES DA WEB;  SOFTWARE
+DE APLICAÇÃO PARA TRANSMISSÃO CONTÍNUA
+DE CONTEÚDOS MULTIMÉDIA AUDIOVISUAIS VIA
+INTERNET;
+SOFTWARE
+DE
+PLATAFORMAS
+INFORMÁTICAS;  PLATAFORMAS DE SOFTWARE,
+GRAVADO OU DESCARREGÁVEL.
+(591)
+(540)
+(531) 5.1.16 ; 26.1.15 ; 27.5.25
+(210) 749172
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT JANELAS ÉPICAS LDA
+(511) 03 ARTIGOS
+DE
+HIGIENE
+PESSOAL;
+ÓLEOS
+ESSENCIAIS E EXTRATOS AROMÁTICOS.
+05 PRODUTOS PARA DESODORIZAR E PURIFICAR O
+AR;  PREPARAÇÕES E ARTIGOS HIGIÉNICOS.
+09 APARELHOS, INSTRUMENTOS E CABOS PARA
+ELETRICIDADE;
+ADAPTADORES
+USB;
+ADAPTADORES DE TOMADAS;  ADAPTADORES
+PARA CABOS;  CABOS ADAPTADORES PARA
+AUSCULTADORES;  SMARTBANDS;  AURICULARES;
+AURICULARES SEM FIOS;  AURICULARES PARA
+TELEMÓVEIS;
+AURICULARES
+PARA
+COMUNICAÇÕES REMOTAS;  AURICULARES DE
+APARELHOS TELEFÓNICOS;  AURICULARES SEM
+FIOS
+COM
+MICROFONE
+INTEGRADO
+PARA
+SMARTPHONES;  AURICULARES PARA UTILIZAÇÃO
+COM
+DISPOSITIVOS
+DE
+TELECOMUNICAÇÕES
+MÓVEIS.
+25 CALÇADO;  CHAPELARIA;  PARTES DE VESTUÁRIO,
+CALÇADO E CHAPELARIA;  VESTUÁRIO;  ARTIGOS
+DE CHAPELARIA.
+28 APARELHOS
+PARA
+FEIRAS
+E
+RECREIOS;
+BRINQUEDOS, JOGOS E ARTIGOS DE BRINCAR;
+DECORAÇÕES FESTIVAS, ARTIGOS DE FANTASIA E
+ÁRVORES DE NATAL ARTIFICIAIS;  EQUIPAMENTO
+DESPORTIVO
+E
+PARA
+EXERCÍCIO
+FÍSICO;
+MÁQUINAS DE FITNESS;  APARELHOS DE INTERIOR
+PARA FITNESS.
+35 SERVIÇOS DE VENDA A RETALHO RELATIVOS A
+VESTUÁRIO;  SERVIÇOS DE VENDA A RETALHO
+RELATIVOS A ARTIGOS DESPORTIVOS;  GESTÃO
+COMERCIAL DE LOJAS DE VENDA A RETALHO;
+SERVIÇOS DE VENDA
+A RETALHO ON-LINE
+RELATIVOS A ARTIGOS DE VESTUÁRIO.
+41 SERVIÇOS DE EDUCAÇÃO, ENTRETENIMENTO E
+DESPORTO;  ACREDITAÇÃO DE COMPETÊNCIA
+PROFISSIONAL;  ACREDITAÇÃO DE SERVIÇOS
+EDUCACIONAIS;
+ADMINISTRAÇÃO
+[ORGANIZAÇÃO]
+DE
+SERVIÇOS
+DE
+ENTRETENIMENTO;
+ADMINISTRAÇÃO
+[ORGANIZAÇÃO] DE ATIVIDADES CULTURAIS;
+ALUGUER
+DE
+INSTALAÇÕES
+RECREATIVAS;
+ANIMAÇÃO
+DE
+PALHAÇOS;
+SERVIÇOS
+DESPORTIVOS E DE FITNESS;  FORMAÇÃO NA
+ÁREA DA SAÚDE E FITNESS;  FORNECIMENTO DE
+INSTALAÇÕES PARA EXERCÍCIO FÍSICO E DE
+FITNESS;
+PRESTAÇÃO
+DE
+SERVIÇOS
+DE
+EDUCAÇÃO RELACIONADOS COM O FITNESS.
+(591)
+(540)
+(531) 26.11.13 ; 27.5.25
+(210) 749198
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT IURIE SPINU
+(511) 37 INSTALAÇÃO DE SISTEMAS DE CANALIZAÇÃO;
+TRABALHOS DE CANALIZAÇÃO;  SERVIÇOS DE
+LIMPEZA DE CANALIZAÇÕES.
+(591)
+(540)
+(531) 1.15.15 ; 27.5.25
+(210) 749206
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT MARIA DAS DORES MARQUES
+BANHEIRO MEIRA
+(511) 16 SACOS DE PAPEL;  SACOS E BOLSAS DE PAPEL;
+BANDEIRAS EM PAPEL;  CARTAZES EM PAPEL OU
+EM CARTÃO;  ESTANDARTES DE PAPEL;  LENÇOS..
+35 SERVIÇOS DE PUBLICIDADE, DE MARKETING E DE
+PROMOÇÃO.
+41 PUBLICAÇÃO, RELATO E REDAÇÃO DE TEXTOS;
+SERVIÇOS DE EDUCAÇÃO, ENTRETENIMENTO E
+DESPORTO.
+(591)
+(540)
+
+BOLETIM DA PROPRIEDADE
+(531) 24.17.20
+(210) 749207
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT MEO - SERVIÇOS DE COMUNICAÇÕES
+E MULTIMÉDIA, S.A.
+(511) 09 APARELHOS E INSTRUMENTOS CIENTÍFICOS, DE
+INVESTIGAÇÃO, DE PESQUISAS, FOTOGRÁFICOS,
+CINEMATOGRÁFICOS, AUDIOVISUAIS, ÓTICOS E
+DE ENSINO;  APARELHOS E INSTRUMENTOS PARA
+A CONDUÇÃO, DISTRIBUIÇÃO, TRANSFORMAÇÃO,
+ACUMULAÇÃO, REGULAÇÃO OU CONTROLO DA
+DISTRIBUIÇÃO
+OU
+USO
+DE
+ELETRICIDADE;
+APARELHOS E INSTRUMENTOS PARA O REGISTO, A
+TRANSMISSÃO,
+A
+REPRODUÇÃO
+OU
+PROCESSAMENTO DE SOM, IMAGENS OU DADOS;
+CONTEÚDOS GRAVADOS E DESCARREGÁVEIS,
+SOFTWARE
+INFORMÁTICO,
+SUPORTES
+DE
+GRAVAÇÃO
+E
+ARMAZENAMENTO
+VIRGENS,
+DIGITAIS OU ANALÓGICOS;  COMPUTADORES E
+DISPOSITIVOS PERIFÉRICOS INFORMÁTICOS.
+35 PUBLICIDADE;
+GESTÃO,
+ORGANIZAÇÃO
+E
+ADMINISTRAÇÃO DE NEGÓCIOS COMERCIAIS;
+TRABALHOS DE ESCRITÓRIO.
+36 SERVIÇOS
+FINANCEIROS,
+MONETÁRIOS
+E
+BANCÁRIOS;  SERVIÇOS DE SEGUROS;  SERVIÇOS
+IMOBILIÁRIOS.
+38 SERVIÇOS DE TELECOMUNICAÇÕES.
+41 EDUCAÇÃO;
+FORMAÇÃO;
+DIVERTIMENTO;
+ATIVIDADES DESPORTIVAS E CULTURAIS.
+42 SERVIÇOS CIENTÍFICOS E TECNOLÓGICOS BEM
+COMO SERVIÇOS DE PESQUISAS E DE CONCEÇÃO
+A ELES REFERENTES;  ANÁLISES INDUSTRIAIS,
+SERVIÇOS DE PESQUISA E DESIGN INDUSTRIAL;
+SERVIÇOS DE CONTROLO DE QUALIDADE E DE
+AUTENTICAÇÃO;
+CONCEÇÃO
+E
+DESENVOLVIMENTO DE COMPUTADORES E DE
+PROGRAMAS DE COMPUTADORES.
+(591) Verde
+(540)
+(531) 3.11.12 ; 3.11.26
+(210) 749225
+MNA
+(220) 2025.07.09
+(300)
+(730)  GB SIAN CATHERINE ELTON
+(511) 35 SERVIÇOS DE PUBLICIDADE, DE MARKETING E DE
+PROMOÇÃO;  SERVIÇOS DE PUBLICIDADE, DE
+MARKETING E PROMOCIONAIS;  SERVIÇOS DE
+ASSISTÊNCIA, GESTÃO E ADMINISTRAÇÃO DE
+NEGÓCIOS.
+38 SERVIÇOS DE REDE DE TELECOMUNICAÇÕES.
+42 SERVIÇOS
+DE
+TI
+(TECNOLOGIAS
+DE
+INFORMAÇÃO);  SERVIÇOS DE DESIGN.
+(591) preto; verde; branco
+(540)
+(531) 2.9.1 ; 2.9.14 ; 26.11.13 ; 27.5.13 ; 27.5.25
+(210) 749228
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT ILUMILED, LDA
+(511) 09 DISPOSITIVOS DE CONTROLO ELETRÓNICO [ECGS]
+PARA LÂMPADAS DE LED E ACESSÓRIOS DE
+ILUMINAÇÃO;  CONTROLADORES LED.
+11 LÂMPADAS LED;  LÂMPADAS DE SEGURANÇA
+LED;
+LÂMPADAS
+DE
+ILUMINAÇÃO
+LED;
+LÂMPADAS DE DÍODOS EMISSORES DE LUZ (LED);
+LÂMPADAS DE DIODO EMISSOR DE LUZ [LED];
+FITAS LED;  LUMINÁRIAS LED;  LUMINÁRIAS DE
+LED;  LUMINÁRIAS DE DÍODOS EMISSORES DE LUZ
+[LED].
+(591)
+(540)
+(531) 1.15.9 ; 27.5.4 ; 27.5.9 ; 27.5.14 ; 27.5.25
+(210) 749239
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT RAFAEL CANDREVA CUNHA NACIF
+(511) 25 PARTES DE VESTUÁRIO, CALÇADO E CHAPELARIA.
+26 ACESSÓRIOS PARA VESTIMENTAS, ARTIGOS DE
+COSTURA E ARTIGOS DECORATIVOS TÊXTEIS;
+BERLOQUES [SEM SER DE JOALHARIA OU PARA
+CHAVES, ARGOLAS OU CORRENTES].
+41 SERVIÇOS DE EDUCAÇÃO, ENTRETENIMENTO E
+DESPORTO;  PUBLICAÇÃO, RELATO E REDAÇÃO DE
+TEXTOS.
+(591) PRETO; BRANCO; BORDO; VINHO; VERMELHO ESCURO
+(540)
+
+BOLETIM DA PROPRIEDADE
+(531) 2.1.1 ; 2.1.23 ; 3.1.1 ; 3.1.16 ; 3.1.24 ; 6.1.4 ; 25.5.1 ; 26.1.4 ;
+26.1.14 ; 26.1.15 ; 26.1.20
+(210) 749244
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT EDUARDO MANUEL PEREIRA DE
+SOUSA
+(511) 41 EDUCAÇÃO
+E
+FORMAÇÃO;
+SERVIÇOS
+DE
+EDUCAÇÃO
+E
+FORMAÇÃO;
+SERVIÇOS
+DE
+EDUCAÇÃO,
+ENTRETENIMENTO
+E
+DESPORTO;
+SERVIÇOS DESPORTIVOS E DE FITNESS;  SERVIÇOS
+DE FORMAÇÃO E EDUCAÇÃO.
+(591)
+(540)
+(531) 26.1.9 ; 28.3
+(210) 749245
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT COLDSISTEMAS AVAC, LDA
+(511) 11 APARELHOS E INSTALAÇÕES DE VENTILAÇÃO
+[CLIMATIZAÇÃO];
+INSTALAÇÕES
+DE
+CLIMATIZAÇÃO
+[CONDICIONAMENTO
+DE
+AR];
+INSTALAÇÕES
+DE
+CLIMATIZAÇÃO;
+VENTILADORES
+[CLIMATIZAÇÃO];
+VENTILADORES
+PARA
+CLIMATIZAÇÃO;
+VENTILADORES
+MOTORIZADOS
+PARA
+CLIMATIZAÇÃO;
+CALDEIRAS
+DE
+ÁGUA;
+APARELHOS DE AR CONDICIONADO;  APARELHOS
+DE AR CONDICIONADO DOMÉSTICOS;  APARELHOS
+DE AR CONDICIONADO ELÉTRICOS;  APARELHOS
+DE
+CLIMATIZAÇÃO;
+SISTEMAS
+DE
+CLIMATIZAÇÃO;  APARELHOS DE VENTILAÇÃO
+[CLIMATIZAÇÃO];  APARELHOS COMBINADOS DE
+AQUECIMENTO E CLIMATIZAÇÃO;  CONDUTAS
+PARA APARELHOS DE AQUECIMENTO.
+37 ADAPTAÇÃO DE INSTALAÇÕES DE VENTILAÇÃO
+EM EDIFÍCIOS;  ADAPTAÇÃO DE INSTALAÇÕES DE
+AQUECIMENTO,
+VENTILAÇÃO
+E
+AR
+CONDICIONADO EM EDIFÍCIOS;  ADAPTAÇÃO DE
+INSTALAÇÕES DE AQUECIMENTO EM EDIFÍCIOS;
+INSTALAÇÃO DE APARELHOS DE AQUECIMENTO;
+INSTALAÇÃO E REPARAÇÃO DE APARELHOS DE
+AQUECIMENTO;  INSTALAÇÃO DE APARELHOS DE
+EXTRAÇÃO
+DE
+POEIRAS;
+INSTALAÇÃO
+DE
+APARELHOS
+DE
+AQUECIMENTO
+E
+DE
+REFRIGERAÇÃO;  INSTALAÇÃO DE EQUIPAMENTO
+DE AQUECIMENTO;  INSTALAÇÃO E REPARAÇÃO
+DE
+EQUIPAMENTO
+DE
+AQUECIMENTO;
+INSTALAÇÃO, REPARAÇÃO E MANUTENÇÃO DE
+EQUIPAMENTOS DE AQUECIMENTO;  INSTALAÇÃO
+E
+REPARAÇÃO
+DE
+APARELHOS
+DE
+AR
+CONDICIONADO;  INSTALAÇÃO, MANUTENÇÃO E
+REPARAÇÃO
+DE
+APARELHOS
+DE
+AR
+CONDICIONADO;  INSTALAÇÃO E REPARAÇÃO DE
+APARELHOS DE REFRIGERAÇÃO;  TRABALHOS DE
+CANALIZAÇÃO;  INSTALAÇÃO, CONSERVAÇÃO E
+REPARAÇÃO DE MÁQUINAS;  INSTALAÇÃO E
+REPARAÇÃO
+DE
+APARELHOS
+ELÉTRICOS;
+COLOCAÇÃO DE CONDUTAS;  INSTALAÇÃO DE
+CONDUTAS;
+ISOLAMENTO
+DE
+CONDUTAS;
+INSTALAÇÃO
+DE
+CONDUTAS
+INDUSTRIAIS;
+INSTALAÇÃO
+DE
+CONDUTAS
+DE
+ÁGUA;
+MANUTENÇÃO E REPARAÇÃO DE CONDUTAS
+INDUSTRIAIS;  SERVIÇOS DE COLOCAÇÃO DE
+TUBOS/CONDUTAS;
+SERVIÇOS
+PARA
+A
+REPARAÇÃO DE CONDUTAS;  SERVIÇOS DE
+VEDAÇÃO DE CONDUTAS DE CLIMATIZAÇÃO.
+(591) LARANJA; AZUL
+(540)
+(531) 1.15.24 ; 27.5.25 ; 29.1.4 ; 29.1.98
+(210) 749248
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT ANA CRISTINA LOBO PEREIRA
+PT MAFALDA ALEXANDRA LOBO
+PEREIRA
+(511) 14 PEDRAS
+PRECIOSAS,
+PÉROLAS
+E
+METAIS
+PRECIOSOS, E SUAS IMITAÇÕES;  ARTIGOS DE
+JOALHARIA;  PORTA-CHAVES E CORRENTES PARA
+CHAVES, E RESPETIVOS BERLOQUES.
+25 VESTUÁRIO;
+ARTIGOS
+DE
+CHAPELARIA;
+CALÇADO.
+(591)
+(540)
+LOBO BROWN
+
+BOLETIM DA PROPRIEDADE
+(210) 749252
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT RICARDO FILIPE DOS SANTOS
+FERREIRA
+(511) 35 CONSULTORIA EMPRESARIAL.
+36 CONSULTORIA
+FISCAL
+[NÃO
+SENDO
+CONTABILÍSTICA].
+45 CONSULTORIA JURÍDICA EM MATÉRIA FISCAL;
+SERVIÇOS DE ADVOCACIA (SERVIÇOS JURÍDICOS).
+(591)
+(540)
+(531) 26.4.3
+(210) 749274
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT INVENTIS S.A.
+(511) 35 PROMOÇÃO DE VENDAS PARA TERCEIROS, POR
+GROSSO E A RETALHO;  SERVIÇOS DE LOJAS DE
+VENDA A RETALHO ONLINE.
+(591) castanho; bege
+(540)
+(531) 5.3.20 ; 26.1.15
+(210) 749277
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT TIMEPEOPLE - TRABALHO
+TEMPORÁRIO E GESTÃO DE
+RECURSOS HUMANOS, LDA.
+(511) 35 DESTACAMENTO
+DE
+PESSOAL
+TEMPORÁRIO;
+GESTÃO
+DE
+PESSOAL
+E
+CONSULTORIA
+EM
+MATÉRIA DE EMPREGO.
+(591) PRETO; COR LARANJA; BRANCO
+(540)
+(531) 2.1.1 ; 26.1.14
+(210) 749305
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT BASTOS & BARREIROS, LDA
+(511) 41 CLUBES DE PRAIA E PISCINA;  ALUGUER DE
+PRANCHAS DE SURF;  ALUGUER DE SNORKELS;
+ORGANIZAÇÃO
+DE
+FESTAS
+[DIVERTIMENTO];
+ORGANIZAÇÃO
+DE
+FESTAS
+PARA
+FINS
+DEENTRETENIMENTO..
+43 BARES;  SNACK-BARES;  BARES (PUBS);  SERVIÇOS
+DE RESTAURANTES;  SERVIÇOS DEALIMENTAÇÃO
+E
+BEBIDAS
+EM
+RESTAURANTES
+E
+BARES;
+FORNECIMENTO DE ALIMENTOS EBEBIDAS EM
+RESTAURANTES
+E
+BARES;
+ALUGUER
+DE
+CADEIRAS DE PRAIA EM VIME COMCOBERTURA;
+ALUGUER DE CADEIRAS, MESAS, TOALHAS DE
+MESA, COPOS;  ALUGUER DEESPREGUIÇADEIRAS;
+SERVIÇOS RELACIONADOS COM A PREPARAÇÃO
+DE
+ALIMENTOS
+EBEBIDAS;
+SERVIÇOS
+DE
+COZINHADO DE ALIMENTOS;  PREPARAÇÃO DE
+ALIMENTOS
+EBEBIDAS;
+PREPARAÇÃO
+E
+FORNECIMENTO DE ALIMENTOS E BEBIDAS PARA
+CONSUMOIMEDIATO;
+SERVIÇOS
+DE
+FORNECIMENTO
+DE
+ALIMENTOS
+E
+BEBIDAS;
+SERVIÇOS DECATERING..
+45 SERVIÇOS DE NADADORES-SALVADORES..
+(591)
+(540)
+(531) 27.5.9 ; 27.5.11 ; 27.5.25 ; 27.99.15
+(210) 749308
+MNA
+(220) 2025.07.09
+(300)
+(730)  PT MUNICÍPIO DE S. JOÃO DA PESQUEIRA
+
+BOLETIM DA PROPRIEDADE
+(511) 35 SERVIÇOS
+DE
+ASSISTÊNCIA,
+GESTÃO
+E
+ADMINISTRAÇÃO DE NEGÓCIOS;  SERVIÇOS DE
+PUBLICIDADE, DE MARKETING E DE PROMOÇÃO;
+SERVIÇOS DE PUBLICIDADE, DE MARKETING E
+PROMOCIONAIS;  SERVIÇOS DE PUBLICIDADE, DE
+PROMOÇÃO E DE MARKETING.
+(591)
+(540)
+VILA MAIS ANTIGA DE
+PORTUGAL
+(210) 749315
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT ALEXANDRA MARIA FERNANDES
+PIRES NUNES RICCIARDI
+(511) 41 ACTIVIDADES
+CULTURAIS
+E
+DE
+ENTRETENIMENTO;  ACTIVIDADES RECREATIVAS
+E DESPORTIVAS;  DIVERTIMENTO;  ESPETÁCULOS
+DE VARIEDADES;  ORGAIZAÇÃO E REALIZAÇÃO
+DE SEMINÁRIOS, CONGRESSOS, CONFERÊNCIAS E
+SIMPÓSIOS;  ORGANIZAÇÃO, APRESENTAÇÃO E
+PRODUÇÃO DE ESPECTÁCULOS E ACTUAÇÕES AO
+VIVO;
+ORGANIZAÇÃO
+DE
+ACTIVIDADES
+DESPORTIVAS E CULTURAIS;  ORGANIZAÇÃO DE
+DESFILES
+DE
+MODA
+PARA
+FINS
+DE
+ENTRETENIMENTO;
+ORGANIZAÇÃO
+DE
+ESPECTÁCULOS CINEMATOGRÁFICOS E MUSICAIS,
+EVENTOS CULTURAIS E DESPORTIVOS, ASSIM
+COMO ESPECTÁCULOS AO VIVO;  ORGANIZAÇÃO
+DE
+ESPECTÁCULOS
+CINEMATOGRÁFICOS,
+ESPECTÁCULOS MUSICAIS AO VIVO E EVENTOS
+CULTURAIS E DESPORTIVOS;  ORGANIZAÇÃO DE
+ESPECTÁCULOS
+DE
+ENTRETENIMENTO;
+ORGANIZAÇÃO DE ESPECTÁCULOS E CONCERTOS;
+ORGANIZAÇÃO DE ESPECTÁCULOS MUSICAIS AO
+VIVO;  ORGANIZAÇÃO DE EVENTOS CULTURAIS;
+ORGANIZAÇÃO
+DE
+EVENTOS
+EDUCATIVOS,
+RECREATIVOS,
+DESPORTIVOS
+E
+CULTURAIS;
+ORGANIZAÇÃO
+DE
+EXPOSIÇÕES
+COM
+FINS
+CULTURAIS;  ORGANIZAÇÃO DE EXPOSIÇÕES,
+CONGRESSOS, SEMINÁRIOS E CONFERÊNCIAS,
+COM
+FINS
+RECREATIVOS
+E
+CULTURAIS;
+ORGANIZAÇÃO
+DE
+EXPOSIÇÕES
+PARA
+FINS
+CULTURAIS OU EDUCATIVOS;  ORGANIZAÇÃO DE
+FESTAS
+(DIVERTIMENTO);
+ORGANIZAÇÃO
+E
+PREPARAÇÃO DE EVENTOS MUSICAIS E OUTROS
+EVENTOS
+CULTURAIS
+E
+ARTÍSTICOS;
+ORGANIZAÇÃO E REALIZAÇÃO DE ACTIVIDADES
+CULTURAIS
+E
+DE
+ENTRETENIMENTO;
+ORGANIZAÇÃO E REALIZAÇÃO DE ACTIVIDADES
+RECREATIVAS,
+DESPORTIVAS
+E
+CULTURAIS;
+ORGANIZAÇÃO E REALIZAÇÃO DE COLÓQUIOS,
+CONFERÊNCIAS E CONGRESSOS;  ORGANIZAÇÃO,
+PRODUÇÃO, APRESENTAÇÃO E REALIZAÇÃO DE
+CONCERTOS
+MUSICAIS,
+FESTAS,
+PASSEIOS
+E
+OUTRAS
+APRESENTAÇÕES
+MUSICAIS
+E
+CULTURAIS,
+EVENTOS
+E
+ATIVIDADES;
+ORGANIZAÇÃO, PRODUÇÃO E APRESENTAÇÃO DE
+ESPECTÁCULOS,
+COMPETIÇÕES,
+JOGOS,
+CONCERTOS
+E
+EVENTOS
+RECREATIVOS;
+PRODUÇÃO DE ESPETÁCULOS;  PUBLICAÇÃO DE
+MATERIAL IMPRESSO E REVISTAS;  REALIZAÇÃO
+DE ESPECTÁCULOS RECREATIVOS, CULTURAIS,
+DESPORTIVOS,
+EDUCACIONAIS,
+ASSIM
+COMO
+ACTIVIDADES CULTURAIS E DE RECREATIVAS.
+(591)
+(540)
+LISBON WEEK
+(210) 749327
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT MSA CABELEIREIRO E ESTÉTICA
+UNIPESSOAL, LDA
+(511) 03 PRODUTOS DE TOILETTE;  PREPARAÇÕES PARA
+HIGIENE PESSOAL.
+44 SERVIÇOS DE HIGIENE E CUIDADOS DE BELEZA
+PARA PESSOAS;  SERVIÇOS DE HIGIENE CORPORAL
+E DE BELEZA PARA PESSOAS.
+(591)
+(540)
+VITALITÉ CABELEIREIRO E
+ESTÉTICA
+(210) 749337
+MNA
+(220) 2025.07.10
+(300)
+(730)  PT LUIS FILIPE DOS SANTOS VENTURA
+(511) 30 AÇÚCARES, ADOÇANTES NATURAIS, COBERTURAS
+E RECHEIOS DOCES, PRODUTOS APÍCOLAS E
+DECORAÇÕES COMESTÍVEIS;  CAFÉ, CHÁS E
+CACAU E SUBSTITUTOS DOS MESMOS;  GELADOS,
+IOGURTES
+GELADOS
+E
+SORVETES;
+GRÃOS
+PROCESSADOS, AMIDOS, E PRODUTOS FEITOS A
+PARTIR
+DOS
+MESMOS,
+PREPARAÇÕES
+DE
+COZEDURA
+E
+LEVEDURAS;
+ALIMENTOS
+PREPARADOS
+SOB
+A
+FORMA
+DE
+MOLHOS;
+ALIMENTOS SALGADOS PREPARADOS FEITOS DE
+FARINHA DE BATATA;  ALMOÇOS EMBALADOS
+COMPOSTOS POR ARROZ, COM ADIÇÃO DE CARNE,
+PEIXE OU LEGUMES;  ALMOÇOS PRÉ-EMBALADOS
+CONSTITUÍDOS PRINCIPALMENTE POR ARROZ,
+INCLUINDO TAMBÉM CARNE, PEIXE OU LEGUMES;
+APERITIVOS ALIMENTARES À BASE DE CEREAIS;
+APERITIVOS COMPOSTOS POR PRODUTOS À BASE
+DE
+CEREAIS;
+APERITIVOS
+CONSTITUÍDOS
+ESSENCIALMENTE POR ARROZ;  APERITIVOS À
+BASE DE CEREAIS;  APERITIVOS À BASE DE
+CEREAIS EXTRUDIDOS;  APERITIVOS À BASE DE
+FARINHA;  APERITIVOS À BASE DE GRÃOS;
+APERITIVOS À BASE DE MILHO;  APERITIVOS À
+BASE DE MULTICEREAIS;  APERITIVOS À BASE DE
+TRIGO;  APERITIVOS FEITOS A PARTIR DE
+FARINHA DE ARROZ;  APERITIVOS FEITOS A
+PARTIR DE FARINHA DE CEREAIS;  APERITIVOS
+FEITOS COM FARINHA DE BATATA;  APERITIVOS
+FEITOS DE AMIDO DE CEREAIS;  APERITIVOS
+FEITOS DE CEREAIS;  APERITIVOS FEITOS DE
+FARINHA DE MILHO;  APERITIVOS FEITOS DE
+FARINHA DE SOJA;  APERITIVOS FEITOS DE MILHO
+E SOB A FORMA DE ARGOLAS;  APERITIVOS
+PRODUZIDOS A PARTIR DE CEREAIS;  APERITIVOS
+SALGADOS FEITOS DE
+FARINHA DE MILHO
+MOLDADOS
+POR
+EXTRUSÃO;
+APERITIVOS
+SALGADOS À BASE DE CEREAIS;  APERITIVOS
+SALGADOS À BASE DE FARINHA;  APERITIVOS
+SALGADOS À BASE DE MILHO;  BOLACHAS
+SALGADAS COM RECHEIO DE QUEIJO;  BOLACHAS
+SALGADAS COM SABOR A CARNE;  BOLACHAS
+SALGADAS COM SABOR A ERVAS;  BOLACHAS
+
+BOLETIM DA PROPRIEDADE
+SALGADAS
+COM
+SABOR
+A
+ESPECIARIAS;
+BOLACHAS SALGADAS COM SABOR A LEGUMES;
+BOLACHAS SALGADAS COM SABOR A QUEIJO;
+BOLACHAS SALGADAS DE CEREAIS PREPARADOS;
+CHAMUÇAS;  CHIPS DE MASSA WONTON;  CREPES;
+EMPADAS CONTENDO VEGETAIS;  EMPADAS DE
+CARNE;  EMPADAS DE CARNE DE AVES E DE
+CAÇA;  EMPADAS DE CARNE DE PORCO;  EMPADAS
+DE CARNE PREPARADAS;  EMPADAS DE FRANGO;
+EMPADAS, DOCES OU SALGADAS;  ENCHILADAS
+[PANQUECA MEXICANA RECHEADA];  ALIMENTOS
+QUE
+CONTÊM
+CACAU
+[COMO
+ELEMENTO
+PRINCIPAL];
+ALIMENTOS
+QUE
+CONTÊM
+CHOCOLATE
+[COMO
+ELEMENTO
+PRINCIPAL];
+ALIMENTOS À BASE DE CACAU;  AMÊNDOAS
+COBERTAS DE CHOCOLATE;  APERITIVOS À BASE
+DE CONFEITARIAS;  AROMAS DE CHOCOLATE;
+ARTIGOS
+DE
+CONFEITARIA
+COBERTOS
+DE
+CHOCOLATE.
+(591)
+(540)
+(531) 9.7.19
+(210) 749339
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT ABSTRATO E AUTÊNTICO LDA
+(511) 04 COMBUSTIVEIS.
+(591) PANTONE 485C CMYK: CMYK 0,100,100,0
+(540)
+(531) 24.17.24 ; 26.1.18 ; 27.3.15 ; 27.5.22
+(210) 749340
+MNA
+(220) 2025.07.11
+(300)
+(730)  BR VICTOR HUGO ARAUJO
+(511) 35 SERVIÇOS DE PUBLICIDADE, DE MARKETING E DE
+PROMOÇÃO.
+(591)
+(540)
+(531) 4.5.21 ; 26.4.3
+(210) 749343
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT CRUZ DE OITO- ENGENHARIA
+SOCIEDADE UNIPESSOAL LDA
+(511) 37 EDIFICAÇÃO,
+CONSTRUÇÃO
+E
+DEMOLIÇÃO;
+ALUGUER DE FERRAMENTAS, INSTALAÇÕES E
+EQUIPAMENTO DE CONSTRUÇÃO, DEMOLIÇÃO,
+LIMPEZA E MANUTENÇÃO.
+42 SERVIÇOS DE DESIGN;  TESTES, AUTENTICAÇÃO E
+CONTROLO
+DE
+QUALIDADE;
+SERVIÇOS
+CIENTÍFICOS E TECNOLÓGICOS.
+(591) PANTONE 021C
+(540)
+(531) 24.17.8 ; 26.4.16 ; 26.4.98 ; 27.5.25 ; 29.1.98
+(210) 749348
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT FERNANDO CARVALHO TEIXEIRA
+(511) 32 BEBIDAS DESALCOOLIZADAS.
+33 BEBIDAS ALCOÓLICAS (EXCLUINDO CERVEJA).
+(591)
+(540)
+
+BOLETIM DA PROPRIEDADE
+(531) 4.5.5 ; 18.5.11 ; 27.5.25
+(210) 749349
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT ANA PATRÍCIA MENDES
+(511) 44 SERVIÇOS DE SAÚDE MENTAL.
+(591) AZUL; COR DE LARANJA
+(540)
+(531) 26.11.12 ; 27.5.13 ; 27.5.25 ; 29.1.4 ; 29.1.98
+(210) 749352
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT ALÍVIO EM RESPIRAR -
+REABILITAÇÃO RESPIRATÓRIA LDA
+(511) 41 AÇÕES DE FORMAÇÃO;  CURSOS DE FORMAÇÃO;
+DIREÇÃO
+DE
+CURSOS
+DE
+FORMAÇÃO;
+DISPONIBILIZAÇÃO
+DE
+FORMAÇÃO
+ONLINE;
+FORMAÇÃO;  FORMAÇÃO EM SAÚDE;  FORMAÇÃO
+EM SAÚDE E BEM-ESTAR;  FORNECIMENTO DE
+CURSOS DE FORMAÇÃO;  FORNECIMENTO DE
+CURSOS PARA FORMAÇÃO;  ORGANIZAÇÃO DE
+ATIVIDADES DE FORMAÇÃO;  ORGANIZAÇÃO DE
+CURSOS DE FORMAÇÃO;  ORGANIZAÇÃO DE
+EVENTOS
+EDUCATIVOS;
+ORGANIZAÇÃO
+DE
+WORKSHOPS
+PROFISSIONAIS
+E
+CURSOS
+DE
+FORMAÇÃO;  ORGANIZAÇÃO E DIREÇÃO DE
+WORKSHOPS DE FORMAÇÃO;  PREPARAÇÃO,
+DIREÇÃO
+E
+ORGANIZAÇÃO
+DE
+WORKSHOPS
+[FORMAÇÃO];
+PRESTAÇÃO
+DE
+CURSOS
+DE
+FORMAÇÃO;
+REALIZAÇÃO
+DE
+AÇÕES
+DE
+FORMAÇÃO;  REDAÇÃO DE TEXTOS;  SERVIÇOS DE
+FORMAÇÃO
+E
+EDUCAÇÃO;
+SERVIÇOS
+DE
+INSTRUÇÃO E FORMAÇÃO;  WORKSHOPS DE
+FORMAÇÃO;
+FORMAÇÃO
+NA
+ÁREA
+DA
+ENFERMAGEMJORNADAS EDUCATIVAS.
+(591)
+(540)
+(531) 24.13.1 ; 26.11.7 ; 27.5.25
+(210) 749354
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT NUNO MIGUEL DA SILVA VENDA
+(511) 41 EDIÇÃO DE PUBLICAÇÕES;  EDIÇÃO DE E-BOOKS
+(LIVROS ELETRÓNICOS);  EDIÇÃO DE MATERIAL
+IMPRESSO
+COM
+IMAGENS,
+SEM
+FINS
+PUBLICITÁRIOS;  PUBLICAÇÃO DE HISTÓRIAS;
+PUBLICAÇÃO DE LIVROS;  PUBLICAÇÃO DE
+LIVRETOS;  PUBLICAÇÃO DE LIVROS DE ÁUDIO;
+PUBLICAÇÃO DE LIVROS DE TEXTO;  PUBLICAÇÃO
+DE LIVROS EDUCATIVOS;  PUBLICAÇÃO DE
+MATERIAL
+EDUCATIVO;
+PUBLICAÇÃO
+DE
+MATERIAL DIDÁTICO;  PUBLICAÇÃO E EDIÇÃO DE
+LIVROS;  PUBLICAÇÃO E EDIÇÃO DE MATERIAL
+IMPRESSO;
+PUBLICAÇÃO
+MULTIMÉDIA
+DE
+LIVROS;  SERVIÇOS DE EDIÇÃO;  SERVIÇOS DE
+PUBLICAÇÃO.
+(591)
+(540)
+(531) 3.7.6 ; 3.7.24 ; 26.4.15 ; 26.4.22 ; 27.5.25
+(210) 749356
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT LUÍS FILIPE COSTA GAMITO
+(511) 25 VESTUÁRIO.
+(591)
+(540)
+(531) 27.5.13
+(210) 749360
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT DAVID EMANUEL MATIAS DE SOUSA
+PAULO
+
+BOLETIM DA PROPRIEDADE
+PT RODRIGO COELHO NUNES
+(511) 25 VESTUÁRIO;
+CHAPELARIA;
+PARTES
+DE
+VESTUÁRIO, CALÇADO E CHAPELARIA;  ARTIGOS
+DE CHAPELARIA.
+43 SERVIÇOS DE FORNECIMENTO DE ALIMENTOS E
+BEBIDAS.
+(591)
+(540)
+(531) 24.17.25 ; 27.3.15 ; 27.5.25 ; 27.99.15
+(210) 749362
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT INÊS RAMOS MOREIRA
+(511) 44 PRESTAÇÃO DE SERVIÇOS DE SAÚDE.
+(591) azul turquesa
+(540)
+(531) 2.1.23 ; 27.5.25 ; 29.1.4
+(210) 749368
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT RICARDO JORGE MESQUITA AREAL
+(511) 36 SERVIÇOS IMOBILIÁRIOS.
+(591)
+(540)
+(531) 27.99.26
+(210) 749380
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT MARIA DE MORAIS SEABRA DA SILVA
+E SOUSA
+(511) 02 TINTA DE TATUAGEM.
+08 UTENSÍLIOS PARA OS CUIDADOS DE HIGIENE E
+BELEZA ACIONADOS MANUALMENTE PARA USO
+HUMANO E ANIMAL;  AGULHAS PARA TATUAGEM;
+APARELHOS PARA TATUAGEM.
+09 CONTEÚDOS GRAVADOS E DESCARREGÁVEIS.
+16 OBRAS DE ARTE E DECORAÇÕES, INCLUINDO
+FIGURAS, FEITAS SOBRETUDO DE PAPEL OU
+CARTÃO, E MAQUETES ARQUITETÓNICAS.
+21 OBRAS DE ARTE E DECORAÇÕES, INCLUINDO
+ESCULTURAS, FEITAS SOBRETUDO DE CERÂMICA
+OU DE VIDRO, OU DE SEUS SUBSTITUTOS;
+UTENSÍLIOS COSMÉTICOS, DE HIGIENE E PARA OS
+CUIDADOS DE BELEZA.
+25 VESTUÁRIO.
+41 PUBLICAÇÃO ONLINE DE MATERIAL MULTIMÉDIA.
+44 SERVIÇOS DE HIGIENE CORPORAL E DE BELEZA
+PARA PESSOAS;  ESTÚDIOS DE TATUAGEM.
+(591)
+(540)
+~
+(531) 27.5.25
+(210) 749382
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT VÍTOR HUGO ESPIRITO SANTO SOUSA
+(511) 39 SERVIÇOS
+DE
+NAVEGAÇÃO
+[TRANSPORTE];
+SERVIÇOS
+DE
+TRANSPORTE
+EM
+VEÍCULOS
+AUTOMÓVEIS;  ORGANIZAÇÃO DE SERVIÇOS DE
+TRANSPORTE;  AGÊNCIAS DE MEDIAÇÃO DE
+
+BOLETIM DA PROPRIEDADE
+TRANSPORTE;  CORRETAGEM DE TRANSPORTE;
+CORRETAGEM/AGÊNCIAS
+DE
+TRANSPORTE;
+MEDIAÇÃO
+DE
+SERVIÇOS
+DE
+TRANSPORTE;
+LOGÍSTICA DE TRANSPORTE;  ORGANIZAÇÃO DE
+TRANSPORTE
+AÉREO;
+ORGANIZAÇÃO
+DE
+TRANSPORTE E VIAGENS;  ORGANIZAÇÃO DE
+TRANSPORTES;  ORGANIZAÇÃO DE TRANSPORTES
+EM FERRY;  ORGANIZAÇÃO DO TRANSPORTE DE
+PASSAGEIROS
+POR
+VIA
+RODOVIÁRIA,
+FERROVIÁRIA,
+MARÍTIMA
+E
+AÉREA;
+ORGANIZAÇÃO
+E
+FORNECIMENTO
+DE
+TRANSPORTE POR TERRA, POR MAR E POR AR;
+ORGANIZAÇÕES DE TRANSPORTES POR TERRA,
+MAR E AR;  SERVIÇOS DE CHECK-IN PARA
+PASSAGEIROS DE AEROPORTO;  SERVIÇOS DE
+CONDUÇÃO
+DE
+VEÍCULOS;
+SERVIÇOS
+DE
+CONDUÇÃO;
+SERVIÇOS
+DE
+LOGÍSTICA
+RELACIONADOS COM TRANSPORTE;  SERVIÇOS DE
+PASSAGEIROS E DE CARGA;  SERVIÇOS DE
+TRANSPORTE;
+SERVIÇOS
+DE
+TÁXI
+AÉREO;
+SERVIÇOS DE TRANSFERÊNCIA DE AEROPORTOS;
+SERVIÇOS
+DE
+TRANSPORTE
+RODOVIÁRIO;
+SERVIÇOS
+DE
+TRANSPORTE
+PROTEGIDO;
+SERVIÇOS
+DE
+TRANSPORTES
+POR
+ESTRADA;
+SERVIÇOS PARA FRETAMENTO DE TRANSPORTE
+FERROVIÁRIO;  SERVIÇOS PARA ORGANIZAÇÃO
+DE TRANSPORTE;  SERVIÇOS PARA ORGANIZAÇÃO
+DE TRANSPORTE FERROVIÁRIO;  SERVIÇOS PARA
+ORGANIZAÇÃO DE TRANSPORTE RODOVIÁRIO;
+SERVIÇOS
+PARA
+TRANSPORTE;
+SERVIÇOS
+PORTUÁRIOS;  SERVIÇOS PORTUÁRIOS [DOCAS];
+SERVIÇOS
+PRESTADOS
+POR
+FERRYBOAT;
+SERVIÇOS
+RELACIONADOS
+COM
+PONTES
+BASCULANTES;  TRANSPORTE;  TRANSPORTE
+AÉREO;  SERVIÇOS TRANSITÁRIOS;  TRANSPORTE
+E DISTRIBUIÇÃO DE MERCADORIAS;  TRANSPORTE
+DE PASSAGEIROS;  TRANSPORTE DE PASSAGEIROS
+[VIAJANTES];  TRANSPORTE DE VALORES EM
+VEÍCULOS BLINDADOS;  TRANSPORTE E ENTREGA
+DE
+MERCADORIAS;
+TRANSPORTE
+EM
+AUTOMÓVEIS;  TRANSPORTE EM COMPANHIAS
+AÉREAS;
+TRANSPORTE
+EM
+FERRYBOAT;
+TRANSPORTE EM HELICÓPTERO;  TRANSPORTE
+FERROVIÁRIO;
+TRANSPORTE
+EM
+NAVIOS;
+TRANSPORTE
+POR
+ESTRADA;
+VIAGENS
+E
+TRANSPORTE DE PASSAGEIROS;  TRANSPORTE
+POR TELEFÉRICO;  TRANSPORTE POR TERRA;
+TRANSPORTE
+POR
+VEÍCULOS
+BLINDADOS;
+TRANSPORTE POR VEÍCULOS MOTORIZADOS DE
+DUAS RODAS;  TRANSPORTE POR VIA AÉREA;
+TRANSPORTE POR VIA FLUVIAL;  TRANSPORTES
+POR CAMINHO DE FERRO.
+43 ALOJAMENTO
+TEMPORÁRIO;
+ALUGUER
+DE
+MÓVEIS, ROUPA DE CASA, CONJUNTOS DE MESA E
+EQUIPAMENTO
+PARA
+FORNECIMENTO
+DE
+ALIMENTOS
+E
+BEBIDAS;
+SERVIÇOS
+DE
+INFORMAÇÃO, ACONSELHAMENTO E RESERVA
+RELATIVOS
+A
+ALOJAMENTO
+TEMPORÁRIO;
+FORNECIMENTO DE ALOJAMENTO TEMPORÁRIO;
+FORNECIMENTO DE ALOJAMENTO TEMPORÁRIO
+PARA
+ESCRITÓRIOS;
+FORNECIMENTO
+DE
+ALOJAMENTOS TEMPORÁRIOS;  SERVIÇOS DE
+ALOJAMENTO
+TEMPORÁRIO;
+ALOJAMENTO
+TEMPORÁRIO
+FORNECIDO
+POR
+CASAS
+DE
+TRANSIÇÃO;
+ALUGUER
+DE
+ALOJAMENTO
+TEMPORÁRIO;  ALUGUER DE ALOJAMENTOS PARA
+FÉRIAS;  ALUGUER DE CAMARINS PORTÁTEIS;
+ALUGUER DE CAMAS PARA CAMPISMO;  ALUGUER
+DE
+QUARTOS
+ENQUANTO
+ALOJAMENTO
+TEMPORÁRIO;  ALUGUER DE SALAS PARA FINS
+SOCIAIS;  ALUGUER DE TENDAS GRANDES;
+ALUGUER DE TOLDOS;  ALUGUER DE TENDAS;
+FORNECIMENTO DE INSTALAÇÕES PARA EVENTOS
+E
+DE
+INSTALAÇÕES
+TEMPORÁRIAS
+PARA
+ESCRITÓRIOS
+E
+REUNIÕES;
+ALUGUER
+TEMPORÁRIO DE QUARTOS;  ARRENDAMENTO DE
+PAVILHÕES;  ARRENDAMENTO DE QUARTOS;
+DISPONIBILIZAÇÃO
+DE
+ACOMODAÇÕES
+PARA
+ALOJAMENTO TEMPORÁRIO;  FORNECIMENTO DE
+ALOJAMENTO
+HABITACIONAL
+TEMPORÁRIO;
+FORNECIMENTO
+DE
+ALOJAMENTO
+PARA
+CERIMÓNIAS;  FORNECIMENTO DE ALOJAMENTOS
+TEMPORÁRIOS MOBILADOS;  FORNECIMENTO DE
+INSTALAÇÕES
+PARA
+ESTACIONAMENTO
+DE
+CARAVANAS;  FORNECIMENTO DE INSTALAÇÕES
+PARA PARQUES DE CARAVANAS;  FORNECIMENTO
+DE ZONAS DE REPOUSO TEMPORÁRIAS PARA
+PASSAGEIROS;
+GESTÃO DOS SERVIÇOS DE
+ALOJAMENTO PARA MEMBROS;  INSTALAÇÕES
+PARA EVENTOS E INSTALAÇÕES TEMPORÁRIAS
+PARA ESCRITÓRIOS E REUNIÕES;  ORGANIZAÇÃO
+E FORNECIMENTO DE ALOJAMENTO TEMPORÁRIO;
+SERVIÇOS DE ACOMODAÇÃO PARA EVENTOS;
+SERVIÇOS DE AGÊNCIA DE ARRENDAMENTO DE
+ALOJAMENTO [TIME-SHARING];  SERVIÇOS DE
+AGÊNCIAS DE ALOJAMENTO;  SERVIÇOS DE
+ALOJAMENTO;  SERVIÇOS DE ALOJAMENTOS
+PARA FÉRIAS;  SERVIÇOS DE ALUGUER DE
+QUARTOS;
+SERVIÇOS
+DE
+BENEFICÊNCIA,
+NOMEADAMENTE
+FORNECIMENTO
+DE
+ALOJAMENTO
+TEMPORÁRIO;
+SERVIÇOS
+DE
+HOSPITALIDADE [ALOJAMENTO];  SERVIÇOS DE
+INTERCÂMBIO DE ALOJAMENTO [TIME-SHARING];
+SERVIÇOS DE RECEPÇÃO PARA ALOJAMENTO
+TEMPORÁRIO [ENTREGA DE CHAVES];  SERVIÇOS
+DE RECEÇÃO PARA ALOJAMENTO TEMPORÁRIO
+[ATRIBUIÇÃO
+DE
+CHAVES];
+SERVIÇOS
+DE
+RECEÇÃO
+PARA
+ALOJAMENTO
+TEMPORÁRIO
+[GESTÃO
+DE
+CHEGADAS
+E
+PARTIDAS];
+DISPONIBILIZAÇÃO
+DE
+INFORMAÇÃO
+ONLINE
+SOBRE RESERVAS DE ALOJAMENTO EM FÉRIAS;
+DISPONIBILIZAÇÃO
+DE
+INFORMAÇÃO
+SOBRE
+ALOJAMENTO
+TEMPORÁRIO
+VIA
+INTERNET;
+DISPONIBILIZAÇÃO
+DE
+INFORMAÇÃO
+SOBRE
+SERVIÇOS
+DE
+ALOJAMENTO
+TEMPORÁRIO;
+FORNECIMENTO
+DE
+INFORMAÇÃO
+DE
+ALOJAMENTO VIA INTERNET;  FORNECIMENTO DE
+INFORMAÇÃO
+ONLINE
+SOBRE
+RESERVAS
+DE
+HOTÉIS;  FORNECIMENTO DE INFORMAÇÃO SOBRE
+SERVIÇOS DE CRECHE;  FORNECIMENTO DE
+INFORMAÇÕES SOBRE HOTÉIS ATRAVÉS DE UM
+SÍTIO WEB;  INFORMAÇÃO RELACIONADA COM
+HOTÉIS;
+INFORMAÇÕES
+SOBRE
+HOTÉIS;
+ORGANIZAÇÃO DE ALOJAMENTO TEMPORÁRIO;
+PRESTAÇÃO DE INFORMAÇÕES RELACIONADAS
+COM RESERVA DE ALOJAMENTO;  PRESTAÇÃO DE
+INFORMAÇÕES
+RELATIVAS
+A
+HOTÉIS;
+PRESTAÇÃO
+DE
+SERVIÇOS
+DE
+INFORMAÇÃO
+SOBRE ALOJAMENTO DE VIAGENS E DE SERVIÇOS
+DE AGÊNCIAS DE RESERVA DE ALOJAMENTO DE
+VIAGENS PARA VIAJANTES;  REALIZAÇÃO DE
+RESERVAS
+DE
+HOTÉIS
+PARA
+TERCEIROS;
+RESERVA DE ALOJAMENTO EM HOTÉIS;  RESERVA
+DE ALOJAMENTO EM PARQUES DE CAMPISMO;
+RESERVA DE ALOJAMENTO PARA VIAJANTES;
+RESERVA
+DE
+ALOJAMENTO
+TEMPORÁRIO;
+RESERVA DE ALOJAMENTO TEMPORÁRIO EM
+CASAS DE FÉRIAS;  RESERVA DE ALOJAMENTO
+TEMPORÁRIO VIA INTERNET;  RESERVA DE
+ALOJAMENTOS
+EM
+HOTÉIS;
+RESERVA
+DE
+ALOJAMENTOS TURÍSTICOS;  RESERVA DE HOTEIS;
+RESERVA DE HOTÉIS;  RESERVA DE PENSÕES;
+RESERVA DE QUARTOS;  RESERVA DE QUARTOS
+PARA VIAJANTES;  RESERVAS DE ALOJAMENTO;
+RESERVAS
+DE
+ALOJAMENTO
+TEMPORÁRIO;
+RESERVAS
+DE
+ALOJAMENTOS
+TEMPORÁRIOS;
+RESERVAS DE HOTÉIS;  RESERVAS DE QUARTOS
+DE HOTEL PARA VIAJANTES;  SERVIÇOS DE
+AGÊNCIA DE MARCAÇÃO DE ALOJAMENTO EM
+HOTÉIS;  SERVIÇOS DE AGÊNCIA DE RESERVAS DE
+ALOJAMENTO EM REGIME DE TIME-SHARING;
+SERVIÇOS
+DE
+AGÊNCIA
+DE
+VIAGENS
+PARA
+RESERVA
+DE
+ALOJAMENTO;
+SERVIÇOS
+DE
+AGÊNCIA
+DE
+VIAGENS
+PARA
+RESERVA
+DE
+ALOJAMENTO EM HOTÉIS;  SERVIÇOS DE AGÊNCIA
+PARA A RESERVA DE ALOJAMENTO TEMPORÁRIO;
+
+BOLETIM DA PROPRIEDADE
+SERVIÇOS DE AGÊNCIA PARA RESERVA DE
+ALOJAMENTOS
+EM
+HOTÉIS;
+SERVIÇOS
+DE
+AGÊNCIAS DE TURISMO PARA RESERVAS DE
+ALOJAMENTO;  SERVIÇOS DE AGÊNCIAS DE
+VIAGENS
+PARA
+RESERVA
+DE
+ALOJAMENTO
+TEMPORÁRIO;  SERVIÇOS DE AGÊNCIAS DE
+VIAGENS QUE REALIZAM RESERVA DE HOTÉIS;
+SERVIÇOS DE CONSULTADORIA RELACIONADOS
+COM INSTALAÇÕES HOTELEIRAS;  SERVIÇOS DE
+INFORMAÇÃO
+ELETRÓNICOS
+RELACIONADOS
+COM HOTÉIS;  SERVIÇOS DE RESERVA DE
+ALOJAMENTO [TIME-SHARING];  SERVIÇOS DE
+OPERADORES TURÍSTICOS PARA A RESERVA DE
+ALOJAMENTO
+TEMPORÁRIO;
+SERVIÇOS
+DE
+RESERVA DE ALOJAMENTO EM HOTÉIS;  SERVIÇOS
+DE RESERVA DE HOTEL;  SERVIÇOS DE RESERVA
+DE HOTÉIS VIA INTERNET;  SERVIÇOS DE RESERVA
+DE QUARTOS;  SERVIÇOS DE RESERVA DE
+QUARTOS DE HOTEL;  SERVIÇOS DE RESERVA DE
+QUARTOS E RESERVA DE HOTÉIS;  SERVIÇOS DE
+RESERVA PARA MARCAÇÃO DE ALOJAMENTO;
+SERVIÇOS
+DE
+RESERVAS
+DE
+ALOJAMENTO;
+SERVIÇOS DE RESERVAS DE ALOJAMENTO EM
+REGIME TIME-SHARING;  SERVIÇOS DE RESERVAS
+DE QUARTOS DE HOTEL;  SERVIÇOS DE RESERVAS
+PARA HOTÉIS;  SERVIÇOS DE RESERVAS PARA
+ALOJAMENTO;  SERVIÇOS PARA MARCAÇÃO DE
+ALOJAMENTO;  SERVIÇOS PARA RESERVA DE
+ALOJAMENTO DE FÉRIAS.
+(591)
+(540)
+(531) 1.1.17 ; 26.1.4 ; 27.5.25
+(210) 749383
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT ORVALHO COSMICO, UNIPESSOAL
+LDA
+(511) 41 SERVIÇOS
+PRESTADOS
+POR
+INSTITUTOS
+DE
+EDUCAÇÃO;  SERVIÇOS DE ESCOLAS E CURSOS DE
+LÍNGUAS;
+ORGANIZAÇÃO
+DE
+CURSOS
+DE
+FORMAÇÃO TÉCNICOS.
+(591)
+(540)
+LIL - LISBON INSTITUTE OF
+LANGUAGES
+(210) 749385
+MNA
+(220) 2025.07.11
+(300)
+(730)  CV ISA MILENA SOUSA RODRIGUES
+(511) 18 BAGAGENS,
+MALAS,
+CARTEIRAS
+E
+OUTRAS
+BOLSAS DE TRANSPORTE;  BOLSAS.
+(591)
+(540)
+(531) 5.5.20 ; 27.5.25
+(210) 749386
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT PATRÍCIA DANIELA CORREIA COUTO
+ALVES
+(511) 35 MARKETING;  MARKETING DIGITAL;  MARKETING
+PROMOCIONAL;
+MARKETING
+DE
+INTERNET;
+SERVIÇOS DE MARKETING;  CONSULTADORIA DE
+MARKETING;
+MARKETING
+DE
+PRODUTOS;
+PUBLICIDADE E MARKETING;  SERVIÇOS DE
+MARKETING
+EMPRESARIAL;
+SERVIÇOS
+DE
+AGÊNCIAS DE MARKETING;  DESENVOLVIMENTO
+DE PLANOS DE MARKETING;  SERVIÇOS DE
+PUBLICIDADE, DE MARKETING E DE PROMOÇÃO.
+42 DESIGN
+GRÁFICO;
+CONCEÇÃO
+DE
+ARTE
+COMERCIAL;  ALUGUER DE EQUIPAMENTO DE
+DESENHO;
+AVALIAÇÕES
+TÉCNICAS
+RELACIONADAS COM O DESIGN;  SERVIÇOS DE
+DESIGN;  WEB DESIGN E DESIGN GRÁFICO;
+DESIGN DE MARCAS;  DESIGN DE MODA;  DESIGN
+VISUAL;  DESIGN DE CONSTRUÇÃO;  DESIGN DE
+CORTINADOS;  DESIGN DE COZINHAS;  DESIGN DE
+EMBALAGENS;
+DESIGN
+DE
+ILUSTRAÇÕES
+GRÁFICAS;  SERVIÇOS DE DESIGN COMERCIAL;
+SERVIÇOS DE DESIGN CUSTOMIZADO;  DESIGN DE
+WEBSITES INFORMÁTICOS;  DESIGN DE MATERIAL
+IMPRESSO;  DESIGN E DESIGN GRÁFICO PARA A
+CRIAÇÃO DE WEBSITES;  DESIGN GRÁFICO DE
+MATERIAIS PUBLICITÁRIOS;  DESIGN GRÁFICO DE
+MATERIAIS
+PROMOCIONAIS;
+SERVIÇOS
+DE
+DESIGN DE LOGOTIPOS;  DESIGN INDUSTRIAL E DE
+ARTES GRÁFICAS;  SERVIÇOS DE DESIGN DE
+ARTES
+GRÁFICAS;
+SERVIÇOS
+PARA
+PLANEAMENTO [DESIGN] DE PUBS;  DESIGN
+GRÁFICO DE MATERIAL DE IMPRESSÃO;  DESIGN
+DE GRÁFICOS E CONCEÇÃO DE FARDAS PARA A
+IDENTIDADE DE EMPRESAS;  SERVIÇOS DE DESIGN
+RELACIONADOS
+COM
+A
+REPRODUÇÃO
+DE
+DOCUMENTOS;
+SERVIÇOS
+DE
+DESIGN
+RELACIONADOS COM A CRIAÇÃO DE REDES;
+
+BOLETIM DA PROPRIEDADE
+SERVIÇOS DE DESIGN RELACIONADOS COM O
+GRAFISMO DE JANELAS.
+(591)
+(540)
+(531) 26.11.12 ; 26.11.13 ; 27.5.25
+(210) 749388
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT WIDE TRAVEL - VIAGENS E TURISMO,
+LDA.
+(511) 39 AGÊNCIAS DE RESERVAS DE VIAGENS.
+(591)
+(540)
+WIDE DMC PORTUGAL
+(210) 749391
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT DÉBORA PAREDES
+(511) 44 SERVIÇOS DE PSICOLOGIA INDIVIDUAL E DE
+GRUPO.
+(591) PRETO; BRANCO
+(540)
+(531) 7.3.11 ; 7.3.12 ; 20.7.2 ; 27.5.25
+(210) 749397
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT CLÁUDIA MARGARIDA MELGADA DE
+ANDRADE BAETA
+(511) 16 MATERIAL IMPRESSO E ARTIGOS DE PAPELARIA E
+DE
+INSTRUÇÃO;
+AGENDA
+PLANIFICADORA;
+AGENDAS;  AGENDAS DE BOLSO;  AGENDAS COM
+CAPAS DE COURO;  AGENDAS DE ESCRITÓRIO;
+AGENDAS
+DE
+SECRETÁRIA;
+ADESIVOS
+[PAPELARIA];
+ADESIVOS
+AUTOCOLANTES;
+AGENDAS ORGANIZADORAS DE BOLSO;  AGENDAS
+PESSOAIS;  AGRAFADORES;  AGRAFOS;  AGRAFOS
+[ARTIGOS DE PAPELARIA];  AGRAFOS PARA
+ESCRITÓRIO;  ALFINETES PARA PRANCHETAS DE
+DESENHO;  ALFINETES PARA QUADROS DE
+CORTIÇA;  ALFINETES TIPO PINS [ARTIGOS DE
+PAPELARIA];  ALMOFADAS DE CARIMBO PARA
+ESCRITÓRIO;  AMPARA-LIVROS;  APARA-LÁPIS,
+MECÂNICOS;  APLICAÇÕES SOB A FORMA DE
+DECALQUES;
+ARGOLAS
+PARA
+ARQUIVAR
+DOCUMENTOS;  ARMÁRIOS OU PEQUENAS CAIXAS
+PARA PAPELARIA [ARTIGOS DE ESCRITÓRIO];
+ARMÁRIOS
+PARA
+PAPELARIA
+[ARTIGOS
+DE
+ESCRITÓRIO];  ARQUIVADORES;  ARQUIVADORES
+(MATERIAL DE ESCRITÓRIO);  ARQUIVADORES
+COM MOLA DE ALAVANCA;  ARQUIVADORES DE
+ESCRITÓRIO;  ARQUIVADORES DE TRÊS ARGOLAS
+MAGNÉTICOS;  ARQUIVADORES DE ÍNDICES;
+ARQUIVADORES PARA ESCRITÓRIO;  ARQUIVOS
+PARA RECEITAS;  ARTE IMPRESSA;  ARTIGOS DE
+ESCRITÓRIO;  ARTIGOS DE PAPELARIA;  ARTIGOS
+DE PAPELARIA E MATERIAL ESCOLAR;  ARTIGOS
+DE
+PAPELARIA
+EM
+PAPEL;
+ARTIGOS
+DE
+PAPELARIA IMPRESSOS;  ARTIGOS DE PAPELARIA
+PARA ESCRITA;  ARTIGOS DE PAPELARIA PARA
+ESCRITÓRIO;  ARTIGOS DE PAPELARIA PARA
+FESTAS;  ARTIGOS DE PAPELARIA PERFUMADA;
+ARTIGOS
+IMPRESSOS
+A
+CORES;
+ARTIGOS
+PUBLICITÁRIOS IMPRESSOS;  AUTOCOLANTES;
+AUTOCOLANTES
+[ARTIGOS
+DE
+PAPELARIA];
+AUTOCOLANTES
+[DECALCOMANIAS];
+AUTOCOLANTES PARA AUTOMÓVEIS;  BANDA
+DESENHADA;  BASES PARA SECRETÁRIAS;  BASES
+PARA
+LAVAR
+PINCÉIS
+PARA
+ESCRITA;
+BIBLIORAPTOS [PASTAS PARA PAPÉIS];  BILHETES;
+BILHETES
+DE
+ENTRADA;
+BILHETES
+DE
+PASSAGEIRO;  BILHETES IMPRESSOS;  BILHETES
+IMPRESSOS
+PARA
+ENTRADA
+EM
+EVENTOS;
+BLOCOS DE CONVITES PARA FESTAS;  BLOCOS DE
+FOLHAS SOLTAS;  BLOCOS DE MEMORANDOS;
+BLOCOS DE MEMORANDOS DE BOLSO;  BLOCOS
+DE NOTAS;  BLOCOS DE NOTAS [PARA ESCREVER];
+BLOCOS DE NOTAS ADESIVOS;  BLOCOS DE NOTAS
+DE PAPEL EM BRANCO;  BLOCOS DE NOTAS EM
+ESPIRAL;  BLOCOS DE NOTAS ILUSTRADOS;
+BLOCOS DE PAPEL;  BLOCOS DE PAPEL DE
+MÚLTIPLAS VIAS [PAPELARIA];  BLOCOS DE
+RASCUNHO;  BLOCOS DE RECADOS;  BLOCOS DE
+REPÓRTER;  BLOCOS EM FORMA DE CALENDÁRIOS
+PARA SECRETÁRIA;  BLOCOS PARA DESENHO;
+BLOCOS PARA MEMORANDOS;  BLOCOS PARA
+NOTAS;  BOLSAS DE ARQUIVO PARA PAPELARIA;
+BOLSAS DE CORREIO DE PAPEL;  BRASÕES
+[SINETES EM PAPEL];  BRILHANTES PARA FINS DE
+PAPELARIA;  BRILHANTINAS PARA PAPELARIA;
+BROCHURAS;
+BROCHURAS
+INFORMATIVAS;
+BROCHURAS NA ÁREA DE VENDAS DE IMÓVEIS;
+CABEÇALHOS IMPRESSOS;  CADERNO DE NOTAS;
+CADERNOS;  CADERNOS DE APONTAMENTOS;
+CADERNOS
+DE
+BOLSO;
+BOLSAS
+PARA
+INSTRUMENTOS DE ESCRITA;  BOLSAS PARA
+MAPAS;  BOLSAS PARA PASSAPORTES;  BOLSAS
+PARA QUADROS DE FOLHAS MÓVEIS;  BLOCOS
+[PAPELARIA];  BLOCOS DE PAPEL PARA ESCREVER;
+BLOCOS DE PONTUAÇÃO;  BLOCOS;  BLOCOS DE
+ANOTAÇÕES;
+BLOCOS
+DE
+APONTAMENTOS;
+CADERNOS DE ESTENÓGRAFO;  CADERNOS DE
+NOTAS;  CADERNOS DE RESULTADOS;  CADERNOS
+PARA ESCREVER OU DESENHAR;  CAIXAS DE
+ARRUMAÇÃO DE SECRETÁRIA PARA PAPELARIA
+[ARTIGOS DE ESCRITÓRIO];  CAIXAS DE ARTIGOS
+DE
+PAPELARIA;
+CAIXAS
+PARA
+CARIMBOS
+
+BOLETIM DA PROPRIEDADE
+[CHANCELAS];  CAIXAS PARA CARIMBOS [SELOS];
+CALENDÁRIOS;  CALENDÁRIOS DE ADVENTO;
+CALENDÁRIOS DE BOLSO;  CALENDÁRIOS DE
+FOLHA DESTACÁVEL;  CALENDÁRIOS DE PAREDE;
+CALENDÁRIOS DE SECRETÁRIA;  CALENDÁRIOS
+IMPRESSOS;  CANETAS COM PONTA DE FIBRA;
+CANETAS DE BRILHANTES PARA PAPELARIA;
+CANETAS DE COR;  CANETAS DE CORES;  CANETAS
+DE
+PELÍCULA;
+CANETAS
+MARCADORES;
+CANETAS PARA COLORIR;  CAPAS DE ARGOLAS;
+CAPAS DE CADERNOS;  CAPAS DE LIVROS DE
+EXERCÍCIOS;  CAPAS EM COURO PARA LIVROS;
+CAPAS PARA AGENDAS;  CAPAS PARA ARQUIVO;
+CAPAS PARA BLOCOS DE MEMORANDOS;  CAPAS
+PARA DOCUMENTOS;  CAPAS PARA LIVROS DE
+CHEQUES;  CAPAS PARA PAPÉIS;  CAPAS PARA
+PASSAPORTES;  CAPAS PARA PLANIFICADORES
+SEMANAIS;  CAPAS PARA SELOS DOS CORREIOS;
+CAPAS PROTETORAS PARA LIVROS;  CARATERES
+DE TRANSFERÊNCIA A SECO;  CARATERES PARA
+TRANSFERÊNCIA A SECO;  CARTAZES;  CARTAZES
+DE EXPOSIÇÃO EM PAPEL;  CARTAZES DE
+EXPOSIÇÃO FEITOS DE CARTÃO;  CARTAZES DE
+PAPEL;  CARTAZES EM CARTÃO;  CARTAZES
+EMOLDURADOS;
+CARTAZES
+PUBLICITÁRIOS;
+CARTÕES
+DE
+ANIVERSÁRIO;
+CARTÕES
+DE
+AGRADECIMENTO;
+CARTÕES
+COM
+NOMES;
+CARTÕES
+COLECIONÁVEIS;
+CARTÕES
+DE
+ANUNCIAÇÃO
+[ARTIGOS
+DE
+PAPELARIA];
+CARTÕES DE ANÚNCIO DE ACONTECIMENTOS
+[PAPELARIA];  CARTÕES DE ARQUIVO (FICHAS);
+CARTÕES DE BOAS FESTAS MUSICAIS;  CARTÕES
+DE BOAS-FESTAS;  CARTÕES DE BOAS-VINDAS;
+CARTÕES DE COLECIONADOR;  CARTÕES DE
+CONVITE;  CARTÕES DE FELICITAÇÕES;  CARTÕES
+DE FELICITAÇÕES IMPRESSOS COM INFORMAÇÕES
+ELETRÓNICAS ARMAZENADAS;  CARTÕES DE
+FELICITAÇÕES
+MUSICAIS;
+CARTÕES
+DE
+FELICITAÇÕES QUE SE DESDOBRAM AO ABRIR;
+CARTÕES DE FIDELIDADE EM PAPEL;  CARTÕES DE
+IDENTIFICAÇÃO
+[ARTIGOS
+DE
+ESCRITÓRIO];
+CARTÕES DE ÍNDICES;  CARTÕES DE MENSAGENS
+SOCIAIS;  CARTÕES DE MOTIVAÇÃO;  CARTÕES DE
+NATAL;  CARTÕES DE PARTICIPAÇÃO [ARTIGOS DE
+PAPELARIA];
+CARTÕES
+DE
+PONTUAÇÃO;
+CARTÕES DE REFERÊNCIA;  CARTÕES DE REGISTO;
+CARTÕES DE RESPOSTA POSTAL IMPRESSOS;
+CARTÕES DE VISITA;  CARTÕES DE VISITA
+[PAPELARIA];  CARTÕES DIDÁTICOS;  CARTÕES EM
+BRANCO;
+CARTÕES
+FESTIVOS;
+CARTÕES
+ILUSTRADOS;  CARTÕES IMPRESSOS;  CARTÕES
+IMPRESSOS COM NOMES PARA USO EM EVENTOS
+ESPECIAIS;  CARTÕES IMPRESSOS COM NÚMEROS
+DE MESAS PARA USO EM EVENTOS ESPECIAIS;
+CARTÕES INFORMATIVOS IMPRESSOS;  CARTÕES
+PARA
+ANIVERSÁRIO;
+CARTÕES
+PARA
+CORRESPONDÊNCIA;  CARTÕES PARA EMBRULHOS
+DE PRESENTES;  CARTÕES PARA MENSAGENS;
+CARTÕES PARA OCASIÕES ESPECIAIS;  CARTÕES
+PARA PONTUAÇÃO DE GOLFE;  CARTÕES PARA
+TROCA, SEM SER PARA JOGOS;  CARTÕES
+PERFURADOS EM BRANCO PARA MÁQUINAS DE
+TRICOTAR;  CARTÕES PERFURADOS PARA O
+REGISTO DE PROGRAMAS DE COMPUTADOR;
+CARTÕES POSTAIS;  CARTÕES POSTAIS E POSTAIS
+ILUSTRADOS;  CATÁLOGOS;  CERTIFICADOS DE
+PRÉMIOS IMPRESSOS;  CERTIFICADOS IMPRESSOS;
+CLIPES PARA PAPÉIS;  CLIPS PARA PAPÉIS;
+COBERTURAS (CAPAS) [ARTIGOS DE PAPELARIA];
+COBERTURAS
+[CAPAS]
+[PAPELARIA];
+COFREZINHOS
+OU
+PEQUENAS
+CAIXAS
+PARA
+PAPELARIA
+[ARTIGOS
+DE
+ESCRITÓRIO];
+COLAGENS;  COLA COM BRILHANTES PARA
+PAPELARIA;  COLEÇÕES DE FOTOGRAFIAS DE
+JOGADORES;
+COMPASSOS
+PARA
+DESENHO;
+CONJUNTOS PARA SECRETÁRIA;  CONTENTORES
+DE ARQUIVO;  CONVITES;  CONVITES PARA
+FESTAS;  CORRECTORES DE FITA [ARTIGOS DE
+ESCRITÓRIO];  CORRETORES DE FITA [ARTIGOS DE
+ESCRITÓRIO];
+CORTA-PAPEL
+[ABRE-CARTAS];
+CORTA-PAPEL [ARTIGOS DE ESCRITÓRIO] [ABRE-
+CARTAS];
+CORTA-PAPÉIS
+[ARTIGOS
+DE
+ESCRITÓRIO];  CORTADORES DE FITA ADESIVA
+SENDO ARTIGOS DE PAPELARIA;  CROMOS DE
+BASEBOL;  CROMOS DE DESPORTOS;  CURRÍCULOS
+IMPRESSOS;  CURSOS IMPRESSOS;  CURVAS
+FRANCESAS;
+DECALCOMANIAS;
+DECALCOMANIAS DE FRICÇÃO;  DECALCOMANIAS
+DE
+PAREDE;
+DECALCOMANIAS
+DE
+TRANSFERÊNCIA;
+DECALCOMANIAS
+DE
+TRANSFERÊNCIA TÉRMICA;  DECALCOMANIAS EM
+PAPEL
+DE
+TRANSFERÊNCIA
+TÉRMICA;
+DECALCOMANIAS IMPRESSAS PARA BORDADOS
+OU APLICAÇÕES EM TECIDO;  DECALQUES;
+DECALQUES 3D PARA UTILIZAR EM QUALQUER
+SUPERFÍCIE;  DECALQUES [DECALCOMANIAS];
+DECALQUES
+DE
+CHÃO;
+DECALQUES
+PARA
+PAVIMENTOS;  DECORAÇÕES ADESIVAS DE PAPEL
+PARA PAREDE;  DECORAÇÕES EM PAPEL PARA
+FESTAS;  DECORAÇÕES PARA FESTAS EM PAPEL
+METALIZADO;
+DEDEIRAS
+DE
+BORRACHA;
+DEDEIRAS PARA USO EM ESCRITÓRIO;  DESENHOS
+ANIMADOS IMPRESSOS;  DIAGRAMAS IMPRESSOS;
+DIPLOMAS
+IMPRESSOS;
+DIÁRIOS
+[CONTABILIDADE];  DIÁRIOS COM CAPAS DE
+COURO;
+DIÁRIOS
+DE
+BORDO [IMPRESSOS];
+DIÁRIOS DE BORDO MARÍTIMOS [IMPRESSOS];
+DIÁRIOS EM BRANCO;  DISTRIBUIDORES DE FITA
+ADESIVA
+[ARTIGOS
+DE
+PAPELARIA];
+DISTRIBUIDORES DE FITAS ADESIVAS [ARTIGOS
+DE PAPELARIA];  DOBRADEIRAS [ARTIGOS DE
+ESCRITÓRIO];  DOBRADORES DE PAPEL [ARTIGOS
+DE
+ESCRITÓRIO];
+DOSSIERS
+[PAPELARIA];
+ELÁSTICOS PARA ESCRITÓRIO;  ELÁSTICOS PARA
+PAPELARIA;  EMBLEMAS DE CARTÃO;  EMBLEMAS
+DE
+PAPEL;
+EMBLEMAS
+IMPRESSOS;
+EQUIPAMENTO DE IMPRESSÃO E ENCADERNAÇÃO;
+EQUIPAMENTO EDUCACIONAL;  CAPAS PARA
+ENCADERNAÇÃO;  TRANSPARÊNCIAS [ARTIGOS
+DE
+PAPELARIA];
+TIRA-AGRAFOS;
+TRANSFERIDORES
+COMO
+INSTRUMENTOS
+DE
+DESENHO;  TRANSPARENTES [PAPELARIA];  TINTA;
+TATUAGENS TEMPORÁRIAS;  TACHAS [PIONESES];
+TACHAS (PIONESES) PARA DESENHOS;  SUPORTES
+PARA OBJETOS ARTÍSTICOS;  SUPORTES PARA
+PAPEL
+DE
+ESCREVER;
+TABULEIROS
+DE
+SECRETÁRIA;  TABELA DE CORES;  TACHAS;
+TACHAS (PERCEVEJOS, PIONESES) [ARTIGOS DE
+PAPELARIA];  SUPORTES PARA CLIPES DE PAPEL;
+SUPORTES PARA MONTAGENS FOTOGRÁFICAS;
+SUPORTES PARA CARIMBOS;  SUPORTES PARA
+FITA ADESIVA;  SUPORTES PARA CRACHÁS
+[ARTIGOS DE ESCRITÓRIO];  SUPORTES PARA
+BLOCOS DE NOTAS;  STENCILS;  SINETES DE
+ESCRITÓRIO;  SINALIZADORES EM PAPEL OU EM
+CARTÃO;  SOBRECAPA DE PAPEL PARA LIVROS;
+SEPARADORES
+PARA
+CARTÕES
+DE
+ÍNDICE;
+SEPARADORES
+PARA
+BLOCOS
+DE
+NOTAS;
+SEPARADORES
+DE
+PASTAS
+DE
+ARQUIVO;
+SEBENTAS;  RÓTULOS EM PAPEL;  RÓTULOS
+PROMOCIONAIS IMPRESSOS PARA GARRAFAS DE
+VINHO;  RÓTULOS ADERENTES;  REPRODUÇÕES
+GRÁFICAS;
+REPRODUÇÕES
+FOTOGRÁFICAS;
+REPRODUÇÕES DE ARTE GRÁFICA;  REPRODUÇÕES
+ARTÍSTICAS IMPRESSAS;  RÉGUAS;  RÉGUAS T;
+RECARGAS DE CALENDÁRIO;  PUBLICAÇÕES
+DIDÁTICAS;  PRÉMIOS IMPRESSOS;  PRODUTOS DE
+IMPRESSÃO;  PRANCHETAS;  POSTAIS;  POSTAIS
+ILUSTRADOS;  POSTAIS LENTICULARES;  PLANTAS
+[DOCUMENTOS IMPRESSOS];  PLANOS IMPRESSOS;
+PLANIFICADORES
+DE
+SECRETÁRIA;
+PLANIFICADORES DE PAREDE;  PLANIFICADORES
+DIÁRIOS;
+PLANIFICADORES
+MENSAIS;
+PLANIFICADORES
+SEMANAIS;
+PISA-PAPÉIS;
+PERCEVEJOS;  PAUS DE GIZ;  PASTAS PARA
+ARQUIVO;  PASTAS EM PAPEL;  PAPELARIA;  PAPEL
+
+BOLETIM DA PROPRIEDADE
+TIMBRADO;  PAPEL PARA XEROGRAFIA;  PAPEL
+PARA PROVAS;  PAPEL PARA FOTOCÓPIAS;  PAPEL
+PARA ETIQUETAS;  PAPEL PARA DECALQUE;
+PAPEL PARA CÓPIAS;  PAPEL DE FOTOCÓPIA;
+CADERNOS DE ESPIRAL.
+35 ALUGUER DE EQUIPAMENTO DE ESCRITÓRIO EM
+INSTALAÇÕES DE COWORKING;  SERVIÇOS DE
+PUBLICIDADE, DE MARKETING E DE PROMOÇÃO.
+40 IMPRESSÃO DIGITAL;  IMPRESSÃO;  IMPRESSÃO DE
+LIVROS;  IMPRESSÃO DE RETRATOS;  IMPRESSÃO,
+E
+DESENVOLVIMENTO
+FOTOGRÁFICO
+E
+CINEMATOGRÁFICO;
+DISPONIBILIZAÇÃO
+DE
+INFORMAÇÃO SOBRE SERVIÇOS DE IMPRESSÃO;
+ENCADERNAÇÃO;  TRATAMENTO DE SEPARAÇÃO
+DE
+CORES;
+TRATAMENTO
+DE
+IMAGENS
+FOTOGRÁFICAS;  TIPOGRAFIA;  SERVIÇOS DE
+TIPOGRAFIA;  SERVIÇOS DE SEPARAÇÃO DE
+CORES;  SERVIÇOS DE IMPRESSÃO EM OFFSET;
+SERVIÇOS
+DE
+IMPRESSÃO;
+SERVIÇOS
+DE
+IMPRESSÃO
+DE
+ARTIGOS
+DE
+PAPELARIA;
+SERVIÇOS DE IMPRESSÃO DIGITAL DE LIVROS E
+OUTROS
+DOCUMENTOS
+POR
+ENCOMENDA;
+SERIGRAFIA;
+SERVIÇOS
+DE
+ACABAMENTO
+[CORTE] DE ARTIGOS IMPRESSOS;  SERVIÇOS DE
+ACABAMENTO
+[DOBRAGEM]
+DE
+ARTIGOS
+IMPRESSOS;
+SERVIÇOS
+DE
+ACABAMENTO
+[ENCADERNAÇÃO]
+DE
+MATERIAL
+IMPRESSO;
+SERVIÇOS
+DE
+ACABAMENTO
+DE
+MATERIAL
+IMPRESSO;  SERVIÇOS DE COMPOSIÇÃO DE
+FOTOGRAFIA;  SERVIÇOS DE FOTOCOMPOSIÇÃO;
+SERVIÇOS DE FOTOGRAVURA;  REPRODUÇÃO DE
+OBRAS DE ARTE DE MUSEUS;  REPRODUÇÃO DE
+IMPRESSÕES
+FOTOGRÁFICAS;
+REPRODUÇÃO
+FOTOGRÁFICA;  IMPRESSÃO EM OFFSET.
+41 SERVIÇOS DE GALERIAS DE ARTE;  REALIZAÇÃO
+DE EVENTOS CULTURAIS;  ORGANIZAÇÃO E
+REALIZAÇÃO DE WORKSHOPS;  ORGANIZAÇÃO E
+REALIZAÇÃO DE SEMINÁRIOS E WORKSHOPS
+[FORMAÇÃO].
+42 DESIGN
+GRÁFICO;
+SERVIÇOS
+DE
+DESIGN;
+SERVIÇOS DE DESIGN GRÁFICO;  WEB DESIGN E
+DESIGN
+GRÁFICO;
+DESIGN
+GRÁFICO
+DE
+MATERIAIS PROMOCIONAIS;  DESIGN GRÁFICO DE
+MATERIAIS PUBLICITÁRIOS;  DESIGN E DESIGN
+GRÁFICO PARA A CRIAÇÃO DE WEBSITES;  DESIGN
+GRÁFICO DE MATERIAL DE IMPRESSÃO;  DESIGN E
+DESIGN GRÁFICO PARA A CRIAÇÃO DE PÁGINAS
+WEB NA INTERNET;  CONCEÇÃO DE ARTE
+COMERCIAL;
+CONCEÇÃO
+DE
+HOMEPAGES;
+CONCEÇÃO
+DE
+LIVROS
+PERSONALIZADOS;
+CONCEÇÃO DE MARCAS COMERCIAIS;  CONCEÇÃO
+DE OBRAS CRIATIVAS AUDIOVISUAIS;  CONCEÇÃO
+DE
+PRODUTOS;
+CONCEÇÃO
+DE
+PÁGINAS
+PRINCIPAIS
+[HOMEPAGES]
+E
+PÁGINAS
+WEB;
+CONCEÇÃO DE PROTÓTIPOS;  CONCEÇÃO E
+DESENVOLVIMENTO
+DE
+NOVOS
+PRODUTOS;
+CONCEÇÃO
+DE
+STANDS
+DE
+EXPOSIÇÃO;
+CONCEÇÃO DE TIPOS DE LETRA;  CONCEÇÃO
+GRÁFICA
+DE
+LOGÓTIPOS
+PUBLICITÁRIOS;
+CONCEÇÃO GRÁFICA DE CAPAS DE LIVROS;
+CRIAÇÃO, DESIGN E MANUTENÇÃO DE WEBSITES;
+DESENHO DE EMBALAGENS;  DESENHO DE ARTE
+COMERCIAL;  DESIGN DE ARTE GRÁFICA;  DESIGN
+DE
+ARTIGOS
+DE
+PAPELARIA;
+DESIGN
+DE
+EMBALAGENS;  DESIGN DE EMBALAGENS PARA
+TERCEIROS;  DESIGN DE ESCULTURAS;  DESIGN DE
+ILUSTRAÇÕES GRÁFICAS;  DESIGN DE LOGOTIPOS
+PARA IDENTIFICAÇÃO DE EMPRESAS;  DESIGN DE
+MARCAS;  DESIGN DE NOVOS PRODUTOS;  DESIGN
+DE PROTÓTIPOS;  DESIGN INDUSTRIAL E DE ARTES
+GRÁFICAS.
+(591)
+(540)
+(531) 27.5.25
+(210) 749402
+MNA
+(220) 2025.07.12
+(300)
+(730)  PT CARDINALDRAGON UNIPESSOAL LDA
+(511) 37 LAVANDARIAS SELF-SERVICE.
+(591)
+(540)
+(531) 26.1.98 ; 27.5.9 ; 27.5.25
+(210) 749404
+MNA
+(220) 2025.07.12
+(300)
+(730)  PT SUELEN FIDELIS BARROTE
+PT FILIPE VASCONCELOS BARROTE
+(511) 04 VELAS AROMÁTICAS.
+18 BOLSAS;
+NÉCESSAIRES
+DE
+MAQUILHAGEM
+[VAZIOS];
+PORTA-MOEDAS
+MULTIUSOS;
+MOCHILAS.
+25 MEIAS;  LENÇOS [VESTUÁRIO];  LENÇOS DE
+PESCOÇO;  BONÉS.
+(591)
+(540)
+(531) 2.9.1 ; 27.5.25
+~
+
+BOLETIM DA PROPRIEDADE
+(210) 749427
+MNA
+(220) 2025.07.11
+(300)
+(730)  CN CHONGQING CHANGAN AUTOMOBILE
+CO., LTD.
+(511) 12 AUTOMÓVEIS ELÉTRICOS;  VIATURAS [CARROS];
+CARROÇARIAS PARA AUTOMÓVEIS;  MOTORES
+PARA AUTOMÓVEIS;  AUTOMÓVEIS HÍBRIDOS;
+CHASSIS PARA AUTOMÓVEIS;  AUTOMÓVEIS SEM
+CONDUTOR [VEÍCULOS AUTÓNOMOS];  CAPOTS
+PARA MOTORES DE VEÍCULOS;  PARA-CHOQUES
+PARA AUTOMÓVEIS;  AIR BAGS INSUFLÁVEIS
+[DISPOSITIVOS
+DE
+SEGURANÇA
+PARA
+AUTOMÓVEIS];  VIATURAS ALIMENTADAS POR
+HIDROGÉNIO;
+CAMIÕES
+(TRATORES);
+AUTOCARAVANAS;
+CARROS
+DE
+DESPORTO;
+VEÍCULOS ANFÍBIOS;  EIXOS PARA VEÍCULOS;
+ESTRIBOS PARA VEÍCULOS;  CALÇOS DE TRAVÃO
+PARA AUTOMÓVEIS;  ESPELHOS RETROVISORES;
+AVISADORES
+ELÉTRICOS
+DE
+MARCHA-ATRÁS
+PARA VEÍCULOS.
+(591) preto
+(540)
+(531) 27.5.25
+(210) 749489
+MNA
+(220) 2025.07.10
+(300)
+(730)  BR HIAGO FERREIRA STUQUI
+(511) 03 COSMÉTICOS;
+COSMÉTICOS
+NATURAIS;
+SABONETES
+COSMÉTICOS;
+MOUSSES
+[COSMÉTICOS];
+HIDRATANTES
+COSMÉTICOS;
+ÓLEOS
+ESSENCIAIS;
+ÓLEOS
+ESSENCIAIS
+NATURAIS;  MISTURAS DE ÓLEOS ESSENCIAIS;
+PRODUTOS DE TRATAMENTO DO CABELO PARA
+USO COSMÉTICO;  CHAMPÔS SECOS;  CHAMPÔS
+EMOLIENTES;  CHAMPÔS;  CHAMPÔ PARA BEBÉ;
+CHAMPÔS
+EM
+BARRAS;
+CHAMPÔS
+E
+AMACIADORES;  CHAMPÔS PARA ALCATIFAS;
+CREMES CONDICIONADORES;  CONDICIONADORES
+DE UNHAS;  CONDICIONADORES PARA O CABELO;
+CONDICIONADORES PARA USAR NO CABELO;
+MÁSCARAS PARA OS CABELOS;  MÁSCARAS EM
+FOLHAS PARA FINS COSMÉTICOS;  MÁSCARAS DE
+GEL PARA OS OLHOS;  MÁSCARAS DE BELEZA
+PARA
+O
+ROSTO;
+PREPARAÇÕES
+PARA
+MAQUILHAGEM;  PÓS PARA MAQUILHAGEM;  PÓ
+PARA A MAQUILHAGEM;  MAQUILHAGEM PARA A
+PELE;  MAQUILHAGEM PARA REPRESENTAÇÕES
+CÉNICAS;  MAQUILHAGEM PARA DUPLICAÇÃO
+DAS PÁLPEBRAS;  LOÇÕES PARA REMOVER A
+MAQUILHAGEM;  HIDRATANTES;  MÁSCARAS
+HIDRATANTES;
+CREMES
+HIDRATANTES;
+HIDRATANTES
+ANTIENVELHECIMENTO;
+HIDRATANTES
+CORPORAIS;
+PREPARAÇÕES
+HIDRATANTES [COSMÉTICOS];  HIDRATANTES
+NÃO
+MEDICINAIS;
+GELES
+HIDRATANTES
+[COSMÉTICOS];
+HIDRATANTES
+FACIAIS
+[COSMÉTICOS];  HIDRATANTES PARA A PELE;
+CONCENTRADOS
+DE
+HIDRATANTES
+[COSMÉTICOS];  HIDRATANTES PARA O CABELO;
+TINTAS
+PARA
+CABELOS;
+TINTAS
+PARA
+COSMÉTICA.
+(591)
+(540)
+(531) 27.5.10
+(210) 749553
+MNA
+(220) 2025.07.11
+(300)
+(730)  PT ALEXANDRE EMANUEL FONSECA
+RODRIGUES
+(511) 35 SERVIÇOS
+DE
+ASSISTÊNCIA,
+GESTÃO
+E
+ADMINISTRAÇÃO DE NEGÓCIOS;  SERVIÇOS DE
+PUBLICIDADE, DE MARKETING E DE PROMOÇÃO;
+SERVIÇOS DE PUBLICIDADE, DE MARKETING E
+PROMOCIONAIS;  SERVIÇOS DE PUBLICIDADE, DE
+PROMOÇÃO E DE MARKETING;  ADMINISTRAÇÃO
+DE VENDAS.
+42 SERVIÇOS
+DE
+DESIGN;
+ATUALIZAÇÃO
+DE
+WEBSITES PARA TERCEIROS.
+(591)
+(540)
+(531) 27.99.14
+
+BOLETIM DA PROPRIEDAD
+Conc
+Processo
+Data
+do
+registo
+Data
+do
+despacho
+Nome do 1º requerente/titular
+739719
+2025.07.03
+2025.07.03 ACCT AGÊNCIA NACIONAL PARA O DESENVOLV
+ARTÍSTICO CULTURAL E CRIATIVO DO TERRITÓ
+UNIPESSOAL LDA
+741704
+2025.07.23
+2025.07.23 HERSAL - INVESTIMENTOS TURÍSTICOS S.A.
+741709
+2025.07.23
+2025.07.23 HERSAL - INVESTIMENTOS TURÍSTICOS S.A.
+743182
+2025.07.23
+2025.07.23 MÁRCIO DURVAL TORRALVO COSTA FREITAS
+743186
+2025.07.23
+2025.07.23 LUÍS MIGUEL GERMANO LOBO
+743700
+2025.07.23
+2025.07.23 BRUNO ANDRÉ TEIXEIRA DIAS LEAL
+743752
+2025.07.23
+2025.07.23 CASTELO & LAZZAROTTO, LDA
+743753
+2025.07.23
+2025.07.23 LA TRATTORIA - TURISMO E HOTELARIA, LDA.
+743754
+2025.07.23
+2025.07.23 JULIANA FERNANDES CONSTRUÇOES, UNIPESS
+743762
+2025.07.23
+2025.07.23 R&T ENERGIA, LDA
+743824
+2025.07.23
+2025.07.23 TECNIMEDE-SOCIEDADE TÉCNICO-MEDICINAL
+743864
+2025.07.23
+2025.07.23 OLIVE COLLECTIVE, UNIPESSOAL LDA
+743866
+2025.07.23
+2025.07.23 JOÃO GUILHERME TAVARES TEIXEIRA
+743875
+2025.07.23
+2025.07.23 RICARDO GONÇALVES
+743876
+2025.07.23
+2025.07.23 LUIS GABRIEL SAAD ALMEIDA
+743877
+2025.07.23
+2025.07.23 PATRICIA SOFIA SILVA PACHECO
+743878
+2025.07.23
+2025.07.23 IPDROID LDA
+743884
+2025.07.23
+2025.07.23 MARIA MADALENA BERGSTRÖM DE AIRES MAT
+743889
+2025.07.23
+2025.07.23 PURELAND, LDA.
+743916
+2025.07.23
+2025.07.23 JACARANDA AZUL, UNIPESSOAL LDA
+743918
+2025.07.23
+2025.07.23 SERPENTINA VELOZ UNIPESSOAL LDA
+743919
+2025.07.23
+2025.07.23 JACARANDA AZUL, UNIPESSOAL LDA
+743921
+2025.07.23
+2025.07.23 ORIGINAL TEMPTATION FOODS UNIPESSOAL LD
+743925
+2025.07.23
+2025.07.23 IDEALSYNC, UNIPESSOAL LDA
+743926
+2025.07.23
+2025.07.23 HOSTEL DA ESTAÇÃO, UNIPESSOAL LDA
+743933
+2025.07.23
+2025.07.23 JOÃO DANIEL OLIVEIRA PENOUÇO
+743935
+2025.07.23
+2025.07.23 RS PENSAR COM AS MÃOS, UNIPESSOAL LDA
+743942
+2025.07.23
+2025.07.23 EMANNA VENTURES, LDA.
+743943
+2025.07.23
+2025.07.23 LIFECONDOMINIUS, UNIPESSOAL LDA
+743945
+2025.07.23
+2025.07.23 VISUM PHARM LDA
+743946
+2025.07.23
+2025.07.23 ASSUNTOS EFÉMEROS, LDA
+cessões
+País
+resid.
+Classes (Nice)
+Observações
+VIMENTO
+ÓRIO,
+PT
+35
+RECUSA PARCIAL DO REGISTO:
+arts 232 º n º 1 al. a); 229º n º 5 e
+237.º do cpi recusa parcial do registo
+para cl. 41 (todos os serviços)
+PT
+41 44
+PT
+41 44
+PT
+41
+PT
+36 42
+PT
+08
+PT
+35
+PT
+43
+SOAL LDA
+PT
+37
+PT
+09 35 37 42
+, S.A.
+PT
+05
+PT
+09 16 28 41
+PT
+25 41 45
+PT
+37
+PT
+41
+PT
+14
+PT
+42
+TEUS
+PT
+14 18 20 24 25 26
+PT
+41
+PT
+35 36 43
+PT
+39
+PT
+30 32 33 35
+DA
+PT
+43
+PT
+19 20 35 37
+PT
+36 43
+PT
+35 42
+PT
+42
+PT
+41 43
+PT
+35 36
+PT
+05
+PT
+43
+
+BOLETIM DA PROPRIEDAD
+Processo
+Data
+do
+registo
+Data
+do
+despacho
+Nome do 1º requerente/titular
+743948
+2025.07.23
+2025.07.23 PAULA MARINA DIAS CARDOSO
+743953
+2025.07.23
+2025.07.23 MUNDIE TEC, LDA
+743954
+2025.07.23
+2025.07.23 THIAGO RUSSO & RAUL MARTINS LDA
+743956
+2025.07.23
+2025.07.23 CITYCONVENIENCE LDA.
+743958
+2025.07.23
+2025.07.23 NEXUS BLUE, LDA
+743959
+2025.07.23
+2025.07.23 TRUTHSEEKERS LDA
+743960
+2025.07.23
+2025.07.23 DANREP REPRESENTAÇÕES LDA
+743963
+2025.07.23
+2025.07.23 RAFAEL ALEXANDRE RODRIGUES GUERREIRO
+743969
+2025.07.23
+2025.07.23 YEJUN HU
+743971
+2025.07.23
+2025.07.23 TVI - TELEVISÃO INDEPENDENTE, S.A.
+743975
+2025.07.23
+2025.07.23 ELECTROREP - SOCIEDADE DE ELECTRICIDADE
+LDA
+743980
+2025.07.23
+2025.07.23 JOSÉ PEDRO DELGADO SEQUEIRA FERRÃO
+743983
+2025.07.23
+2025.07.23 PARAÍSO TEÓRICO LDA
+743995
+2025.07.23
+2025.07.23 RUBEN FERNANDO SILVA DOS SANTOS
+743997
+2025.07.23
+2025.07.23 ELISABETE MARIA NAZIMO RUFINO ALVES
+743998
+2025.07.23
+2025.07.23 LILIANA MARQUES PIMENTEL
+743999
+2025.07.23
+2025.07.23 PROCARE HEALTH IBERIA, S.L.
+744016
+2025.07.23
+2025.07.23 LXBIO - PHARMACEUTICALS, S.A.
+744017
+2025.07.23
+2025.07.23 LXBIO - PHARMACEUTICALS, S.A.
+744018
+2025.07.23
+2025.07.23 LXBIO - PHARMACEUTICALS, S.A.
+744019
+2025.07.23
+2025.07.23 YLY UNIPESSOAL LDA
+744020
+2025.07.23
+2025.07.23 CÉLIA RAQUEL GONÇALVES CRAVEIRO
+744028
+2025.07.23
+2025.07.23 DESENVOLVE + - CENTRO DE DESENVOLVIMEN
+INFANTIL, UNIPESSOAL, LDA
+744029
+2025.07.23
+2025.07.23 SWEET ARGUMENTS - MARKETING E COMUNIC
+744030
+2025.07.23
+2025.07.23 LUÍS CARLOS RODRIGUES PEREIRA
+744032
+2025.07.23
+2025.07.23 ANA PAULA PEREIRA MARQUES
+744048
+2025.07.23
+2025.07.23 INSTITUTO SUPERIOR DE ENGENHARIA DO POR
+744049
+2025.07.23
+2025.07.23 INSTITUTO SUPERIOR DE ENGENHARIA DO POR
+744129
+2025.07.23
+2025.07.23 ERICA FLAMMARION BAIONETA VASCONCELL
+744142
+2025.07.23
+2025.07.23 SMASHPRO LDA
+744143
+2025.07.23
+2025.07.23 LÚCIA MARIANA DE SOUSA FERREIRA
+744144
+2025.07.23
+2025.07.23 BRUNO ANDRE DA SILVA BOLINHAS
+744146
+2025.07.23
+2025.07.23 IMOCACAU, LDA
+744148
+2025.07.23
+2025.07.23 CARLA SOFIA REIS GUERRA
+744157
+2025.07.23
+2025.07.23 JOHN DA SILVA FARIA
+744161
+2025.07.23
+2025.07.23 DMITRII SAVCHENKO
+744172
+2025.07.23
+2025.07.23 LACTOGAL - PRODUTOS ALIMENTARES, S.A.
+744176
+2025.07.23
+2025.07.23 NUTPOR BREADS UNIPESSOAL, LDA.
+País
+resid.
+Classes (Nice)
+Observações
+PT
+44
+PT
+37
+PT
+41 44
+PT
+36
+PT
+30 37 41 43
+PT
+42 43
+PT
+35
+PT
+11 21 34
+CN
+18
+PT
+41
+E DE AVEIRO
+PT
+11 37
+PT
+41
+PT
+03
+PT
+45
+PT
+44
+PT
+35 45
+ES
+03 05
+PT
+03
+PT
+03
+PT
+03
+PT
+41
+PT
+44
+NTO
+PT
+44
+CAÇÃO, LDA
+PT
+33
+PT
+41 43
+PT
+35 41 43 44
+RTO
+PT
+09 10 25 42
+RTO
+PT
+09 10 25 42
+OS
+PT
+30
+PT
+09 35 42
+PT
+41
+PT
+44
+PT
+30 36 43
+PT
+41
+PT
+44
+PT
+33
+PT
+29 30 35
+PT
+30
+
+BOLETIM DA PROPRIEDAD
+Processo
+Data
+do
+registo
+Data
+do
+despacho
+Nome do 1º requerente/titular
+744179
+2025.07.23
+2025.07.23 TISSOT INDUSTRIE
+744182
+2025.07.23
+2025.07.23 HÉLDER JORGE CARVALHO MOURA TEIXEIRA
+744202
+2025.07.23
+2025.07.23 ÂNGELO MIGUEL MAGALHÃES CARDOSO
+744221
+2025.07.23
+2025.07.23 LÁZARO DANIEL DE SOUSA FERREIRA
+744223
+2025.07.23
+2025.07.23 RITA FONTES DE OLIVEIRA
+744231
+2025.07.23
+2025.07.23 OCTÁVIO FREITAS - UNIPESSOAL LDA
+744233
+2025.07.23
+2025.07.23 RODRIGO PEDROSO AFONSO VILELA DE MATOS
+744234
+2025.07.23
+2025.07.23 DAVIDE ROCHA CORREIA
+744237
+2025.07.23
+2025.07.23 IDEAIS CONVEXAS LDA
+744239
+2025.07.23
+2025.07.23 F88 COMERCIO DE PRODUTOS LDA
+744248
+2025.07.23
+2025.07.23 FÁBIO DANIEL DE ALMEIDA BRANCO
+744250
+2025.07.23
+2025.07.23 EDITORIAL JURUÁ, LDA.
+744251
+2025.07.23
+2025.07.23 MICHAEL KANZLEITER
+744284
+2025.07.23
+2025.07.23 MARIA ISABEL NEVES CERNICH
+País
+resid.
+Classes (Nice)
+Observações
+FR
+06 37 40 42
+PT
+03 05 10 44
+PT
+43
+PT
+35
+PT
+44
+PT
+33
+S
+PT
+45
+PT
+29
+PT
+36
+PT
+35
+PT
+31
+PT
+41
+PT
+35
+PT
+14 23
+
+BOLETIM DA PROPRIEDAD
+Rec
+Processo
+Data
+do
+pedido
+Data
+da
+recusa
+Nome do 1º requerente/titular
+743874
+2025.04.08
+2025.07.23 SEMPRE INEDITO UNIPESSOAL LDA
+cusas
+País
+resid.
+Classes (Nice)
+Observações
+PT
+18
+art. 23º n. º 1 al. b) do cpi.
+
+BOLETIM DA PROPRIEDADE
+Renov
+N.os 196 804, 231 364, 231 365, 300 662, 304 100, 306 1
+387 548, 387 694, 388 122, 388 134, 541 449, 543 767, 546 3
+554 706.
+vações
+120, 382 877, 384 816, 386 929, 386 930, 386 989, 387 330,
+388, 546 853, 547 117, 547 118, 547 121, 547 373, 553 505 e
+
+BOLETIM DA PROPRIEDAD
+Averba
+Transm
+Processo
+Data
+do
+averbamento
+Antigo requerente/titular
+País
+resid.
+232088
+2025.07.15
+CARRIER CORPORATION
+US
+232089
+2025.07.15
+CARRIER CORPORATION
+US
+232090
+2025.07.15
+CARRIER CORPORATION
+US
+232091
+2025.07.15
+CARRIER CORPORATION
+US
+286161
+2025.07.04
+ARLINDO DA COSTA PINTO E CRUZ
+PT
+303415
+2025.07.02
+PPG ARCHITECTURAL FINISHES, INC
+US
+310068
+2025.07.15
+KIDDE PRODUCTS LIMITED
+GB
+318094
+2025.07.04
+ARLINDO DA COSTA PINTO E CRUZ
+PT
+337397
+2025.07.02
+A COLMEIA DO MINHO, S.A.
+PT
+337398
+2025.07.02
+A COLMEIA DO MINHO, S.A.
+PT
+amentos
+missões
+Atual requerente/titular
+País
+resid.
+Observações
+KIDDE-FENWAL, INC.
+US  TRANSMISSÃO TOTAL.
+KIDDE-FENWAL, INC.
+US  TRANSMISSÃO TOTAL.
+KIDDE-FENWAL, INC.
+US  TRANSMISSÃO TOTAL.
+KIDDE-FENWAL, INC.
+US  TRANSMISSÃO TOTAL.
+CABEÇA DE CASAL DA HERANÇA DE ARLINDO DA
+COSTA PINTO E CRUZ
+PT
+PPG INDUSTRIES OHIO, INC.
+US
+KIDDE-FENWAL, INC.
+US  TRANSMISSÃO TOTAL.
+CABEÇA DE CASAL DA HERANÇA DE ARLINDO DA
+COSTA PINTO E CRUZ
+PT
+SABOR A MUNDO BY M&S, LDA.
+PT
+SABOR A MUNDO BY M&S, LDA.
+PT  TRANSMISSÃO TOTAL.
+
+BOLETIM DA PROPRIEDADE
+Declarações d
+Processo
+Data
+do
+registo
+Data
+da
+caducidade
+Nome do 1º r
+489392
+2011.12.30
+2025.07.23 VILKAS BYME, LDA.
+de caducidade
+requerente/titular
+País
+resid.
+Observações
+PT
+CADUCO POR FALTA DE
+USO: caduco por falta de
+uso, nos termos do n.º 1 do
+artigo 268.º do cpi
+
+BOLETIM DA PROPRIEDADE
+Requerimento
+Processo
+Número
+do
+documento
+Data
+de
+apresentação
+Data
+do
+despacho
+218253
+00000538
+33
+2025.07.22
+2025.07.23 CASA DE SEZ
+TURISMO E IN
+IMOBILIARIO
+731983
+20072223
+59
+2025.07.15
+2025.07.23 DAVID LEMO
+743937
+20072353
+15
+2025.07.21
+2025.07.23 TOMÁS AFON
+746654
+20071605
+60
+2025.06.16
+2025.07.23 COMITÉ PORT
+os indeferidos
+Nome do titular
+País
+resid.
+Observações
+ZIM - AGRICULTURA,
+NVESTIMENTOS
+OS, LDA.
+PT
+REQUERIMENTO DE
+RENÚNCIA PARCIAL
+INDEFERIDO, POR SE
+APURAR AUMENTO DO
+ÂMBITO DE PROTEÇÃO
+DA MARCA
+REGISTADA.
+OS SALDANHA
+PT
+REQUERIMENTO DE
+ALTERAÇÃO DE
+ELEMENTOS NÃO
+ESSENCIAIS
+INDEFERIDO, POR
+PREJUÍZO DO
+DISPOSTO NO ART. 255º
+DO CPI.
+NSO NARCISO CRUZ
+PT
+REQUERIMENTO DE
+RETIFICAÇÃO DE
+CLASSES INDEFERIDO,
+POR PREJUÍZO DO
+DISPOSTO NO ART. 228º
+DO CPI.
+TUGUÊS PARA A UNICEF
+PT
+REQUERIMENTO DE
+RESTITUIÇÃO DE
+TAXAS INDEFERIDO,
+POR NÃO TER SIDO
+APURADO QUALQUER
+PAGAMENTO
+INDEVIDO.
+
+BOLETIM DA PROPRIEDADE
+Pedidos e Avisos de Defe
+Processo
+Data do
+pedido de
+revalidação
+Data de
+despacho de
+deferimento
+Requerente / titular
+363437
+2025.06.30
+2025.07.22 VOW EUROPE LIMITED
+522890
+2025.06.30
+2025.07.22 QUINTA DE PANCAS -
+UNIPESSOAL, LDA.
+533785
+2025.07.14
+2025.07.23 ANA CARINA LOUREN
+MONTEIRO
+535538
+2025.07.08
+2025.07.22 ALFENA - OURIVESAR
+TRAVASSOS, LDA.
+537036
+2025.07.07
+2025.07.22 GOKEE - TECNOLOGIA
+INFORMAÇÃO, LDA.
+710838
+2025.07.07
+2025.07.22 ADSPS - ASSOCIAÇÃO
+DESENVOLVIMENTO
+SOCIOCULTURAL DE P
+SALGADAS
+719449
+2025.07.14
+2025.07.23 CHEMTEC - PRODUTOS
+QUIMICOS, LDA
+erimento de Revalidação
+Observações
+D
+VINHOS,
+NÇO
+RIA DE
+AS DE
+DE
+PEDRAS
+S
+
+BOLETIM DA PROPRIEDADE
+Declarações d
+Processo
+Data do
+pedido
+Data da
+concessão
+Data da declaração de
+invalidade
+668291 M
+2021.06.21
+2021.09.27
+2025.07.23
+de Invalidade
+Observações
+ANULAÇÃO DO REGISTO: INPI DECIDE, AO ABRIGO DOS
+ARTIGOS 34.º, N.º 2 E 260.º, N.º 1 DO CPI, PELO
+DEFERIMENTO DO PEDIDO DE ANULAÇÃO DA MARCA
+NACIONAL N.º 668291 «NOVA TOUR», POR CONSIDERAR
+QUE NA SUA CONCESSÃO FOI INFRINGIDO O DISPOSTO
+NO ARTIGO 232.º, N.º 2, ALÍNEA A) DO MESMO DIPLOMA
+
+BOLETIM DA PROPRIEDAD
+REGISTO INTERNAC
+Conc
+Processo
+Data
+do
+registo
+Data
+do
+despacho
+Nome do 1º requerente/titular
+1813094
+2024.07.03
+2025.07.23 MANICA S.P.A.
+1813450
+2024.05.23
+2025.07.23 LOUIS VUITTON MALLETIER
+1813452
+2024.07.15
+2025.07.23 LOUIS VUITTON MALLETIER
+1825243
+2024.10.03
+2025.07.23 LOUIS VUITTON MALLETIER
+1825917
+2024.09.27
+2025.07.23 LOUIS VUITTON MALLETIER
+1826692
+2024.10.08
+2025.07.23 LOUIS VUITTON MALLETIER
+CIONAL DE MARCAS
+cessões
+País
+resid.
+Classes (Nice)
+Observações
+IT
+01 05
+FR
+03
+FR
+03
+FR
+18 35
+FR
+37
+FR
+18
+
+BOLETIM DA PROPRIEDADE
+REGISTO DE
+Pedi
+De acordo com o artigo 286.º do Código da Proprieda
+logótipos; da data de publicação do presente aviso começa
+reclamações de quem se julgar prejudicado pela eventual con
+mesmo Código.
+(210) 58286
+LOG
+(220) 2025.07.09
+(730)  PT MARIA E JOÃO CENTRO MÉDICO E DE
+ENFERMAGEM, LDA
+(512) 86220
+ATIVIDADES MÉDICAS ESPECIALIZADAS
+ATIVIDADES DE CLÍNICA GERAL LABORATÓRIO DE
+ANÁLISES
+CLÍNICAS
+CLÍNICAS
+ESPECIALIZADAS
+ENFERMAGEM ATIVIDADES DE SAÚDE HUMANA.
+(591)
+(540)
+(531) 2.9.1 ; 2.9.14 ; 26.2.1
+(210) 58287
+LOG
+(220) 2025.07.09
+(730)  PT READYBENEFIT, UNIPESSOAL, LDA.
+(512) 68310
+ATIVIDADES
+DE
+SERVIÇOS
+DE
+INTERMEDIAÇÃO DE ATIVIDADES IMOBILIÁRIAS
+MEDIAÇÃO IMOBILIÁRIA.
+(591) pantone 4023u, pantone 4019u, pantone process blackU
+(540)
+(531) 7.1.99
+(210) 58289
+LOG
+(220) 2025.07.10
+(730)  PT MARCO ROMEU BAPTISTA DE
+ALMEIDA
+(512) 46493
+COMÉRCIO POR GROSSO DE BRINQUEDOS,
+JOGOS E ARTIGOS DE DESPORTO
+LOGÓTIPOS
+idos
+ade Industrial, a seguir se publicam os pedidos de registo de
+a contar-se o prazo de dois meses para a apresentação de
+ncessão dos mesmos, em conformidade com o artigo 17.º do
+COMÉRCIO POR GROSSO DE BRINQUEDOS, JOGOS E
+ARTIGOS DE DESPORTO.
+(591)
+(540)
+(531) 3.1.8 ; 26.1.15
+(210) 58290
+LOG
+(220) 2025.07.10
+(730)  PT SANDRA MARIA FERNANDES
+GONÇALVES
+(512) 85510
+ENSINO DESPORTIVO E RECREATIVO
+ENSINO DESPORTIVO E RECREATIVO.
+(591) COR DE LARANJA
+(540)
+(531) 2.1.23 ; 2.7.23
+
+BOLETIM DA PROPRIEDADE
+Renov
+N.os 34 591.
+vações
+
+BOLETIM DA PROPRIEDAD
+Averba
+Transm
+Processo
+Data
+do
+averbamento
+Antigo requerente/titular
+País
+resid.
+50023
+2025.06.18
+FAR CAPITAL SA
+PT
+Instituto Nacional da Propriedade Industrial, 28 de julho de 2025. – A Presidente
+amentos
+missões
+Atual requerente/titular
+País
+resid.
+Observações
+FAR & LEGDR, S.A.
+PT
+e do C. D., Ana Margarida Bandeira.
+
+BOLETIM DA PROPRIEDAD
+AGENTES OFICIAIS DE PR
+(Os Agentes Oficiais da Propriedade Industrial, co
+da Propriedade Industrial, podem promover actos e
+juntar procuração).
+João Mascarenhas de Vasconcelos
+- Cartório: Av. Duque D’Ávila, 32–1º – 1000-141 LISB
+- Tel.: 21 3547763 – Fax: 21 3560486
+- E-mail: geral@fdenovaes.com
+João Pereira da Cruz
+- Cartório: Rua Vitor Cordon, 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: joaopcruz@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+Vitor Hugo Ramalho da Costa França
+- Cartório: Av. Duque D’Ávila, 32 - 1º – 1000-141 LIS
+- Tel.: 21 3547574 – Fax: 21 3528473 e 21 35511 03
+- E-mail: costa.franca@costafranca.pt
+Jorge Afonso Cruz
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: jorgeacruz@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+Marta Burnay da Costa Pessoa Bobone
+- Cartório: Travessa do Jardim à Estrela, 28 – 1350-186
+- E-mail: bobone@zonmail.pt
+Maria Silvina Vieira Pereira Ferreira
+- Cartório: Av. Casal Ribeiro, 50 - 3º, 1000-093 LISBO
+- Tel.: 21 3815050 – Fax: 21 3831150/21 381 33 93
+- E-mail: sferreira@clarkemodet.com.pt
+Maria Eugénia Martinez
+- Cartório: Rua Vitor Cordon, 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: info@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+Maria do Rosário May Pereira da Cruz
+- Cartório: Av. Duque d' Ávila, 66, 7º - 1050-083 LISB
+- Tel.: 21 387 69 61 - Fax: 21 387 75 96
+- E-mail: furtado@furtado.pt
+Nuno Cruz
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: nunocruz@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+ROPRIEDADE INDUSTRIAL
+omo tal reconhecidos pelo Instituto Nacional
+e termos do processo sem necessidade de
+BOA
+OA
+SBOA
+OA
+6 LISBOA
+OA
+OA
+BOA
+OA
+
+BOLETIM DA PROPRIEDAD
+Raquel da Costa França
+- Cartório: Av. Duque D’Ávila, 32 – 1º – 1000-141 LIS
+- Tel.: 21 3547574 – Fax: 21 3528473 e 21 3551103
+- E-mail: costa.franca@netcabo.pt
+António José Pissarra Dias Machado
+- Cartório: Av. José Gomes Ferreira, 15 – 3ºL, 1495-13
+- Tel.: 21 3241530 – Fax: 21 3422446 e 21 3476656
+- E-mail: marcpat@agcunhaferreira.pt
+- Web: www.agcunhaferreira.pt
+José Eduardo de Sampaio
+- Cartório: Rua do Salitre, 195 – 1269-063 LISBOA
+- Tel.: 21 3841300 – Fax: 21 3875775
+- E-mail: jedc@jedc.pt
+- Web: www.jedc.pt
+João Carlos Sardiña de Barros
+- Cartório: Rua Rodrigo da Fonseca, 72 – 3º Esq. - 125
+- Tel.: 213863466
+- E-mail: gmr@magalhaes-adv.pt
+Isabel Carvalho Franco
+- Cartório: Rua do Salitre, 195 – 1269-063 LISBOA
+- Tel.: 21 3841300 – Fax: 21 3875775
+- E-mail: isabel.franco@jedc.pt
+- Web: www.jedc.pt
+Álvaro Albano Duarte Catana
+- Cartório: Avenida Marquês de Tomar, 44 - 6º - 1069
+- Tel.: 217 613 490 – Fax: 217 613 499
+- E-mail: alvaro.duarte@aduarteassoc.com
+- Web: www.aduarteassoc.com
+José Eduardo Dinis de Carvalho
+- Cartório: Rua do Salitre, 195 – 1269-063 LISBOA
+- Tel.: 21 3841300 – Fax: 21 3875775
+- E-mail: jedc@jedc.pt
+- Web: www.jedc.pt
+Fernando António Ferreira Magno
+- Cartório: Av. José Gomes Ferreira, 15 – 3ºL, 1495-13
+- Tel.: 21 3241530 – Fax: 21 3422446 e 21 3476656
+- E-mail: marcpat@agcunhaferreira.pt
+- Web: www.agcunhaferreira.pt
+António Côrte-Real
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 LI
+- Tel.: 21 7801963
+- E-mail: sgcr@sgcr.pt
+SBOA
+39 ALGÉS
+0-193 LISBOA
+- 229 LISBOA
+39 ALGÉS
+ISBOA
+
+BOLETIM DA PROPRIEDAD
+José Luís Arnaut
+- Cartório: Rua Castilho, 50, 1250-071 LISBOA
+- Tel.: 21 0958100  – Fax21 0958155
+- E-mail: jarnaut@rpa.pt
+José Motta Veiga
+- Cartório: Rua João Penha, 10 – 1250-131 LISBOA
+- Tel.: 213841120 - Tlm: 919146060
+- E-mail: mottaveiga@mail.telepac.pt | geral@mottave
+- Web: www.mottaveiga.com
+Pedro da Silva Alves Moreira
+- Cartório: Rua Tomás Ribeiro, nº 45 – 2º Andar, 1050
+- Tel.: 210545500 – Fax: 21 3978754
+- E-mail: pedro.moreira@rcf.pt
+- Web: www.rcf.pt
+João Luís Garcia
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 LI
+- Tel.: 21 7801963
+- E-mail: sgcr@sgcr.pt
+Manuel António Durães da Conceição Rocha
+- Cartório: Lagoas Park - Edifício 7, 1º Piso – 2740-244
+- Tel.: 21 1224726
+- E-mail: info.portugal@herrero.pt
+Gonçalo de Magalhães Moreira Rato
+- Cartório: Rua Rodrigo da Fonseca, 72 – 3º Esq, 1250
+- Tel.: 21 3875201 - Fax: 21 3875200
+- E-mail: gmr@magalhaes-adv.pt
+José Raúl de Magalhães Simões
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 LI
+- Tel.: 21 7801963
+- E-mail: sgcr@sgcr.pt
+Maria das Dores Marques Banheiro Meira
+- Cartórios: Rua Quirino da Fonseca, 29 – 5º Esq. – 100
+e Av. Luísa Todi, 277, 2º, E-1 – 2900-452 SETÚBAL
+- Tel.: 21 8436250 e 265 540240 – Fax: 21 8436251 e 2
+- E-mail: tecnimarca@gmail.com
+- Web: www.tecnimarca.pt e www.tecnimarca.com
+Martim Luís Gomes de Araújo de Arantes e Oliveir
+- Cartório: Rua Tomás Ribeiro, nº 45 – 5º Esq., 1050-2
+- Tel.: 21 3907373 – Fax: 21 3978754
+- E-mail: rcf@rcf.pt
+Dina Maria Martins Pereira Soares
+- Cartório: Av. José Gomes Ferreira, 15 – 3ºL, 1495-13
+- Tel.: 21 3241530 – Fax: 21 3422446 e 21 3476656
+- E-mail: marcpat@agcunhaferreira.pt
+- Web: www.agcunhaferreira.pt
+eiga.com
+-225 LISBOA
+ISBOA
+4 PORTO SALVO
+-193 LISBOA
+ISBOA
+00-251 LISBOA
+265 540241
+ra
+225 LISBOA
+39 ALGÉS
+
+BOLETIM DA PROPRIEDAD
+Carmen Cristina Martins Garcia de Pina Alcobia G
+- Cartório: Avenida Ressano Garcia nº 6 R/c. Esq. - 107
+- Tel.: +351 213 712 737 - Fax:+351 213 874 726
+- E-mail: carmenpina@sapo.pt
+Ana Maria Ferreira Pereira da Silva Veiga
+- Cartório: Rua Ator Chaby Pinheiro, 5 A - 2795-060 L
+- Tel.: 914930808
+- E-mail: apsilvaveiga@netcabo.pt
+Luís Silva Carvalho
+- Cartório: Rua Vitor Cordon, 10-A, – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: lsc@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+Alberto Canelas
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: acanelas@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+César Manuel de Bessa Monteiro
+- Cartório: Av. Infante D. Henrique, 26 - 1149-096 LIS
+- Tel.: 21 723 18 00  – Fax: 21 723 1899
+- E-mail: bessa.monteiro@abreuadvogados.com
+- Web: www.abreuadvogados.com
+Paulo Alexandre Pinto Correia Rodrigues da Graça
+- Cartório: Av. Almirante Reis, 104 - 5º – 1150-022 LI
+- Tel.: 21 8110051 – Fax: 21 8141605
+- E-mail: paulo.graca-8293l@advogados.oa.pt
+Miguel Camargo de Sousa Eiró
+- Cartório: Av. Fontes Pereira de Melo, 15 – 7º – 1050-
+- Tel.: 21 3160324 – Fax: 21 3150826
+- E-mail: miguel.eiro@mail.telepac.pt
+Elsa Maria Martins Barreiros Amaral Canhão
+- Cartório: Rua Tomás Ribeiro, nº 45 – 2º Andar, 1050
+- Tel.: 210545500 – Fax: 21 3978754
+- E-mail: elsa.canhao@rcf.pt
+- Web: www.rcf.pt
+Joaquim Maria Calado Marques
+- Cartório: Av. Álvares Cabral, 47 - R/C - 1250-015 LI
+- Tel.: 21 381 46 40 – Fax: 21 381 46 41
+- E-mail: jcaladomarques@esc-advogados.pt
+Ana Teresa Pulido
+- Cartório: Al. D. Afonso Henriques, 72 - 6ºesq., 1000-
+- Tel.: 936792055
+- E-mail: atp-6725l@advo.oa.pt
+Galinha
+70-237 LISBOA
+LINDA A VELHA
+OA
+OA
+SBOA
+a
+ISBOA
+-115 LISBOA
+-225 LISBOA
+ISBOA
+-125 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Vera Araújo Arnaut
+- Cartório: Av. Eng Duarte Pacheco, Torre 2, 9.º - Sala
+- Tel.: 21 384 01 97/8 – Fax: 21 384 01 99
+- E-mail: vera.araujo@notarios.pt
+Luísa Guerreiro
+- Cartório: Rua Raul Proença, 3 - 2820-478 CHARNEC
+- Tel: 21 821 23 47
+- E-mail: luisague@netcabo.pt
+- Web: www.lguerreiro.com
+Olga Maria Rocha da Cruz Landim
+- Cartório: Av. Casal Ribeiro, 50 - 3º, 1000-093 LISBO
+- Tel.: 21 3815050 e 21 3815054 – Fax: 21 3831150 e 2
+- E-mail: info@clarkemodet.com.pt
+Paulo Pelayo de Sousa
+- Cartório: Rua de Sá da Bandeira, 706 –  2.º. Esq.º – 4
+- Tel.: 22 2046120 – Fax: 22 2080728
+- E-mail: geral@arlindodesousa.pt
+Pedro Pelayo de Sousa
+- Cartório: Rua de Sá da Bandeira, 706 – 2º. Esq. – 400
+- Tel.: 22 2046120 – Fax: 22 2080728
+- E-mail: geral@arlindodesousa.pt
+- Web: www.arlindodesousa.pt
+Pedro Manuel Branco da Cruz
+- Cartório: Av. Duque de Loulé, 1 – 7º Esq. – 1050-085
+- Tel.: 21 3535233 – Fax: 21 3535259
+- E-mail: lex@cruzadvogados.com
+Vítor Luís Ribeiro Cardoso
+- Cartório: Rua Jaime Cortesão, nº 62 - 2910-538 SETÚ
+- Tel.: 265 233 158 - TLM: 937250536 - Fax: 265 233
+- E-mail: marcasepatentes@ribeirocardoso.com
+Abel Dário Pinto de Oliveira
+- Cartório: Rua Nossa Senhora de Fátima, 419 - 3º - Fre
+- Tel.: 22 600 80 94 e 22 016 02 04 – Fax: 22 600 80 9
+- E-mail: geral@ampporto.com
+Alexandra Costa Paixão
+- Cartório: Av. António Augusto de Aguiar, nº 148, 4C
+- Telemóvel: 919830742
+- E-mail: fastfiling@fast-filing.com
+Ana Bárbara Emauz de Melo Portugal de Sampaio
+- Cartório: Rua do Salitre, 195 – 1269-063 LISBOA
+- Tel.: 21 3841300 – Fax: 21 3875775
+- E-mail: ana.sampaio@jedc.pt
+- Web: www.jedc.pt
+a 3. – 1070 – 102 LISBOA
+CA DA CAPARICA
+OA
+21 3813393
+4000-432 PORTO
+00-432 PORTO
+5 LISBOA
+ÚBAL
+158
+ente - 4050-428 PORTO
+5
+C e 5C - 1050-021 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Ana Maria Gonçalves Fidalgo
+- Cartório: Av. Casal Ribeiro, 50 - 3º, 1000-093 LISBO
+- Tel.: 21 3815050 – Fax: 21 3831150
+- E-mail: afidalgo@clarkemodet.com.pt
+Anabela Teixeira de Carvalho
+- Cartório: Edifício Net - Rua de Salazares, n.º 842 - 41
+- Tel.: 220028916 - Fax: 225322066
+- E-mail: anabela.carvalho@patents.pt
+- Web: http://patentree.eu/
+António Jorge Mateus Andrade
+- Cartório: Av. Infante D. Henrique, 26 - 1149-096 LIS
+- Tel.: 21 7231800 - Fax: 21 7231899
+- E-mail: antonio.andrade@abreuadvogados.com
+- Web: www.abreuadvogados.com
+Bruno Braga da Cruz
+- Cartório: Rua Castilho, 67, 1º 1250-068 LISBOA
+- Tel.: (+351) 213 849441 - Fax: (+351) 213 849449
+- E-mail: brunobragadacruz-12779l@adv.oa.pt
+- Web: https://www.glawyers.eu/
+Carla Maria Santos Pinheiro
+- Cartório: Edificio Oceanus - Avenida da Boavista, 32
+- Tel.: 22 5323340 – Fax: 22 5323349
+- E-mail: cpinheiro@clarkemodet.com.pt
+Cláudia Pimenta Monteiro de Medina Barbosa Xar
+- Cartório: Av. Maria Helena Vieira da Silva, 40, 1º Dt
+- Tlm.: 96 297 25 10
+- E-mail: cxarabrasil@gmail.com
+Cristina Antónia de Almeida Carvalho
+- Cartório: Av. 5 de Outubro, 16, 2º Esq - 1050-056 LI
+- Tel.: 217 80 19 63
+- E-mail: sgcr@sgcr.pt
+Filipe Teixeira Baptista
+- Cartório: Edifício Heron Castilho - Rua Braamcamp,
+- Tel.: 211 914 169 - Fax: 211 914 166
+- E-mail: filipe.baptista@bma.com.pt
+- Web: www.bma.com.pt
+Gonçalo Maria Cabral da Cunha Ferreira
+- Cartório: Tv do Froes 10 A – 2000-145 SANTARÉM
+- Tel.: 916093424
+- E-mail: goncalo@cfadvogados.com
+Gonçalo Santos da Cunha de Paiva e Sousa
+- Cartório: Avenida António Augusto Aguiar 108, 4ºan
+- Tel.: 917 764 793
+- E-mail: goncalo.sousa@gastao.com
+- Web: goncalo.sousa@gastao.com
+OA
+149-002, PORTO
+SBOA
+265 - 3º andar, Escr. 3.4 – 4100-137 PORTO
+ra-Brasil Nogueira
+to.– 1750-184 LISBOA
+SBOA
+40 – 5 E - 1250-050 LISBOA
+M
+ndar – 1150-019 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Inês de Carvalho Simões
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020/30 – Fax: 21 3421885 e 21 3424583
+- E-mail: inessimoes@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+João M. Pimenta
+- Cartório: Rua Vitor Cordon, 10-A – 1249-103 LISBO
+- Tel.: 21 3475020/30 – Fax: 21 3421885 e 21 3424583
+- E-mail: joaopimenta@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+João Sardinha
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020/30 – Fax: 21 3421885 e 21 3424583
+- E-mail: joaosardinha@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+João Paulo Sena Mioludo
+- Cartório: Rua Tomás Ribeiro, n.º 45 - 2º Andar, 1050
+- Tel.: 963075786
+- E-mail: joao.mioludo@rcf.pt
+- Web: www.rcf.pt
+Luís Gonçalo Moura Cavaleiro de Ferreira
+- Cartório: Av. Álvares Cabral, 47, 1º – 1250-015 LISB
+- Tel.: 213 806 530 – Fax: 213 806 531
+- E-mail: cavaleiro.ferreira@leonelalves.com
+Marco Alexandre Gomes da Silva Pires de Sousa
+- Cartório: Rua Quinta do Monte, 96 - 1º Dtº - 4805-15
+- Tel. 936954610 – Fax: 253471946
+- E-mail: marcopires.sousa-9680p@adv.oa.pt
+Maria do Carmo Fernandes
+- Cartório: Rua Vítor Cordon, 10 A, 1º Andar - 1249-1
+- Tel.: 213876961 – Tlm 965804956
+- E-mail: maria.fernandes@furtado.pt
+Maria Manuel Ramos Lucas
+- Cartório: Praça de Portugal nº. 7C - 1ºD - 2910-640 S
+- Tel.: 265 228685 – Fax: 265 228637
+- E-mail: mmlucas@marquesmarcas.com
+Maria Teresa Delgado
+- Cartório: Lagoas Park - Edifício 7, 1º Piso – 2740-244
+- Tel.: 21 1224726
+- E-mail: tdelgado@herrero.pt
+Miguel Quintans
+- Cartório: Rua Castilho, 50, 1250-071 LISBOA
+- Tel.: 21 0958109 – Fax: 21 0958155
+- E-mail: miguel.quintans@cmsportugal.com
+- Web: www.cms.law/pt
+OA
+3
+OA
+3
+OA
+3
+0-225 LISBOA
+BOA
+51 CALDAS DAS TAIPAS
+03  LISBOA
+SETÚBAL
+4 PORTO SALVO
+
+BOLETIM DA PROPRIEDAD
+Ricardo Souto Soares Henriques
+- Cartório: Av. Infante D. Henrique, 26 – 1149-096 LIS
+- Tel.: 21 7231800 – Fax: 21 7231899
+- E-mail: ricardo.henriques@abreuadvogados.com
+- Web: www.abreuadvogados.com
+Teresa Colaço Dias
+- Cartório: Rua Vítor Cordon, 10 A, 1º Andar, 1249-10
+- Telef.: 351 21 387 69 61 - Fax: 351 21 387 75 96
+- E-mail: teresa.dias@furtado.pt
+- Web: www.furtado.pt
+Teresa Maria Ferreira Pereira da Silva Garcia
+- Cartório: R. Soldados da Índia, 72 – 1400-340 LISBO
+- Tel.: 21 3017086
+- E-mail: garcia.teresa@netcabo.pt
+Paulo Jorge Monteverde Plantier Saraiva Maia
+- Cartório: Edifício Heron Castilho, Rua Braamcamp, 4
+- Tel.: 213 806 530 - Fax: 213 806 531
+- E-mail: paulo.monteverde@bma.com.pt
+- Web: www.bma.com.pt
+Águeda Silva
+- Cartório: Rua 4 de Outubro, 821 - 4810-485 GUIMA
+- E-mail: aguedasilva@gmail.com
+Ana Bela Ferreira
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 LI
+- Tel.: 217801963
+- E-mail: sgcr@sgcr.pt
+- Web: www.sgcr.pt
+Margarida Martinho do Rosário
+- Cartório: Rua dos Bacalhoeiros, 4 - 1100-070 LISBO
+- Tel.: 218823990 – Fax: 218823997
+- E-mail: gcf@gastao.eu
+- www.gastao.eu
+Ana Rita Vilhena
+- Cartório: Rua Vitor Cordon, 10-A – 1249-103 LISBO
+- Tel.: 21 3475020 – Fax: 21 3421885 e 21 3424583
+- E-mail: anaritavilhena@jpcruz.pt
+- Web: www.jpereiradacruz.pt
+António Trigueiros de Aragão
+- Cartório: : Rua Tomás Ribeiro, n.º 45 - 2º Andar, 105
+- Tel.: 210545500
+- E-mail: ata@taglobal.pt
+- Web: www.rcf.pt
+SBOA
+03 LISBOA
+OA
+40 – 5E - 1250-050 LISBOA
+RÃES
+ISBOA
+OA
+OA
+50-225 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Carmina Cardoso
+- Cartório: Largo de São Carlos, 3 - 1200-410 LISBOA
+- Tel.: 213583620 – Fax: 213159434
+- E-mail: c.cardoso-18317l@adv.oa.pt.
+Elsa Maria Bruno Guilherme
+- Cartório: Avenida da Liberdade, nº 258, 6ºAndar - 12
+- Tel.: ++351 215 943 993
+- E-mail: elsagui76@gmail.com
+Filipe Pedro
+- Cartório: Rua Varela Silva, 3 - 2º Dto. - 2730-233 BA
+- E-mail: filipedro@netcabo.pt
+Francisca Ferreira Pinto
+- Cartório: Av. da República, 25 - 1º - 1050-186 LISBO
+- Tel.: 213821200 – Fax: 213877109
+- E-mail: francisca.ferreira.pinto@garrigues.com / gcf@
+Hugo Monteiro de Queirós
+- Cartório: Av. Fontes Pereira de Melo, 43 - 1050-119
+- Tel.: +351 213 197 311 – Tlm: +351 934 301 498
+- E-mail: hugo.monteiroqueiros@plmj.pt
+- Web: www.plmj.com
+Isabel Bairrão
+- Cartório: Rua Pedro Calmon, 7, 3.º Esquerdo, 1300-4
+- Tel.: 926606856
+- E-mail: ibairrao@gmail.com
+Joana Mata
+- Cartório: Rua Bernardo Lima, 3 - 1150-074 LISBOA
+- Tel.: 213566400 – Fax: 213566488
+- E-mail: joanamata@rsa-advogados.pt
+João Jorge
+- Cartório: Rua Tomás Ribeiro, nº 45 – 2º Andar, 1050
+- Tel.: 210545500 – Fax: 213978754
+- E-mail: joao.jorge@rcf.pt
+- Web: www.rcf.pt
+João Pedro Fazendeiro
+- Cartório: Av. Conselheiro Fernando de Sousa, nº 19,
+- Tel.: 216083894
+- E-mail: legal@protectidea.pt
+Jorge Faustino
+- Cartório: Rua Tomás Ribeiro, nº 45 – 2º Andar, 1050
+- Tel.: 210545500 – Fax: 213978754
+- E-mail: jorge.faustino@rcf.pt
+- Web: www.rcf.pt
+A
+250-149 LISBOA
+ARCARENA
+OA
+@garrigues.com
+LISBOA
+454 LISBOA
+-225 LISBOA
+5º - 1070-072 LISBOA
+-225 LISBOA
+
+BOLETIM DA PROPRIEDAD
+José de Novaes e Ataíde
+- Cartório: Av. Duque D'Ávila, 32 - 1º - 1000-141 LISB
+- Tel.: 213547763 – Fax: 213560486
+- E-mail: geral@fdenovaes.com
+Lídia Neves
+- Cartório: Edifício Amoreiras Square, Rua Carlos Alb
+- Tel.: 213192080
+- E-mail: lneves@adcecija.pt
+Lourenço de Sampaio
+- Cartório: Rua do Salitre, 195 - 1269-063 LISBOA
+- Tel.: 213841300 – Fax: 213875775
+- E-mail: lourenco.sampaio@jedc.pt
+Luís Humberto Ferreira
+- Cartório: Edifício Net - Rua de Salazares, n.º 842 - 41
+- Tel.: 220028916 - Fax: 225322066
+- E-mail: luis.ferreira@patents.pt
+- Web: http://patentree.eu/
+Maria Joana Marques Galvão Fialho Pinto Trindad
+- Cartório: Alameda dos Oceanos 41K-21, Parque das N
+- Tel.: 213150970
+- E-mail: jfpinto@inventa.com
+Maria Cruz Garcia
+- Cartório: Av. Casal Ribeiro, 50, 3º Andar – 1000-093
+- Tel.: 91 145 26 59
+- E-mail: inpi@clarkemodet.com.pt.
+- Web: www.clarkemodet.com
+Mário Castro Marques
+- Cartório: Rua António Cardoso, 235, 6º Drt Frt, 4150
+- Tel.: 91 9107557
+- E-mail: mariocastromarques@gmail.com
+Marisa Coimbra
+- Cartório: Rua Dom Francisco Manuel de Melo 21, 10
+- Tel.: 21 313 2000 – Fax: 21 313 2001
+- E-mail: marisa.coimbra@srslegal.pt
+- Web: https://www.srslegal.pt/pt/
+Nuno Lourenço
+- Cartório: Lusoworld II A25. Rua Pé de Mouro 2710-1
+- Tel.: 21 1395721 – Fax: 21 1946681
+- E-mail: nuno.lourenco@today.patents.com
+- Web: www.todaypatents.com
+Rodolfo Condessa
+- Cartório: Rua Cidade de Rabat, 31 - 8º Esq. - 1500-15
+- Tel.: 966712005
+- E-mail: rodolfo.condessa@gmail.com
+BOA
+erto da Mota Pinto, n.º 17, 2.º piso - 1070-313 LISBOA
+149-002, PORTO
+de Veiga
+Nações, 1990-207 LISBOA
+3 LISBOA
+0-081 PORTO
+070-085 LISBOA
+144 SINTRA
+59 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Rui Duarte Catana
+- Cartório: Av. Marquês de Tomar, 44 - 6º - 1069-229 L
+- Tel.: 217613490 – Fax: 217613499
+- E-mail: rui.catana@aduarteassoc.com
+- Web: www.aduarteassoc.com
+Rui Moreira de Resende
+- Cartório: Rua Bernardo Lima, 3 - 1150-074 LISBOA
+- Tel.: 213566400 – Fax: 213566488
+- E-mail: ruiresende@rsa-advogados.pt
+Sandra Martins Pinto
+- Cartório: Praça Gen. Humberto Delgado 267, 3º Anda
+- E-mail: sandramartinspinto@gmail.com
+Teresa Luísa Catarino Fernandes Gingeira Martins
+- Cartório: Edifício Net - Rua de Salazares, n.º 842 - 41
+- Tel.: 220028916
+- E-mail: teresa.martins@patents.pt
+- Web: www.patentree.eu
+Vasco Stilwell d'Andrade
+- Cartório: Rua Castilho, 165 - 1070-050 LISBOA
+- Tel.: 213817400 – Fax: 213826629
+- E-mail: vsandrade@mlgts.pt
+- Web: www.mlgts.pt
+Vera Correia Alves
+- Cartório: Rua do Carmo, n.º 11, 2º, sala 11, 4700-309
+-Tlm: 919285011
+- E-mail: valves@sablegal.pt
+Ana Sofia Dinis Chaves
+- Cartório:Rua Luis Gonzaga, Edificio Phoenix Garden
+- Tel.:00853 66591201
+- E-mail: chaves.anasofia@gmail.com
+Ália Mohamade Amadá
+- Cartório: Rua Visconde de Santarém, n.º 75B, 1000 -
+- E-mail: info@amadalegal.com
+- Web: www.amadalegal.com
+Rita Milhões
+- Cartório: Rua do Salitre, 195 - 1269-063 LISBOA
+- Tel.: 351 213 841 300
+- E-mail: jedc@jedc.pt
+Daniel Reis Nobre
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: portugal@inventa.com
+- Web: www.inventa.pt
+LISBOA
+ar, Salas 1-2, 4000-288 Porto
+s
+149-002, PORTO
+9 BRAGA
+n, 7º andar H, MACAU
+286 LISBOA
+Nações – 1990-207 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Tiago Reis Nobre
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: portugal@inventa.com
+- Web: www.inventa.pt
+David Cardoso
+- Cartório: Avenida Defensores de Chaves, 36, 1.º Direi
+- Tel.: 218758322 – Fax: 255134816
+- E-mail: dc@legalwest.eu
+Ágata Pinho
+- Cartório: Av. Sidónio Pais, n.º 379, Piso 1, sala 1.14,
+- Tel.: 220167495 – Fax: 226092487
+- E-mail: agatapinho@jpcruz.pt
+- Web: www. jpereiradacruz.pt
+Ana Eugénio
+- Cartório: Rua António Enes 18-3D - 1050-025 LISBO
+- E-mail: aeugenio.ana@gmail.com
+Ana M. Sebastião
+- Cartório: Rua Vitor Cordon , 10-A – 1249-103 LISBO
+- Tel.: 21 3475020/30 – Fax: 21 3421885 e 21 3424583
+- E-mail: anamsebastiao@jpcruz.pt
+- Web: www. jpereiradacruz.pt
+Cátia Ribeiro
+- Cartório: Praça de Portugal nº. 7C - 1ºD - 2910-640 S
+- Tel.: 265 228 685 - Fax: 265 228 637
+- E-mail: catia@marquesmarcas.com
+- Web: www.marquesmarcas.com
+Joana Dez-Réis Grilo
+- Cartório: Rua de Campolide n.º 164 D, 1070-029 LIS
+- Tel.: 934954388
+- E-mail: joana.grilo@protectdata.pt
+Luís Caixinhas
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: portugal@inventa.com
+- Web: www.inventa.pt
+Ricardo Abrantes
+- Cartório: Taguspark, Núcleo Central 392, 2740-122 O
+- Tel.: 211119919
+- E-mail: ricardo.abrantes@patents.pt
+- Web: www.patentree.eu
+Patrícia Marques
+- Cartório: Rua Santo António nº47B, 3ºQ -  2410-168
+- Tel.: 963169814
+- E-mail: patriciamarqs@gmail.com
+Nações – 1990-207 LISBOA
+ito, 1000-119 LISBOA
+Ed. HOECHST - 4100-486 BOAVISTA, PORTO
+OA
+OA
+3
+SETÚBAL
+SBOA
+Nações - 1990-207 LISBOA
+OEIRAS
+LEIRIA
+
+BOLETIM DA PROPRIEDAD
+Márcia Martinho da Rosa
+-  Cartório: Largo Machado de Assis, Ed. Roma – 5B,
+- Tel.: (+351) 913997452 / (+351) 211643217
+- E-mail: marcia.rosa@mmr.pt
+- Web: www.mmr.pt
+Madalena Barradas
+- Cartório: Avenida Casal Ribeiro, 50, 3º Dto, 1000-09
+- Tel.: 21 3815050
+- E-mail: mbarradas@clarkemodet.com
+Luís Teixeira
+- Cartório: Rua Públia Hortênsia de Castro, nº 1, 2º A -
+- E-mail: teixeira.luismanuel@gmail.com
+Manuel Cunha Ferreira
+- Cartório: Av. José Gomes Ferreira, 15 – 3ºL, 1495-13
+- Tel.: 213241530 - Fax: 213476656 / 213422446
+- E-mail: manuel.cunhaferreira@agcunhaferreira.pt
+Ana Fazendeiro
+- Cartório: Av. das Forças Armadas, nº 125 - 12º - 160
+- Tel.: 217231800 - Fax: 217231899
+- E-mail: ana.fazendeiro@abreuadvogados.com
+Vítor Palmela Fidalgo
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: vfidalgo@inventa.com
+- Web: www.inventa.pt
+Sérgio Coimbra Henriques
+- Cartório: Av de Berna, 30 - 3º A, 1050-148 LISBOA
+- Tel.: 211 64 99 99
+- E-mail: sergiocoimbrahenriques@gmail.com
+Filipa Lopes Galvão
+- Cartório: Rua Professor Simões Raposo, nº 5, 4º B -
+- E-mail: flg@dcmlittler.com
+Jorge Manuel Vaz Machado
+- Cartório: Edifício Oceanus - Escrit. 1.9 - Av. da Boa
+- Tel.: 912325395
+- E-mail: jmachado@inventa.com
+- Web: www.inventa.com
+Vera Albino
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: portugal@inventa.com
+- Web: www.inventa.pt
+1700-116 LISBOA
+93 LISBOA
+- 1500-518 LISBOA
+39 ALGÉS
+00-079 LISBOA
+s Nações – 1990-207 LISBOA
+A
+1600-660 LISBOA
+avista 3265, 4100-137 PORTO
+s Nações – 1990-207 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Maria João Pereira
+- Cartório: Av. Doutor João Canavarro 305, 1º, sl 19, 4
+- Tel.: +351 252 611 927 / +351 91 019 87 35
+- E-mail: mariabaltarpereira@gmail.com
+Mário André Marques
+- Cartório: Avenida Madame Curie, 27, 1A, 2720-111
+- Tel.: +351 910842465
+- E-mail: mario.marques@gmail.com
+Isaura Monteiro
+- Cartório: Avenida 25 de Abril, Urbanização Solar da
+- Tel.: 914164499
+- E-mail: isaura.monteiro@rcf.pt
+Ana Rita Remígio
+- Cartório: Edifício Net, Rua de Salazares 842 - 4149-
+- Tel.: 225322064 - Fax: 225322066
+- E-mail: ana.remigio@patents.pt
+- Web: www.patents.pt
+Daniela Dinis
+- Cartório: Rua da Fé n.º 10 Casal do Rato 1675-313 P
+- Tel.: 961294016
+- E-mail: danielamdinis-45642l@adv.oa.pt
+Luís Pinto Monteiro
+- Cartório: Av. da República, 25, 1º - 1050-186 LISBO
+- Tel.: 213821200 e 914898865
+- E-mail: luis.pinto.monteiro@garrigues.com
+Cláudia Freixinho Serrano
+- Cartório: Rua Vitor Cordon , 10-A - 1249-103 LISB
+- Tel.: 213475020 - Fax: 213421885
+- E-mail: claudiaserrano@jpcruz.pt
+David Marques
+- Cartório: Avenida Cova dos Vidros, Lote 2570 - 297
+- E-mail: davidmtfmarques@gmail.com
+Filipe Funenga
+- Cartório: Postboks 9, 4068 STAVANGER NO / Ru
+Urbanização Vale da Rosa – 2910-834 SETÚBAL
+- Tel.: (+47) 908 77 808
+- E-mail: filipe.funenga@patent.no
+Inês Monteiro Alves
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213150970 - Fax: 213531352
+- E-mail: ialves@inventa.com
+4480-668 VILA DO CONDE
+1 AMADORA
+as Palmeiras, Bloco C4, 4ºD, 8100-506 LOULÉ
+-002 PORTO
+PONTINHA
+OA
+OA
+75-333 QUINTA DO CONDE
+a Cidade de Ouro Preto n.º 12,
+s Nações – 1990-207 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Mariana Bernardino Ferreira
+- Cartório: Av. Álvares Cabral, 47 - 1.º - 1250-015 LIS
+- Tel.: 213806530 - Fax: 213806531
+- E-mail: mariana.ferreira@bma.com.pt
+- Web: www.bma.pt
+Patrícia Lima
+- Cartório: Instituto Superior Técnico, Avenida Rovisc
+- E-mail: patriciamlima@hotmail.com
+Rita Mendonça
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 L
+- Tel.: 217 801 963
+- E-mail: sgcr@sgcr.pt
+- Web: www.sgcr.pt
+Rui do Nascimento Gomes
+- Cartório: Rua Vitor Cordon, 10-A - 1249-103 LISBO
+- Tel.: 213475020 - Fax: 213421885
+- E-mail: ruigomes@jpcruz.pt
+- Web: www.jpereiradacruz.p
+Vasco Rosa Dias
+- Cartório: Est. Beira nº 176, 5º A - 3030-173 COIMB
+- Tel.: 963312134
+- E-mail: vasco.rosa.dias@gmail.com
+Joana Piriquito Santos
+- Cartório: Avenida da Liberdade, 212-S/L Esquerdo,
+- Tel.: 916225520
+- E-mail: jps@nlp.legal
+Sónia Mota Maia
+- Cartório: Alameda da Quinta de Sto. António, nº 1 -
+- Tel.: 217160190 - Fax: 213244665
+- E-mail: info@ip-smm.com
+Pedro Bacelar
+- Cartório: Estrada da Chainha, Lote 6, Nº163 R/C - 7
+- Tel: 266040468 e 919654760 - Fax: 266040948
+- E-mail: pedro.espanca@gmail.com
+Miguel Antunes de Resende
+- Cartório: Avenida de São Pedro nº 31 Monte Estoril
+- Tel: 910583778
+- E-mail: miguelantunesderesende@gmail.com
+Luís Sommer Ribeiro
+- Cartório: Rua Artilharia Um, n.º 79, 3.º direito, 1250
+- E-mail: geral@saveas.pt
+SBOA
+co Pais - 1049-001 LISBOA
+LISBOA
+OA
+BRA
+, Salas 1 e 2, 1250-147 LISBOA
+Núcleo 1 - 2º E - 1600-675 LISBOA
+005-198 ÉVORA
+- 2765-446 ESTORIL
+0-038 LISBOA
+
+BOLETIM DA PROPRIEDAD
+João Pereira Cabral
+- Cartório: Alameda dos Oceanos, 41, K21, Parque da
+- Tel: 213150970 - Fax: 213531352
+- E-mail: jcabral@inventa.com
+- Web: www.inventa.pt
+João Francisco Sá
+- Cartório: Rua Rangel de Quadros, nº 4 2º drt. - 3800
+- E-mail: Joaofrancis.sa@gmail.com
+Sousa Ribeiro
+- Cartório: Av. Álvares Cabral, n.º 47, 1.º andar - 1250
+- Tel: 213806530 - Fax: 213806531
+Evangelino Marques Ribeiro
+- Cartório: Praça de Portugal nº. 7C - 1ºD - 2910-640
+- Tel: 265228685 e 932573091 - Fax: 265228637
+- E-mail: marquesribeiro@marquesmarcas.com
+- Web: www.marquesmarcas.com
+Diogo Xavier Santos
+- Cartório: Av. 5 de Outubro, 16, 2º Esq - 1050-056 L
+- Tel: 217801963
+- E-mail: sgcr@sgcr.pt
+Saulo Chanoca
+- Cartório: Rua Artilharia Um, nº 51, Páteo Bagatela, E
+- Tel: 211554330 e 935274353
+- E-mail: schanoca@bas.pt
+Lígia Gata
+- Cartório: Av. Dr. Mário Moutinho, Lt 1519, 7º Esq.
+- Tel: 213011684
+- E-mail: ligiagata007@gmail.com
+Manuel Bastos Moniz Pereira
+- Cartório: Rua dos Bacalhoeiros 4, 1100-070 LISBOA
+- Tel: 218823990 - Fax: 218823997
+- E-mail: manuel.pereira@gastao.eu
+- Web: www.gastao.eu
+Ana Neves
+- Cartório: Alameda dos Oceanos 41, K-21, Parque da
+- Tel: 213150970
+- E-mail: aneves@inventa.com
+Ana Isabel Plácido Martins
+- Cartório: Rua Feliciano de Castilho, 92, 4150-311 PO
+- E-mail: anaplacidomartins-21156l@adv.oa.pt
+as Nações - 1990-207 LISBOA
+0-072 AVEIRO
+0-015 LISBOA
+SETÚBAL
+LISBOA
+Edifício 1, 4º Andar - 1250-137 LISBOA
+- 1400-136 LISBOA
+A
+as Nações, 1990-207 LISBOA
+ORTO
+
+BOLETIM DA PROPRIEDAD
+André Sarmento
+- Cartório: Rua Damião de Góis, nº 56, 4º Andar, apt.
+- Tel: 223 751 032
+- E-mail: andrevsarmento@gmail.com
+Carlos Miguel Vaz Serra
+- Cartório: Edifício Lumnia, Rua da Centieira, nº 61 -
+- Tel: 917169727
+- E-mail: carlos.miguel@ascenza.rovensa.com
+Leila Teixeira
+- Cartório: Avenida 24, 803 - 4500-201 ESPINHO
+- Tel: 935254856
+- E-mail: leilateixeiraa@gmail.com
+Cristina de Castro
+- Cartório: Rua António Sérgio, 49 - 3º Esq. - 6300-66
+- Tel: 965028903
+- E-mail: cristinacastro@ipg.pt
+Mariana Belo de Oliveira
+- Cartório: Rua Domingos Ferreira Pinto Basto, nº 45,
+- Tel: 914913442
+- E-mail: marianabelooliveira@gmail.com
+Natacha Batista
+- Cartório: Rua 9 de Março, nº 63, Cajados - 2965-505
+- Tel: 916187637
+- E-mail: anatachabatista@gmail.com
+Raquel Antunes
+- Cartório: Rua dos Ilhavos 29, 2825-339 COSTA DA
+- Tel.: 913157271
+- E-mail: rgaboleiroantunes@gmail.com
+Sofia Rebelo Ladeira
+- Cartório: Rua Ana de Castro Osório, nº 4 - 5º B– 150
+- Tel.: 969267585
+- E-mail: ladeira.sofia@gmail.com
+Adriana Esteves
+- Cartório: Av. Casal Ribeiro, 50 - 3ºandar – 1000-093
+- Tel.: 213815050 – Fax: 212831150
+- E-mail: aesteves@clarkemodet.com.pt
+Cláudia Tomás Pedro
+- Cartório: Avenida Duque de Ávila, n.º 46, 6.º – 1050-
+- Tel.: 213408600 Tlm: 966478360
+- E-mail: cpedro@ga-p.com
+Diana Pereira
+- Cartório: Alameda dos Oceanos, 41, K21, Parque das
+- Tel.: 213150970/1 – Fax: 213531352
+- E-mail: dpereira@inventa.com
+43, 4050-221 PORTO
+5B, 1800-056 LISBOA
+65 GUARDA
+, 3830 -176 ÍLHAVO - AVEIRO
+5 ÁGUAS DE MOURA
+CAPARICA
+0-039 LISBOA
+LISBOA
+-083 LISBOA
+s Nações – 1990-207 LISBOA
+
+BOLETIM DA PROPRIEDAD
+Inês Sequeira
+- Cartório: Alameda dos Oceanos, 41, K21, Parque das
+- Tel.: 918860596
+- E-mail: isequeira@inventa.com
+Joel David Rodrigues
+- Cartório: Rua Escola do Futebol, n.º 11, 1.º dto. – 870
+- Tel.: 961 108 500
+- E-mail: jdcruzrodrigues@gmail.com
+Inês Guerra
+- Cartório: Av. 5 de Outubro, 16, 2º Esq. - 1050-056 LI
+- Tel.: 217801963
+- E-mail: sgcr@sgcr.pt
+-Web: www.sgcr.pt
+Luísa Azevedo Soares Rodrigues
+- Cartório: Rua António da Silveira, 131– 2765-300 ES
+- Tel.: 914431158
+- E-mail: marialuisa.rodrigues@gmail.com
+Miguel Bibe
+- Cartório: Alameda dos Oceanos, 41, K21, Parque das
+- Tel.: 918759849
+- E-mail: mbibe@inventa.com
+Tiago Andrade
+- Cartório: Rua Vitor Cordon, 10-A – 1200-442 LISBO
+- Tel.: 213475020
+- E-mail: tiagoandrade@jpcruz.pt
+- Web: www. jpereiradacruz.pt
+Cláudia Alexandra Maia do Couto
+- Cartório: Av. Casal Ribeiro, 50 - 3° andar - 1000-093
+- Tel: 213 815 050
+- E-mail: ccouto@clarkemodet.com
+Cristina Maria Sanches Simões de Faria
+- Cartório: Rua António Livramento, n.º3, -5ºC 1600-3
+- Tel: 960290166
+- E-mail: csdefaria@gmail.com
+Diogo de Almeida Antunes
+- Cartório: Alameda dos Oceanos 41 K 21-1991-207 L
+- Tel. 21 3150970 – Tlm: 925835323
+- E-mail: dantunes@inventa.com
+Dulce Varandas Andrade
+- Cartório: Rua da Vilarinha, n. 543, 4100-515 - PORT
+- Tel.: 962043227
+- E-mail: dulce.varandas@gmail.com
+s Nações – 1990-207 LISBOA
+00-258 OLHÃO
+ISBOA
+STORIL
+s Nações– 1990-207 LISBOA
+OA
+3 LISBOA
+71 LISBOA
+ISBOA
+TO
+
+BOLETIM DA PROPRIEDAD
+Filipa João da Gama Franco Marques Pereira
+- Cartório: Rua Victor Cordon, n.º 10 - A - 1249-103 L
+- Tlm.: 910075582
+- E-mail: filipapereira@jpcruz.pt
+Inês Duarte Tavares
+- Cartório: Av. Fontes Pereira de Melo, 42, 1050-119 L
+- Tel.: (+351) 213 197 322 | (+351) 938 433 217
+- E-mail: ines.duartetavares@plmj.pt
+- Web: www.plmj.com
+Joana Alves Coelho
+- Cartório: Praça General Humberto Delgado, 267 - 3º
+- Tel.: 222012603 - Fax: 222012605
+- E-mail: jac@sgcr.pt
+-Web: www.sgcr.pt
+Miguel Filipe Duarte
+- Cartório: Faculdade de Medicina da Universidade de
+Avenida Professor Egas Moniz,1649-028 LISBOA
+- Tel.: (+351) 217 999 411 - ext: 47020
+- E-mail: miguel.duarte@medicina.ulisboa.pt
+Vera Lúcia Faria Viola Gonçalves
+- Cartório: Rua Dr. Herminio Laborinho, nº 13 - 2500-2
+- Tel.: 914287287
+- E-mail: vera.viola.goncalves@gmail.com
+Diogo Frada Almeida
+- Cartório: Rua Castilho n.º 165 - 1070-050 LISBOA
+- Tel.: 213817400- Fax: 213826629
+- E-mail: dfalmeida@mlgts.pt
+- Web: www.mlgts.pt
+Joana Eugénio
+- Cartório: Av. Sidónio Pais 379, Ed. Hoechst, Sala 1.1
+- Tel.: 220167495 / 917814970
+- E-mail: joanaeugenio@jpcruz.pt
+Júlia Alves Coutinho
+- Cartório: Rua da Ilha Terceira, 1, 3º Direito, 1000-17
+- E-mail: juliaalvescoutinho@gmail.com
+Maria João Carapinha
+- Cartório: Largo Samwell Dinis, n.º 3 - 2.º Dto.- 2820-
+- Tel.: 926224774
+- E-mail: mariajoaocarapinha@gmail.com
+Margarida Rossi
+- Cartório: Rua Infante D. Henrique 34 - 4780-482 SAN
+- Tel.: 919455946
+- E-mail: margarida.rossi@gmail.com
+LISBOA
+LISBOA
+salas 1 e 2 - 4000-288 PORTO
+LISBOA,
+214 CALDAS DA RAINHA
+14 - 4100-468 PORTO
+1 LISBOA
+-491 ALMADA
+NTO TIRSO
+
+BOLETIM DA PROPRIEDAD
+Miguel Maia
+- Cartório: Edifício Net -Rua de Salazares, n.º 842 -  41
+- Tel.: 220 028 916
+- E-mail: miguel.maia@patents.pt
+- Web: www.patentree.eu
+Pedro Rebelo Tavares
+- Cartório: Rua Nossa Senhora de Fátima, 177, Piso 7 -
+- Tel.: 223715485 / 916589604 - Fax: 223723285
+- E-mail: pedro.tavares@pra.pt
+Sílvia Vieira
+- Cartório: Edifício Net - Rua de Salazares, n.º 842 - 41
+- Tel.: 220028916
+- E-mail: silvia.vieira@patents.pt
+-Web: www.patentree.eu
+Vitor Sérgio Moreira
+- Cartório: Alameda dos Oceanos, 41K, 21 - Parque da
+- Tel.: 213150970 - Fax: 213531352
+- E-mail: vmoreira@inventa.com
+Luisa Resende Castro
+- Cartório: Av. Casal Ribeiro, 50 – 3ºandar- 1000-093 L
+- Tel.: 213815050
+- E-mail: luisarezendecastro@gmail.com
+Marisol Cardoso
+- Cartório: Alameda dos Oceanos 41 K-21 - 1990-207 L
+- E-mail - mcardoso@inventa.com
+- Tel.: 213150970
+José Maria Lopes Pires Santos Quelhas
+- Cartório: Av. Fontes Pereira de Melo, 43 - 1050-119
+- E-mail: josemaria.quelhas@plmj.pt
+- Tel.: 211592504
+Francisco Branco Pardal
+- Cartório: Av. EUA 61, 2 esq. 1700-165 LISBOA
+- E-mail: franciscobpardal@gmail.com
+Vasco Granate
+- Cartório: Av.ª Fontes Pereira de Melo, 43, 1050-119 L
+- E-mail: vasco.granate@plmj.pt
+- Tel.: 213197303
+Maria João Nunes
+- Cartório: Rua Nova de Almada 29, 2640-411  – MAF
+- E-mail: mariajoaodecamposnunes@gmail.com
+- Tel.: 916219056
+149-002- PORTO
+- 4050-427 PORTO
+149-002 PORTO
+as Nações - 1990-207 LISBOA
+LISBOA
+LISBOA
+LISBOA
+LISBOA
+FRA
+
+BOLETIM DA PROPRIEDAD
+Beatriz Pereira da Cruz
+- Cartório: Rua das Janelas Verdes. Nº 128 2ºAndar, 12
+- E-mail: beatrizpcruz@hotmail.com
+Madalena Pacheco
+- Cartório: Edifício Heron Castilho, R. Braamcamp 40
+- E-mail: madalena.pacheco@bma.pt
+- Tel.: 213 806 530
+- Web: www.bma.pt
+António Aragão
+- Cartório: Rua Tomás Ribeiro, nº 45 – 2º Andar, 1050
+- Tel.: 210545500
+- E-mail: antonio.aragao@rcf.pt
+- Web: www.rcf.pt
+Andreia Pereira
+- Cartório: Rua Tomás Ribeiro, n.º 45 – 2º Andar, 1050
+- E-mail: andreia.pereira@rcf.pt
+- Tel.: 210545500 - Fax: 213978754
+-Web: www.rcf.pt
+Catarina Azevedo Fernandes
+- Cartório: Av.ª General Humberto Delgado, 181, 4800
+- E-mail: catarinaazevedo@gamalobomelo.com
+- Tel.: 253421600
+Diana Andrade Sands
+- Cartório: Rua Vitorino Nemésio, 107 - Rés do Chão D
+- E-mail: diana.faustino.andrade@gmail.com
+- Tel.: 925585334
+Rui Manuel Silva
+- Cartório: Praça Doutor Teixeira de Aragão 7, 3º Direi
+- Tlm.: 914024203
+- E-mail: ruimsilva3@gmail.com
+Alexandra Oliveira
+- Cartório: Rua Padre António Francisco Marques Nº1,
+- Tlm.: 913643170
+- E-mail: alexandra.peresdeoliveira@gmail.com
+Inês Falcão Rovisco
+- Cartório: Av. António Augusto Aguiar 108, 4º, 1050-
+- Tel.: 218823990 – Tlm.: 939624767
+- E-mail: ines.rovisco@gastao.com
+200-692 - LISBOA
+- 5º E, 1250-050 - LISBOA
+-225 LISBOA
+0-225 - LISBOA
+0-158 - GUIMARÃES
+Direito - 4050-638 PORTO
+ito, 1500-251 LISBOA
+, 2ºDto, 1675-014 PONTINHA
+-019 Lisboa
+
+BOLETIM DA PROPRIEDAD
+Manuel Gil Fernandes
+- Cartório: Rua Sousa Martins, 16, 1º A, 1050-218 LIS
+- Tlm.: 919902476
+- E-mail: manelmgil@gmail.com
+Susana Couto Gonçalves
+- Cartório: Casal Ribeiro, 50, 3° dto, 1000-091  LISBO
+- Tlm.: 917938762
+- E-mail: sgoncalves@clarkemodet.com
+João Carlos Assunção
+- Cartório: Avenida da Liberdade, 212, S/L Esquerdo,
+- Tel.: 210540860 - Tlm.: 962104158
+- E-mail: jca@nlp.legal
+- Web: www.nlp.legal
+Elizabete Coutinho
+- Cartório: Rua 1º de Maio, nº 8, Soutelo, 3850-587 Br
+- Tlm.: 913839747
+- E-mail: elizabeteccoutinho@gmail.com
+Antonieta Ribeiro
+- Cartório: Instituto Superior Técnico – Avenida Rovis
+- Tel.: 218417391
+- E-mail: antonieta.ribeiro@tecnico.ulisboa.pt
+- Web: https://tecnico.ulisboa.pt/
+Carla Andrade Silva
+- Cartório: Avenida José Gomes Ferreira, 15 – 3º L, 14
+- Tel.: 213241530
+- E-mail: carla.silva@agcunhaferreira.pt
+BOA
+OA
+1250-147 LISBOA
+anca, ALBERGARIA-A-VELHA
+co Pais, 1049-001 LISBOA
+495-139 ALGÉS
+
+BOLETIM DA PROPRIEDAD
+PROCURADORES A
+(Os Procuradores Autorizados são pessoas singu
+Propriedade Industrial, podem praticar actos e te
+procuração simples e com poderes especiais para
+Artur Almeida Pinto Furtado da Luz
+- Cartório: Rua da Madalena, 214 – 4º – 1100-325 LIS
+- Tel.: 21 8870657 – Fax: 21 8879714
+- E-mail: abpatentiena@mail.telepac.pt
+Carlos António dos Santos Rodrigues
+- Cartório: Rua da Madalena, 214 – 4º – 1100-325 LIS
+- Tel.: 21 8870657 – Fax: 21 8879714
+- E-mail: abpatentiena@mail.telepac.pt
+Ruy Pelayo de Sousa
+- Cartório: Rua de Sá da Bandeira, 706 – 2º Esq. – 400
+- Tel.: 22 2046120 – Fax: 22 2080728
+- E-mail: geral@arlindodesousa.pt
+- Web: www.arlindodesousa.pt
+Carmen Ferreira Furtado da Luz de Oliveira e Silv
+- Cartório: Rua Sousa Martins, N.º 10 - 7º – 1050-218
+- Tel.: 21 3876961 – Fax: 21 3877596
+- E-mail: furtado.marcas@netcabo.pt
+Luís Reinaldo de Oliveira e Silva
+- Cartório: Rua Maria Pia, 20 - 3º Dto. – 1350-208 LIS
+- Tel.: 21 3951814 – Fax: 21 3951842
+- E-mail: publimarca@iol.pt
+Carlos Eugénio Reis Nobre
+- Cartório: Alameda dos Oceanos, 41K-21, Parque das
+- Tel.: 213 150 970 - Fax: 213 531 352
+- E-mail: portugal@inventa.com
+- Web: www.inventa.pt
+Maria Margarida Gomes Sanches Nunes
+- Cartório: Av. António José Gomes, 60 - B - 1º E, Ap
+- Tel.: 21 2744129 e 21 2768069 – Fax: 21 2740012
+- E-mail: guimarque@guimarque.pt
+José Roger Pimenta Rodrigues
+- Cartório: Praça Francisco Sá Carneiro, 3 – 4º - Apart
+- Tel. 21 8461705 – Fax 21 8478686
+AUTORIZADOS
+ulares que, não sendo Agentes Oficiais da
+ermos do processo, juntando, para o efeito,
+cada processo)
+SBOA
+SBOA
+00-432 PORTO
+va
+8 LISBOA
+SBOA
+Nações – 1990-207 LISBOA
+partado 175 – 2801-902 ALMADA
+tado 2874 – 1000-159 LISBOA CODEX
