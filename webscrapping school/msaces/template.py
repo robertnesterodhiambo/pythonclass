@@ -6,6 +6,7 @@ import numpy as np
 import unicodedata
 
 # -- coding: utf-8 --
+
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template2.pdf"
 
@@ -51,6 +52,20 @@ for idx, row in df.iterrows():
         print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because Marca is missing or empty")
         continue
 
+    # === CapitalSocial range check (must be >5 and <6100 euros) ===
+    capital_raw = str(row['CapitalSocial']).strip()
+    capital_clean = capital_raw.replace("€", "").replace(".", "").replace(",", ".").strip()
+
+    try:
+        capital_value = float(capital_clean)
+    except ValueError:
+        print(f"Skipping row {idx+1} (NumeroPedido {row['NumeroPedido']}) due to invalid CapitalSocial format: '{capital_raw}'")
+        continue
+
+    if not (5 < capital_value < 6100):
+        print(f"Skipping row {idx+1} (NumeroPedido {row['NumeroPedido']}) because CapitalSocial €{capital_value} is out of range")
+        continue
+
     print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']}")
 
     doc = fitz.open(pdf_path)
@@ -90,6 +105,7 @@ for idx, row in df.iterrows():
             overlay=True
         )
 
+        # === Function to insert single-line values after a label ===
         def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
@@ -110,14 +126,8 @@ for idx, row in df.iterrows():
                 else:
                     text_value = str(value)
 
-                # === Omit typing of EUR sign ===
-                # if dollar_sign:
-                #     euro_sign = unicodedata.lookup("EURO SIGN")
-                #     text_value += f" {euro_sign}"
-
                 text_value = (" " * leading_spaces) + text_value
 
-                # === Make Código Postal Helvetica ===
                 font_name = "helvetica" if label == "Código Postal:" else ("Times-Roman" if not bold else "Times-Bold")
 
                 page.insert_text(
@@ -128,6 +138,7 @@ for idx, row in df.iterrows():
                     color=(0, 0, 0)
                 )
 
+        # === Function to insert wrapped (multiline) values ===
         def insert_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False, leading_spaces=0):
             if pd.isna(value):
                 print(f"Skipping '{label}' insertion because value is NaN")
@@ -180,53 +191,6 @@ for idx, row in df.iterrows():
                         color=(0, 0, 0)
                     )
 
-        # === Insert 11683 beneath Entidade ===
-        # entidade_instances = page.search_for("Entidade")
-        # for inst in entidade_instances:
-        #     x1, y1, x2, y2 = inst
-        #     insert_x = x1  # aligned with Entidade
-        #     insert_y = y2 + 15  # beneath Entidade with spacing
-        #     page.insert_text(
-        #         (insert_x, insert_y),
-        #         "11683",
-        #         fontname="Times-Bold",
-        #         fontsize=11,
-        #         color=(0, 0, 0)
-        #         )
-        #     print(f"Inserted '11683' beneath Entidade at ({insert_x}, {insert_y})")
-            
-        # === Insert 367098190 beneath Referência ===
-        # referencia_instances = page.search_for("Referência")
-        # for inst in referencia_instances:
-        #     x1, y1, x2, y2 = inst
-        #     insert_x = x1  # aligned with Referência
-        #     insert_y = y2 + 15  # beneath Referência with spacing
-        #     page.insert_text(
-        #         (insert_x, insert_y),
-        #         "367098190",
-        #         fontname="Times-Bold",
-        #         fontsize=11,
-        #         color=(0, 0, 0)
-        #         )
-        #     print(f"Inserted '367098190' beneath Referência at ({insert_x}, {insert_y})")
-
-
-        # === Insert 34,44€ beneath Montante ===
-        # montante_instances = page.search_for("Montante")
-        # for inst in montante_instances:
-        #     x1, y1, x2, y2 = inst
-        #     insert_x = x1  # aligned with Montante
-        #     insert_y = y2 + 15  # beneath Montante with spacing
-        #     page.insert_text(
-        #         (insert_x, insert_y),
-        #         "34,44€",
-        #         fontname="Times-Bold",
-        #         fontsize=11,
-        #         color=(0, 0, 0)
-        #         )
-        #     print(f"Inserted '34,44€' beneath Montante at ({insert_x}, {insert_y})")
-
-
         # === Insert wrapped Titular ===
         insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
 
@@ -252,11 +216,7 @@ for idx, row in df.iterrows():
         insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        # === Omit typing into Importância, IVA (23%), TOTAL ===
-        # insert_after_label("Importância:", row['ValorImportancia'], skip_line=True, dollar_sign=True)
-        # insert_after_label("IVA (23%):", row['IVA'], skip_line=True, dollar_sign=True)
-        # insert_after_label("TOTAL:", row['ValorTotal'], skip_line=True, dollar_sign=True)
-
+        # === Marca boxes coordinates and logic ===
         coords_list = [
             (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
             (72.95, 393.80), (93.43, 394.80), (148.89, 398.30),
@@ -300,6 +260,7 @@ for idx, row in df.iterrows():
                     )
                 print(f"Inserted wrapped Marca value '{text_value}' in {len(wrapped_lines)} lines within box")
 
+    # === Save the updated PDF ===
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
     doc.close()
