@@ -27,6 +27,11 @@ if not xlsx_files:
 input_path = os.path.join(current_folder, xlsx_files[0])
 output_path = os.path.join(current_folder, "racius_links_output.xlsx")
 
+# 🗑️ Delete old output file before starting
+if os.path.exists(output_path):
+    os.remove(output_path)
+    print("🗑️ Deleted existing output file: racius_links_output.xlsx")
+
 # Load input Excel
 input_df = pd.read_excel(input_path).dropna(how='all')
 if 'Titular' not in input_df.columns:
