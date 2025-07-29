@@ -2,13 +2,22 @@ import fitz
 import os
 import glob
 import re
+from datetime import datetime
 
-# === Find the latest Boletim PDF ===
+
+def extract_date_from_filename(path):
+    filename = os.path.basename(path)
+    match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
+    if match:
+        return datetime.strptime(match.group(1), "%Y-%m-%d")
+    else:
+        return datetime.min  # fallback for safety
+
 pdf_pattern = "Boletim_da_PI_-_*.pdf"
 pdf_files = glob.glob(pdf_pattern)
 if not pdf_files:
     raise FileNotFoundError("No Boletim_da_PI_-_*.pdf files found.")
-latest_pdf = max(pdf_files, key=os.path.getctime)
+latest_pdf = max(pdf_files, key=extract_date_from_filename)
 
 # === Create folder for extracted images ===
 output_folder = "extracted_image"

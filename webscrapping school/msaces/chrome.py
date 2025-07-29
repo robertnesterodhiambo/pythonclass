@@ -18,13 +18,27 @@ chromedriver_autoinstaller.install()
 
 # Paths
 current_folder = os.path.dirname(os.path.abspath(__file__))
-xlsx_files = [f for f in os.listdir(current_folder) if f.endswith('.xlsx') and not f.startswith("~$")]
 
-if not xlsx_files:
-    print("❌ No .xlsx file found in the folder.")
+# === Find the latest Boletim_da_PI_-_YYYY-MM-DD.xlsx ===
+pattern = re.compile(r"Boletim_da_PI_-_(\d{4}-\d{2}-\d{2})\.xlsx")
+
+latest_file = None
+latest_date = None
+
+for f in os.listdir(current_folder):
+    match = pattern.match(f)
+    if match:
+        file_date = datetime.strptime(match.group(1), "%Y-%m-%d")
+        if not latest_date or file_date > latest_date:
+            latest_file = f
+            latest_date = file_date
+
+if not latest_file:
+    print("❌ No valid Boletim_da_PI_-_YYYY-MM-DD.xlsx file found.")
     exit()
 
-input_path = os.path.join(current_folder, xlsx_files[0])
+input_path = os.path.join(current_folder, latest_file)
+print(latest_file)
 output_path = os.path.join(current_folder, "racius_links_output.xlsx")
 
 # 🗑️ Delete old output file before starting

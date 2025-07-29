@@ -5,6 +5,9 @@ import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
 from datetime import datetime  
+import datetime
+import re
+
 # -- coding: utf-8 --
 
 # === Step 1: Locate Template PDF === 
@@ -13,9 +16,17 @@ pdf_path = "Template2.pdf"
 # === Step 2: Locate latest Excel file ===
 excel_folder = "excel"
 list_of_files = glob.glob(os.path.join(excel_folder, '*.xlsx'))
-latest_excel = max(list_of_files, key=os.path.getmtime)
-print(f"Latest Excel file found: {latest_excel}")
 
+def extract_date_from_filename(path):
+    filename = os.path.basename(path)
+    match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
+    if match:
+        return datetime.datetime.strptime(match.group(1), "%Y-%m-%d")
+    else:
+        return datetime.datetime.min  # fallback for files without a date
+
+latest_excel = max(list_of_files, key=extract_date_from_filename)
+print(f"Latest Excel file by date in filename: {latest_excel}")
 # === Step 3: Load Excel data ===
 df = pd.read_excel(latest_excel)
 print(df.head())  # View to confirm your columns
