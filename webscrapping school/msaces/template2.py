@@ -12,14 +12,36 @@ from datetime import datetime
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template2.pdf"
 
-# === Step 2: Locate latest Excel file ===
+
+# === Step 2: Locate latest Excel file based on filename date ===
 excel_folder = "excel"
 list_of_files = glob.glob(os.path.join(excel_folder, '*.xlsx'))
-latest_excel = max(list_of_files, key=os.path.getmtime)
-print(f"Latest Excel file found: {latest_excel}")
+
+# Extract date from each filename and find the latest one
+latest_file = None
+latest_date = None
+
+for file in list_of_files:
+    filename = os.path.basename(file)
+    name_part = os.path.splitext(filename)[0]
+    
+    # Expecting format like "2025-07-29.xlsx"
+    try:
+        file_date = datetime.strptime(name_part, "%Y-%m-%d")
+        if not latest_date or file_date > latest_date:
+            latest_date = file_date
+            latest_file = file
+    except ValueError:
+        # Skip files that don't match the expected date format
+        continue
+
+if latest_file:
+    print(f"Latest Excel file based on filename date: {latest_file}")
+else:
+    raise FileNotFoundError("No Excel files with a valid date format found.")
 
 # === Step 3: Load Excel data ===
-df = pd.read_excel(latest_excel)
+df = pd.read_excel(latest_file)
 print(df.head())  # View to confirm your columns
 
 
