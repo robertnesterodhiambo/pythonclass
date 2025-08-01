@@ -21,7 +21,6 @@ current_folder = os.path.dirname(os.path.abspath(__file__))
 
 # === Find the latest Boletim_da_PI_-_YYYY-MM-DD.xlsx ===
 pattern = re.compile(r"Boletim_da_PI_-_(\d{4}-\d{2}-\d{2})\.xlsx")
-
 latest_file = None
 latest_date = None
 
@@ -38,7 +37,7 @@ if not latest_file:
     exit()
 
 input_path = os.path.join(current_folder, latest_file)
-print(latest_file)
+print(f"📄 Using file: {latest_file}")
 output_path = os.path.join(current_folder, "racius_links_output.xlsx")
 
 # 🗑️ Delete old output file before starting
@@ -52,16 +51,19 @@ if 'Titular' not in input_df.columns:
     print("❌ 'Titular' column missing in Excel.")
     exit()
 
+# Filter: Only include rows where 'Titular' contains lda, unipessoal, or limitada (case-insensitive, anywhere in string)
+input_df = input_df[input_df['Titular'].str.contains(r'(lda|unipessoal|limitada)', case=False, na=False)]
+if input_df.empty:
+    print("⚠️ No entries containing 'lda', 'unipessoal', or 'limitada' found.")
+    exit()
+
 # Prepare output DataFrame
 extra_cols = [
     'Link', 'NIF', 'Morada', 'CodigoPostal', 'ValidadeInicio', 'ValidadeFim', 'DataDocumento',
     'ValorImportancia', 'IVA', 'ValorTotal', 'MontanteMB', 'ReferenciaMB', 'EntidadeMB',
     'CapitalSocial', 'Forma Jurídica'
 ]
-if os.path.exists(output_path):
-    output_df = pd.read_excel(output_path)
-else:
-    output_df = pd.DataFrame(columns=list(input_df.columns) + extra_cols)
+output_df = pd.DataFrame(columns=list(input_df.columns) + extra_cols)
 
 # Set up dates
 now = datetime.now()
@@ -72,8 +74,8 @@ data_documento = now.strftime("%Y-%m-%d")
 # Start auto-increment values
 ref_start = 123456789
 entidade_start = 12345
-next_ref = ref_start + len(output_df)
-next_ent = entidade_start + len(output_df)
+next_ref = ref_start
+next_ent = entidade_start
 
 # Selenium setup
 options = Options()
@@ -89,7 +91,6 @@ for idx, row in input_df.iterrows():
     print(f"\n🔍 Searching for: {name_full}")
 
     try:
-        # Search
         search_input = wait.until(EC.element_to_be_clickable((By.ID, "main-search")))
         search_input.clear()
         search_input.send_keys(name_full)
@@ -107,19 +108,16 @@ for idx, row in input_df.iterrows():
                     continue
                 name_text = name_tags[0].text.strip()
 
-                # ✅ Clean Excel text
                 titular_cleaned = re.sub(r'[,.]', '', name_full).strip()
                 titular_cleaned = re.sub(r'\b(unipessoal )?lda\b$', '', titular_cleaned, flags=re.IGNORECASE).strip()
                 titular_cleaned = re.sub(r'\s+', ' ', titular_cleaned)
                 titular_normalized = unidecode(titular_cleaned).lower().replace('-', '').replace(' ', '')
 
-                # ✅ Clean website text
                 website_cleaned = re.sub(r'[,.]', '', name_text).strip()
                 website_cleaned = re.sub(r'\b(unipessoal )?lda\b$', '', website_cleaned, flags=re.IGNORECASE).strip()
                 website_cleaned = re.sub(r'\s+', ' ', website_cleaned)
                 website_normalized = unidecode(website_cleaned).lower().replace('-', '').replace(' ', '')
 
-                # ✅ Final comparison ignoring dashes and spaces
                 if website_normalized == titular_normalized:
                     matched = True
 
@@ -135,18 +133,15 @@ for idx, row in input_df.iterrows():
                     current_link = driver.current_url
                     print(f"✅ Matched and got link: {current_link}")
 
-                    # Extract NIF
                     try:
                         nif_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.company__loc h3.company-info__data")))
                         nif = nif_element.text.strip()
                     except:
                         nif = ""
 
-                    # Extract Morada and CodigoPostal
                     try:
                         morada_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.t--d-blue")))
                         full_address = morada_element.text.strip()
-
                         match = re.search(r'\d{4}-\d{3}(.*?)$', full_address)
                         codigo_postal = match.group().strip() if match else ""
                         morada = full_address.split(match.group())[0].strip(', ') if match else full_address
@@ -154,7 +149,6 @@ for idx, row in input_df.iterrows():
                         morada = ""
                         codigo_postal = ""
 
-                    # Extract ValorImportancia
                     try:
                         li_elements = driver.find_elements(By.CSS_SELECTOR, "li.d--flex.detail__detail.py-md--1.align--center")
                         if len(li_elements) >= 2:
@@ -166,7 +160,6 @@ for idx, row in input_df.iterrows():
                     except:
                         valor_importancia = "28 "
 
-                    # Extract Capital Social
                     try:
                         detail_sections = driver.find_elements(By.CSS_SELECTOR, "div.t-md--right.detail__line")
                         capital_social = ""
@@ -180,7 +173,6 @@ for idx, row in input_df.iterrows():
                     except:
                         capital_social = ""
 
-                    # Extract Forma Jurídica
                     try:
                         juridica_sections = driver.find_elements(By.CSS_SELECTOR, "div.px-md--2.detail__line.f--grow")
                         forma_juridica = ""
@@ -194,11 +186,9 @@ for idx, row in input_df.iterrows():
                     except:
                         forma_juridica = ""
 
-                    # Fixed values with euro signs as requested
                     iva = "6,44"
                     valor_total = "34,44"
                     montante_mb = "34,44"
-
                     referencia_mb = str(next_ref).zfill(9)
                     entidade_mb = str(next_ent).zfill(5)
                     next_ref += 1
@@ -232,11 +222,7 @@ for idx, row in input_df.iterrows():
 
         if not matched:
             print(f"❌ No exact match for: {name_full}")
-            output_row = row.to_dict()
-            for col in extra_cols:
-                output_row[col] = "Not Found"
-            output_df = pd.concat([output_df, pd.DataFrame([output_row])], ignore_index=True)
-            output_df.to_excel(output_path, index=False)
+            # Do not save unmatched rows
 
         driver.get("https://www.racius.com/")
         time.sleep(2)
@@ -247,4 +233,4 @@ for idx, row in input_df.iterrows():
         time.sleep(2)
 
 driver.quit()
-print(f"\n✅ Finished. All links and data saved in: {output_path}")
+print(f"\n✅ Finished. Saved data with matches to: {output_path}")
