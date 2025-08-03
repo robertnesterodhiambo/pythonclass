@@ -36,6 +36,12 @@ if not latest_file:
     print("❌ No valid Boletim_da_PI_-_YYYY-MM-DD.xlsx file found.")
     exit()
 
+# ✅ Check that the file is from today
+today_str = datetime.today().strftime('%Y-%m-%d')
+if latest_date.strftime('%Y-%m-%d') != today_str:
+    print(f"🛑 The most recent file is not from today ({today_str}). Found: {latest_date.strftime('%Y-%m-%d')}")
+    exit()
+
 input_path = os.path.join(current_folder, latest_file)
 print(f"📄 Using file: {latest_file}")
 output_path = os.path.join(current_folder, "racius_links_output.xlsx")
