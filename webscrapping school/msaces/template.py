@@ -4,11 +4,8 @@ import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
-from datetime import datetime  
-import datetime
 import re
-
-# -- coding: utf-8 --
+from datetime import datetime
 
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template2.pdf"
@@ -21,20 +18,30 @@ def extract_date_from_filename(path):
     filename = os.path.basename(path)
     match = re.search(r'(\d{4}-\d{2}-\d{2})', filename)
     if match:
-        return datetime.datetime.strptime(match.group(1), "%Y-%m-%d")
+        return datetime.strptime(match.group(1), "%Y-%m-%d")
     else:
-        return datetime.datetime.min  # fallback for files without a date
+        return datetime.min  # fallback for files without a date
 
+# Get latest file by date in filename
 latest_excel = max(list_of_files, key=extract_date_from_filename)
 print(f"Latest Excel file by date in filename: {latest_excel}")
+
+# === Step 2.1: Check if latest file's date matches today's date ===
+latest_date = extract_date_from_filename(latest_excel).date()
+today_date = datetime.today().date()
+
+if latest_date != today_date:
+    print(f"❌ Latest Excel file is dated {latest_date}, but today's date is {today_date}. Exiting script.")
+    exit()
+else:
+    print("✅ Latest Excel file matches today's date. Continuing...")
+
 # === Step 3: Load Excel data ===
 df = pd.read_excel(latest_excel)
 print(df.head())  # View to confirm your columns
 
-from datetime import datetime  # Add this to your imports at the top
-
 # === Step 4: Prepare dynamic output folder based on date ===
-today_str = datetime.today().strftime('%Y-%m-%d')
+today_str = today_date.strftime('%Y-%m-%d')
 output_folder = f"PDF_{today_str}"
 
 if os.path.exists(output_folder):
@@ -42,7 +49,6 @@ if os.path.exists(output_folder):
 else:
     os.makedirs(output_folder)
     print(f"✅ Created output folder: {output_folder}")
-
 
 # === Helper function to wrap text to width ===
 def wrap_text_to_width(text, fontname, fontsize, max_width):
@@ -94,36 +100,16 @@ for idx, row in df.iterrows():
         page = doc[page_num]
 
         # === Overlay white rectangles on all sides to cover black borders ===
-        border_thickness = 20  # adjust as needed
+        border_thickness = 20
 
         # Top
-        page.draw_rect(
-            fitz.Rect(0, 0, page.rect.width, border_thickness),
-            color=(1, 1, 1),
-            fill=(1, 1, 1),
-            overlay=True
-        )
+        page.draw_rect(fitz.Rect(0, 0, page.rect.width, border_thickness), color=(1, 1, 1), fill=(1, 1, 1), overlay=True)
         # Bottom
-        page.draw_rect(
-            fitz.Rect(0, page.rect.height - border_thickness, page.rect.width, page.rect.height),
-            color=(1, 1, 1),
-            fill=(1, 1, 1),
-            overlay=True
-        )
+        page.draw_rect(fitz.Rect(0, page.rect.height - border_thickness, page.rect.width, page.rect.height), color=(1, 1, 1), fill=(1, 1, 1), overlay=True)
         # Left
-        page.draw_rect(
-            fitz.Rect(0, 0, border_thickness, page.rect.height),
-            color=(1, 1, 1),
-            fill=(1, 1, 1),
-            overlay=True
-        )
+        page.draw_rect(fitz.Rect(0, 0, border_thickness, page.rect.height), color=(1, 1, 1), fill=(1, 1, 1), overlay=True)
         # Right
-        page.draw_rect(
-            fitz.Rect(page.rect.width - border_thickness, 0, page.rect.width, page.rect.height),
-            color=(1, 1, 1),
-            fill=(1, 1, 1),
-            overlay=True
-        )
+        page.draw_rect(fitz.Rect(page.rect.width - border_thickness, 0, page.rect.width, page.rect.height), color=(1, 1, 1), fill=(1, 1, 1), overlay=True)
 
         # === Function to insert single-line values after a label ===
         def insert_after_label(label, value, skip_line=False, dollar_sign=False, shift_left=0, bold=True, leading_spaces=0):
@@ -140,7 +126,6 @@ for idx, row in df.iterrows():
                     insert_y = y2 + 15
                     insert_x = x1 - shift_left
 
-                # Convert float ending with .0 to int
                 if isinstance(value, float) and value.is_integer():
                     text_value = str(int(value))
                 else:
@@ -211,32 +196,24 @@ for idx, row in df.iterrows():
                         color=(0, 0, 0)
                     )
 
-        # === Insert wrapped Titular ===
         insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
-
-        # === Insert wrapped Morada ===
         insert_wrapped("Morada:", row['Morada'], shift_left=2, bold=False, leading_spaces=3)
-
-        # === Insert Código Postal with leading spaces ===
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False, leading_spaces=3)
 
-        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
+        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'], skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
 
-        # === Insert Validade da Vigilância with ValidadeInicio and ValidadeFim combined ===
         validade_inicio = row['ValidadeInicio']
         validade_fim = row['ValidadeFim']
-
         if pd.notna(validade_inicio) and pd.notna(validade_fim):
             validade_text = f"De {validade_inicio} até {validade_fim}"
             insert_after_label("Validade da Vigilância:", validade_text, skip_line=True, bold=True)
         else:
             print(f"Skipping Validade da Vigilância insertion because ValidadeInicio or ValidadeFim is missing for NumeroPedido {row['NumeroPedido']}")
 
-        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
+        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'], skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
-        # === Marca boxes coordinates and logic ===
         coords_list = [
             (42.47, 393.80), (48.96, 393.80), (63.95, 393.80),
             (72.95, 393.80), (93.43, 394.80), (148.89, 398.30),
@@ -262,7 +239,6 @@ for idx, row in df.iterrows():
                 font_name = "Times-Bold"
 
                 wrapped_lines = wrap_text_to_width(text_value, font_name, font_size, box_width)
-
                 total_height = len(wrapped_lines) * (font_size + 2)
                 start_y = box_top + (box_height - total_height) / 2
 
@@ -270,7 +246,6 @@ for idx, row in df.iterrows():
                     line_width = fitz.get_text_length(line, fontname=font_name, fontsize=font_size)
                     centered_x = box_left + (box_width - line_width) / 2
                     insert_y = start_y + j * (font_size + 2)
-
                     page.insert_text(
                         (centered_x, insert_y),
                         line,
@@ -280,11 +255,9 @@ for idx, row in df.iterrows():
                     )
                 print(f"Inserted wrapped Marca value '{text_value}' in {len(wrapped_lines)} lines within box")
 
-    # === Save the updated PDF ===
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
     doc.close()
-
     print(f"Saved PDF: {output_path}")
 
-print("All rows processed.")
+print("✅ All rows processed.")
