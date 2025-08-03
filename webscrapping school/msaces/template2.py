@@ -4,52 +4,52 @@ import pandas as pd
 import fitz  # PyMuPDF
 import numpy as np
 import unicodedata
-from PIL import Image  # Added for image size calculations
-from datetime import datetime  
-
-# -- coding: utf-8 --
+from PIL import Image  # For image size calculations
+from datetime import datetime
 
 # === Step 1: Locate Template PDF === 
 pdf_path = "Template2.pdf"
-
 
 # === Step 2: Locate latest Excel file based on filename date ===
 excel_folder = "excel"
 list_of_files = glob.glob(os.path.join(excel_folder, '*.xlsx'))
 
-# Extract date from each filename and find the latest one
 latest_file = None
 latest_date = None
 
 for file in list_of_files:
     filename = os.path.basename(file)
     name_part = os.path.splitext(filename)[0]
-    
-    # Expecting format like "2025-07-29.xlsx"
+
     try:
         file_date = datetime.strptime(name_part, "%Y-%m-%d")
         if not latest_date or file_date > latest_date:
             latest_date = file_date
             latest_file = file
     except ValueError:
-        # Skip files that don't match the expected date format
-        continue
+        continue  # Skip files that don't match the date format
 
-if latest_file:
-    print(f"Latest Excel file based on filename date: {latest_file}")
-else:
+if not latest_file:
     raise FileNotFoundError("No Excel files with a valid date format found.")
+else:
+    print(f"Latest Excel file based on filename date: {latest_file}")
+
+# === Step 2.1: Ensure file date matches today's date ===
+today_date = datetime.today().date()
+if latest_date.date() != today_date:
+    print(f"❌ Latest Excel file is dated {latest_date.date()}, but today is {today_date}. Exiting.")
+    exit()
+else:
+    print("✅ File date matches today's date. Proceeding...")
 
 # === Step 3: Load Excel data ===
 df = pd.read_excel(latest_file)
-print(df.head())  # View to confirm your columns
-
+print(df.head())
 
 # === Step 4: Prepare dynamic output folder ===
-today_str = datetime.today().strftime('%Y-%m-%d')
+today_str = today_date.strftime('%Y-%m-%d')
 output_folder = f"PDF_{today_str}"
 os.makedirs(output_folder, exist_ok=True)
-
 
 # === Helper function to wrap text to width ===
 def wrap_text_to_width(text, fontname, fontsize, max_width):
@@ -66,21 +66,17 @@ def wrap_text_to_width(text, fontname, fontsize, max_width):
             if current_line:
                 lines.append(current_line)
             current_line = word
-
     if current_line:
         lines.append(current_line)
-
     return lines
 
 # === Step 5: Loop through all rows ===
 for idx, row in df.iterrows():
     marca_value = row['Marca']
-    # === Only proceed if Marca is missing or empty ===
     if pd.notna(marca_value) and any(mv.strip() for mv in str(marca_value).split(',')):
         print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because Marca is NOT empty")
         continue
 
-    # === CapitalSocial check: Only proceed if between 5€ and 6100€ ===
     capital_raw = str(row['CapitalSocial'])
     try:
         capital_cleaned = capital_raw.replace("€", "").replace(".", "").replace(",", ".").strip()
@@ -90,16 +86,15 @@ for idx, row in df.iterrows():
         continue
 
     if not (5 < capital_value < 6100):
-        print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because CapitalSocial ({capital_value} €) is not in range (5€, 6100€)")
+        print(f"Skipping row {idx+1} with NumeroPedido {row['NumeroPedido']} because CapitalSocial ({capital_value} €) is out of range")
         continue
 
-    print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']} (Marca is empty and CapitalSocial is {capital_value} €)")
+    print(f"Processing row {idx+1} with NumeroPedido: {row['NumeroPedido']}")
 
     doc = fitz.open(pdf_path)
 
     for page_num in range(len(doc)):
         page = doc[page_num]
-
         border_thickness = 20
 
         # White out the borders
@@ -128,14 +123,7 @@ for idx, row in df.iterrows():
 
                 text_value = (" " * leading_spaces) + text_value
                 font_name = "helvetica" if label == "Código Postal:" else ("Times-Roman" if not bold else "Times-Bold")
-
-                page.insert_text(
-                    (insert_x, insert_y),
-                    text_value,
-                    fontname=font_name,
-                    fontsize=11,
-                    color=(0, 0, 0)
-                )
+                page.insert_text((insert_x, insert_y), text_value, fontname=font_name, fontsize=11, color=(0, 0, 0))
 
         def insert_wrapped(label, value, shift_left=2, max_line_length=40, font_size=11, bold=False, leading_spaces=0):
             if pd.isna(value):
@@ -164,15 +152,13 @@ for idx, row in df.iterrows():
 
                 if current_line and len(lines) < 2:
                     lines.append(current_line)
-
                 if len(lines) == 1:
                     lines.append("")
 
                 len_first = len(lines[0])
                 len_second = len(lines[1])
                 if len_second < len_first:
-                    padding = " " * (len_first - len_second)
-                    lines[1] += padding
+                    lines[1] += " " * (len_first - len_second)
 
                 font_name = "helvetica-bold" if bold else "helvetica"
                 insert_x = x2 + 5 - shift_left
@@ -188,12 +174,10 @@ for idx, row in df.iterrows():
                         color=(0, 0, 0)
                     )
 
-        # === Insert fields ===
         insert_wrapped("Titular:", row['Titular'], shift_left=2, bold=False, leading_spaces=3)
         insert_wrapped("Morada:", row['Morada'], shift_left=2, bold=False, leading_spaces=3)
         insert_after_label("Código Postal:", row['CodigoPostal'], shift_left=2, bold=False, leading_spaces=3)
-
-        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'],  skip_line=True, bold=True)
+        insert_after_label("Número do pedido de Registo:", row['NumeroPedido'], skip_line=True, bold=True)
         insert_after_label("Data do Pedido de Registo:", row['DataPedido'], skip_line=True, bold=True)
 
         validade_inicio = row['ValidadeInicio']
@@ -202,9 +186,9 @@ for idx, row in df.iterrows():
             validade_text = f"De {validade_inicio} até {validade_fim}"
             insert_after_label("Validade da Vigilância:", validade_text, skip_line=True, bold=True)
         else:
-            print(f"Skipping Validade da Vigilância insertion because ValidadeInicio or ValidadeFim is missing for NumeroPedido {row['NumeroPedido']}")
+            print(f"Skipping Validade da Vigilância because of missing dates")
 
-        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'],  skip_line=True, bold=True)
+        insert_after_label("Classes de Produtos/Serviços:", row['ClasseProdutos'], skip_line=True, bold=True)
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         # === Insert centered image ===
@@ -228,17 +212,16 @@ for idx, row in df.iterrows():
                     x1 = x0 + new_width
                     y1 = y0 + new_height
 
-                    doc[page_num].insert_image(fitz.Rect(x0, y0, x1, y1), filename=image_path)
-                    print(f"Inserted centered image for NumeroPedido {row['NumeroPedido']}")
+                    page.insert_image(fitz.Rect(x0, y0, x1, y1), filename=image_path)
+                    print(f"Inserted image for NumeroPedido {row['NumeroPedido']}")
             except Exception as e:
                 print(f"Failed to insert image for NumeroPedido {row['NumeroPedido']}: {e}")
         else:
-            print(f"Image not found for NumeroPedido {row['NumeroPedido']} at {image_path}")
+            print(f"Image not found for NumeroPedido {row['NumeroPedido']}")
 
     output_path = os.path.join(output_folder, f"{row['NumeroPedido']}.pdf")
     doc.save(output_path)
     doc.close()
-
     print(f"Saved PDF: {output_path}")
 
-print("All rows processed.")
+print("✅ All rows processed.")
