@@ -10,38 +10,22 @@ import os
 import re
 import pandas as pd
 import fitz  # PyMuPDF
-
+from datetime import datetime
 
 def convert_pdf_to_txt_with_images(pdf_path, txt_path):
     print("🔍 Extracting text from PDF...")
-
     doc = fitz.open(pdf_path)
     text_lines = []
-    numero_pedido_for_page = {}
-
-    # Map each page to its first (210) NumeroPedido if available
-    for i, page in enumerate(doc):
-        text = page.get_text()
-        match = re.search(r"\(210\)\s*(\S+)", text)
-        if match:
-            numero_pedido_for_page[i] = match.group(1)
 
     for i, page in enumerate(doc):
         rect = page.rect
         mid_x = rect.width / 2
-
-        # Extract left and right columns
         left_text = page.get_text(clip=fitz.Rect(0, 0, mid_x, rect.height))
         right_text = page.get_text(clip=fitz.Rect(mid_x, 0, rect.width, rect.height))
-
-        # Combine column text in reading order
         lines = (left_text + "\n" + right_text).splitlines()
         new_lines = []
-
         for line in lines:
             line = line.strip()
-
-            # Skip empty or unwanted lines
             if not line:
                 continue
             if (
@@ -51,24 +35,19 @@ def convert_pdf_to_txt_with_images(pdf_path, txt_path):
                 re.search(r"N\.º\s+\d{4}/\d{2}/\d{2}", line)
             ):
                 continue
-
             new_lines.append(line)
-
         text_lines.append("\n".join(new_lines))
 
     full_text = "\n\n".join(text_lines)
-
     with open(txt_path, "w", encoding="utf-8") as f:
         f.write(full_text)
 
     print(f"✅ Text saved: {txt_path}")
     return full_text
 
-
 def extract_boletim_data_from_string(pdf_text, output_excel_path):
     entries = re.split(r"\(210\)", pdf_text)[1:]
     parsed_data = []
-
     for entry in entries:
         entry = "(210)" + entry
         numero_pedido = re.search(r"\(210\)\s*(\S+)", entry)
@@ -83,8 +62,7 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
         )
         if marca_match:
             marca_value = marca_match.group(1).strip()
-            header_footer_pattern = re.compile(r"^E\s+INDUSTRIAL\s+N\.º\s+\d{4}/\d{2}/\d{2}$")
-            if header_footer_pattern.match(marca_value):
+            if re.compile(r"^E\s+INDUSTRIAL\s+N\.º\s+\d{4}/\d{2}/\d{2}$").match(marca_value):
                 marca_value = ""
             marca_text = marca_value
 
@@ -95,9 +73,7 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
             collected = []
             for line in lines:
                 line = line.strip()
-                if not line:
-                    continue
-                if re.search(r"(BOLETIM|N\.º|\d+\s+de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
+                if not line or re.search(r"(BOLETIM|N\.º|\d+\s+de\s+\d+|MNA|PÁGINA\s+\d+)", line, re.IGNORECASE):
                     break
                 if re.match(r"\(\d{3}\)", line):
                     break
@@ -113,35 +89,24 @@ def extract_boletim_data_from_string(pdf_text, output_excel_path):
             "Marca": marca_text,
         })
 
-    def sanitize(value):
-        if isinstance(value, str):
-            return re.sub(r"[\x00-\x1F\x7F]", " ", value)
-        return value
-
     df = pd.DataFrame(parsed_data)
-    df = df.applymap(sanitize)
+    df = df.applymap(lambda x: re.sub(r"[\x00-\x1F\x7F]", " ", x) if isinstance(x, str) else x)
     df.to_excel(output_excel_path, index=False)
     print(f"✅ Extracted {len(df)} entries to Excel: {output_excel_path}")
-
 
 def extract_boletim_data_from_txt(txt_path, output_excel_path):
     with open(txt_path, "r", encoding="utf-8") as f:
         pdf_text = f.read()
     extract_boletim_data_from_string(pdf_text, output_excel_path)
 
-
 # === Selenium logic to detect/download PDF ===
 chromedriver_autoinstaller.install()
-
 options = Options()
 options.add_argument("--start-maximized")
-
 driver = webdriver.Chrome(options=options)
 driver.get("https://inpi.justica.gov.pt/boletim-da-propriedade-industrial")
 
-WebDriverWait(driver, 30).until(
-    EC.presence_of_element_located((By.CLASS_NAME, "wrapper"))
-)
+WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, "wrapper")))
 
 first_wrapper = driver.find_element(By.CLASS_NAME, "wrapper")
 link = first_wrapper.find_element(By.TAG_NAME, "a")
@@ -155,32 +120,27 @@ filename = f"{bulletin_title}.pdf"
 txt_filename = f"{bulletin_title}.txt"
 excel_filename = f"{bulletin_title}.xlsx"
 
+# === Only download if filename contains today's date ===
+today_str = datetime.today().strftime('%Y-%m-%d')
+date_match = re.search(r"(\d{4}-\d{2}-\d{2})", filename)
+
+if not date_match or date_match.group(1) != today_str:
+    print(f"⛔ PDF '{filename}' is not from today ({today_str}). Skipping download.")
+    driver.quit()
+    exit()
+
+# === Check if file exists already
 existing_pdfs = [f for f in os.listdir() if f.endswith(".pdf")]
-download = False
-
-if not existing_pdfs:
-    print("[INFO] No PDF exists. Will download new one.")
-    download = True
-elif filename in existing_pdfs:
-    print("[INFO] PDF already exists. Will use it for extraction.")
-    download = False
-else:
-    print(f"[INFO] New PDF '{filename}' differs from existing file(s): {existing_pdfs}")
-    download = True
-
-if download:
-    print("Downloading PDF...")
+if filename not in existing_pdfs:
+    print("⬇️ Downloading new PDF...")
     response = requests.get(pdf_url)
     with open(filename, "wb") as f:
         f.write(response.content)
-    print(f"✅ PDF downloaded as: {filename}")
+    print(f"✅ PDF downloaded: {filename}")
 else:
-    print("Using existing PDF:", filename)
+    print(f"📁 Using existing file: {filename}")
 
-# Convert PDF to .txt (filtered clean text only)
+# === Process PDF
 convert_pdf_to_txt_with_images(filename, txt_filename)
-
-# Extract structured fields from .txt
 extract_boletim_data_from_txt(txt_filename, excel_filename)
-
 driver.quit()
