@@ -1,0 +1,1 @@
+Data uses is [this](https://www.kaggle.com/datasets/ahmedshahriarsakib/usa-real-estate-dataset)
