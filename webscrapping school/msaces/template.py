@@ -197,10 +197,10 @@ for idx, row in df.iterrows():
         insert_after_label("Data:", row['DataDocumento'], skip_line=True, bold=True)
 
         # === Insert full Marca block into predefined area ===
-        box_left = 36.97
-        box_right = 297.28
+        box_left = 38.97
+        box_right = 296.79
         box_top = 293.35
-        box_bottom = 530.23
+        box_bottom = 525.23
         box_width = box_right - box_left
         box_height = box_bottom - box_top
 
