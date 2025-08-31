@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 
 # Start and end dates
 
-start_date = datetime(2025, 8, 10)
-end_date = datetime(2025, 8, 16)
+start_date = datetime(2025, 8, 28)
+end_date = datetime(2025, 8, 30)
 
 
 # Path to the text file
@@ -15,7 +15,7 @@ date_file_path = "commit_dates.txt"
 with open(date_file_path, "w") as file:
     current_date = start_date
     while current_date <= end_date:
-        commits_per_day = random.randint(1, 5)
+        commits_per_day = random.randint(1, 8)
         for _ in range(commits_per_day):
             file.write(current_date.strftime("%Y-%m-%dT%H:%M:%S") + "\n")
         current_date += timedelta(days=1)
