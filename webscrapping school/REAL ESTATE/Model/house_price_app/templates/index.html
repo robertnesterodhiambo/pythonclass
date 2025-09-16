@@ -2,19 +2,39 @@
 <html>
 <head>
     <title>House Price Predictor</title>
+    <style>
+        .container { display: flex; flex-wrap: wrap; gap: 20px; }
+        .card { flex: 1 1 30%; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
+        .card h3 { margin: 0; }
+    </style>
 </head>
 <body>
-    <h2>Enter Property Details</h2>
-    <form action="/predict" method="post">
-        Bedrooms: <input type="number" name="bed" required><br><br>
-        Bathrooms: <input type="number" name="bath" required><br><br>
-        House size (sqft): <input type="number" step="0.1" name="house_size" required><br><br>
-        Lot size (acres): <input type="number" step="0.01" name="acre_lot" required><br><br>
-        City: <input type="text" name="city" required><br><br>
-        State: <input type="text" name="state" required><br><br>
-        Zip Code: <input type="text" name="zip_code" required><br><br>
-        Status (for_sale/sold/pending): <input type="text" name="status" required><br><br>
-        <button type="submit">Predict Price</button>
+    <h2>Select State</h2>
+    <form method="post" action="/">
+        <select name="state" required>
+            <option value="">-- Choose State --</option>
+            <option value="ga" {% if state=="ga" %}selected{% endif %}>Georgia (GA)</option>
+            <option value="nc" {% if state=="nc" %}selected{% endif %}>North Carolina (NC)</option>
+        </select>
+        <button type="submit">Show Data</button>
     </form>
+
+    {% if data %}
+    <h2>Properties in {{ state|upper }}</h2>
+    <div class="container">
+        {% for row in data %}
+        <div class="card">
+            <h3>{{ row.address_db }}</h3>
+            <p><b>Beds:</b> {{ row.beds }} | <b>Baths:</b> {{ row.baths }}</p>
+            <p><b>SqFt:</b> {{ row.sqFt }} | <b>Lot:</b> {{ row.lot_size }}</p>
+            <p><b>Year:</b> {{ row.year_built }} | <b>Type:</b> {{ row.property_type }}</p>
+            <p><b>Status:</b> {{ row.status }}</p>
+            <p><b>County:</b> {{ row.county }}</p>
+            <p><b>Estimated Value:</b> ${{ "{:,.2f}".format(row.estimated_value) }}</p>
+            <p><b>Predicted Value:</b> ${{ "{:,.2f}".format(row.predicted_value) }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
 </html>
