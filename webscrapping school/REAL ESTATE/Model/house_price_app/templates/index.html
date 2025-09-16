@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Price Predictor</title>
+</head>
+<body>
+    <h2>Enter Property Details</h2>
+    <form action="/predict" method="post">
+        Bedrooms: <input type="number" name="bed" required><br><br>
+        Bathrooms: <input type="number" name="bath" required><br><br>
+        House size (sqft): <input type="number" step="0.1" name="house_size" required><br><br>
+        Lot size (acres): <input type="number" step="0.01" name="acre_lot" required><br><br>
+        City: <input type="text" name="city" required><br><br>
+        State: <input type="text" name="state" required><br><br>
+        Zip Code: <input type="text" name="zip_code" required><br><br>
+        Status (for_sale/sold/pending): <input type="text" name="status" required><br><br>
+        <button type="submit">Predict Price</button>
+    </form>
+</body>
+</html>
