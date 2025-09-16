@@ -1,65 +1,107 @@
 import pandas as pd
+import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OrdinalEncoder
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from xgboost import XGBRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-import numpy as np
 
-# === 1. Load data ===
+# ================================
+# 1. Load Data
+# ================================
 df = pd.read_csv("realtor-data.zip.csv")
 
-# === 2. Preprocessing ===
-df = df.dropna(subset=["price"])
-
-df["prev_sold_date"] = pd.to_datetime(df["prev_sold_date"], errors="coerce")
-df["sold_year"] = df["prev_sold_date"].dt.year.fillna(0)
-
-# === 3. Select features ===
+# Keep only relevant columns
+features = [
+    "bed", "bath", "house_size", "acre_lot",
+    "city", "state", "zip_code", "status"
+]
 target = "price"
-features = ['bed', 'bath', 'acre_lot', 'house_size', 'city', 'state', 'zip_code', 'brokered_by', 'status', 'sold_year']
-X = df[features].copy()
+
+# Drop rows without target
+df = df.dropna(subset=[target])
+
+X = df[features]
 y = df[target]
 
-# === 4. Handle missing numerics ===
-for col in ['acre_lot', 'house_size', 'bed', 'bath']:
-    X[col] = X[col].fillna(X[col].median())
+# ================================
+# 2. Handle Missing Values
+# ================================
+X = X.fillna({
+    "bed": 0,
+    "bath": 0,
+    "house_size": X["house_size"].median(),
+    "acre_lot": X["acre_lot"].median(),
+    "city": "Unknown",
+    "state": "Unknown",
+    "zip_code": "00000",
+    "status": "Unknown"
+})
 
-# === 5. Define encoders ===
-categorical_cols = ['city', 'state', 'zip_code', 'brokered_by', 'status']
-numeric_cols = ['bed', 'bath', 'acre_lot', 'house_size', 'sold_year']
+# Force categorical features into strings
+categorical_features = ["city", "state", "zip_code", "status"]
+for col in categorical_features:
+    X[col] = X[col].astype(str)
+
+# ================================
+# 3. Preprocessing
+# ================================
+numeric_features = ["bed", "bath", "house_size", "acre_lot"]
 
 preprocessor = ColumnTransformer(
     transformers=[
-        ('cat', OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1), categorical_cols)
-    ],
-    remainder='passthrough'
+        ("num", "passthrough", numeric_features),
+        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
+    ]
 )
 
-# === 6. Model pipeline ===
+# ================================
+# 4. Model Pipeline
+# ================================
 model = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('regressor', XGBRegressor(n_estimators=100, max_depth=6, learning_rate=0.1, random_state=42))
+    ("preprocessor", preprocessor),
+    ("regressor", RandomForestRegressor(n_estimators=200, random_state=42))
 ])
 
-# === 7. Train-test split ===
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# ================================
+# 5. Train/Test Split
+# ================================
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-# === 8. Train ===
 model.fit(X_train, y_train)
 
-# === 9. Predict & evaluate ===
+# Evaluate
 y_pred = model.predict(X_test)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-r2 = r2_score(y_test, y_pred)
+print("MAE:", mean_absolute_error(y_test, y_pred))
+print("R²:", r2_score(y_test, y_pred))
 
-print(f"✅ RMSE: ${rmse:,.2f}")
-print(f"✅ R² Score: {r2:.4f}")
-
-import joblib
-
-# Save the full pipeline (preprocessing + model)
+# ================================
+# 6. Save Model
+# ================================
 joblib.dump(model, "house_price_model.pkl")
-
 print("✅ Model saved as house_price_model.pkl")
+
+# ================================
+# 7. Take User Input for Prediction
+# ================================
+loaded_model = joblib.load("house_price_model.pkl")
+
+print("\nEnter property details for prediction:")
+
+user_data = {
+    "bed": int(input("Bedrooms: ")),
+    "bath": int(input("Bathrooms: ")),
+    "house_size": float(input("House size (sqft): ")),
+    "acre_lot": float(input("Lot size (acres): ")),
+    "city": input("City: "),
+    "state": input("State: "),
+    "zip_code": input("Zip code: "),
+    "status": input("Status (for_sale/sold/pending): ")
+}
+
+sample = pd.DataFrame([user_data])
+predicted_price = loaded_model.predict(sample)[0]
+print(f"\n💰 Predicted Price: ${predicted_price:,.2f}")
