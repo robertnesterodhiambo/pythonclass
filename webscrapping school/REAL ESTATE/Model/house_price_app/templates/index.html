@@ -1,54 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>House Price Predictor</title>
-    <style>
-        .container { display: flex; flex-wrap: wrap; gap: 20px; }
-        .card { flex: 1 1 30%; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
-        .card h3 { margin: 0; }
-        .pagination { margin-top: 20px; }
-        .pagination a { margin: 0 5px; text-decoration: none; }
-    </style>
+  <title>House Price App</title>
 </head>
 <body>
-    <h2>Select State</h2>
-    <form method="post" action="/">
-        <select name="state" required>
-            <option value="">-- Choose State --</option>
-            <option value="ga" {% if state=="ga" %}selected{% endif %}>Georgia (GA)</option>
-            <option value="nc" {% if state=="nc" %}selected{% endif %}>North Carolina (NC)</option>
-        </select>
-        <button type="submit">Show Data</button>
-    </form>
-
-    <p><a href="/estimate">👉 Get House Price Estimate</a></p>
-
-    {% if data %}
-    <h2>Properties in {{ state|upper }}</h2>
-    <div class="container">
-        {% for row in data %}
-        <div class="card">
-            <h3>{{ row.address_db }}</h3>
-            <p><b>Beds:</b> {{ row.beds }} | <b>Baths:</b> {{ row.baths }}</p>
-            <p><b>SqFt:</b> {{ row.sqFt }} | <b>Lot:</b> {{ row.lot_size }}</p>
-            <p><b>Year:</b> {{ row.year_built }} | <b>Type:</b> {{ row.property_type }}</p>
-            <p><b>Status:</b> {{ row.status }}</p>
-            <p><b>County:</b> {{ row.county }}</p>
-            <p><b>Estimated Value:</b> ${{ "{:,.2f}".format(row.estimated_value) }}</p>
-            <p><b>Predicted Value:</b> ${{ "{:,.2f}".format(row.predicted_value) }}</p>
-        </div>
-        {% endfor %}
+  {% if session.username %}
+    <div style="float:right;">
+      <span>{{ session.username }}</span>
+      <a href="{{ url_for('profile') }}">Profile</a> |
+      <a href="{{ url_for('logout') }}">Logout</a>
     </div>
+  {% else %}
+    <a href="{{ url_for('login') }}">Login</a> | 
+    <a href="{{ url_for('signup') }}">Signup</a>
+  {% endif %}
 
-    <div class="pagination">
-        {% if page > 1 %}
-            <a href="/?state={{ state }}&page={{ page-1 }}">⬅ Prev</a>
-        {% endif %}
-        <span>Page {{ page }} of {{ total_pages }}</span>
-        {% if page < total_pages %}
-            <a href="/?state={{ state }}&page={{ page+1 }}">Next ➡</a>
-        {% endif %}
-    </div>
-    {% endif %}
+  <h1>Welcome to House Price App</h1>
+
+  {% if session.username %}
+    <h3>Select State to Explore Properties</h3>
+    <a href="{{ url_for('properties', state='ga') }}">Georgia</a> | 
+    <a href="{{ url_for('properties', state='nc') }}">North Carolina</a>
+  {% else %}
+    <p>Please login to explore properties.</p>
+  {% endif %}
 </body>
 </html>
