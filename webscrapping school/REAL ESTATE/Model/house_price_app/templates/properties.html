@@ -1,25 +1,59 @@
-<h2>Properties in {{ state }}</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Properties - {{ state|upper }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .nav-links a { margin-left:10px; text-decoration:none; }
+    .property-card { width:30%; border:1px solid #ccc; margin:10px; padding:10px; border-radius:8px; }
+    .properties-grid { display:flex; flex-wrap:wrap; }
+    .pagination { margin-top:20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Properties in {{ state|upper }}</h1>
+    <div class="nav-links">
+      {% if session.username %}
+        <span>Welcome, <strong>{{ session.username }}</strong></span>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('estimate') }}">Get Estimate</a>
+        <a href="{{ url_for('properties', state='ga') }}">GA Properties</a>
+        <a href="{{ url_for('properties', state='nc') }}">NC Properties</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+  </header>
 
-<div style="display:flex; flex-wrap:wrap;">
-  {% for row in rows %}
-  <div style="width:30%; border:1px solid #ccc; margin:10px; padding:10px;">
-    <p><b>Address:</b> {{ row.address_db }}</p>
-    <p>Beds: {{ row.beds }} | Baths: {{ row.baths }}</p>
-    <p>SqFt: {{ row.sqFt }} | Lot: {{ row.lot_size }}</p>
-    <p>Year Built: {{ row.year_built }}</p>
-    <p>County: {{ row.county }}</p>
-    <p><b>Real Value:</b> {{ row.estimated_value }}</p>
-    <p><b>Predicted Value:</b> {{ row.predicted_value }}</p>
+  <div class="properties-grid">
+    {% for row in rows %}
+    <div class="property-card">
+      <p><b>Address:</b> {{ row.address_db }}</p>
+      <p>Beds: {{ row.beds }} | Baths: {{ row.baths }}</p>
+      <p>SqFt: {{ row.sqFt }} | Lot: {{ row.lot_size }}</p>
+      <p>Year Built: {{ row.year_built }}</p>
+      <p>County: {{ row.county }}</p>
+      <p><b>Real Value:</b> {{ row.estimated_value }}</p>
+      <p><b>Predicted Value:</b> {{ row.predicted_value }}</p>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
 
-<div>
-  {% if page > 1 %}
-    <a href="{{ url_for('properties', state=state, page=page-1) }}">Prev</a>
-  {% endif %}
-  Page {{ page }} of {{ total_pages }}
-  {% if page < total_pages %}
-    <a href="{{ url_for('properties', state=state, page=page+1) }}">Next</a>
-  {% endif %}
-</div>
+  <div class="pagination">
+    {% if page > 1 %}
+      <a href="{{ url_for('properties', state=state, page=page-1) }}">Prev</a>
+    {% endif %}
+    Page {{ page }} of {{ total_pages }}
+    {% if page < total_pages %}
+      <a href="{{ url_for('properties', state=state, page=page+1) }}">Next</a>
+    {% endif %}
+  </div>
+</body>
+</html>

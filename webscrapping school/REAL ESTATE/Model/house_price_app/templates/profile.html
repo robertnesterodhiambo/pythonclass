@@ -1,13 +1,49 @@
-<h2>Welcome, {{ user.username }}</h2>
-<p>Email: {{ user.email }}</p>
-<p>User type: {{ user.user_type }}</p>
-<hr>
-<h3>Your Property</h3>
-<p>Address: {{ user.property_address }}</p>
-<p>Beds: {{ user.beds }}</p>
-<p>Baths: {{ user.baths }}</p>
-<p>SqFt: {{ user.sqft }}</p>
-<p>Lot Size: {{ user.lot_size }}</p>
-<p>Year Built: {{ user.year_built }}</p>
-<p>County: {{ user.county }}</p>
-<p><b>Estimated Value (Predicted): ${{ user.estimated_value }}</b></p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>User Profile</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .nav-links a { margin-left:10px; text-decoration:none; }
+    .profile-box { border:1px solid #ddd; padding:20px; border-radius:8px; max-width:600px; margin:auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Profile</h1>
+    <div class="nav-links">
+      {% if session.username %}
+        <span>Welcome, <strong>{{ session.username }}</strong></span>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('estimate') }}">Get Estimate</a>
+        <a href="{{ url_for('properties', state='ga') }}">GA Properties</a>
+        <a href="{{ url_for('properties', state='nc') }}">NC Properties</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="profile-box">
+    <h2>Welcome, {{ user.username }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>User type:</strong> {{ user.user_type }}</p>
+    <hr>
+    <h3>Your Property</h3>
+    <p><strong>Address:</strong> {{ user.property_address }}</p>
+    <p><strong>Beds:</strong> {{ user.beds }}</p>
+    <p><strong>Baths:</strong> {{ user.baths }}</p>
+    <p><strong>SqFt:</strong> {{ user.sqft }}</p>
+    <p><strong>Lot Size:</strong> {{ user.lot_size }}</p>
+    <p><strong>Year Built:</strong> {{ user.year_built }}</p>
+    <p><strong>County:</strong> {{ user.county }}</p>
+    <p><b>Estimated Value (Predicted): ${{ user.estimated_value }}</b></p>
+  </div>
+</body>
+</html>

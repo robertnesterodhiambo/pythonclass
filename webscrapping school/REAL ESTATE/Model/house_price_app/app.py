@@ -4,6 +4,7 @@ import joblib
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from math import ceil
+import pandas as pd
 
 # Load ML model
 model = joblib.load("house_price_model.pkl")

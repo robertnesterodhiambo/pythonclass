@@ -1,17 +1,58 @@
-<form method="POST">
-  <input name="username" placeholder="Username" required><br>
-  <input name="email" type="email" placeholder="Email" required><br>
-  <input name="password" type="password" placeholder="Password" required><br>
-  <select name="user_type" required>
-    <option value="buyer">Buyer</option>
-    <option value="seller">Seller</option>
-  </select><br>
-  <input name="address" placeholder="Property Address" required><br>
-  <input name="beds" type="number" placeholder="Beds"><br>
-  <input name="baths" type="number" placeholder="Baths"><br>
-  <input name="sqft" type="number" placeholder="SqFt"><br>
-  <input name="lot_size" type="number" placeholder="Lot Size"><br>
-  <input name="year_built" type="number" placeholder="Year Built"><br>
-  <input name="county" placeholder="County"><br>
-  <button type="submit">Signup</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Signup</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .nav-links a { margin-left:10px; text-decoration:none; }
+    .form-box { border:1px solid #ddd; padding:20px; border-radius:8px; max-width:500px; margin:auto; }
+    input, select { width:100%; padding:8px; margin-top:8px; }
+    button { margin-top:12px; padding:10px 14px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Signup</h1>
+    <div class="nav-links">
+      {% if session.username %}
+        <span>Welcome, <strong>{{ session.username }}</strong></span>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('estimate') }}">Get Estimate</a>
+        <a href="{{ url_for('properties', state='ga') }}">GA Properties</a>
+        <a href="{{ url_for('properties', state='nc') }}">NC Properties</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="form-box">
+    <form method="POST">
+      <input name="username" placeholder="Username" required><br>
+      <input name="email" type="email" placeholder="Email" required><br>
+      <input name="password" type="password" placeholder="Password" required><br>
+      
+      <select name="user_type" required>
+        <option value="buyer">Buyer</option>
+        <option value="seller">Seller</option>
+      </select><br>
+      
+      <input name="address" placeholder="Property Address" required><br>
+      <input name="beds" type="number" placeholder="Beds"><br>
+      <input name="baths" type="number" placeholder="Baths"><br>
+      <input name="sqft" type="number" placeholder="SqFt"><br>
+      <input name="lot_size" type="number" placeholder="Lot Size"><br>
+      <input name="year_built" type="number" placeholder="Year Built"><br>
+      <input name="county" placeholder="County"><br>
+      
+      <button type="submit">Signup</button>
+    </form>
+  </div>
+</body>
+</html>
