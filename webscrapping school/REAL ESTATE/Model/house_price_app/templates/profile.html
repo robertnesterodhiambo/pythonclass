@@ -14,16 +14,18 @@
   <header>
     <h1>Profile</h1>
     <div class="nav-links">
+      <a href="{{ url_for('index') }}">🏠 Home</a>
+      <a href="{{ url_for('profile') }}">👤 Profile</a>
+      <a href="{{ url_for('estimate') }}">💰 Estimate</a>
+      <a href="{{ url_for('properties', state='ga') }}">📍 GA</a>
+      <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
+
       {% if session.username %}
-        <span>Welcome, <strong>{{ session.username }}</strong></span>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('profile') }}">Profile</a>
-        <a href="{{ url_for('estimate') }}">Get Estimate</a>
-        <a href="{{ url_for('properties', state='ga') }}">GA Properties</a>
-        <a href="{{ url_for('properties', state='nc') }}">NC Properties</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <span>Hi, <strong>{{ session.username }}</strong></span>
+        <form action="{{ url_for('logout') }}" method="post">
+          <button type="submit">🚪 Logout</button>
+        </form>
       {% else %}
-        <a href="{{ url_for('index') }}">Home</a>
         <a href="{{ url_for('login') }}">Login</a>
         <a href="{{ url_for('signup') }}">Signup</a>
       {% endif %}
