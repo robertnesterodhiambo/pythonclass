@@ -1,13 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>User Profile</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-    .nav-links a { margin-left:10px; text-decoration:none; }
-    .profile-box { border:1px solid #ddd; padding:20px; border-radius:8px; max-width:600px; margin:auto; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      color: #1d1d1f;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-links a, .nav-links form button {
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: #0071e3;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover, .nav-links form button:hover {
+      color: #004c99;
+      transform: scale(1.05);
+    }
+
+    .nav-links form {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile-box {
+      background: #fff;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .profile-box h2 {
+      margin-top: 0;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .profile-box p {
+      margin: 6px 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .profile-box strong {
+      color: #1d1d1f;
+    }
+
+    .profile-box hr {
+      border: none;
+      height: 1px;
+      background: #e0e0e0;
+      margin: 20px 0;
+    }
+
+    .highlight {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0071e3;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -21,7 +112,7 @@
       <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
 
       {% if session.username %}
-        <span>Hi, <strong>{{ session.username }}</strong></span>
+        <span style="font-weight:500;">Hi, <strong>{{ session.username }}</strong></span>
         <form action="{{ url_for('logout') }}" method="post">
           <button type="submit">🚪 Logout</button>
         </form>
@@ -45,7 +136,7 @@
     <p><strong>Lot Size:</strong> {{ user.lot_size }}</p>
     <p><strong>Year Built:</strong> {{ user.year_built }}</p>
     <p><strong>County:</strong> {{ user.county }}</p>
-    <p><b>Estimated Value (Predicted): ${{ user.estimated_value }}</b></p>
+    <p class="highlight">Estimated Value (Predicted): ${{ user.estimated_value }}</p>
   </div>
 </body>
 </html>

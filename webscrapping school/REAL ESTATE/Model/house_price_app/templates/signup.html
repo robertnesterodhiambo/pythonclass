@@ -1,15 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Signup</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-    .nav-links a { margin-left:10px; text-decoration:none; }
-    .form-box { border:1px solid #ddd; padding:20px; border-radius:8px; max-width:500px; margin:auto; }
-    input, select { width:100%; padding:8px; margin-top:8px; }
-    button { margin-top:12px; padding:10px 14px; cursor:pointer; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      color: #1d1d1f;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-links a, .nav-links form button {
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: #0071e3;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover, .nav-links form button:hover {
+      color: #004c99;
+      transform: scale(1.05);
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 32px;
+      border-radius: 20px;
+      max-width: 480px;
+      margin: 40px auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 22px;
+      text-align: center;
+      color: #1d1d1f;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #d2d2d7;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border: 1px solid #0071e3;
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.3);
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #0071e3;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #004c99;
+      transform: scale(1.02);
+    }
   </style>
 </head>
 <body>
@@ -23,8 +118,8 @@
       <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
 
       {% if session.username %}
-        <span>Hi, <strong>{{ session.username }}</strong></span>
-        <form action="{{ url_for('logout') }}" method="post">
+        <span style="font-weight:500;">Hi, <strong>{{ session.username }}</strong></span>
+        <form action="{{ url_for('logout') }}" method="post" style="display:inline;">
           <button type="submit">🚪 Logout</button>
         </form>
       {% else %}
@@ -35,24 +130,33 @@
   </header>
 
   <div class="form-box">
+    <h2>Create Your Account</h2>
     <form method="POST">
-      <input name="username" placeholder="Username" required><br>
-      <input name="email" type="email" placeholder="Email" required><br>
-      <input name="password" type="password" placeholder="Password" required><br>
-      
+      <input name="username" placeholder="Username" required>
+      <input name="email" type="email" placeholder="Email" required>
+      <input name="password" type="password" placeholder="Password" required>
+
       <select name="user_type" required>
+        <option value="" disabled selected>Select User Type</option>
         <option value="buyer">Buyer</option>
         <option value="seller">Seller</option>
-      </select><br>
-      
-      <input name="address" placeholder="Property Address" required><br>
-      <input name="beds" type="number" placeholder="Beds"><br>
-      <input name="baths" type="number" placeholder="Baths"><br>
-      <input name="sqft" type="number" placeholder="SqFt"><br>
-      <input name="lot_size" type="number" placeholder="Lot Size"><br>
-      <input name="year_built" type="number" placeholder="Year Built"><br>
-      <input name="county" placeholder="County"><br>
-      
+      </select>
+
+      <input name="address" placeholder="Property Address" required>
+      <input name="beds" type="number" placeholder="Bedrooms">
+      <input name="baths" type="number" placeholder="Bathrooms">
+      <input name="sqft" type="number" placeholder="House Size (sqft)">
+      <input name="lot_size" type="number" placeholder="Lot Size (acres)">
+      <input name="year_built" type="number" placeholder="Year Built">
+      <input name="county" placeholder="City/County">
+      <input name="state" placeholder="State">
+      <input name="zip" placeholder="Zip Code">
+      <select name="status" required>
+        <option value="for_sale">For Sale</option>
+        <option value="sold">Sold</option>
+        <option value="pending">Pending</option>
+      </select>
+
       <button type="submit">Signup</button>
     </form>
   </div>

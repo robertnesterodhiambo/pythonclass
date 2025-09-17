@@ -1,29 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Properties - {{ state|upper }}</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-    .nav-links a { margin-left:10px; text-decoration:none; }
-    .property-card { width:30%; border:1px solid #ccc; margin:10px; padding:10px; border-radius:8px; }
-    .properties-grid { display:flex; flex-wrap:wrap; }
-    .pagination { margin-top:20px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      color: #1d1d1f;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-links a, .nav-links form button {
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: #0071e3;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover, .nav-links form button:hover {
+      color: #004c99;
+      transform: scale(1.05);
+    }
+
+    .nav-links form {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 32px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .property-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .property-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .property-card p {
+      margin: 6px 0;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .property-card b {
+      color: #1d1d1f;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 32px 0;
+      font-size: 15px;
+      gap: 16px;
+    }
+
+    .pagination a {
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: #0071e3;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .pagination a:hover {
+      background: #004c99;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Properties in {{ state|upper }}</h1>
     <div class="nav-links">
-     <a href="{{ url_for('index') }}">🏠 Home</a>
+      <a href="{{ url_for('index') }}">🏠 Home</a>
       <a href="{{ url_for('profile') }}">👤 Profile</a>
       <a href="{{ url_for('estimate') }}">💰 Estimate</a>
       <a href="{{ url_for('properties', state='ga') }}">📍 GA</a>
       <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
 
       {% if session.username %}
-        <span>Hi, <strong>{{ session.username }}</strong></span>
+        <span style="font-weight:500;">Hi, <strong>{{ session.username }}</strong></span>
         <form action="{{ url_for('logout') }}" method="post">
           <button type="submit">🚪 Logout</button>
         </form>

@@ -1,126 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Get House Price Estimate</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    header {
-      background:#f8f8f8; border-bottom:1px solid #ddd;
-      padding:12px 20px; display:flex; justify-content:space-between; align-items:center;
-    }
-    header h1 { margin:0; font-size:1.4rem; }
-    nav a, nav form button {
-      margin-left:12px; text-decoration:none; color:#333; font-weight:500;
-      background:none; border:none; cursor:pointer; font-size:1rem;
-    }
-    nav form { display:inline; }
-    main { padding:20px; }
-    .form-box, .result-box, .user-box { border:1px solid #ddd; padding:15px; border-radius:8px; margin-bottom:15px; }
-    .grid { display:flex; gap:20px; flex-wrap:wrap; }
-    .grid > div { flex:1 1 320px; }
-    label { display:block; margin-top:8px; font-size:0.95rem; }
-    input, select { width:100%; padding:8px; margin-top:4px; box-sizing:border-box; }
-    button { margin-top:12px; padding:10px 14px; cursor:pointer; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>House Price Estimate</h1>
-    <nav>
-      <a href="{{ url_for('index') }}">🏠 Home</a>
-      <a href="{{ url_for('profile') }}">👤 Profile</a>
-      <a href="{{ url_for('estimate') }}">💰 Estimate</a>
-      <a href="{{ url_for('properties', state='ga') }}">📍 GA</a>
-      <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
+{% extends "base.html" %}
+{% block title %}Estimate - House Price App{% endblock %}
 
-      {% if session.username %}
-        <span>Hi, <strong>{{ session.username }}</strong></span>
-        <form action="{{ url_for('logout') }}" method="post">
-          <button type="submit">🚪 Logout</button>
-        </form>
-      {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('signup') }}">Signup</a>
-      {% endif %}
-    </nav>
-  </header>
+{% block content %}
+<div class="grid">
+  <!-- Form Card -->
+  <div class="card">
+    <h2>Enter Property Details</h2>
+    <form method="post" action="{{ url_for('estimate') }}">
+      <label>Bedrooms
+        <input type="number" name="bed" required min="0" value="{{ request.form.bed or (user.beds if user) or '' }}">
+      </label>
 
-  <main>
-    <div class="grid">
-      <div class="form-box">
-        <h3>Enter property details</h3>
-        <form method="post" action="{{ url_for('estimate') }}">
-          <label>Bedrooms
-            <input type="number" name="bed" required min="0" value="{{ request.form.bed or (user.beds if user) or '' }}">
-          </label>
+      <label>Bathrooms
+        <input type="number" name="bath" required min="0" value="{{ request.form.bath or (user.baths if user) or '' }}">
+      </label>
 
-          <label>Bathrooms
-            <input type="number" name="bath" required min="0" value="{{ request.form.bath or (user.baths if user) or '' }}">
-          </label>
+      <label>House size (sqft)
+        <input type="number" step="0.1" name="house_size" required value="{{ request.form.house_size or (user.sqft if user) or '' }}">
+      </label>
 
-          <label>House size (sqft)
-            <input type="number" step="0.1" name="house_size" required value="{{ request.form.house_size or (user.sqft if user) or '' }}">
-          </label>
+      <label>Lot size (acres)
+        <input type="number" step="0.01" name="acre_lot" required value="{{ request.form.acre_lot or (user.lot_size if user) or '' }}">
+      </label>
 
-          <label>Lot size (acres)
-            <input type="number" step="0.01" name="acre_lot" required value="{{ request.form.acre_lot or (user.lot_size if user) or '' }}">
-          </label>
+      <label>City/County
+        <input type="text" name="city" value="{{ request.form.city or (user.county if user) or '' }}">
+      </label>
 
-          <label>City/County
-            <input type="text" name="city" value="{{ request.form.city or (user.county if user) or '' }}">
-          </label>
+      <label>State
+        <input type="text" name="state" value="{{ request.form.state or '' }}">
+      </label>
 
-          <label>State
-            <input type="text" name="state" value="{{ request.form.state or '' }}">
-          </label>
+      <label>Zip code
+        <input type="text" name="zip_code" value="{{ request.form.zip_code or '' }}">
+      </label>
 
-          <label>Zip code
-            <input type="text" name="zip_code" value="{{ request.form.zip_code or '' }}">
-          </label>
+      <label>Status (for_sale / sold / pending)
+        <input type="text" name="status" value="{{ request.form.status or '' }}">
+      </label>
 
-          <label>Status (for_sale / sold / pending)
-            <input type="text" name="status" value="{{ request.form.status or '' }}">
-          </label>
+      <button type="submit">Get Estimate</button>
+    </form>
+  </div>
 
-          <button type="submit">Get Estimate</button>
-        </form>
-      </div>
-
-      <div>
-        {% if price %}
-        <div class="result-box">
-          <h3>Predicted Price</h3>
-          <p style="font-size:1.4rem; font-weight:600;">${{ "{:,.2f}".format(price) }}</p>
-        </div>
-        {% endif %}
-
-        {% if user %}
-        <div class="user-box">
-          <h3>Your saved property</h3>
-          <p><strong>Address:</strong> {{ user.property_address or '—' }}</p>
-          <p><strong>Beds:</strong> {{ user.beds or '—' }} &nbsp; <strong>Baths:</strong> {{ user.baths or '—' }}</p>
-          <p><strong>SqFt:</strong> {{ user.sqft or '—' }} &nbsp; <strong>Lot:</strong> {{ user.lot_size or '—' }}</p>
-          <p><strong>Year Built:</strong> {{ user.year_built or '—' }}</p>
-          <p><strong>County:</strong> {{ user.county or '—' }}</p>
-          <hr>
-          <p><strong>Stored Estimated Value (from signup):</strong>
-             {% if user.estimated_value %}${{ "{:,.2f}".format(user.estimated_value) }}{% else %}—{% endif %}
-          </p>
-
-          {% if price and user.estimated_value %}
-          <hr>
-          <h4>Comparison</h4>
-          <p><strong>Predicted now:</strong> ${{ "{:,.2f}".format(price) }}</p>
-          <p><strong>Stored estimate:</strong> ${{ "{:,.2f}".format(user.estimated_value) }}</p>
-          <p><strong>Difference:</strong>
-             ${{ "{:,.2f}".format(price - user.estimated_value) }}
-          </p>
-          {% endif %}
-        </div>
-        {% endif %}
-      </div>
+  <!-- Result + User Data -->
+  <div class="card">
+    {% if price %}
+    <div style="margin-bottom:20px;">
+      <h2>Predicted Price</h2>
+      <p style="font-size:1.6rem; font-weight:600; color:var(--apple-blue);">
+        ${{ "{:,.2f}".format(price) }}
+      </p>
     </div>
-  </main>
-</body>
-</html>
+    {% endif %}
+
+    {% if user %}
+    <h2>Your Saved Property</h2>
+    <p><b>Address:</b> {{ user.property_address or '—' }}</p>
+    <p><b>Beds:</b> {{ user.beds or '—' }} &nbsp; <b>Baths:</b> {{ user.baths or '—' }}</p>
+    <p><b>SqFt:</b> {{ user.sqft or '—' }} &nbsp; <b>Lot:</b> {{ user.lot_size or '—' }}</p>
+    <p><b>Year Built:</b> {{ user.year_built or '—' }}</p>
+    <p><b>County:</b> {{ user.county or '—' }}</p>
+
+    <hr>
+    <p><b>Stored Estimated Value (from signup):</b>
+       {% if user.estimated_value %}${{ "{:,.2f}".format(user.estimated_value) }}{% else %}—{% endif %}
+    </p>
+
+    {% if price and user.estimated_value %}
+    <hr>
+    <h3>Comparison</h3>
+    <p><b>Predicted now:</b> ${{ "{:,.2f}".format(price) }}</p>
+    <p><b>Stored estimate:</b> ${{ "{:,.2f}".format(user.estimated_value) }}</p>
+    <p><b>Difference:</b>
+       ${{ "{:,.2f}".format(price - user.estimated_value) }}
+    </p>
+    {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

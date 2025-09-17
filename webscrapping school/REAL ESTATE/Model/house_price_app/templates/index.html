@@ -1,44 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>House Price App</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-    .nav-links a { margin-left:10px; text-decoration:none; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>House Price App</h1>
-    <div class="nav-links">
-       <a href="{{ url_for('index') }}">🏠 Home</a>
-      <a href="{{ url_for('profile') }}">👤 Profile</a>
-      <a href="{{ url_for('estimate') }}">💰 Estimate</a>
-      <a href="{{ url_for('properties', state='ga') }}">📍 GA</a>
-      <a href="{{ url_for('properties', state='nc') }}">📍 NC</a>
+{% extends "base.html" %}
+{% block title %}Home - House Price App{% endblock %}
 
-      {% if session.username %}
-        <span>Hi, <strong>{{ session.username }}</strong></span>
-        <form action="{{ url_for('logout') }}" method="post">
-          <button type="submit">🚪 Logout</button>
-        </form>
-      {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-        <a href="{{ url_for('signup') }}">Signup</a>
-      {% endif %}
+{% block content %}
+<div class="card" style="text-align:center;">
+  {% if session.username %}
+    <h2>Welcome back, {{ session.username }} 👋</h2>
+    <p style="margin-top:10px;">Select a state to explore available properties:</p>
+
+    <div style="margin-top:20px;">
+      <select id="stateSelect" class="dropdown-btn">
+        <option value="">-- Choose a State --</option>
+        <option value="ga">Georgia</option>
+        <option value="nc">North Carolina</option>
+      </select>
+      <button onclick="goToState()" class="btn">Explore</button>
     </div>
-  </header>
+  {% else %}
+    <h2>Welcome to the House Price App 🏡</h2>
+    <p style="margin-top:10px;">Please <a href="{{ url_for('login') }}" class="link">login</a> or 
+       <a href="{{ url_for('signup') }}" class="link">signup</a> to explore properties and get house price estimates.</p>
+  {% endif %}
+</div>
 
-  <main>
-    {% if session.username %}
-      <h3>Select State to Explore Properties</h3>
-      <a href="{{ url_for('properties', state='ga') }}">Georgia</a> | 
-      <a href="{{ url_for('properties', state='nc') }}">North Carolina</a>
-    {% else %}
-      <p>Please login to explore properties.</p>
-    {% endif %}
-  </main>
-</body>
-</html>
+<script>
+function goToState() {
+  const state = document.getElementById("stateSelect").value;
+  if (state) {
+    window.location.href = "/properties/" + state;
+  }
+}
+</script>
+
+<style>
+/* Apple-inspired button */
+.btn {
+  background: #0071e3;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  background: #0077ed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+/* Dropdown styled like Apple */
+.dropdown-btn {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  margin-right: 10px;
+  cursor: pointer;
+  appearance: none;
+  background: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+.dropdown-btn:hover {
+  border-color: #0071e3;
+}
+</style>
+{% endblock %}
