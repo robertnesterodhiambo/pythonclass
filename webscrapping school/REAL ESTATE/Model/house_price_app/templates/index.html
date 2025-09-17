@@ -6,6 +6,8 @@
         .container { display: flex; flex-wrap: wrap; gap: 20px; }
         .card { flex: 1 1 30%; border: 1px solid #ccc; padding: 15px; border-radius: 10px; }
         .card h3 { margin: 0; }
+        .pagination { margin-top: 20px; }
+        .pagination a { margin: 0 5px; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -18,6 +20,8 @@
         </select>
         <button type="submit">Show Data</button>
     </form>
+
+    <p><a href="/estimate">👉 Get House Price Estimate</a></p>
 
     {% if data %}
     <h2>Properties in {{ state|upper }}</h2>
@@ -34,6 +38,16 @@
             <p><b>Predicted Value:</b> ${{ "{:,.2f}".format(row.predicted_value) }}</p>
         </div>
         {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="/?state={{ state }}&page={{ page-1 }}">⬅ Prev</a>
+        {% endif %}
+        <span>Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+            <a href="/?state={{ state }}&page={{ page+1 }}">Next ➡</a>
+        {% endif %}
     </div>
     {% endif %}
 </body>
