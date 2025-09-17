@@ -62,7 +62,7 @@
 
     .properties-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
       padding: 32px;
       max-width: 1200px;
@@ -90,6 +90,18 @@
 
     .property-card b {
       color: #1d1d1f;
+    }
+
+    .price {
+      font-size: 17px;
+      font-weight: 600;
+      color: #0071e3;
+    }
+
+    .predicted {
+      font-size: 16px;
+      font-weight: 600;
+      color: #34c759;
     }
 
     .pagination {
@@ -146,8 +158,14 @@
       <p>SqFt: {{ row.sqFt }} | Lot: {{ row.lot_size }}</p>
       <p>Year Built: {{ row.year_built }}</p>
       <p>County: {{ row.county }}</p>
-      <p><b>Real Value:</b> {{ row.estimated_value }}</p>
-      <p><b>Predicted Value:</b> {{ row.predicted_value }}</p>
+
+      {% if row.estimated_value %}
+        <p class="price">💰 Real Value: ${{ "{:,.0f}".format(row.estimated_value|float) }}</p>
+      {% endif %}
+
+      {% if row.predicted_value %}
+        <p class="predicted">🤖 Predicted Value: ${{ "{:,.0f}".format(row.predicted_value|float) }}</p>
+      {% endif %}
     </div>
     {% endfor %}
   </div>

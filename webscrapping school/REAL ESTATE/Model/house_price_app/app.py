@@ -156,7 +156,7 @@ def properties(state):
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    table = None
+    # map state to correct table
     if state.lower() == "ga":
         table = "propstream_ga"
     elif state.lower() == "nc":
@@ -176,23 +176,54 @@ def properties(state):
     total_rows = cur.fetchone()["total"]
     total_pages = ceil(total_rows / per_page)
 
-    cur.execute(f"SELECT * FROM {table} LIMIT %s OFFSET %s", (per_page, offset))
+    cur.execute(f"""
+        SELECT address_db, beds, baths, sqFt, lot_size, status, county, estimated_value
+        FROM {table}
+        LIMIT %s OFFSET %s
+    """, (per_page, offset))
     rows = cur.fetchall()
 
     conn.close()
 
-    # Predict estimated values
-    for r in rows:
+    # --- helper to parse city & zip from address_db ---
+    def parse_city_zip(address):
         try:
-            features = [[int(r["beds"] or 0), int(r["baths"] or 0), int(r["sqFt"] or 0),
-                         int(r["lot_size"] or 0), int(r["year_built"] or 0)]]
-            r["predicted_value"] = float(model.predict(features)[0])
+            parts = [p.strip() for p in address.split(",")]
+            city = parts[-2] if len(parts) >= 2 else ""
+            zip_match = re.search(r"\b\d{5}\b", address)
+            zip_code = zip_match.group(0) if zip_match else ""
+            return city, zip_code
+        except Exception:
+            return "", ""
+
+    # Predict estimated values using model’s expected input
+    for r in rows:
+        city, zip_code = parse_city_zip(r.get("address_db", ""))
+
+        user_data = {
+            "bed": int(r.get("beds") or 0),
+            "bath": int(r.get("baths") or 0),
+            "house_size": float(r.get("sqFt") or 0),
+            "acre_lot": float(r.get("lot_size") or 0),
+            "city": city,
+            "state": state.upper(),
+            "zip_code": zip_code,
+            "status": str(r.get("status") or "Unknown"),
+        }
+
+        try:
+            sample = pd.DataFrame([user_data])
+            r["predicted_value"] = float(model.predict(sample)[0])
         except Exception:
             r["predicted_value"] = None
 
-    return render_template("properties.html", rows=rows, state=state.upper(),
-                           page=page, total_pages=total_pages)
+    return render_template("properties.html",
+                           rows=rows,
+                           state=state.upper(),
+                           page=page,
+                           total_pages=total_pages)
 
+# ---------- ESTIMATE ----------
 @app.route("/estimate", methods=["GET", "POST"])
 def estimate():
     if "user_id" not in session:

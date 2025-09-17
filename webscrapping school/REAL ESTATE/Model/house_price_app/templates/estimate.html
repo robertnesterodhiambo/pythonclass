@@ -20,8 +20,10 @@
       </label>
 
       <label>Lot size (acres)
-        <input type="number" step="0.01" name="acre_lot" required value="{{ request.form.acre_lot or (user.lot_size if user) or '' }}">
+        <input type="number" step="0.01" min="0.01" name="acre_lot" required 
+         value="{{ request.form.acre_lot or (user.lot_size if user) or '' }}">
       </label>
+
 
       <label>City/County
         <input type="text" name="city" value="{{ request.form.city or (user.county if user) or '' }}">
