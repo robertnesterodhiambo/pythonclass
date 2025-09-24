@@ -1,401 +1,2051 @@
-Address,Agent Name
-"Express Drive, Goodmayes, Ilford, Redbridge","Aspire Estate Agents, Benfleet"
-"Creephedge Lane, East Hanningfield","Church & Hawes, Danbury"
-"High Street, Spaldwick","Simpson & Partners, Thrapston"
-"Armitage Way, Cambridge, CB4","Country Properties, Cambridge"
-"Market Street, Long Sutton, Spalding","LLH Solutions Limited, Oakham"
-"Evergreen Drive, Hampton Hargate, Peterborough, PE7","Belvoir, Peterborough"
-"Upper Bourne End Lane, Hemel Hempstead, Hertfordshire, HP12RR","Tribute Land, High Wycombe"
-"North End, Wisbech","William H. Brown, Wisbech"
-"Flat 10,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square"
-"Napier Road, Luton LU1","Esquire Estates, Luton"
-"Napier Road, Luton LU1","Esquire Estates, Luton"
-"Ford's Lane, Aston End, Stevenage, Hertfordshire, SG27HD","Tribute Land, High Wycombe"
-"Mere View, Haughley, Stowmarket, Suffolk, IP14","Lacy Scott & Knight, Stowmarket"
-Arable Farm - Wisbech St Mary,"Longstaff, Spalding"
-"Sandridgebury Lane, Sandridge, St. Albans, Hertfordshire, AL36JF","Tribute Land, High Wycombe"
-"Bayfordbury Campus, Bayford, Hertfordshire, SG138LD","Tribute Land, High Wycombe"
-"Arnold Court, Chelmsford Road, London, E18","Wentworth Estates, London"
-"Hutton Road, Hutton Road, CM15","Beresfords, Shenfield"
-"Church Lane, Stapleford Abbotts, Romford, Essex, RM4","Lawlors Property Services, Loughton Sales"
-"High Street, Cheshunt","Paul Wallace Estate Agents, Cheshunt"
-"417 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-"G59, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-"Park Road, Clacton-on-Sea","Blake & Thickbroom, Clacton on sea"
-"Barrow Common, Common Lane, Brancaster","Brown & Co, King's Lynn"
-"Crownmead Way, Romford, Essex, RM7","Woodland, Ilford"
-"Oaklands Close, Halvergate","Bycroft Estate Agents, Great Yarmouth"
-"Harlequin Close, Barking, IG11","Wentworth Estates, London"
-"Wayside Farm Park, Ravensden","Aston Charles Estate Agents Ltd, Bedford"
-"Seaview Avenue, West Mersea, Colchester, Essex, CO5","Palmer & Partners, Colchester & Coast"
-"418 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-Chadwell St Mary,"Chandler & Martin, Orsett"
-"Wixfield Park, Great Bricett, Ipswich","Hamilton Smith, Needham Market"
-"North End, Wisbech","Maxey Grounds, Wisbech"
-"Nix Hill Road, Wimblington, March, Cambs., PE15 0PL","T Payne & Co Ltd, Chatteris"
-"The Leas, Frinton-On-Sea","Paveys Estate Agents Ltd, Frinton On Sea"
-"Ovaltine Drive, Kings Langley","Sterling Estate Agents, Kings Langley, Abbots Langley & Watford"
-"Attleborough Road, Great Ellingham, Attleborough, NR17 1LG","Brown & Co, Norwich"
-"Old Road, Clacton on Sea","Stoneridge Estates, Clacton On Sea"
-"Heia Wharf, Hythe","Martin & Co, Colchester"
-"North Green Road, Pulham Market","Howards, covering Long Stratton"
-"T17 Chapel Street, Luton, LU1","Collective Property Co, Liverpool"
-"Room S2 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool"
-"Plots Available, Bedwell Park, Witchford, Ely, Cambridgeshire, CB6 2HW","Sell My Group, Lytham"
-"Old Essex Road, Hoddesdon - CHAIN FREE","Westwood Leber, Hertfordshire"
-"Queensway, Hemel Hempstead","Michael Anthony, Hemel Hempstead"
-Shared Ownership,"Michael Anthony, Hemel Hempstead"
-"Hamilton Court, Leighton Buzzard","Retirement Homesearch, East of England"
-"South Beach, Lowestoft, Suffolk","Paul Hubbard Estate Agents, Lowestoft"
-"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford"
-"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford"
-"Woolcott apartment, Barking","Sandra Davidson Estate Agents, Seven Kings"
-"The Cedars, Cedars Village, Chorleywood, Hertfordshire, WD3","Binks Estate Agents, Covering Chilterns"
-"Plot 2 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich"
-"Plots Available, Wixfield Park, Great Bricett, Ipswich, Suffolk, IP7 7DW","Sell My Group, Lytham"
-"Unit S1 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool"
-"F17 Chapel Street, 21-25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool"
-"Eastcliff, Walton On The Naze","Sheen's, Frinton-On-Sea"
-"Firmin Close, Ipswich","Connells, Ipswich"
-"Mandeville Court, Darkes Lane, Potters Bar, Hertfordshire, EN6","Hobdays, Potters Bar"
-"Suffolk Sands, Felixstowe","Nicholas Estates, Felixstowe"
-"Havenfield, Arbury Road, Cambridge","Bush & Co, Cambridge"
-"Shakespeare Square, Ilford, Essex, IG6","Woodland, Ilford"
-"Plots Available, Sacketts Grove Residential Park, Jaywick Lane, Clacton-on-Sea, Essex, CO16 7BD","Sell My Group, Lytham"
-"Old Wickford Road, South Woodham Ferrers, Chelmsford","Church & Hawes, South Woodham Ferrers"
-"Willow Walk, Hadleigh, Essex","Amos Estates, Hadleigh"
-"Lancaster Avenue, Hitchin","Cesare & Co, Tring"
-"Howards Way, Gayton","Russen & Turner, Kings Lynn"
-"Howards Way, Gayton","Russen & Turner, Kings Lynn"
-"Howards Way, Gayton","Russen & Turner, Kings Lynn"
-"Sail House, Ship Wharf, Colchester, Essex, CO2","Saxons Estate Agents, Colchester"
-"Medway House, Riverside Maltings, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle"
-"New Enterprise House, 149-151 High Road, Chadwell Heath, Romford, RM6","Stanton Hockett, Billericay"
-"Holme Close, Ailsworth, Peterborough","Quentin Marks Estate Agents, Bourne"
-"Doddington Road, Chatteris, Cambs., PE16 6UA","T Payne & Co Ltd, Chatteris"
-"72 Wallace Road, Ipswich, East Of England, IP1","Lambert Smith Hampton, London"
-"St. James Road, Brentwood","Keith Ashton, Brentwood"
-"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe"
-"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe"
-"Agricultural buildings & land for sale at Ballingdon Farm, Clements End Road, Hertfordshire, HP2 6HX","Vantage Land, St. Albans"
-"Blackthorn House, Blackthorn Avenue, Chigwell","Friend & Farrelly, Loughton"
-"Norwich Road,Wisbech,PE13 3LX","eXp UK, East of England"
-"Nelson Street, Brightlingsea, CO7","Town & Country Residential, Brightlingsea"
-"Eastern Avenue, Ilford, IG2","Wentworth Estates, London"
-"Railway Road, King's Lynn","Brown & Co, King's Lynn"
-"Pinchbeck Road, Spalding","Longstaff, Spalding"
-W1 Place,"London House, London"
-"High Street, Cheshunt, Waltham Cross","Kings Group, Cheshunt"
-"4.08 D, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-"3.08D, Opto Village , 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-"The Mill, College Street, Ipswich","Leaders Sales, Ipswich"
-"West Parade, Wisbech","William H. Brown, Wisbech"
-"Castlefield, Preston SG4 7AZ","First Step, Stotfold"
-"The Street, Hindolveston, Dereham, NR20","Abbotts, Fakenham"
-"North Road, TOLLESBURY","Hardy-King Estate Agents, Tiptree"
-"Little Lullaway, Basildon, Essex, SS15","Bairstow Eves, Basildon"
-Ringshall Road,"Sterling Estate Agents, Berkhamsted"
-"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted"
-"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted"
-"Metropolitan Station Approach,Watford,WD18 7BL","eXp UK, London"
-"Gedney Drove End, PE12 9PN","Longstaff, Spalding"
-"Herne Road, Ramsey, Huntingdon","William H. Brown, Ramsey"
-"Lincoln Road, Peterborough, PE1","Bairstow Eves, Peterborough"
-"Folksworth Road, Norman Cross, Peterborough","Sharman Quinney, Yaxley"
-"Misterton Court, Ortonplaza, Orton Goldhay, Peterborough, PE2","Belvoir, Peterborough"
-"Westcliff Parade, Westcliff-On-Sea","Home, Leigh on sea"
-"Manor Road, Hunstanton, Norfolk, PE36","The Norfolk Agents, Fakenham"
-"Holland Court, Biscot Road, Luton, Bedfordshire, LU3","Taylors Estate Agents, Luton"
-Fritton Lake - Norfolk,"Escape & Discover, Downend"
-"Essendyke, Bretton, PE3","Belvoir, Peterborough"
-Fritton Lake - Norfolk,"Escape & Discover, Downend"
-"Station Road, Westcliff-on-sea, SS0","Yopa, East Anglia & London"
-"Hagley House, Bond Street, Cromer, Norfolk","Iconic, Taverham"
-"Church Mews, Wisbech","Maxey Grounds, Wisbech"
-"Church Mews, Wisbech","Maxey Grounds, Wisbech"
-"Land for Sale, Kingston Road, Luton","Esquire Estates, Luton"
-"Cobbinsbank, Farm Hill Road","Rainbow Estate Agents (S.E.) Ltd, Essex"
-"The Old Chapel, Heath Road, Polstead Heath","Chapman Stickels, Hadleigh"
-"Forest Road, Ilford","Hammonds, London"
-"The Holly, Oak Lane","Hammonds, London"
-"Horns Road, Barkingside","Arbon & Miller, Barkingside"
-"Frinton Road, Thorpe-Le-Soken","Oakheart Property, Colchester"
-"Myers Court, The Galleries, CM14","Beresfords, at Brentwood"
-"Upminster, Essex, RM14","Quickmove Properties, Wiltshire"
-"Upminster, Essex, RM14","Quickmove Properties, Wiltshire"
-"Norwich Road, Claydon","Austwick Berry Estate Agents, Kesgrave"
-"Spencer Way, Stowmarket","Rock Estates Suffolk, Needham Market"
-"Grassmere Road, Hornchurch, RM11","Bairstow Eves, Hornchurch"
-"School Road, Necton","The Norfolk Agents, Fakenham"
-"Anderson Close, Broxbourne","Kirby Colletti, Hoddesdon"
-"Thrintofts, Blindmans Lane, Cheshunt, Hertfordshire, EN8","Morgan Alexander, Hertford"
-"Dunwich Court, Chadwell Heath, RM6","AJ Dwellings, Ilford"
-"Fletton Avenue, Peterborough","William H. Brown, Fletton"
-"Church Mews, Wisbech","Maxey Grounds, Wisbech"
-"Opposite the Cathedral, Norwich, NR3","AbbotFox, Norwich"
-"Swale House, 563 High Road, Ilford, Essex, IG1","Woodland, Ilford"
-"Fraserburgh Way, Peterborough, PE2","Purplebricks, covering Peterborough"
-"Old Wickford Road, South Woodham Ferrers, Chelmsford","William H. Brown, Chelmsford"
-"Thorpland Road, Fakenham, Norfolk, NR21","Savills Rural Sales, Ipswich"
-"High Street, Cheshunt,","Shepherds Estate Agents, Cheshunt"
-"Letheringsett Hill, Holt, Norfolk","Brown & Co, Holt"
-"Darkes Lane, Potters Bar, EN6","Home Counties, Potters Bar"
-Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington"
-Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington"
-"Mount Pleasant Road, Wisbech","Maxey Grounds, Wisbech"
-"The Causeway, Thorney, Peterborough","City & County (UK) Ltd, Crowland"
-"The Wilderness, Stratton Strawless, Norwich","William H. Brown Select, Norwich"
-"Butt Lane, Burgh Castle","Bycroft Gorleston, Great Yarmouth"
-"Wrights close, Dagenham, RM10","AJ Dwellings, Ilford"
-"Abenberg Way, Hutton, Brentwood","Keith Ashton, Brentwood"
-"Kingswood Court, 175 Chingford Mount Road, Chingford","Churchill Estates, South Chingford & Highams Park"
-"Robinson Avenue, Goffs Oak","JR Property Services, Cuffley"
-"PORTMAN ROAD, IPSWICH","Crofts Estate Agents, Cleethorpes"
-"Swindon Close, Ilford","Yopa, London"
-"Oakview Drive, Downham Market","William H. Brown, Downham Market"
-"Rose Way, St Osyth","Stoneridge Estates, Clacton On Sea"
-"Willows Green, Chelmsford","Fine & Country, Mid & South Essex"
-"Robins Field, Wansford","Richardson Surveyors, Stamford"
-"Feltwell, IP26","Elvin Estates, Mildenhall"
-"Theobald Street, Radlett, Hertfordshire, WD7","Lumley Estates, Radlett"
-"Land with Full PP for 2 dwellings, Adj. 51 The Poplars, PE11 2RJ","Longstaff, Spalding"
-"Low Road, Spalding","Ark Property Centre, Spalding"
-"Duke Street, Peterborough, Cambridgeshire, PE2","Freedom Homes, Peterborough"
-"Dellow Close, Newbury Park, IG2","Woodland, Ilford"
-"Bedford Bank, Welney, Wisbech","William H. Brown, March"
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-"St Marks Street, Peterborough, PE1","Belvoir, Peterborough"
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-"Pier Approach, Walton On The Naze","Sheen's, Frinton-On-Sea"
-Orsett Village,"Chandler & Martin, Orsett"
-"Southminster, Essex, CM0","Quickmove Properties, Wiltshire"
-"Southminster, Essex, CM0","Quickmove Properties, Wiltshire"
-"School Road, Upwell","Brown & Co, King's Lynn"
-"Burgess Springs, Chelmsford","haart, Chelmsford"
-Great Bromley,"Gyles & Rose, Colchester"
-"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston"
-"St James Park, Chelmsford","HOME, Chelmsford"
-"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston"
-"Wratting Road, Haverhill","Cheffins Residential, Haverhill"
-"Main Street, Yaxley, Peterborough","William H. Brown, Yaxley"
-Residential Development Site PE12 7BZ,"Longstaff, Spalding"
-"Norland House, High Street, March","Maxey Grounds, March"
-"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford"
-"The, Old School, St Margarets Hill, Wereham PE33 9FN","EweMove, Covering South East England"
-2 bedroom 2nd Floor and Above Flat in Southend on Sea,"PACE Property Lettings and Management Ltd, Southend-on-Sea"
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-"Reeves Lane, Roydon, CM19","Woodhouse, Cheshunt"
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited
-"High Street, Clacton-On-Sea","William H. Brown, Clacton On Sea"
-Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington"
-Great Hadham Country Club,"The Goodlife Lodge, Tallington"
-"Albion Place, Wisbech","William H. Brown, Wisbech"
-"Cuffley Hill, Goffs Oak","Banc Property, Cuffley"
-"St Osyth Road, Clacton-On-Sea","haart, Clacton"
-"Providence Place, Railway Street, Hertford","Steven Oates, Hertford"
-"Herent Drive, Clayhall, IG5 0HH","Sandra Davidson Estate Agents, Redbridge"
-"Church Street, Langford, Biggleswade","Latcham Dowling Estate Agents, St. Neots"
-"Forester Close, Pinewood, Ipswich, IP8","Fenn Wright, Ipswich"
-"St Stephens Road, Norwich","haart, Norwich"
-"Barnstaple Road, Thorpe Bay, SS1","Goldings Estate Agents, Thorpe Bay"
-"Bellmont Lodge, Sterling Court, Hertfordshire, AL7","Woodland, Ilford"
-"Sheering Mill Lane, Sawbridgeworth, CM21","iad, Nationwide"
-"Thornham Way, Eastrea, Whittlesey","Harrison Rose Estate Agents, Whittlesey"
-"Heather Court, Beck Row, Bury St. Edmunds","Shires Estate & Letting Agents, Mildenhall"
-"Baccara Grove, Bletchley, Milton Keynes, Buckinghamshire, MK2","Taylors Estate Agents, Bletchley"
-"Mandarin Mead, Bedford","haart, Bedford"
-"Morleys Leet, King's Lynn, Norfolk,","Bennett & Co Estate Agents, King's Lynn"
-"Valentines House, 51-69 Ilford Hill, Ilford, Essex, IG1","Woodland, Ilford"
-"Rickmansworth Road, Watford","Yopa, South East & London"
-"Seaview Avenue, West Mersea","Game Estate Agents, West Mersea"
-"The Elms, Lippitts Hill","Rainbow Estate Agents (S.E.) Ltd, Essex"
-"Unit 279, Block B, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool"
-"Oundle Road, Peterborough","William H. Brown, Fletton"
-Orsett Village,"Chandler & Martin, Orsett"
-"Old St Michaels Drive, Braintree, CM7","Michaels Property Consultants Ltd, Braintree"
-"Highfield Grange Holiday Park, London Road, Clacton-on-Sea","Mike Vincent & Son, Clacton On Sea"
-"Hempstead Road, Holt, Norfolk","Brown & Co, Holt"
-"The Landmark, Flowers Way, Luton, Bedfordshire, LU1","Taylors Estate Agents, Luton"
-"Exeter Close, Watford, Hertfordshire, WD24","Your Move, Watford"
-"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth"
-"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich"
-"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich"
-"Haward Street, Lowestoft, NR32","Paul Hubbard Estate Agents, Lowestoft"
-"Bedford Bank, Welney, Wisbech","William H. Brown, March"
-"Roman Road, Colchester","William H. Brown, Colchester"
-"** SIGNATURE HOMES ** Cory Drive, Hutton, Brentwood","Keith Ashton, Brentwood"
-"High Street, Redbourn, AL3","Town & Country, Caddington"
-"Elm Farm Country Park, Frinton Road, Thorpe-Le-Soken, Clacton-On-Sea","Kiln and Lodge Estates, Chelmsford"
-"High Street, Mundesley","The Norfolk Agents, Kings Lynn"
-"Turners Hill, Waltham Cross","Kings Group, Cheshunt"
-"Lucas Lane, Beaumont","Paveys Estate Agents Ltd, Frinton On Sea"
-"Bluebell Close, Watton, Thetford","William H. Brown, Watton"
-"Widbury Gardens, Ware","Westwood Leber, Hertfordshire"
-"Regents Court, Princes Street, Peterborough, PE1 2QR","Optimum Lettings & Property Management Ltd, Peterborough"
-"Main Street, Littleport, Ely, Cambridgeshire, CB6","Abbotts, Ely"
-"Alderton Hill, Loughton, Essex, IG10","Savills, Loughton"
-"Elvedon Close, Ipswich, IP3","Yopa, East Anglia & London"
-"Comberton Road, Harlton, Cambridge, CB23","Carter Jonas, Cambridge"
-"Hardwicke Fields, Haddenham, Ely","Bush & Co, Cambridge"
-"Hayes Road, Clacton-On-Sea","haart, Clacton"
-"138A-140 St. Albans Road, Watford, Hertfordshire WD24 4FT","Blue Alpine, London"
-"Dumfries Street, Luton, LU1","Taylors Estate Agents, Luton"
-"Fletcher Way, Hemel Hempstead","Brown & Merry, Hemel Hempstead"
-"Lime Tree Gardens, Chatteris","Kavanagh Hayes, Chatteris"
-"Tye Green, Barking, Ipswich","Land & New Homes, Needham Market"
-"The Crescent, Great Holland","Sheen's, Frinton-On-Sea"
-Fakenham,"Sowerbys, Fakenham"
-"The Causeway, Toppesfield, Halstead","William H. Brown, Halstead"
-"South Street, Crowland, Peterborough","City & County (UK) Ltd, Crowland"
-"Crown Road, Attleborough, NR17","Nicholas Humphreys, Norwich"
-"Morgans Close, Wilstead, Bedford","Leaders Sales, Bedford"
-"Summerhouse Lane, Aldenham, Hertfordshire, WD25","Statons, Totteridge"
-"Chappel, Colchester, Essex","David Burr Estate Agents, Leavenheath"
-"Two Bed Stately Albion Warwick (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham"
-"Two Bed Omar Alderney (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham"
-"Burrowmoor Road, March","William H. Brown, March"
-"The Malt Store & Malt Kiln, The Maltings, High Street, Mistley, Essex, CO11","Kemsley LLP, Chelmsford"
-"Milton Road, Lovell Lodge, CB4","Ensum Brown, Royston"
-"Brackenbury Cliffs, Cliff Road, Felixstowe","Diamond Mills & Co, Felixstowe"
-"South Hall Drive, Rainham, RM13","Yopa, East Anglia & London"
-"Bakers Road, Belchamp St. Paul, Sudbury","William H. Brown, Sudbury"
-"Mendham Lane, Harleston","Whittley Parish, Long Stratton"
-"Mayfield Gardens, Baston, Peterborough","Sharman Quinney, Market Deeping"
-"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft"
-"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft"
-"High Street, Mistley","Gyles & Rose, Colchester"
-"WAVRING AVENUE, KIRBY CROSS","Rouse Estate Agents, Frinton on Sea"
-"Summerhouse Lane, WATFORD, WD25","Hamptons, St Albans"
-Beach Hut 838,"Diamond Mills & Co, Felixstowe"
-"Park Road, Diss","Whittley Parish, Diss"
-"Steeple Bay Holiday Park, Canney Road, Steeple","Barrett Estate & Letting Agents, Rayleigh"
-"London Road, Chalfont St. Giles","Colman & Co, Chalfont St Giles"
-"South Beach, Heacham, King's Lynn, Norfolk, PE31","Abbotts, Hunstanton"
-"Mill Drove South, Cowbit, COWBIT, PE12","Rosedale Land & New Homes, Peterborough"
-"Peel Court, College Way, Welwyn Garden City, Hertfordshire, AL8 6DG","McCarthy & Stone Resales, Bournemouth"
-"Milton Road, Milton Keynes, MK10","Yopa, East Anglia & London"
-"Ramnoth Road, Wisbech","William H. Brown, Wisbech"
-"The Street, Southolt, Eye, Suffolk, IP23","Savills, Ipswich"
-"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh"
-"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh"
-"Dumfries Street, Luton, Bedfordshire","Leaders Sales, Bedford"
-"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh"
-"Towgood Close, Helpston, Peterborough","Sharman Quinney, Market Deeping"
-"Cheltenham Drive, Leigh-on-Sea, Essex","Leaders Sales, Southend-On-Sea"
-"Broxburn Drive, South Ockendon, RM15","Keller Williams Plus, Covering Nationwide"
-"Colne Road, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead"
-"Various Locations, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead"
-"Marine Parade East, Clacton-On-Sea","haart, Clacton"
-"Park House, Old Park Road, Hitchin","McCarthy & Stone Resales, Bournemouth"
-"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford"
-The Canopy - new properties also rentals available on selected properties,"Cognatum Property Limited, Wallingford"
-"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford"
-"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford"
-"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford"
-"Potton Road, Eynesbury Hardwicke, St. Neots, Cambridgeshire, PE19","Michael Graham, Bedford"
-"Burgess Springs, Chelmsford","haart, Chelmsford"
-"Colchester Road, Thorpe-le-Soken, Clacton-on-sea, CO16 0LA","Joe Ross Properties, Powered by eXp, Maldon"
-"Audley Court, 1 Forge Way, Southend-on-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea"
-"Old Ipswich Road, Yaxley, Eye","William H. Brown, Diss"
-"Banbury Heath, Great Denham, Bedford","Goodacres Residential, Kempston"
-"Clifftown Parade, Southend-On-Sea","Home, Leigh on sea"
-"Cross Road, Sutton St. Edmund, Spalding","William H. Brown, Spalding"
-"St. Johns Road, Clacton-On-Sea, CO16","Town & Country Residential, Brightlingsea"
-"North Beach, Heacham, PE31","Belton Duffey, Kings Lynn"
-"Russett Way, Dunstable","Connells, Dunstable"
-"St. Peters Close, Charsfield, Woodbridge, Suffolk, IP13","Fenn Wright, Woodbridge"
-"Lynn Road, Grimston, King's Lynn, PE32 1AD","Homeworks, Dereham"
-"Florida Holiday Park, Hemsby","Aldreds, Great Yarmouth"
-"Stow Road, Wisbech, Cambridgeshire, PE13","Robert Hale Estates, Wisbech"
-"Summerfields, Sible Hedingham, Halstead","William H. Brown, Halstead"
-Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington"
-"Ousden, Newmarket, Suffolk, CB8","Jackson-Stops, Newmarket"
-"St Peters Close, Charsfield, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge"
-"Maldon Road, WITHAM","Hardy-King Estate Agents, Tiptree"
-"Wicken Bonhunt, Saffron Walden, CB11","iad, Nationwide"
-"Daffodil Close, IP14","Maxwell Brown, Stowmarket"
-"Clements Close, Puckeridge","Steven Oates, Hertford"
-"St. Matthews Street, Ipswich, IP1","Tyron Ash International Real Estate, London"
-"London Road, Peterborough","Connells, Peterborough"
-"Varity House,Vicarage Farm Road, Peterborough, PE1","Belvoir, Peterborough"
-"Trotwood, Chigwell, IG7","Wentworth Estates, London"
-"Victoria Esplanade, West Mersea","Game Estate Agents, West Mersea"
-"Passingham Avenue, Billericay, Essex, CM11","Ellis & Co, Sidcup"
-"Green Farm Barns, Hindolveston Road, Melton Constable, Norfolk, NR24","Jackson-Stops, Burnham Market"
-"Bucks Alley, Little Berkhamstead, Hertfordshire, SG13 8PY",Bells Wood Park Limited
-"Cranwell Crescent, Bletchley","Michael Anthony, Bletchley"
-"Kingcup Avenue, Hemel Hempstead","Connells, Hemel Hempstead"
-"Quilter Close, Luton","Connells, Leagrave"
-"Clapham Park, Clapham, Bedford","Goodacres Residential, Kempston"
-"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley"
-"Bedwell Park, Witchford, Ely","William H. Brown, Ely"
-Woodward Road Dagenham Essex,"Anisten Homes, Ilford"
-"High Road, Buckhurst Hill, Essex, IG9","Bairstow Eves, Woodford Green"
-Wisbech,"Fine & Country, King's Lynn"
-Wisbech,"Fine & Country, King's Lynn"
-"Kelvedon Road, Inworth, Colchester, Essex, CO5","Savills, Chelmsford"
-"Plot 1 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall"
-"Plot 2 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall"
-"Bedford View, Manea, March, Cambs., PE15 0US","T Payne & Co Ltd, Chatteris"
-"Windmill Road, Bradfield, Manningtree","Baker Estates Essex Limited, Wickham Bishops"
-"Church Green, Hinxton, Saffron Walden","Cheffins Residential, Saffron Walden"
-"Dowsdale Bank, Whaplode Drove, Spalding","City & County (UK) Ltd, Crowland"
-"Blindmans Lane, Cheshunt","Steven Oates, Hertford"
-"Bridge Broad Close, Wroxham, Norwich, Norfolk, NR12","Abbotts, Wroxham"
-"Hyland Close, HORNCHURCH","haart, Hornchurch"
-"Edward Street, Luton, Bedfordshire, LU2","Giggs & Bell, Stopsley"
-"Redmason Road, Ardleigh, Colchester, CO7","Michaels Property Consultants Ltd, Colchester"
-"BEACH HUT, OLD HUNSTANTON BEACH","CRUSO AND WILKIN, Hunstanton"
-"Gabrielle House, Perth Road, Gants Hill","Sandra Davidson Estate Agents, Redbridge"
-"Heybridge Court, Hertford","William H. Brown, Hertford"
-"Green Tye, Much Hadham, SG10","Wright & Co, Sawbridgeworth"
-"Maidstone Road, Norwich","AbbotFox, Norwich"
-"Dovehouse Lodge, Wratten Road, Hitchin, SG5","Taylors Estate Agents, Hitchin"
-"South street, Romford","Steps Estate Agents, Dagenham"
-"High Street, Soham, Ely, Cambridgeshire, CB7","Carter Jonas, Cambridge"
-"Low Road, Billingford","Durrants, Harleston"
-"Eastcliff , Walton on the Naze, CO14","My Moving Places, Frinton On Sea"
-"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech"
-"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech"
-"Main Road, Tydd, Wisbech, Cambridgeshire, PE13 5QD","Maxey Grounds, Wisbech"
-"Chamberlin Court, Hoveton, Norwich","William H. Brown, Norwich"
-"Chalk Hill Lane, Great Blakenham, Ipswich","Land & New Homes, Needham Market"
-"High Wych Road, Sawbridgeworth, CM21","Wright & Co, Sawbridgeworth"
-"Plot 5, Old Croft Place, Welney","Maxey Grounds, March"
-"Siloam Place, Ipswich, Suffolk, IP3","Pennington Surveyors Limited, Ipswich"
-"Mill Street, Hastingwood","Millers Estate Agents, Epping"
-"Marine Parade East, Clacton-On-Sea","Sheen's, Clacton-on-sea"
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Castle Acre Road, Great Massingham","William H. Brown, Swaffham"
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited
-"Chapel Road, Burnham-On-Crouch","S J Warren, Burnham-On-Crouch"
-"Cross Penny Court, Bury St. Edmunds","Mark Ewin, Bury St Edmunds"
-"Lower Road, Lavenham, Sudbury, Suffolk, CO10","Lacy Scott & Knight, Bury St Edmunds"
-"Academy Way, Dagenham RM8 2FJ","haart, Dagenham"
-"Bridgland Road, Purfleet-on-Thames, Essex, RM19","Bairstow Eves, South Ockendon"
-"The Street, Clacton-On-Sea","haart, Clacton"
-"The Street, Bintree","The Norfolk Agents, Fakenham"
-"Battlefields Lane South, Holbeach, Spalding","Leaders, Holbeach"
-"Walter Mead Close, Ongar","Millers Estate Agents, Epping"
-"Parkhouse Court, Hatfield, Hertfordshire, AL10","EweMove, Covering East of England"
-"5 Great Canney Court, Purleigh.","Church & Hawes, South Woodham Ferrers"
-"Flat 19,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square"
-"School Road, West Walton, Wisbech, Norfolk, PE14 7HA","Aspire Homes, Wisbech"
-"Victoria Esplanade, West Mersea, CO5 8BP","Game Estate Agents, West Mersea"
-"Tabors Avenue, Chelmsford, CM2","Beresfords, Chelmsford"
-"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley"
-"Dowsdale Bank, Shepeau Stow, SHEPEAU STOW, PE12","Rosedale Land & New Homes, Peterborough"
-"Plot 28 Walnut Close, Sutton St. James, Spalding, Lincolnshire, PE12","EweMove, Covering East Midlands"
-"Chapel Lane, Elmstead, Colchester, CO7","Michaels Property Consultants Ltd, Wivenhoe"
-"Plot 8 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich"
-"New Street, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle"
-"Morris Green, Sible Hedingham, Halstead, Essex, CO9","Savills, Chelmsford"
-"Dragon Road, Hatfield, AL10","Country Properties, Hatfield"
-"Brookmans Avenue, Brookmans Park, Hertfordshire, AL9","Statons, Brookmans Park"
-"Church Street, Spalding","Longstaff, Spalding"
+Address,Agent Name,Phone Number
+"Station Road, West Horndon, CM13","Beresfords, at Upminster",01708 209955
+"Creephedge Lane, East Hanningfield","Church & Hawes, Danbury",01245 945834
+"High Street, Spaldwick","Simpson & Partners, Thrapston",01832 770621
+"Armitage Way, Cambridge, CB4","Country Properties, Cambridge",01223 919464
+"Market Street, Long Sutton, Spalding","LLH Solutions Limited, Oakham",01780 431569
+"Evergreen Drive, Hampton Hargate, Peterborough, PE7","Belvoir, Peterborough",01733 964767
+"Upper Bourne End Lane, Hemel Hempstead, Hertfordshire, HP12RR","Tribute Land, High Wycombe",01494 341338
+"North End, Wisbech","William H. Brown, Wisbech",01945 664477
+"Flat 10,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square",020 7382 2860
+"Napier Road, Luton LU1","Esquire Estates, Luton",01582 377323
+"Napier Road, Luton LU1","Esquire Estates, Luton",01582 377323
+"Ford's Lane, Aston End, Stevenage, Hertfordshire, SG27HD","Tribute Land, High Wycombe",01494 341338
+"Mere View, Haughley, Stowmarket, Suffolk, IP14","Lacy Scott & Knight, Stowmarket",01449 612384
+Arable Farm - Wisbech St Mary,"Longstaff, Spalding",01775 661101
+"Sandridgebury Lane, Sandridge, St. Albans, Hertfordshire, AL36JF","Tribute Land, High Wycombe",01494 341338
+"Bayfordbury Campus, Bayford, Hertfordshire, SG138LD","Tribute Land, High Wycombe",01494 341338
+"Arnold Court, Chelmsford Road, London, E18","Wentworth Estates, London",020 3889 9106
+"Hutton Road, Hutton Road, CM15","Beresfords, Shenfield",01277 674308
+"Church Lane, Stapleford Abbotts, Romford, Essex, RM4","Lawlors Property Services, Loughton Sales",020 3873 8317
+"High Street, Cheshunt","Paul Wallace Estate Agents, Cheshunt",01992 781100
+"417 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"G59, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Park Road, Clacton-on-Sea","Blake & Thickbroom, Clacton on sea",01255 688788
+"Barrow Common, Common Lane, Brancaster","Brown & Co, King's Lynn",01553 603493
+"Crownmead Way, Romford, Essex, RM7","Woodland, Ilford",020 8554 5544
+"Mixes Hill Road, Stopsley, Luton, Bedfordshire, LU2 7TX","Indigo Residential, Stopsley",01582 297278
+"Harlequin Close, Barking, IG11","Wentworth Estates, London",020 3889 9106
+"Wayside Farm Park, Ravensden","Aston Charles Estate Agents Ltd, Bedford",01234 676643
+"Seaview Avenue, West Mersea, Colchester, Essex, CO5","Palmer & Partners, Colchester & Coast",01206 586084
+"418 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+Chadwell St Mary,"Chandler & Martin, Orsett",01375 891007
+"Wixfield Park, Great Bricett, Ipswich","Hamilton Smith, Needham Market",01449 709827
+"North End, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Nix Hill Road, Wimblington, March, Cambs., PE15 0PL","T Payne & Co Ltd, Chatteris",01354 707494
+"The Leas, Frinton-On-Sea","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Ovaltine Drive, Kings Langley","Sterling Estate Agents, Kings Langley, Abbots Langley & Watford",01923 961377
+"Attleborough Road, Great Ellingham, Attleborough, NR17 1LG","Brown & Co, Norwich",01603 361693
+"Old Road, Clacton on Sea","Stoneridge Estates, Clacton On Sea",01255 442138
+"Heia Wharf, Hythe","Martin & Co, Colchester",01206 586115
+"North Green Road, Pulham Market","Howards, covering Long Stratton",01508 505543
+"Room S2 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"T17 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Plots Available, Bedwell Park, Witchford, Ely, Cambridgeshire, CB6 2HW","Sell My Group, Lytham",020 3910 6164
+"Old Essex Road, Hoddesdon - CHAIN FREE","Westwood Leber, Hertfordshire",01992 927906
+"Queensway, Hemel Hempstead","Michael Anthony, Hemel Hempstead",01442 504180
+Shared Ownership,"Michael Anthony, Hemel Hempstead",01442 504180
+"Hamilton Court, Leighton Buzzard","Retirement Homesearch, East of England",01425 209944
+"South Beach, Lowestoft, Suffolk","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"The Orchards, Fulbourn, Cambridge, Cambridgeshire, CB21","Savills New Homes, Cambridge",01223 972870
+"The Cedars, Cedars Village, Chorleywood, Hertfordshire, WD3","Binks Estate Agents, Covering Chilterns",01923 961214
+"Plot 2 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Plots Available, Wixfield Park, Great Bricett, Ipswich, Suffolk, IP7 7DW","Sell My Group, Lytham",020 3910 6164
+"F17 Chapel Street, 21-25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Unit S1 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Eastcliff, Walton On The Naze","Sheen's, Frinton-On-Sea",01255 852555
+"Firmin Close, Ipswich","Connells, Ipswich",01473 943139
+"Mandeville Court, Darkes Lane, Potters Bar, Hertfordshire, EN6","Hobdays, Potters Bar",01707 954207
+"Suffolk Sands, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Havenfield, Arbury Road, Cambridge","Bush & Co, Cambridge",01223 972783
+"Shakespeare Square, Ilford, Essex, IG6","Woodland, Ilford",020 8554 5544
+"Plots Available, Sacketts Grove Residential Park, Jaywick Lane, Clacton-on-Sea, Essex, CO16 7BD","Sell My Group, Lytham",020 3910 6164
+"Old Wickford Road, South Woodham Ferrers, Chelmsford","Church & Hawes, South Woodham Ferrers",01245 945848
+"Willow Walk, Hadleigh, Essex","Amos Estates, Hadleigh",01702 555888
+"Lancaster Avenue, Hitchin","Cesare & Co, Tring",01442 504143
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Sail House, Ship Wharf, Colchester, Essex, CO2","Saxons Estate Agents, Colchester",01206 586085
+"Medway House, Riverside Maltings, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle",01832 274732
+"New Enterprise House, 149-151 High Road, Chadwell Heath, Romford, RM6","Stanton Hockett, Billericay",01277 674868
+"Holme Close, Ailsworth, Peterborough","Quentin Marks Estate Agents, Bourne",01778 301117
+"Doddington Road, Chatteris, Cambs., PE16 6UA","T Payne & Co Ltd, Chatteris",01354 707494
+"72 Wallace Road, Ipswich, East Of England, IP1","Lambert Smith Hampton, London",020 3834 8520
+"Longfield Road, Great Baddow, Chelmsford, Essex, CM2","Fenn Wright, Chelmsford",01246 948443
+"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe",01394 331588
+"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe",01394 331588
+"Agricultural buildings & land for sale at Ballingdon Farm, Clements End Road, Hertfordshire, HP2 6HX","Vantage Land, St. Albans",01727 701649
+"Blackthorn House, Blackthorn Avenue, Chigwell","Friend & Farrelly, Loughton",020 3195 0850
+"Norwich Road,Wisbech,PE13 3LX","eXp UK, East of England",03304 609968
+"Nelson Street, Brightlingsea, CO7","Town & Country Residential, Brightlingsea",01206 586068
+"Eastern Avenue, Ilford, IG2","Wentworth Estates, London",020 3889 9106
+"Railway Road, King's Lynn","Brown & Co, King's Lynn",01553 603337
+"Pinchbeck Road, Spalding","Longstaff, Spalding",01775 661101
+W1 Place,"London House, London",020 4572 0476
+"High Street, Cheshunt, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"4.08 D, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"3.08D, Opto Village , 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"The Mill, College Street, Ipswich","Leaders Sales, Ipswich",01473 943818
+"West Parade, Wisbech","William H. Brown, Wisbech",01945 664477
+"Castlefield, Preston SG4 7AZ","First Step, Stotfold",01462 416014
+"The Street, Hindolveston, Dereham, NR20","Abbotts, Fakenham",01328 800709
+"North Road, TOLLESBURY","Hardy-King Estate Agents, Tiptree",01621 731218
+"Little Lullaway, Basildon, Essex, SS15","Bairstow Eves, Basildon",01268 202635
+Ringshall Road,"Sterling Estate Agents, Berkhamsted",01442 501618
+"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted",01442 501618
+"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted",01442 501618
+"Metropolitan Station Approach,Watford,WD18 7BL","eXp UK, London",03304 609968
+"Gedney Drove End, PE12 9PN","Longstaff, Spalding",01775 661101
+"27C Leys Avenue, Letchworth Garden City, Hertfordshire, SG6 3ED","Auction House London, Hampstead",020 3897 6030
+"Lincoln Road, Peterborough, PE1","Bairstow Eves, Peterborough",01733 964602
+"Folksworth Road, Norman Cross, Peterborough","Sharman Quinney, Yaxley",01733 964955
+"Misterton Court, Ortonplaza, Orton Goldhay, Peterborough, PE2","Belvoir, Peterborough",01733 964767
+"Westcliff Parade, Westcliff-On-Sea","Home, Leigh on sea",01702 967219
+"Manor Road, Hunstanton, Norfolk, PE36","The Norfolk Agents, Fakenham",01328 803445
+"Holland Court, Biscot Road, Luton, Bedfordshire, LU3","Taylors Estate Agents, Luton",01582 377982
+Fritton Lake - Norfolk,"Escape & Discover, Downend",01225 434940
+"Essendyke, Bretton, PE3","Belvoir, Peterborough",01733 964767
+Fritton Lake - Norfolk,"Escape & Discover, Downend",01225 434940
+"Station Road, Westcliff-on-sea, SS0","Yopa, East Anglia & London",01270 447764
+"Hagley House, Bond Street, Cromer, Norfolk","Iconic, Taverham",01603 361880
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Land for Sale, Kingston Road, Luton","Esquire Estates, Luton",01582 377323
+"Cobbinsbank, Farm Hill Road","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"The Old Chapel, Heath Road, Polstead Heath","Chapman Stickels, Hadleigh",01473 943929
+"Forest Road, Ilford","Hammonds, London",020 8629 1571
+"The Holly, Oak Lane","Hammonds, London",020 8629 1571
+"Horns Road, Barkingside","Arbon & Miller, Barkingside",020 3872 5288
+"Frinton Road, Thorpe-Le-Soken","Oakheart Property, Colchester",01206 586163
+"Myers Court, The Galleries, CM14","Beresfords, at Brentwood",01277 674353
+"Upminster, Essex, RM14","Quickmove Properties, Wiltshire",01793 540551
+"Upminster, Essex, RM14","Quickmove Properties, Wiltshire",01793 540551
+"Norwich Road, Claydon","Austwick Berry Estate Agents, Kesgrave",01473 943294
+"Meadow Way, Barrow","Mark Ewin, Bury St Edmunds",01284 336099
+"Grassmere Road, Hornchurch, RM11","Bairstow Eves, Hornchurch",01708 204792
+"School Road, Necton","The Norfolk Agents, Fakenham",01328 803445
+"Anderson Close, Broxbourne","Kirby Colletti, Hoddesdon",01992 929856
+"Thrintofts, Blindmans Lane, Cheshunt, Hertfordshire, EN8","Morgan Alexander, Hertford",01992 661955
+"Dunwich Court, Chadwell Heath, RM6","AJ Dwellings, Ilford",020 3910 6066
+"Fletton Avenue, Peterborough","William H. Brown, Fletton",01733 964686
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Opposite the Cathedral, Norwich, NR3","AbbotFox, Norwich",01603 510582
+"Swale House, 563 High Road, Ilford, Essex, IG1","Woodland, Ilford",020 8554 5544
+"Fraserburgh Way, Peterborough, PE2","Purplebricks, covering Peterborough",020 3834 8087
+"Old Wickford Road, South Woodham Ferrers, Chelmsford","William H. Brown, Chelmsford",01245 945123
+"Thorpland Road, Fakenham, Norfolk, NR21","Savills Rural Sales, Ipswich",01473 943513
+"High Street, Cheshunt,","Shepherds Estate Agents, Cheshunt",01992 927877
+"Letheringsett Hill, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"Darkes Lane, Potters Bar, EN6","Home Counties, Potters Bar",01707 241387
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+"Mount Pleasant Road, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"The Causeway, Thorney, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"The Wilderness, Stratton Strawless, Norwich","William H. Brown Select, Norwich",01603 361639
+"Butt Lane, Burgh Castle","Bycroft Gorleston, Great Yarmouth",01493 801394
+"Wrights close, Dagenham, RM10","AJ Dwellings, Ilford",020 3910 6066
+"Abenberg Way, Hutton, Brentwood","Keith Ashton, Brentwood",01277 674388
+"Kingswood Court, 175 Chingford Mount Road, Chingford","Churchill Estates, South Chingford & Highams Park",020 3835 2295
+"High Road, Wisbech St. Mary, PE13","Hockeys, Wisbech",01945 661611
+"PORTMAN ROAD, IPSWICH","Crofts Estate Agents, Cleethorpes",01472 404562
+"Swindon Close, Ilford","Yopa, London",0161 524 7996
+"Oakview Drive, Downham Market","William H. Brown, Downham Market",01366 312332
+"Rose Way, St Osyth","Stoneridge Estates, Clacton On Sea",01255 442138
+"Willows Green, Chelmsford","Fine & Country, Mid & South Essex",01246 387258
+"Robins Field, Wansford","Richardson Surveyors, Stamford",01780 431208
+"Feltwell, IP26","Elvin Estates, Mildenhall",01638 597092
+"Theobald Street, Radlett, Hertfordshire, WD7","Lumley Estates, Radlett",01923 961675
+"Land with Full PP for 2 dwellings, Adj. 51 The Poplars, PE11 2RJ","Longstaff, Spalding",01775 661101
+"Low Road, Spalding","Ark Property Centre, Spalding",01775 766888
+"Duke Street, Peterborough, Cambridgeshire, PE2","Freedom Homes, Peterborough",01733 964657
+"Dellow Close, Newbury Park, IG2","Woodland, Ilford",020 8554 5544
+"Bedford Bank, Welney, Wisbech","William H. Brown, March",01354 704614
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"St Marks Street, Peterborough, PE1","Belvoir, Peterborough",01733 964767
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"Pier Approach, Walton On The Naze","Sheen's, Frinton-On-Sea",01255 852555
+Orsett Village,"Chandler & Martin, Orsett",01375 891007
+"Southminster, Essex, CM0","Quickmove Properties, Wiltshire",01793 540551
+"Southminster, Essex, CM0","Quickmove Properties, Wiltshire",01793 540551
+"School Road, Upwell","Brown & Co, King's Lynn",01553 603337
+"Burgess Springs, Chelmsford","haart, Chelmsford",01245 945473
+Great Bromley,"Gyles & Rose, Colchester",01206 586104
+"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston",01493 807227
+"Becket Close, Woodford Green, Essex","Lifestyle Property, Docklands",020 3897 8479
+"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston",01493 807227
+"Wratting Road, Haverhill","Cheffins Residential, Haverhill",01440 840459
+"Main Street, Yaxley, Peterborough","William H. Brown, Yaxley",01733 964831
+Residential Development Site PE12 7BZ,"Longstaff, Spalding",01775 661101
+"Norland House, High Street, March","Maxey Grounds, March",01354 704639
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"The, Old School, St Margarets Hill, Wereham PE33 9FN","EweMove, Covering South East England",01274 015965
+2 bedroom 2nd Floor and Above Flat in Southend on Sea,"PACE Property Lettings and Management Ltd, Southend-on-Sea",01702 967682
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"Reeves Lane, Roydon, CM19","Woodhouse, Cheshunt",01992 662281
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"High Street, Clacton-On-Sea","William H. Brown, Clacton On Sea",01255 442150
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+Great Hadham Country Club,"The Goodlife Lodge, Tallington",01580 236011
+"Albion Place, Wisbech","William H. Brown, Wisbech",01945 664477
+"Cuffley Hill, Goffs Oak","Banc Property, Cuffley",01707 241096
+"St Osyth Road, Clacton-On-Sea","haart, Clacton",01255 442111
+"Providence Place, Railway Street, Hertford","Steven Oates, Hertford",01992 661978
+"Herent Drive, Clayhall, IG5 0HH","Sandra Davidson Estate Agents, Redbridge",020 3909 9755
+"Church Street, Langford, Biggleswade","Latcham Dowling Estate Agents, St. Neots",01480 772012
+"Forester Close, Pinewood, Ipswich, IP8","Fenn Wright, Ipswich",01473 943943
+"St Stephens Road, Norwich","haart, Norwich",01603 937768
+"Quebec Road, Dereham","William H. Brown, Dereham",01362 702191
+"Bellmont Lodge, Sterling Court, Hertfordshire, AL7","Woodland, Ilford",020 8554 5544
+"Sheering Mill Lane, Sawbridgeworth, CM21","iad, Nationwide",03330 382150
+"Thornham Way, Eastrea, Whittlesey","Harrison Rose Estate Agents, Whittlesey",01733 202525
+"Heather Court, Beck Row, Bury St. Edmunds","Shires Estate & Letting Agents, Mildenhall",01638 597090
+"Baccara Grove, Bletchley, Milton Keynes, Buckinghamshire, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Mandarin Mead, Bedford","haart, Bedford",020 3840 3438
+"Morleys Leet, King's Lynn, Norfolk,","Bennett & Co Estate Agents, King's Lynn",01553 603486
+"Valentines House, 51-69 Ilford Hill, Ilford, Essex, IG1","Woodland, Ilford",020 8554 5544
+"Rickmansworth Road, Watford","Yopa, South East & London",01322 952994
+"Seaview Avenue, West Mersea","Game Estate Agents, West Mersea",01206 586072
+"The Elms, Lippitts Hill","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"Unit 279, Block B, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Oundle Road, Peterborough","William H. Brown, Fletton",01733 964686
+Orsett Village,"Chandler & Martin, Orsett",01375 891007
+"Old St Michaels Drive, Braintree, CM7","Michaels Property Consultants Ltd, Braintree",01376 315794
+"Highfield Grange Holiday Park, London Road, Clacton-on-Sea","Mike Vincent & Son, Clacton On Sea",01255 442182
+"Hempstead Road, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"The Landmark, Flowers Way, Luton, Bedfordshire, LU1","Taylors Estate Agents, Luton",01582 377982
+"Exeter Close, Watford, Hertfordshire, WD24","Your Move, Watford",01923 961818
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich",01473 943579
+"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich",01473 943579
+"Haward Street, Lowestoft, NR32","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Bedford Bank, Welney, Wisbech","William H. Brown, March",01354 704614
+"Newgatestreet Road, Goffs Oak","JR Property Services, Cuffley",01707 244808
+"** SIGNATURE HOMES ** Cory Drive, Hutton, Brentwood","Keith Ashton, Brentwood",01277 674388
+"High Street, Redbourn, AL3","Town & Country, Caddington",01582 841200
+"Elm Farm Country Park, Frinton Road, Thorpe-Le-Soken, Clacton-On-Sea","Kiln and Lodge Estates, Chelmsford",01245 945822
+"High Street, Mundesley","The Norfolk Agents, Kings Lynn",01553 603396
+"Turners Hill, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"Lucas Lane, Beaumont","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Bluebell Close, Watton, Thetford","William H. Brown, Watton",01953 667639
+"Widbury Gardens, Ware","Westwood Leber, Hertfordshire",01992 927906
+"Regents Court, Princes Street, Peterborough, PE1 2QR","Optimum Lettings & Property Management Ltd, Peterborough",01733 459132
+"Main Street, Littleport, Ely, Cambridgeshire, CB6","Abbotts, Ely",01353 887783
+"Alderton Hill, Loughton, Essex, IG10","Savills, Loughton",020 3869 5310
+"Elvedon Close, Ipswich, IP3","Yopa, East Anglia & London",01270 447764
+"Comberton Road, Harlton, Cambridge, CB23","Carter Jonas, Cambridge",01223 972782
+"Hardwicke Fields, Haddenham, Ely","Bush & Co, Cambridge",01223 972783
+"Hayes Road, Clacton-On-Sea","haart, Clacton",01255 442111
+"138A-140 St. Albans Road, Watford, Hertfordshire WD24 4FT","Blue Alpine, London",020 3909 3844
+"Dumfries Street, Luton, LU1","Taylors Estate Agents, Luton",01582 377982
+"Fletcher Way, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"Lime Tree Gardens, Chatteris","Kavanagh Hayes, Chatteris",01354 704640
+"Tye Green, Barking, Ipswich","Land & New Homes, Needham Market",01470 229995
+"The Crescent, Great Holland","Sheen's, Frinton-On-Sea",01255 852555
+Fakenham,"Sowerbys, Fakenham",01328 801643
+"The Causeway, Toppesfield, Halstead","William H. Brown, Halstead",01787 322336
+"South Street, Crowland, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"The Rising, Billericay, CM11","Beresfords, Billericay",01277 674326
+"Morgans Close, Wilstead, Bedford","Leaders Sales, Bedford",01234 987237
+"Summerhouse Lane, Aldenham, Hertfordshire, WD25","Statons, Totteridge",020 3869 4080
+"Chappel, Colchester, Essex","David Burr Estate Agents, Leavenheath",01206 586065
+"Two Bed Stately Albion Warwick (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Two Bed Omar Alderney (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Burrowmoor Road, March","William H. Brown, March",01354 704614
+"The Malt Store & Malt Kiln, The Maltings, High Street, Mistley, Essex, CO11","Kemsley LLP, Chelmsford",01245 945774
+"Milton Road, Lovell Lodge, CB4","Ensum Brown, Royston",01763 750000
+"Brackenbury Cliffs, Cliff Road, Felixstowe","Diamond Mills & Co, Felixstowe",01394 331695
+"South Hall Drive, Rainham, RM13","Yopa, East Anglia & London",01270 447764
+"Bakers Road, Belchamp St. Paul, Sudbury","William H. Brown, Sudbury",01787 321086
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Mayfield Gardens, Baston, Peterborough","Sharman Quinney, Market Deeping",01778 309997
+"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft",01502 448023
+"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft",01502 448023
+"High Street, Mistley","Gyles & Rose, Colchester",01206 586104
+"WAVRING AVENUE, KIRBY CROSS","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Summerhouse Lane, WATFORD, WD25","Hamptons, St Albans",01727 222024
+Beach Hut 838,"Diamond Mills & Co, Felixstowe",01394 331695
+"Park Road, Diss","Whittley Parish, Diss",01379 777262
+"Steeple Bay Holiday Park, Canney Road, Steeple","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"London Road, Chalfont St. Giles","Colman & Co, Chalfont St Giles",01494 341318
+"South Beach, Heacham, King's Lynn, Norfolk, PE31","Abbotts, Hunstanton",01485 506847
+"Mill Drove South, Cowbit, COWBIT, PE12","Rosedale Land & New Homes, Peterborough",01733 964776
+"Padholme Road, Peterborough, PE1","Rosedale Property Agents, Peterborough",01733 964671
+"Milton Road, Milton Keynes, MK10","Yopa, East Anglia & London",01270 447764
+"Ramnoth Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"The Street, Southolt, Eye, Suffolk, IP23","Savills, Ipswich",01473 943373
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Dumfries Street, Luton, Bedfordshire","Leaders Sales, Bedford",01234 987237
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Towgood Close, Helpston, Peterborough","Sharman Quinney, Market Deeping",01778 309997
+"Cheltenham Drive, Leigh-on-Sea, Essex","Leaders Sales, Southend-On-Sea",01702 967359
+"Broxburn Drive, South Ockendon, RM15","Keller Williams Plus, Covering Nationwide",020 3892 9627
+"Colne Road, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"Various Locations, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"Marine Parade East, Clacton-On-Sea","haart, Clacton",01255 442111
+"Park House, Old Park Road, Hitchin","McCarthy & Stone Resales, Bournemouth",03455 564122
+"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+The Canopy - new properties also rentals available on selected properties,"Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"Potton Road, Eynesbury Hardwicke, St. Neots, Cambridgeshire, PE19","Michael Graham, Bedford",01234 676680
+"Burgess Springs, Chelmsford","haart, Chelmsford",01245 945473
+"Colchester Road, Thorpe-le-Soken, Clacton-on-sea, CO16 0LA","Joe Ross Properties, Powered by eXp, Maldon",01621 738966
+"Audley Court, 1 Forge Way, Southend-on-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"Old Ipswich Road, Yaxley, Eye","William H. Brown, Diss",01379 773565
+"Gaston End, East Bergholt, Suffolk, CO7 6RF",David Wilson Homes,01206 417450
+"Clifftown Parade, Southend-On-Sea","Home, Leigh on sea",01702 967219
+"Cross Road, Sutton St. Edmund, Spalding","William H. Brown, Spalding",01775 660913
+"St. Johns Road, Clacton-On-Sea, CO16","Town & Country Residential, Brightlingsea",01206 586068
+"North Beach, Heacham, PE31","Belton Duffey, Kings Lynn",01553 603677
+"Russett Way, Dunstable","Connells, Dunstable",01582 377795
+"St. Peters Close, Charsfield, Woodbridge, Suffolk, IP13","Fenn Wright, Woodbridge",01394 331099
+"Lynn Road, Grimston, King's Lynn, PE32 1AD","Homeworks, Dereham",01362 702202
+"Florida Holiday Park, Hemsby","Aldreds, Great Yarmouth",01493 801522
+"Stow Road, Wisbech, Cambridgeshire, PE13","Robert Hale Estates, Wisbech",01945 661608
+"Summerfields, Sible Hedingham, Halstead","William H. Brown, Halstead",01787 322336
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+"Ousden, Newmarket, Suffolk, CB8","Jackson-Stops, Newmarket",01638 597214
+"St Peters Close, Charsfield, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"Maldon Road, WITHAM","Hardy-King Estate Agents, Tiptree",01621 731218
+"Wicken Bonhunt, Saffron Walden, CB11","iad, Nationwide",03330 382150
+"Daffodil Close, IP14","Maxwell Brown, Stowmarket",01449 673948
+"Clements Close, Puckeridge","Steven Oates, Hertford",01992 661978
+"St. Matthews Street, Ipswich, IP1","Tyron Ash International Real Estate, London",03330 164235
+"London Road, Peterborough","Connells, Peterborough",01733 964390
+"Varity House,Vicarage Farm Road, Peterborough, PE1","Belvoir, Peterborough",01733 964767
+"Trotwood, Chigwell, IG7","Wentworth Estates, London",020 3889 9106
+"Victoria Esplanade, West Mersea","Game Estate Agents, West Mersea",01206 586072
+"Passingham Avenue, Billericay, Essex, CM11","Ellis & Co, Sidcup",020 3907 2894
+"Green Farm Barns, Hindolveston Road, Melton Constable, Norfolk, NR24","Jackson-Stops, Burnham Market",01328 801651
+"Robertson Way, Sapley, Huntingdon.","Oliver James, Huntingdon",01480 776410
+"Cranwell Crescent, Bletchley","Michael Anthony, Bletchley",01908 103606
+"Kingcup Avenue, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"Quilter Close, Luton","Connells, Leagrave",01582 377044
+"Clapham Park, Clapham, Bedford","Goodacres Residential, Kempston",01234 230058
+"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley",01582 377645
+"Bedwell Park, Witchford, Ely","William H. Brown, Ely",01353 881275
+Woodward Road Dagenham Essex,"Anisten Homes, Ilford",020 3889 9064
+"High Road, Buckhurst Hill, Essex, IG9","Bairstow Eves, Woodford Green",020 3835 6392
+Wisbech,"Fine & Country, King's Lynn",01553 603223
+Wisbech,"Fine & Country, King's Lynn",01553 603223
+"Kelvedon Road, Inworth, Colchester, Essex, CO5","Savills, Chelmsford",01245 945669
+"Plot 1 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall",01638 598599
+"Plot 2 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall",01638 598599
+"Bedford View, Manea, March, Cambs., PE15 0US","T Payne & Co Ltd, Chatteris",01354 707494
+"Windmill Road, Bradfield, Manningtree","Baker Estates Essex Limited, Wickham Bishops",01376 319271
+"Church Green, Hinxton, Saffron Walden","Cheffins Residential, Saffron Walden",01799 619642
+"Dowsdale Bank, Whaplode Drove, Spalding","City & County (UK) Ltd, Crowland",01733 964706
+"Blindmans Lane, Cheshunt","Steven Oates, Hertford",01992 661978
+"Bridge Broad Close, Wroxham, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Hyland Close, HORNCHURCH","haart, Hornchurch",01708 973303
+"Edward Street, Luton, Bedfordshire, LU2","Giggs & Bell, Stopsley",01582 377645
+"Redmason Road, Ardleigh, Colchester, CO7","Michaels Property Consultants Ltd, Colchester",01206 586143
+"BEACH HUT, OLD HUNSTANTON BEACH","CRUSO AND WILKIN, Hunstanton",01485 506842
+"Gabrielle House, Perth Road, Gants Hill","Sandra Davidson Estate Agents, Redbridge",020 3909 9755
+"Robinson Avenue, Houghton Conquest, MK45","Cooper Wallace, Bedford",01234 860633
+"Green Tye, Much Hadham, SG10","Wright & Co, Sawbridgeworth",01279 976936
+"Maidstone Road, Norwich","AbbotFox, Norwich",01603 510582
+"Dovehouse Lodge, Wratten Road, Hitchin, SG5","Taylors Estate Agents, Hitchin",01462 415972
+"South street, Romford","Steps Estate Agents, Dagenham",020 3869 4094
+"High Street, Soham, Ely, Cambridgeshire, CB7","Carter Jonas, Cambridge",01223 972782
+"Low Road, Billingford","Durrants, Harleston",01379 777097
+"Eastcliff , Walton on the Naze, CO14","My Moving Places, Frinton On Sea",01255 442092
+"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Main Road, Tydd, Wisbech, Cambridgeshire, PE13 5QD","Maxey Grounds, Wisbech",01945 661540
+"Chamberlin Court, Hoveton, Norwich","William H. Brown, Norwich",01603 361933
+"Chalk Hill Lane, Great Blakenham, Ipswich","Land & New Homes, Needham Market",01470 229995
+"High Wych Road, Sawbridgeworth, CM21","Wright & Co, Sawbridgeworth",01279 976936
+"Plot 5, Old Croft Place, Welney","Maxey Grounds, March",01354 704639
+"Siloam Place, Ipswich, Suffolk, IP3","Pennington Surveyors Limited, Ipswich",01473 943457
+"Mill Street, Hastingwood","Millers Estate Agents, Epping",01992 662310
+"Marine Parade East, Clacton-On-Sea","Sheen's, Clacton-on-sea",01255 475444
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Castle Acre Road, Great Massingham","William H. Brown, Swaffham",01760 302186
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Abbots Park, St. Albans, Hertfordshire","Collinson Hall, St Albans",01727 649409
+"Cross Penny Court, Bury St. Edmunds","Mark Ewin, Bury St Edmunds",01284 336099
+"Lower Road, Lavenham, Sudbury, Suffolk, CO10","Lacy Scott & Knight, Bury St Edmunds",01284 748600
+"Academy Way, Dagenham RM8 2FJ","haart, Dagenham",020 3840 3397
+"Bridgland Road, Purfleet-on-Thames, Essex, RM19","Bairstow Eves, South Ockendon",01708 205245
+"The Street, Clacton-On-Sea","haart, Clacton",01255 442111
+"The Street, Bintree","The Norfolk Agents, Fakenham",01328 803445
+"Battlefields Lane South, Holbeach, Spalding","Leaders, Holbeach",01406 431420
+"Walter Mead Close, Ongar","Millers Estate Agents, Epping",01992 662310
+"Parkhouse Court, Hatfield, Hertfordshire, AL10","EweMove, Covering East of England",01274 015915
+"5 Great Canney Court, Purleigh.","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flat 19,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square",020 7382 2860
+"School Road, West Walton, Wisbech, Norfolk, PE14 7HA","Aspire Homes, Wisbech",01945 664478
+"Victoria Esplanade, West Mersea, CO5 8BP","Game Estate Agents, West Mersea",01206 586072
+"Tabors Avenue, Chelmsford, CM2","Beresfords, Chelmsford",01245 945593
+"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley",01582 377645
+"Dowsdale Bank, Shepeau Stow, SHEPEAU STOW, PE12","Rosedale Land & New Homes, Peterborough",01733 964776
+"Plot 28 Walnut Close, Sutton St. James, Spalding, Lincolnshire, PE12","EweMove, Covering East Midlands",01274 015899
+"Chapel Lane, Elmstead, Colchester, CO7","Michaels Property Consultants Ltd, Wivenhoe",01206 586091
+"Plot 8 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"New Street, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle",01832 274732
+"Morris Green, Sible Hedingham, Halstead, Essex, CO9","Savills, Chelmsford",01245 945669
+"Dragon Road, Hatfield, AL10","Country Properties, Hatfield",01707 271450
+"Brookmans Avenue, Brookmans Park, Hertfordshire, AL9","Statons, Brookmans Park",01707 954088
+"Church Street, Spalding","Longstaff, Spalding",01775 661101
+"The Limberlost, Welwyn, AL6","Ashtons, Welwyn Garden City",01707 247349
+"Royston Road, Baldock, SG7","Country Properties, Baldock",01462 415848
+"Carnoustie Court, Tydd St Giles, Wisbech, Cambridgeshire, PE13 5NZ","Aspire Homes, Wisbech",01945 664478
+"St. Agnes Road, Billericay, Essex, ., CM12","Bairstow Eves, Billericay",01277 674183
+"Sewell, Dunstable","Cassidy & Tate, Marshalswick",01727 649730
+"Sewell, Dunstable","Cassidy & Tate, Marshalswick",01727 649730
+East Ruston NR12,"Aldreds, Stalham",01692 660100
+"Audley Court, 1 Forge Way, Southend-On-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"The Parks, March","Maxey Grounds, March",01354 704639
+"The Street, Little Clacton, Clacton-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"Prince Of Wales Road, Norwich","Think Property, Norwich",01603 361893
+"Manea Road, Wimblington, March","Maxey Grounds - Commercial, March",01354 707467
+"Spring Lane, Wickham Market, IP13 0SW","Cornerstone Residential, Woodbridge",01394 331534
+"24 High Street, Stilton, Huntingdon, PE7 3RA","Eddisons Commercial Limited, Peterborough",01733 964975
+"Eleanor House, London Road, St. Albans . AL1 1NR","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Chapel Lane, Elm, Wisbech","Sharman Quinney, March",01354 704623
+"Stour Close, Harwich","haart, Covering Harwich",01255 441760
+"Pound Lane, Laindon, Essex, SS15","Bairstow Eves, Billericay",01277 674183
+"Cordwainer Close, Norwich, NR7","Northwood, Norwich",01603 249247
+"Oxcroft Bank, Shepeau Stow, PE12 0TY","Longstaff, Spalding",01775 661101
+"Penwald Court, Peakirk, Peterborough, PE6","Rosedale Property Agents, Peterborough",01733 964671
+"Plot 3 (5) Foots Farm Lane, Clacton-on-Sea","Blake & Thickbroom, Clacton on sea",01255 688788
+"Channels, Chelmsford, CM3 3HA",Wimbush Waters,01702 967996
+"Pine Court, Impington, Cambridge, CB24","Tucker Gardner, Histon",01223 972820
+"Carr Street, Ipswich, IP4","Abbotts, Ipswich",01473 943898
+"Court Lane, Stevington, Bedford, Bedfordshire, MK43","Taylors Estate Agents, Bedford",020 3869 5951
+"Batchwood View, St. Albans","Connells, Marshalswick",01727 222160
+"Ash Close, Swaffham","William H. Brown, Swaffham",01760 302186
+"High Road, Buckhurst Hill, IG9","Yopa, East Anglia & London",01270 447764
+"Cats Lane, Great Cornard, Sudbury, CO10","Michaels Property Consultants Ltd, Halstead",01787 322107
+"Albany Gardens, Colchester, Essex, CO2","Saxons Estate Agents, Colchester",01206 586085
+"Turnpike Close, Doddington, March, Cambs, PE15 0FJ","T Payne & Co Ltd, Chatteris",01354 707494
+"The Lookout 2a Crescent Lane Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"Bakers Lane, Woodbridge, IP12","Fenn Wright, Woodbridge",01394 331099
+"Station Avenue, Southend-On-Sea","Colubrid, Thurrock & Basildon",01375 803788
+"Ipswich Road, Newbourne, Woodbridge","Grace Estate Agents, Ipswich",01473 943361
+"West End, Costessey, Norwich","Starkings & Watson, Costessey",01603 336446
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Chesham Road, Amersham, HP6","JNP, Amersham",01494 977148
+"Pockthorpe, Halvergate, Norwich, Norfolk, NR13","YOUR MOVE, Gorleston",01493 807227
+"Bradman Court, Abbeyfields","Martin & Co, Colchester",01206 586115
+"Osprey Court, Barnard Square, Ipswich IP2 8FF","First Step, Stotfold",01462 416014
+"Osprey Court, Barnard Square, Ipswich IP2 8FF","First Step, Stotfold",01462 416014
+"Aldeburgh, Suffolk","Flick & Son, Aldeburgh",01728 448693
+"The Retreat Lodges, St Marys Lane, Upminster, Essex","Sell My Group, Lytham",020 3910 6164
+"Leighton Avenue, Leigh-On-Sea","Ashleigh Stone, Leigh on Sea",01702 967591
+"Swannells Walk, Chorleywood.","Sewell & Gardner, Hertfordshire",01923 961618
+"Wheelwright House, Bedford MK42 9EX","First Step, Stotfold",01462 416014
+"Wheelwright House, Bedford MK42 9EX","First Step, Stotfold",01462 416014
+"High Street, Middlemarch Lodge, WD3","Trend & Thomas, Rickmansworth",01923 961920
+"Toddington Road, Harlington, LU5 6LA",HarperCrewe Central,01926 357096
+"High Road, Benfleet","Countryside Estates, Countryside Estates",01268 203737
+"Connaught Gardens, Connaught Gardens East, Clacton-On-Sea, Essex, CO15","Palmer & Partners, Colchester & Coast",01206 586084
+"Fridaybridge Road, Elm, Wisbech","Kavanagh Hayes, Chatteris",01354 704640
+"Bramfield, Halesworth","AbbotFox, Norwich",01603 510582
+"High Street, Old Town, Hemel Hempstead","Squire Estates, Hemel Hempstead",01442 974627
+"Denham Corner, Denham, Eye","Whittley Parish, Diss",01379 777262
+"St. Marys Lane, Upminster","Noble Residential, Covering Essex",01708 963063
+"St. Marys Lane, Upminster","Noble Residential, Covering Essex",01708 963063
+"St Clements Gate, Broadway, Leigh-On-Sea","Scott & Stapleton, Leigh-on-Sea",01702 471155
+"Waterhouse Street, Hemel Hempstead, HP1","Mulburries, Hemel Hempstead",01442 504258
+"Seaview Avenue, West Mersea, Colchester","Gyles & Rose, Colchester",01206 586104
+"Seaview Avenue, West Mersea, Colchester","Gyles & Rose, Colchester",01206 586104
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Aspen Country Park, IP28 6TT","Bruton Solutions, Bracknell",0118 230 4462
+"Orchard Crescent, Kirby Cross, Frinton on Sea","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Two Bed Regal Retreat, Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Marshland Street, Terrington St. Clement, King's Lynn","William H. Brown, King's Lynn",01553 603650
+"Plot 9 Newland Street, Witham","Yaxley Homes, Witham",01376 315810
+"Whitley Road, Hoddesdon","William H. Brown, Hoddesdon",01992 927314
+"South Walsham Road, Acle, Norwich, NR13","The Property Shop, Acle",01493 800909
+"Byewaters, Watford, WD18","Trend & Thomas, Rickmansworth",01923 961920
+"Nightingale Close, Melton, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"City Centre, NR1","AbbotFox, Norwich",01603 510582
+"Felixstowe Beach Park, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Western Road, Burnham-On-Crouch","S J Warren, Burnham-On-Crouch",01621 738592
+"Denham Corner, Denham","Durrants, Harleston",01379 777097
+"Livingstone Walk, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"De Havilland Road, Wisbech, Cambridgeshire, PE13 3AN","Aspire Homes, Wisbech",01945 664478
+"Nightingale Close, Melton, Woodbridge, Suffolk, IP12","Fenn Wright, Woodbridge",01394 331099
+"Leys Avenue, Letchworth Garden City, SG6","Satchells Estate Agents, Letchworth",01462 415925
+"Stonham Aspal, Suffolk, IP14 6AT","Park Move, Nationwide",01780 432725
+"Plot G Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot B Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot I Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot H Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot F Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot A Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot C Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot E Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Whytefield Road, Ramsey, PE26","Lennon James Property, Abbots Ripton",01480 274333
+Fakenham,"Sowerbys, Fakenham",01328 801643
+"Bond Street, Cromer, Norfolk, NR27","YOUR MOVE - Bennetts, Norwich",01603 708978
+"Queen Street, Castle Hedingham, Essex","David Burr Estate Agents, Castle Hedingham",01787 322211
+"Jarrah Cottages, London Road, Purfleet, Essex, RM19","Woodland, Ilford",020 8554 5544
+"Rayleigh, Essex, SS6","Essex Guild Homes, Rayleigh",01268 777728
+"South Street, Crowland, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"Fifth Avenue, Wisbech, Cambridgeshire, PE13 2BL","Aspire Homes, Wisbech",01945 664478
+"Crowsheath Estate, Billericay, CM11","Gibson & Brennan, Basildon",01268 437987
+"Collier Way, Southend-on-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"The Old Bank, Kelvedon","Oakheart Property, Land & New Homes, Covering Essex & Suffolk",01246 956521
+"Lynn Road, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Vineyards Road, Northaw, Potters Bar","Fine & Country, Brookmans Park",01707 241403
+"Burnham Lodge, Oakstead Close, Ipswich, IP4","Belvoir, Ipswich",01473 943916
+"Ringstead Road, Heacham","The Norfolk Agents, Dersingham",01485 506961
+"Second Avenue, Weeley, Clacton-On-Sea","William H. Brown, Clacton On Sea",01255 442150
+"Chancellor Court, Chelmsford","Retirement Homesearch, East of England",01425 209944
+"Manor Road , Chigwell ,","Lifestyle Property, Docklands",020 3897 8479
+"Manor Road, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Talbot Manor Gardens, Plot 4, Lynn Road, Fincham, Kings Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Talbot Manor Gardens, Plot 6, Lynn Road, Fincham, King Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Land At Pymoor - Lot 1, Main Drove, Little Downham, Ely, Cambridgeshire, CB6","Carter Jonas LLP - Rural, Cambridge",01223 972792
+"Wisbech Road, Thorney, Peterborough","Woodcock Holmes Estate Agents, Peterborough",01733 964839
+"Midland Road, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"City Gate House, Eastern Avenue, Ilford, IG2","Real Move Estates, Chadwell Heath",020 8590 5333
+"20, Basildon, SS16","Keller Williams Plus, Covering Nationwide",020 3892 9627
+Greenstead Green,"Zoe Napier Collection, Essex & South Suffolk",01621 731800
+"Oilmills Road, Ramsey Mereside, PE26","Lennon James Property, Abbots Ripton",01480 274333
+"Enfield Court, Eye, Peterborough, PE6","Rosedale Property Agents, Peterborough",01733 964671
+"Cambridge Road, Stretham, Ely, CB6","Abbotts, Ely",01353 887783
+"Berryfield, March","William H. Brown, March",01354 704614
+"AG14 Felixstowe Beach Holiday Park, Walton Avenue, Felixstowe, Suffolk, IP11","Joscelyne Chase, Essex & Suffolk",01376 315808
+"Tudor Place, Wimblington, March, Cambs., PE15 0PX","T Payne & Co Ltd, Chatteris",01354 707494
+"Deercote Court, Glen Luce, Turners Hill, Cheshunt, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"Somersby Gardens, Ilford, IG4","Bairstow Eves, Barkingside",020 3869 5975
+"PARKSIDE, Grays","Grant Allen Estate Agents, Grays",01375 390029
+"Green End Lane, Great Holland","Lamb & Co, Land & New Homes",01255 444228
+"Guthrie House, Bretton, Peterborough, PE3","Rosedale Property Agents, Peterborough",01733 964671
+"Barroway Drove, Downham Market","Fine & Country, King's Lynn",01553 603223
+"Englands Lane, Gorleston","Aldreds, Gorleston on Sea",01493 807284
+"Graham Road, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Uffen Way, Sawston","Pocock & Shaw, Cambridge",01223 972787
+"Westmead Avenue, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"7a Queen Street, Town Centre","Shires Estate & Letting Agents, Haverhill",01440 840585
+"Taylors Loke, Hemsby","Bycroft Estate Agents, Great Yarmouth",01493 801538
+"Norton Place, Icknield Way, Baldock, SG7","Country Properties, Baldock",01462 415848
+"Pound Lane, Laindon, Essex, SS15","Bairstow Eves, Basildon",01268 202635
+"Chaffinch Way, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"William Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"Tyhurst, Middleton, Milton Keynes","Connells, Milton Keynes",01908 087115
+"March Road, Friday Bridge, Wisbech","William H. Brown, Wisbech",01945 664477
+"Eastlands, Stradbroke, Eye","William H. Brown, Diss",01379 773565
+"Collins Cross, Bishop's Stortford, Hertfordshire, CM23","Park Lane Property Agents, Bishops Stortford",01279 594720
+"Nanterre Court, Cassiobury","Retirement Homesearch, East of England",01425 209944
+"Old Town, Hemel Hempstead","Clements Estate Agents, Covering Herts, Beds & Bucks",01442 501057
+"Mere View, Thompson Close, Haughley, Stowmarket, IP14","Lacy Scott & Knight, Stowmarket",01449 612384
+"Lower Olland Street, Bungay","William H. Brown Select, Norwich",01603 361639
+"354 Four Chimneys Crescent, Hampton Heights, Peterborough, PE7 8SR",Cala Homes North Counties,01733 964778
+"SYCAMORE WAY, KIRBY CROSS","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Mill Lane, Bacton, Norwich","William H. Brown, North Walsham",01692 660092
+"St. Johns Road, Colchester","William H. Brown, Colchester St Johns",01206 586062
+"Parkhouse Court, Hatfield, AL10","Moving Places, Hatfield",01707 954053
+"Braintree Road, Dunmow, Essex","Daniel Brewer Estate Agents, Essex",01371 708267
+"The Old Coal Yard, Snettisham, King's Lynn","William H. Brown, Hunstanton",01485 506836
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"Ness Road, Erith, Kent, DA8","Anthony Martin Estate Agents, Barnehurst",01322 952698
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"East Of England Way, Orton Northgate, Peterborough","Sharman Quinney, Hampton",01733 964948
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"Whitehall Road, London","Coppermills, Walthamstow & Leyton",020 3910 6238
+"Whitehall Road, London","Coppermills, Walthamstow & Leyton",020 3910 6238
+"Park House, Old Park Road, Hitchin","McCarthy & Stone Resales, Bournemouth",03455 564122
+"High View, Bedford","Goodacres Residential, Kempston",01234 230058
+"Coniston Road, PETERBOROUGH","William H. Brown, Peterborough",01733 964717
+"Buntings Path, Burwell, Cambridge","Morris Armitage, Burwell",01630 410888
+"Colchester Road, St. Osyth, Clacton-on-Sea, Essex, CO16","Abbotts, Colchester",01206 586064
+"Channels, Chelmsford, CM3 3HA",Wimbush Waters,01702 967996
+"Aickmans Yard, King Street, King's Lynn, Norfolk, PE30","Bennett & Co Estate Agents, King's Lynn",01553 603486
+"The Common, Metfield, Harleston, Norfolk, IP20","Savills, Ipswich",01473 943373
+"Glanthams Close, Shenfield, CM15","Beresfords, Shenfield",01277 674308
+"Holy Acre, Roydon Mill, Roydon","Oliver Minton, Stanstead Abbotts",01920 455428
+"Greengage Rise, Melbourn, SG8","Ensum Brown, Royston",01763 750000
+"East Street, Huntingdon","Sharman Quinney, Godmanchester",01480 776297
+"Southsea Avenue, Watford, WD18","Proffitt & Holt Partnership, Watford",01923 961129
+"Wintringham, St. Neots","Harvey Robinson, St Neots",01480 278946
+"Penzance Road, Kesgrave, Ipswich","William H. Brown, Ipswich East",01473 943332
+"Queen Elizabeth Way, Colchester","John Alexander Tiptree, Tiptree",01621 738588
+"Flat 17, Waterside Mead","Open House Estate Agents, Nationwide",020 3910 1882
+"Mill Road, Burnham-On-Crouch","S J Warren, Burnham-On-Crouch",01621 738592
+"St James' Park off St James' Way Whittington Way Bishop's Stortford, CM23 4AS",Bellway Homes Ltd (North London),01279 594775
+"Half Moon Lane, Pepperstock, Bedfordshire, LU1 4LW","L&D Estate Agents, Covering Luton",01582 377764
+"Wykes Bishop Street, Ipswich","Connells, Ipswich",01473 943139
+"Loates Lane, Watford, Hertfordshire, WD17","Your Move, Watford",01923 961818
+"Chenies Hill, Latimer, HP5","Bovingdons, Beaconsfield",01494 341026
+"Black Dyke Road, Hockwold, Norfolk, IP26 4JW","Elvin Estates, Mildenhall",01638 597092
+"Kentish Lane, Brookmans Park, Hertfordshire, AL9","Statons, Brookmans Park",01707 954088
+"Ashley Court, Hatfield, AL10","Wrights of Hatfield, Hatfield",01707 241242
+"Cherry Blossom Cottage, Wortham","Durrants, Diss",01379 777085
+"Redwood Grove, Bedford, MK42","Taylors Estate Agents, Bedford",020 3869 5951
+"Greenfields Road, East Dereham, NR20 3TE",Orbit,01362 702210
+"Prince Street, Wisbech, Cambridgeshire, PE13","Town & Country Letting Agents, Downham Market",01949 480441
+"Chingford Avenue, Chingford, E4","Coultons, London",020 3907 9959
+"The Leas, Frinton on Sea","Stoneridge Estates, Frinton on Sea",01255 441084
+"Beaumonds, St Albans, AL1","Northwood, St Albans",01727 222084
+"Bridgwater Drive, Westcliff-On-Sea","Abode, Covering Essex",01702 418793
+"South Beach Road, Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"Wimpole Street, CHATTERIS","Sharman Quinney, March",01354 704623
+"Main Road, Gedney, Spalding","William H. Brown, Long Sutton",01406 431140
+"Anglia Parkway North, IP1","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Eagle Street, Cambridge, Cambridgeshire, CB1","Tucker Gardner, Cambridge",01223 972799
+"Jubilee Avenue, Fakenham","Minors & Brady, Dereham",01362 702993
+"Walton Road, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"38 Wellesley Road, Great Yarmnouth, NR30","One Estate Agents, Gorleston-on-Sea",01493 801387
+"Alder Court, Chesterton","Retirement Homesearch, West of England & Wales",01425 209962
+"Plot 56 Centurion Park, Moulton Chapel, Spalding","Firmin & Co, Crowland",01733 964254
+"Market Rasen Way, Holbeach, PE12","City & County (UK) Ltd, Crowland",01733 964706
+"Dudley Street, Luton, Bedfordshire","Leaders Sales, Bedford",01234 987237
+"Plot 20/39 Centurion Park Roman Road, Moulton Chapel, Spalding","Firmin & Co, Crowland",01733 964254
+"City View Road, Norwich","William H. Brown, Hellesdon",01603 361920
+"Hancock Drive, Luton, LU2","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Ballantyne Drive, Colchester","Jackson & Co, Covering Suffolk",01473 943847
+"Edinburgh House, Harlow, Harlow","Apple Property Services, Hornchurch",01708 704768
+"Brookend Drive, Barton-Le-Clay, MK45 4SQ","Love Homes, Barton-le-Clay",01582 297272
+"Rivendale, Werrington, Peterborough","Sharman Quinney, Werrington",01733 964878
+"Neatherd Moor, Dereham, NR20","Homeworks, Dereham",01362 702202
+"Broad Street, Great Cambourne, Cambridge","Sharman Quinney, Cambourne",01954 776148
+"Flag Hill, Great Bentley, Colchester, CO7","Michaels Property Consultants Ltd, Wivenhoe",01206 586091
+"John Bends Way, Parson Drove, Wisbech","William H. Brown, Wisbech",01945 664477
+"Berryfield, March","William H. Brown, March",01354 704614
+"South Green, Coates, PE7","Yopa, East Anglia & London",01270 447764
+"Poole Street, Great Yeldham, Essex, CO9","Savills, Chelmsford",01245 945669
+"Town Street, Upwell, Wisbech","William H. Brown, Downham Market",01366 312332
+"Hainault Road, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Wolsey Road, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"The Fairways, Rushmere St Andrew, Ipswich, IP4","Marks & Mann Estate Agents Ltd, Covering Suffolk",01473 938325
+"Elmdale Drive, Carlton Colville, Lowestoft","Hardimans Estate Agents, Lowestoft",01502 448102
+"Flag Hill, Great Bentley, CO7","Town & Country Residential, Brightlingsea",01206 586068
+"Valley Way, Stevenage, Hertfordshire, SG2","Putterills, Stevenage",01438 901775
+"Woolram Wygate, Spalding, PE11","Belvoir, Spalding",01775 668874
+"Paynes Park, Hitchin, SG5","Country Properties, Hitchin",01462 416607
+"Palgrave Road, BEDFORD, Bedfordshire, MK42","Taylors Estate Agents, Bedford",020 3869 5951
+"Alexandra Street, Southend-on-sea, SS1","Gilbert & Rose, Leigh-on-sea",01702 967150
+"The Hamilton, Alder Meadow, Creeting St. Mary, Suffolk, IP6","Jackson-Stops, Ipswich",01473 943579
+"Chelmsford Road, Shenfield, CM15","Beresfords, Shenfield",01277 674308
+"Cranbrook Road, Ilford, IG1","Highcastle Estates, Ilford",024 7542 6094
+"Cranbrook Road, Ilford, IG1","Highcastle Estates, Ilford",024 7542 6094
+"Great Gregorie, Lee Chapel South, Basildon, SS16","Yopa, East Anglia & London",01270 447764
+"West Street, Hertford, SG13","Fine & Country, Ware",01920 455382
+"Plot 29, Berryfield, March","Maxey Grounds, March",01354 704639
+"Beach Road, Kessingland, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"The Street, Catfield NR29","Aldreds, Stalham",01692 660100
+"Marsworth Wharf, Marsworth","Cesare & Co, Tring",01442 504143
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Milliners Way, Luton","Esquire Estates, Luton",01582 377323
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"High Street, Gorleston","Howards, Gorleston",01634 563586
+"High Road, Buckhurst Hill, IG9","Farr O'Neil, Buckhurst Hill",020 3870 7037
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Burlescoombe Road, Thorpe Bay","Bear Estate Agents, Southend-on-Sea",01702 967452
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Duke Street, Ipswich","haart, Ipswich",01473 943783
+"The Gateway, Watford","Benjamin Stevens, Bushey",020 3834 8601
+"Park View, Brookside","Harvey Robinson, Huntingdon",01480 271779
+"The Street, Takeley, CM22","Beresfords, Land & New Homes",01245 945975
+"Hungate Road, Emneth , Wisbech, PE14","King & Partners, Downham Market",01366 385588
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"The Street, Tatterford, NR21","Belton Duffey, Fakenham",01328 800722
+"Land Off Broad Street, Green Road, Maldon, Essex, CM9 8NY",Bellway Homes (Thames Gateway),01623 700717
+"Station Road, North Chingford E4","Coultons, London",020 3907 9959
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"St James' Park off St James' Way Whittington Way Bishop's Stortford, CM23 4AS",Bellway Homes Ltd (North London),01279 594775
+"Salter Court, Colchester","Boydens, Colchester",01206 586167
+"Hart Hill Lane, Luton, Bedfordshire, LU2","Giggs & Bell, Stopsley",01582 377645
+"Skippers Way, Walton on the Naze, CO14","My Moving Places, Frinton On Sea",01255 442092
+"Pottersheath Road, Welwyn, Hertfordshire","Ashtons, Welwyn Garden City",01707 247349
+"Lydgate Court, Bury St. Edmunds","Mortimer & Gausden, Bury St. Edmunds",01284 333377
+"Old Road, Coggeshall, Essex, CO6","Heritage, Coggeshall",01376 315805
+"MEADOW VIEW, Epping Lane, Stapleford Tawney,","Millers Estate Agents, Epping",01992 662310
+"Constantine Road, Colchester, CO3","Beresfords, Colchester",01206 586080
+"St. Nicholas Place, Sheringham","Arnolds Keys, Coastal",01263 801360
+"Seton Gardens, Dagenham","Carter & Willow, Dagenham",020 3897 8474
+"Montague Avenue, Luton, Bedfordshire, LU4","EweMove, Covering East of England",01274 015915
+"Tavistock Street, Bedford, MK40","Compass Elevation, Bedford",01234 230843
+"Kendale Road, Luton","Venture Residential, Luton",01582 377648
+"The Broadway, Bedford, MK40","Compass Elevation, Bedford",01234 230843
+"South Beach Road, Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"East Street, Coggeshall, Colchester","William H. Brown, Coggeshall",01376 312574
+"Broadland Drive, Thorpe End, NR13","Northwood, Norwich",01603 249247
+"Gaultree Square, Emneth, Wisbech","William H. Brown, Wisbech",01945 664477
+"461 High Road, Ilford","Clarke Hillyer Limited, Loughton",020 3909 0348
+"Bawburgh, Norwich, NR9","AbbotFox, Norwich",01603 510582
+"Crawthorne Road, Peterborough, PE1","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Swan Mead, Luton","Esquire Estates, Luton",01582 377323
+"Felmersham Road, Carlton, Bedfordshire, MK43","Michael Graham, Bedford",01234 676680
+"Nether Street, Widford, Ware","Steven Oates, Hertford",01992 661978
+"Longmeadow Close, Griston, Thetford, Norfolk, IP25","Abbotts, Watton",01953 667624
+"Devonshire House, Repton Park, IG8","Durden & Hunt, Loughton",020 3840 3855
+"Dudley Street, Bedford","haart, Bedford",020 3840 3438
+"Shannock Court, Sheringham","Retirement Homesearch, East of England",01425 209944
+"Great Hallingbury, Bishop's Stortford","Noble Residential, Covering Essex",01708 963063
+"Hilltop Close, Rayleigh, SS6","Elliott & Smith Partnership, Rayleigh",01268 203676
+"Upper Green, Felsham, Bury St Edmunds, Suffolk, IP30","Jackson-Stops, Bury St Edmunds",01284 332555
+"The Crescent, Hemsby","Aldreds, Great Yarmouth",01493 801522
+"Kiln Field, Hook End, Brentwood","Keith Ashton, Kelvedon Hatch",01277 674395
+"Crocklands, Greenstead Green, Halstead, Essex, CO9","Jackson Stops, Colchester",01206 583491
+"Victoria Road, Lowestoft","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Parkway, Gaywood, King's Lynn, Norfolk, PE30 4WU",Lovell,01553 603521
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"The Icon, Southernhay, Basildon, Essex, SS14","KINGSWOOD, Basildon",01268 203171
+"Eastfield Road, Peterborough","William H. Brown, Peterborough",01733 964717
+"Church Lane, Bocking, Braintree","Nicholas Percival, Colchester",01206 586122
+"Homestead Place, Upper Staithe Road, Stalham, Norwich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Grosvenor Road, Ilford","Calibre Estates, London",020 7183 1060
+"High Street, Clavering, Nr Saffron Walden, Essex, CB11","Mullucks, Saffron Walden",01799 611333
+"33 Eastland Grange, 16 Valentine Road, Hunstanton","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Tudor Court, Brentwood, CM14","Durden & Hunt, Ongar",020 3907 3723
+"Lambourne, Colchester","haart, covering Wivenhoe",01206 586082
+"The Drove, Barroway Drove, Downham Market, PE38","King & Partners, Downham Market",01366 385588
+"MALTING LANE, KIRBY-LE-SOKEN","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Stanley Street, Bedford","Connells, Bedford",020 3869 5634
+"Hunstanton Road, Dersingham","The Norfolk Agents, Dersingham",01485 506961
+"Newland Street, Witham, CM8","Beresfords, Witham",01376 315792
+"Palmerston Road, Buckhurst Hill, Essex, IG9","Bairstow Eves, Woodford Green",020 3835 6392
+"Grove Road, Grays","haart, Grays",01375 803701
+"High Road, Benfleet","Aspire Estate Agents, Benfleet",01268 203954
+LOW WALL BEACH HUT NEAR CONNAUGHT AV.,"Boydens, Frinton-on-Sea",01259 235945
+"Station Road, Canvey Island","Richard Poyntz & Co, Canvey Island",01268 203590
+"The Leas, Frinton- On-Sea","Sheen's, Frinton-On-Sea",01255 852555
+"St. Albans Hill, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"King Street, Norwich","William H. Brown, Norwich",01603 361933
+"Sunson Place, Havelock Road, Luton","Nova Estate Agents, Luton",01582 377133
+"Camp Road, St. Albans","Connells, Marshalswick",01727 222160
+"Fentiman Way, Hornchurch, Essex","Douglas Allen, Hornchurch",01708 205425
+"Mandalay Park, Whittlesey PE7","Bruton Solutions, Bracknell",0118 230 4462
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Three Bed Willerby Malton (37x12) 2022, Belle Aire Holiday Park, Beach Rd, Hemsby, Norfolk, NR29 4HZ","Sell My Group, Lytham",020 3910 6164
+"Plot 1 The Cullinan Collection, The Ridgeway, Cuffley, Hertfordshire, EN6","Statons New Homes Showcase, Barnet",020 3907 9762
+"Plot 4 The Cullinan Collection, Cullinan Close, Cuffley, Hertfordshire, EN6","Statons New Homes Showcase, Barnet",020 3907 9762
+"Bedlars Green, Near Bishops Stortford","Park Lane Property Agents, Bishops Stortford",01279 594720
+"Clyde, East Tilbury, RM18","Chesters Estates, Grays",01375 803682
+"Clyde, East Tilbury, RM18","Chesters Estates, Grays",01375 803682
+Hall Road Copford Colchester CO6 1BN,Dandara Eastern,01206 489560
+"The Manor, Regents Drive, Woodford Green, Greater London, IG8","Madison Fox, Chigwell",020 3840 3992
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Fridaybridge Road, Elm, Wisbech","William H. Brown, Wisbech",01945 664477
+"Park Drive, Marshalls Park, Romford, RM1","Davis Estates, Hornchurch",01708 205276
+"Highfield Drive, Littleport, Ely","William H. Brown, Ely",01353 881275
+"Keller Close, Stevenage, SG2","Express Estate Agency, Nationwide",03330 165458
+"Armstrong Road, Luton","Connells, Luton",01582 377356
+"Bankside Close, South Woodham Ferrers","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flag Hill, Great Bentley, Colchester","Lamb & Co, Tendring",01255 422240
+"Main Road, Mundon, Maldon, CM9 6PB","Joe Ross Properties, Powered by eXp, Maldon",01621 738966
+"Conduit Road, Bedford, Bedfordshire, MK40","Urban & Rural, Bedford",020 3892 9546
+"Chigwell Park, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Harry Barber Close, Norwich","William H. Brown, Norwich",01603 361933
+Beach hut 1 Pier North,"Diamond Mills & Co, Felixstowe",01394 331695
+"North Drive, Great Yarmouth, Norfolk, NR30","YOUR MOVE, Gorleston",01493 807227
+"Flat 9, North Court, Rembrandt Way, Watford, Hertfordshire, WD18","Wynn Estates, Hounslow",020 3909 6626
+"Longbanks, Harlow, Harlow, CM18","Wright & Co, Sawbridgeworth",01279 976936
+"Brington Road, Old Weston. PE28 5LP","Southams, Barnwell",01832 778367
+"Homerton Street, Cambridge, Cambridgeshire","Bidwells, Cambridge",01223 972773
+"Plot 3 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Tolpits Lane, Watford","Brown & Merry, Watford",01923 961759
+"Coast Road, Corton, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Trafalgar Street, Norwich","William H. Brown, Norwich",01603 361933
+Second Avenue RM10,"Anisten Homes, Ilford",020 3889 9064
+"Links Avenue, Felixstowe, Suffolk, IP11","Ascot Estate Agency, Martlesham",01473 611460
+"Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Swan Lane, Barnby","Brown & Co, Norwich",01603 361667
+"Leighton Avenue, Leigh-On-Sea","Home, Leigh on sea",01702 967219
+"G14 Chapel House, 21-25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Fingringhoe Road, Rowhedge, Colchester, Essex","Strutt & Parker, National Country House Department",020 3879 5374
+"Centrum Court, Pooleys Yard","Martin & Co, Ipswich",01473 943877
+"Letheringsett Hill, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"The Boulevard, Repton Park, IG8","Durden & Hunt, Loughton",020 3840 3855
+"Yarmouth Road, North Walsham","Minors & Brady, Wroxham",01603 361621
+"Parklands, Green Lane Estate, Pudding Norton, Fakenham, NR21","Abbotts, Fakenham",01328 800709
+"Pump Street, Orford, IP12","Suffolk Coastal, Aldeburgh",01728 443743
+"Edward House, Pegs Lane, Hertford","Shepherds, Hertford",01992 662103
+"South Street, Romford, RM1","Bairstow Eves, Romford",01708 961674
+"Hargate Way, Hampton Hargate, Peterborough, PE7","Belvoir, Peterborough",01733 964767
+"Leyton Green, Harpenden, Hertfordshire, AL5","Ashtons, Harpenden",01582 377552
+"Potters Court, Potters Bar","Raine & Co, Potters Bar",01707 954070
+"Aventine Court, Holywell Hill, St. Albans, AL1","Hamptons, St Albans",01727 222024
+"Connaught Avenue, Frinton-On-Sea, CO13 9PT","Boydens, Frinton-on-Sea",01259 235945
+"Green Lane, Peterborough, Cambridgeshire, PE1","Freedom Homes, Peterborough",01733 964657
+"Woodbine Close, Waltham Abbey","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"Mill Close, Salhouse, Norwich","Starkings & Watson, Brundall",01603 336556
+"Talbot Manor Garden, Plot 7, Lynn Road, Fincham, Kings Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Ashton Court, Chingford","Churchill Estates, North Chingford & Sewardstone",020 3835 6473
+"Heron Walk, March","Sharman Quinney, March",01354 704623
+"Woodland View, Stratton Strawless, Norwich","William H. Brown, Norwich",01603 361933
+"Mary Munnion Quarter, Chelmsford","William H. Brown, Chelmsford South",01245 945288
+"London Road, Westcliff-on-sea","haart, Westcliff On Sea",01702 746972
+"Alexandra Street, Southend-on-Sea, SS1","Gilbert & Rose, Leigh-on-sea",01702 967150
+"Ely, Cambridgeshire, CB6","Quickmove Properties, Wiltshire",01793 540551
+"High Road, Newton-In-The-Isle, Wisbech","William H. Brown, Wisbech",01945 664477
+"Mafeking Avenue, Newbury Park","Sandra Davidson Estate Agents, Seven Kings",020 3834 8339
+"Gwyn Crescent, Fakenham","William H. Brown, Fakenham",01328 800703
+"Hookfield, Harlow, CM18","iad, Nationwide",03330 382150
+"Hookfield, Harlow","William H. Brown, Harlow",01279 976892
+"Factory Lane, Roydon, Diss","Whittley Parish, Diss",01379 777262
+"Hawkswood Road, Downham, Billericay","Cowling & Payne, Wickford",01268 202962
+"High Street, Mepal, Ely,","Maxey Grounds, March",01354 704639
+"Skipper House, Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Ermine Street South, Papworth Everard, Cambridge, Cambridgeshire, CB23 3QA","Eddisons Commercial Limited, Huntingdon",01480 271765
+"Britannia Road, Northstowe, Cambridgeshire, CB24 1DE",Vistry East Anglia (Bovis),01223 972796
+"Kempley Close, Hampton Centre, Peterborough, PE7 8QH","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Lime Cottages, High Cross - Parking Space","Taylor Phelps, Ware",01920 455452
+"Victoria Mill Road, Framlingham, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"The Glebe, Wells-next-the-Sea, NR23","Belton Duffey, Wells-next-the-Sea",01328 800726
+"Connaught Gardens East, Clacton-On-Sea, Essex, CO15","Palmer & Partners, Colchester & Coast",01206 586084
+"Bull Close, Chafford Hundred, Essex, RM16","Chesters Estates, Grays",01375 803682
+"Longbridge Road, Barking","William H. Brown Incorporating Porter Glenny, Barking",020 3871 3814
+"Bushmead Avenue, Bedford","Hollands Smith, Bedford",020 3835 6022
+"Between Nettlestead & Somersham, Nr Ipswich, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"Residential Development Plots , The Street, Marham, King's Lynn, Norfolk, PE33 9JN","Eddisons Commercial Limited, Huntingdon",01480 271765
+"Yarmouth Road, Ipswich, IP1","Northwood, Norwich",01603 249247
+"Slade Court, Watling Street, Radlett","Susmans Estates, Radlett",01923 961989
+"Chalkwell Esplanade, Chalkwell, SS0","Niche Homes, Leigh on Sea",01702 967888
+"Star Lane, Ipswich, Suffolk, IP4","Pennington Surveyors Limited, Ipswich",01473 943457
+"Passingham Close, Billericay, CM11","Tyler Estates, Billericay",01277 674562
+"Stromness Road, Southend-On-Sea, Essex, SS2","Ocean Residential, Westcliff-on-Sea",01702 967924
+"Hamels Mansion, Hamels Park, Buntingford, Hertfordshire, SG9","Savills, Bishops Stortford",01279 967996
+"Cole Green Lane, Welwyn Garden City","William H. Brown, Welwyn Garden City",01707 954063
+"Wigginton Bottom, Wigginton, Tring","Brown & Merry, Tring",01442 504077
+"Browne Street, Norwich","Pymm & Co, Norwich",01603 361642
+"Alexandra Road, Great Wakering, Southend-on-Sea, Essex, SS3","Hunt Roche, Coast & Country Homes",01702 967987
+"Eastern Esplanade, Thorpe Bay, Southend-On-Sea, Essex, SS1","Hunt Roche, Coast & Country Homes",01702 967987
+"Hamilton Court, Leighton Buzzard, LU7 1JF","M & M Properties, Leighton Buzzard",01525 664321
+"Main Road, Mundon, Maldon","Aspire Estate Agents, Benfleet",01268 203954
+"Woodside Road, Lower Woodside, Luton","Connells, Luton",01582 377356
+"Smeeth Road, Marshland St. James, WISBECH","William H. Brown, Wisbech",01945 664477
+"Ballantyne Drive, Colchester","John Alexander, Colchester",01206 586126
+"Roslyn Court, Lisle Lane, Ely, Cambridgeshire, CB7 4FA","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Skippers Way, WALTON ON THE NAZE","William H. Brown, Clacton On Sea",01255 442150
+"Homewood Court, Cedars Village, Chorleywood, Hertfordshire, WD3","Binks Estate Agents, Covering Chilterns",01923 961214
+"Gwyn Crescent, Fakenham","William H. Brown, Fakenham",01328 800703
+"Water Lane, Steeple Bumpstead, Haverhill, Essex, CB9","Intercounty, Saffron Walden",01799 619634
+"Marsh Road, Oulton Broad","Minors & Brady, Oulton Broad",01502 441421
+"Marsh Road, Oulton Broad","Minors & Brady, Oulton Broad",01502 441421
+"St. Georges Court, Huntingdon, Cambridgeshire.","Oliver James, Huntingdon",01480 776410
+"Gisleham, Lowestoft, Suffolk, NR33","Carter Jonas LLP - Rural, Cambridge",01223 972792
+"Willowbrook Drive, Whittlesey, Peterborough, PE7","Pennell & Partners, Whittlesey",01733 964097
+"Nup End Lane, Wingrave, Aylesbury","Alexander & Co, Aylesbury",01296 254903
+"G27 Park House 146 - 158 Park Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Plot 1 Necton Road, Wheathampstead, AL4","Hamptons New Homes, Stanmore",020 3840 3604
+"High Street, Brentwood","Keith Ashton, Brentwood",01277 674388
+"Halstead Road, Kirby Cross","Sheen's, Frinton-On-Sea",01255 852555
+"Barrier Bank, Cowbit, Spalding","William H. Brown, Spalding",01775 660913
+"Horning Road West, Hoveton, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Ulverston, Purfleet-on-Thames, Essex, RM19","Bairstow Eves, South Ockendon",01708 205245
+Foremans Bridge Caravan Park,"Lets Get you Moving.co.uk, Holbeach",01406 431109
+"Bull Close, Norwich","William H. Brown, Norwich",01603 361933
+"Land Off Broad Street, Green Road, Maldon, Essex, CM9 8NY",Bellway Homes (Thames Gateway),01623 700717
+"Design Drive, Dunstable, Dunstable, LU6 1FS","KEAZE LIMITED, London",020 7870 1830
+"Wyndham Crescent, Clacton-On-Sea","Lamb & Co, Tendring",01255 422240
+"Laxfield Road, Fressingfield","Durrants, Harleston",01379 777097
+"Lynn Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"Crafton, Leighton Buzzard, LU7","Stowhill Estates Ltd, Stowhill Estates Frilford",03330 165177
+"Heath Road, Warboys, Huntingdon, Cambridgeshire, PE28","Thomas Morris, Ramsey",01487 801934
+"Michigan Close, Turnford","Anthony Davies, Hoddesdon",01992 927992
+"Wattle Close, Lower Cambourne, Cambridge","Connells, Cambourne",01954 774652
+"Cambridge Road, Stretham, Ely","William H. Brown, Ely",01353 881275
+"Low Road, Sweffling, Saxmundham","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Hertford Mews, Billy Lows Lane, Potters Bar","Auckland Estates Limited, Potters Bar",01707 241361
+"High Road, Gorefield","Maxey Grounds, Wisbech",01945 661540
+"Dunwich Farm, Stevenage SG1","Properly, London",020 3840 3405
+"Dunwich Farm, Stevenage, Hertfordshire, SG1","Putterills, Stevenage",01438 901775
+"Pound Avenue, Stevenage, Hertfordshire, SG1","Putterills, Stevenage",01438 901775
+"Wind Hill, Magdalen Laver","Butler & Stag, Theydon Bois",020 3897 2972
+"High Wall, Frinton on Sea","Stoneridge Estates, Frinton on Sea",01255 441084
+"Parker Crescent, Sawtry, Cambridgeshire.","Oliver James, Huntingdon",01480 776410
+"The Common, Metfield","TW Gaze, Diss",01371 708263
+"Chalkwell Esplanade, Westcliff-On-Sea","Home, Leigh on sea",01702 967219
+"** SIGNATURE HOMES ** Hook End Road, Hook End","Keith Ashton, Kelvedon Hatch",01277 674395
+"Dagless Way, March","William H. Brown, March",01354 704614
+"Express Drive, London, IG3","Tyron Ash International Real Estate, London",03330 164235
+"Dove House Close, Godmanchester, Huntingdon, PE29","Peter Lane & Partners, Huntingdon",01480 414800
+"Severn House, Riverside Maltings, Oundle, PE8","Woodford & Co, Oundle",01832 274732
+"Wedderburn Road, Barking","Sandra Davidson Estate Agents, Seven Kings",020 3834 8339
+"Booth Court, Handford Road, Ipswich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Rainbow Road, Canvey Island","Aspire Estate Agents, Benfleet",01268 203954
+"Jubilee Way, Crowland, Peterborough","Sharman Quinney, Werrington",01733 964878
+Docking,"Sowerbys, Burnham Market",01328 803417
+"Hall Drive, Gosfield, CO9","Beresfords, Land & New Homes",01245 945975
+"Langshaw Close, Framlingham, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"Oak Tree Park, Attleborough","Hammond & Stratford, Attleborough",01953 667597
+"Withy Mead, London, E4","Dayfields, Enfield Town",020 8103 5678
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"Clarkson Avenue, Wisbech, PE13","Belton Duffey, Kings Lynn",01553 603677
+"Plot 7 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Blyford Lane, Halesworth, IP19","Sefftons, Norfolk",01603 361026
+"Chiltern Road, Dunstable, Bedfordshire, LU6","Urban & Rural Property Services, Dunstable",01582 377032
+"Parkland Close, Horning, Norfolk","Stobart & Hurrell, Wroxham",01603 361930
+"Pegmire Lane, Aldenham, WD25","Purplebricks, covering Watford",020 3909 9701
+"High Road, Buckhurst Hill, Redbridge","Portico, Woodford",020 3909 0018
+"Mill Park Gardens, Mildenhall, Bury St. Edmunds, Suffolk, IP28","Balmforth, Mildenhall",01638 598599
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"Grosvenor Road, St. Albans, Hertfordshire, AL1","Frost's, St. Albans",01727 649757
+"Pettaugh Road, Stonham Aspal, Stowmarket","Hamilton Smith, Needham Market",01449 709827
+"Back Lane, Stisted, Braintree","Paul Mason Associates, Essex",01245 945519
+"Staithe Road, Burgh St. Peter, Beccles, Norfolk, NR34","YOUR MOVE, Beccles",01502 273333
+"Money Bank, Wisbech, PE13 2JN","Robert Hale Estates, Wisbech",01945 661608
+"High Street, Mundesley, Norwich","William H. Brown, Cromer",01263 801120
+"Coxes Farm Road, Billericay, CM11","Beresfords, Billericay",01277 674326
+"Poets Place, 11 Alderton Hill, Loughton, Essex, IG10","Lawlors Property Services, Loughton Sales",020 3873 8317
+"Stonham Barns Park, Stonham Aspal, IP14 6AT","Kavanagh Hayes, Chatteris",01354 704640
+"Lingfield Way, Watford, WD17","Proffitt & Holt Partnership, Watford",01923 961129
+"Connaught Road, Luton, Bedfordshire, England, LU4","Taylors Estate Agents, Luton",01582 377982
+"Main Road, PE12","Hix and Son, Holbeach",01406 431053
+East Ruston,"Fine & Country, Norwich",01603 361375
+"Holme Close, Ailsworth","Bellavie Homes, Peterborough",01733 964297
+"Pettaugh Road, Stonham Aspal, Stowmarket","P&H Estates, Ipswich",01479 787941
+"Stocks Road, Aldbury","Sterling Estate Agents, Tring",01442 504247
+"Ventnor Gardens, Luton, Bedfordshire, LU3","Taylors Estate Agents, Leagrave",01582 377100
+"Mores Lane, Pilgrims Hatch, Brentwood","Meacock & Jones, Shenfield",01277 674791
+"THE LEAS, SECOND ROW, FRINTON ON SEA","Boydens, Frinton-on-Sea",01259 235945
+"Crawthorne Road, Peterborough, PE1","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Woodland Road, Sawston, Cambridgeshire, CB22","Mullucks, Saffron Walden",01799 611333
+"Howe Green, Great Hallingbury, Nr Bishops Stortford, CM22","Mullucks, Bishop's Stortford",01279 594679
+"Chalk Lane, Sutton Bridge, PE12 9YF","Phoenix, Sutton Bridge",01406 431089
+"Mary Lane South, Great Bromley","Gyles & Rose, Colchester",01206 586104
+"Rectory Road, Great Holland","Lamb & Co, Land & New Homes",01255 444228
+"Ramsey Road, St. Ives, Cambridgeshire, PE27","Thomas Morris, St. Ives",01480 271866
+"Two Bed Manor Holcot Bay (44x20), Woodside Park, Woodside, Luton, Bedfordshire, LU1 4LP","Sell My Group, Lytham",020 3910 6164
+"Morston Road, Blakeney, Holt, Norfolk","Strutt & Parker, Norwich",01603 361891
+"May Road, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Albert Road, Buckhurst Hill, IG9","Durden & Hunt, Loughton",020 3840 3855
+"North Street, Wicken, CB7","The Good Estate Agent, National",01303 761722
+"Broad Green, Cranfield, Bedford","Cranes Estate Agents, Cranfield",01234 987332
+"Rose Walk, Wisbech, PE13 1SG","Aspire Homes, Wisbech",01945 664478
+"Coopers Alley, Hitchin","Norgans Estate Agents, Hitchin",01462 415794
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Recorder Road, Norwich, Norfolk, NR1","Property Ladder, Norwich",01603 361657
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Dunstable Road, Luton, Bedfordshire, LU4","Taylors Estate Agents, Luton",01582 377982
+"Kenilworth Gardens, Seven Kings, IG3","Wentworth Estates, London",020 3889 9106
+"Barling Road, Great Wakering, Southend-on-Sea, Essex, SS3","Hunt Roche, Coast & Country Homes",01702 967987
+"Main Street, Welney, Wisbech, Norfolk, PE14","Abbotts, Ely",01353 887783
+"Station Road, Thorpe Bay, Essex, SS1","Hunt Roche, Coast & Country Homes",01702 967987
+"The Portway, King's Lynn","William H. Brown, King's Lynn",01553 603650
+"Linseed Walk, Downham Market","William H. Brown, Downham Market",01366 312332
+"Lammas Walk, Leighton Buzzard","Quarters Estate Agents, Leighton Buzzard",01525 302367
+"High Street, Southend-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"White Hart Drive, Hemel Hempstead, HP2","David Doyle Estate Agents, Boxmoor",01442 949959
+"Rayleigh Road, Eastwood, Leigh-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"Two Bed Omar Westfield, St Osyth Place, Cockett Wick Lane, St Osyth, Essex, CO16 8SE","Sell My Group, Lytham",020 3910 6164
+"Brent Avenue, South Woodham Ferrers","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flaunden Lane, Bovingdon, HP3","Whitewood Estates, Bovingdon",01440 840559
+"The Street, Freckenham, Bury St. Edmunds","Morris Armitage, Newmarket",01638 597098
+"Oxford Crescent, Clacton-on-Sea, Essex, CO15","Bairstow Eves, Clacton on Sea",01255 440524
+"Flitch Green, Dunmow, Essex, CM6","Ivy & Stone, Covering East London and West Essex",020 7046 0338
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"St. Peters Close, Charsfield, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"Padholme Road, Peterborough","William H. Brown, Peterborough",01733 964717
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Pyecroft Lane, Walpole St Peter","haart, Wisbech",01945 661637
+"Pino Way, Kings Head Hill, Chingford","The Stow Brothers New Homes, London",020 3840 3602
+"23 St. Peters Close, Charsfield, Woodbridge, Suffolk, IP13","Fenn Wright, Woodbridge",01394 331099
+"The Willows, Lynn Road, Downham Market, Norfolk, PE38 9QY",Persimmon Homes,01366 312330
+"Pino Way, North Chingford, E4","Butler & Stag, Land & New Homes, London & Home Counties",020 3909 6501
+"Station Road, Hoveton, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Tynan Close, Royston, SG8","Ensum Brown, Royston",01763 750000
+"Huntly Grove, Peterborough, Cambridgeshire, PE1","Freedom Homes, Peterborough",01733 964657
+"St. Philips Road, Norwich, NR2","Websters Estate Agents, Norwich",01603 361833
+"Homestead Place, Upper Staithe Road, Stalham, Norwich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Shortthorn Road, Stratton Strawless","Think Property, Norwich",01603 361893
+"118 Hall Road, Norwich, Norfolk NR1 3HP","Auction House, East Anglia",01603 361653
+"Next to 112 Bridge Road, Sutton Bridge, Spalding","Geoffrey Collings & Co, Long Sutton",01406 431502
+"Dereham Road, Norwich","Think Property, Norwich",01603 361893
+"Hitchin Road, Arlesey, SG15","Country Properties, Stotfold",01462 412883
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Cunningham Avenue, Hatfield, AL10","Yopa, East Anglia & London",01270 447764
+"Coppice Row, Theydon Bois, Epping","Butler & Stag, Theydon Bois",020 3897 2972
+"Waterhouse Moor, Harlow, CM18","Purplebricks, covering Chelmsford",020 3910 0889
+"Hamboro Gardens, Leigh-on-sea, SS9","Niche Homes, Leigh on Sea",01702 967888
+"Reform Street, Crowland","City & County (UK) Ltd, Crowland",01733 964706
+"Towse Close, Clacton on Sea","Stoneridge Estates, Clacton On Sea",01255 442138
+"Pettaugh Road, Stowmarket, IP14","Charles Century, Crowborough",01892 362184
+"Pettaugh Road, Stowmarket, IP14","Charles Century, Crowborough",01892 362184
+"Gillespie Close, Bedford, MK42","Belvoir, Bedford",01234 230441
+"Westwood Park Road, Peterborough","Hurfords, Castor",01733 964902
+"North Drive, Great Yarmouth, Norfolk, NR30","YOUR MOVE, Gorleston",01493 807227
+"Colin Mclean Road, Dereham","haart, Dereham",01362 702159
+"Totlands Drive, Great Clacton","Stoneridge Estates, Clacton On Sea",01255 442138
+"Pettaugh Road, Stonham Aspal, Stowmarket","P&H Estates, Ipswich",01479 787941
+"High Street, Wickford, SS12","Gilbert & Rose, Leigh-on-sea",01702 967150
+"Larch Place, Romford, RM3","Durden & Hunt, Hornchurch",01708 206998
+"Oakhill, Hollesley, Suffolk, IP12","Abbotts, Ipswich",01473 943898
+"Delta Cambridge Tydd St Giles Golf and Country Club, Tydd st Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Minster Norwood Tydd St Golf and Country Park, Tydd St Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Lakeland Lowther Tydd St Giles Golf and Country Club, Tydd st Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Wormleybury, Hertfordshire","Fine & Country, Hoddesdon",01992 662239
+"Acorn Rise, Hollesley, Woodbridge, Suffolk, IP12","Fenn Wright, Woodbridge",01394 331099
+"354 Four Chimneys Crescent, Hampton Heights, Peterborough, PE7 8SR",Cala Homes North Counties,01733 964778
+"Cherrydown East, Basildon, SS16","Gibson & Brennan, Basildon",01268 437987
+"Upper Bedfords Farmhouse, Romford","Lanes, Cheshunt",01992 662123
+"Lexden Road, Colchester","Exquisite Home, Cambridge",03330 381844
+"119 Ermine Street, Caxton, Cambridge, Cambridgeshire CB23 3PQ","Auction House, East Anglia",01603 361653
+"Brackenbury Cliffs, Adjacent Cliff Road","ScottBeckett, Felixstowe",01394 331688
+"Clarkson Court, Hatfield, AL10","Moving Places, Hatfield",01707 954053
+"Cromer Road, Hornchurch, RM11","Balgores, Hornchurch",01708 204755
+"Whittington Way, Bishop's Stortford CM23 4AS",Ashberry Homes (North London),01279 594591
+"Whittington Way, Bishop's Stortford CM23 4AS",Ashberry Homes (North London),01279 594591
+"Hundred Foot Washes, Pymoor, Welney","Cheffins Residential, Agricultural Ely",01353 654900
+"School Road, West Walton, Wisbech, PE14","Abbotts, Kings Lynn",01553 603463
+"London Road, Grays","haart, Grays",01375 803701
+"Main Street, Welney","Brown & Co, King's Lynn",01553 603337
+"The Harebreaks, Watford, WD24","Yopa, East Anglia & London",01270 447764
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+"Camps Road, Haverhill, Suffolk, CB9","Samuel's Independent Estate Agents, Haverhill",01440 847840
+"Coldham Bank, March, PE15","Hockeys, Wisbech",01945 661611
+"Wormleybury Manor, Broxbourne - WEALTH OF CHARACTER","Westwood Leber, Hertfordshire",01992 927906
+"Green Lane, Ilford, Essex","Calibre Estates, London",020 7183 1060
+"Edinburgh Gate, HARLOW","William H. Brown, Harlow",01279 976892
+"Elm Gardens, Mountnessing, CM15","Beresfords, Ingatestone",01277 674283
+"Leighton Road, Stoke Hammond, Buckinghamshire","Fine Homes Property, Great Brickhill",01525 659538
+"Crocus Way, Rushden","Simpson & Weekley, Rushden",01933 823286
+"Creephedge Lane, East Hanningfield","Church & Hawes, Danbury",01245 945834
+"High Street, Spaldwick","Simpson & Partners, Thrapston",01832 770621
+"Armitage Way, Cambridge, CB4","Country Properties, Cambridge",01223 919464
+"Market Street, Long Sutton, Spalding","LLH Solutions Limited, Oakham",01780 431569
+"Evergreen Drive, Hampton Hargate, Peterborough, PE7","Belvoir, Peterborough",01733 964767
+"Upper Bourne End Lane, Hemel Hempstead, Hertfordshire, HP12RR","Tribute Land, High Wycombe",01494 341338
+"North End, Wisbech","William H. Brown, Wisbech",01945 664477
+"Flat 10,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square",020 7382 2860
+"Napier Road, Luton LU1","Esquire Estates, Luton",01582 377323
+"Napier Road, Luton LU1","Esquire Estates, Luton",01582 377323
+"Ford's Lane, Aston End, Stevenage, Hertfordshire, SG27HD","Tribute Land, High Wycombe",01494 341338
+"Mere View, Haughley, Stowmarket, Suffolk, IP14","Lacy Scott & Knight, Stowmarket",01449 612384
+Arable Farm - Wisbech St Mary,"Longstaff, Spalding",01775 661101
+"Sandridgebury Lane, Sandridge, St. Albans, Hertfordshire, AL36JF","Tribute Land, High Wycombe",01494 341338
+"Bayfordbury Campus, Bayford, Hertfordshire, SG138LD","Tribute Land, High Wycombe",01494 341338
+"Arnold Court, Chelmsford Road, London, E18","Wentworth Estates, London",020 3889 9106
+"Hutton Road, Hutton Road, CM15","Beresfords, Shenfield",01277 674308
+"Church Lane, Stapleford Abbotts, Romford, Essex, RM4","Lawlors Property Services, Loughton Sales",020 3873 8317
+"High Street, Cheshunt","Paul Wallace Estate Agents, Cheshunt",01992 781100
+"417 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"G59, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Park Road, Clacton-on-Sea","Blake & Thickbroom, Clacton on sea",01255 688788
+"Barrow Common, Common Lane, Brancaster","Brown & Co, King's Lynn",01553 603493
+"Crownmead Way, Romford, Essex, RM7","Woodland, Ilford",020 8554 5544
+"Britannia Road, Westcliff-on-Sea","Bear Estate Agents, Southend-on-Sea",01702 967452
+"Harlequin Close, Barking, IG11","Wentworth Estates, London",020 3889 9106
+"Wayside Farm Park, Ravensden","Aston Charles Estate Agents Ltd, Bedford",01234 676643
+"Seaview Avenue, West Mersea, Colchester, Essex, CO5","Palmer & Partners, Colchester & Coast",01206 586084
+"418 Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+Chadwell St Mary,"Chandler & Martin, Orsett",01375 891007
+"Wixfield Park, Great Bricett, Ipswich","Hamilton Smith, Needham Market",01449 709827
+"North End, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Nix Hill Road, Wimblington, March, Cambs., PE15 0PL","T Payne & Co Ltd, Chatteris",01354 707494
+"The Leas, Frinton-On-Sea","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Ovaltine Drive, Kings Langley","Sterling Estate Agents, Kings Langley, Abbots Langley & Watford",01923 961377
+"Attleborough Road, Great Ellingham, Attleborough, NR17 1LG","Brown & Co, Norwich",01603 361693
+"Old Road, Clacton on Sea","Stoneridge Estates, Clacton On Sea",01255 442138
+"Heia Wharf, Hythe","Martin & Co, Colchester",01206 586115
+"North Green Road, Pulham Market","Howards, covering Long Stratton",01508 505543
+"Room S2 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"T17 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Plots Available, Bedwell Park, Witchford, Ely, Cambridgeshire, CB6 2HW","Sell My Group, Lytham",020 3910 6164
+"Old Essex Road, Hoddesdon - CHAIN FREE","Westwood Leber, Hertfordshire",01992 927906
+"Queensway, Hemel Hempstead","Michael Anthony, Hemel Hempstead",01442 504180
+Shared Ownership,"Michael Anthony, Hemel Hempstead",01442 504180
+"Hamilton Court, Leighton Buzzard","Retirement Homesearch, East of England",01425 209944
+"South Beach, Lowestoft, Suffolk","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Cargate Lane, Saxlingham Nethergate, NR15","TAUK, Covering Nationwide",020 3910 6171
+"The Cedars, Cedars Village, Chorleywood, Hertfordshire, WD3","Binks Estate Agents, Covering Chilterns",01923 961214
+"Plot 2 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Plots Available, Wixfield Park, Great Bricett, Ipswich, Suffolk, IP7 7DW","Sell My Group, Lytham",020 3910 6164
+"F17 Chapel Street, 21-25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Unit S1 Chapel Street, 21, 23, 25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Eastcliff, Walton On The Naze","Sheen's, Frinton-On-Sea",01255 852555
+"Firmin Close, Ipswich","Connells, Ipswich",01473 943139
+"Mandeville Court, Darkes Lane, Potters Bar, Hertfordshire, EN6","Hobdays, Potters Bar",01707 954207
+"Suffolk Sands, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Havenfield, Arbury Road, Cambridge","Bush & Co, Cambridge",01223 972783
+"Shakespeare Square, Ilford, Essex, IG6","Woodland, Ilford",020 8554 5544
+"Plots Available, Sacketts Grove Residential Park, Jaywick Lane, Clacton-on-Sea, Essex, CO16 7BD","Sell My Group, Lytham",020 3910 6164
+"Old Wickford Road, South Woodham Ferrers, Chelmsford","Church & Hawes, South Woodham Ferrers",01245 945848
+"Willow Walk, Hadleigh, Essex","Amos Estates, Hadleigh",01702 555888
+"Lancaster Avenue, Hitchin","Cesare & Co, Tring",01442 504143
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Howards Way, Gayton","Russen & Turner, Kings Lynn",01553 603361
+"Sail House, Ship Wharf, Colchester, Essex, CO2","Saxons Estate Agents, Colchester",01206 586085
+"Medway House, Riverside Maltings, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle",01832 274732
+"New Enterprise House, 149-151 High Road, Chadwell Heath, Romford, RM6","Stanton Hockett, Billericay",01277 674868
+"Holme Close, Ailsworth, Peterborough","Quentin Marks Estate Agents, Bourne",01778 301117
+"Doddington Road, Chatteris, Cambs., PE16 6UA","T Payne & Co Ltd, Chatteris",01354 707494
+"72 Wallace Road, Ipswich, East Of England, IP1","Lambert Smith Hampton, London",020 3834 8520
+"Chipperfield Road, Hemel Hempstead, HP3","David Doyle Estate Agents, Boxmoor",01442 949959
+"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe",01394 331588
+"Suffolk Sands, Felixstowe.","Nicholas Estates, Felixstowe",01394 331588
+"Agricultural buildings & land for sale at Ballingdon Farm, Clements End Road, Hertfordshire, HP2 6HX","Vantage Land, St. Albans",01727 701649
+"Blackthorn House, Blackthorn Avenue, Chigwell","Friend & Farrelly, Loughton",020 3195 0850
+"Norwich Road,Wisbech,PE13 3LX","eXp UK, East of England",03304 609968
+"Nelson Street, Brightlingsea, CO7","Town & Country Residential, Brightlingsea",01206 586068
+"Eastern Avenue, Ilford, IG2","Wentworth Estates, London",020 3889 9106
+"Railway Road, King's Lynn","Brown & Co, King's Lynn",01553 603337
+"Pinchbeck Road, Spalding","Longstaff, Spalding",01775 661101
+W1 Place,"London House, London",020 4572 0476
+"High Street, Cheshunt, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"4.08 D, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"3.08D, Opto Village , 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"The Mill, College Street, Ipswich","Leaders Sales, Ipswich",01473 943818
+"West Parade, Wisbech","William H. Brown, Wisbech",01945 664477
+"Castlefield, Preston SG4 7AZ","First Step, Stotfold",01462 416014
+"The Street, Hindolveston, Dereham, NR20","Abbotts, Fakenham",01328 800709
+"North Road, TOLLESBURY","Hardy-King Estate Agents, Tiptree",01621 731218
+"Little Lullaway, Basildon, Essex, SS15","Bairstow Eves, Basildon",01268 202635
+Ringshall Road,"Sterling Estate Agents, Berkhamsted",01442 501618
+"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted",01442 501618
+"Ringshall Road, Ringshall, Berkhamsted","Sterling Estate Agents, Berkhamsted",01442 501618
+"Metropolitan Station Approach,Watford,WD18 7BL","eXp UK, London",03304 609968
+"Gedney Drove End, PE12 9PN","Longstaff, Spalding",01775 661101
+"Wroxham Road, Ipswich, IP3","Yopa, East Anglia & London",01270 447764
+"Lincoln Road, Peterborough, PE1","Bairstow Eves, Peterborough",01733 964602
+"Folksworth Road, Norman Cross, Peterborough","Sharman Quinney, Yaxley",01733 964955
+"Misterton Court, Ortonplaza, Orton Goldhay, Peterborough, PE2","Belvoir, Peterborough",01733 964767
+"Westcliff Parade, Westcliff-On-Sea","Home, Leigh on sea",01702 967219
+"Manor Road, Hunstanton, Norfolk, PE36","The Norfolk Agents, Fakenham",01328 803445
+"Holland Court, Biscot Road, Luton, Bedfordshire, LU3","Taylors Estate Agents, Luton",01582 377982
+Fritton Lake - Norfolk,"Escape & Discover, Downend",01225 434940
+"Essendyke, Bretton, PE3","Belvoir, Peterborough",01733 964767
+Fritton Lake - Norfolk,"Escape & Discover, Downend",01225 434940
+"Station Road, Westcliff-on-sea, SS0","Yopa, East Anglia & London",01270 447764
+"Hagley House, Bond Street, Cromer, Norfolk","Iconic, Taverham",01603 361880
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Land for Sale, Kingston Road, Luton","Esquire Estates, Luton",01582 377323
+"Cobbinsbank, Farm Hill Road","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"The Old Chapel, Heath Road, Polstead Heath","Chapman Stickels, Hadleigh",01473 943929
+"Forest Road, Ilford","Hammonds, London",020 8629 1571
+"The Holly, Oak Lane","Hammonds, London",020 8629 1571
+"Horns Road, Barkingside","Arbon & Miller, Barkingside",020 3872 5288
+"Frinton Road, Thorpe-Le-Soken","Oakheart Property, Colchester",01206 586163
+"Myers Court, The Galleries, CM14","Beresfords, at Brentwood",01277 674353
+"Upminster, Essex, RM14","Quickmove Properties, Wiltshire",01793 540551
+"Upminster, Essex, RM14","Quickmove Properties, Wiltshire",01793 540551
+"Norwich Road, Claydon","Austwick Berry Estate Agents, Kesgrave",01473 943294
+"Cromwell Road, Stevenage","William H. Brown, Stevenage",01438 584983
+"Grassmere Road, Hornchurch, RM11","Bairstow Eves, Hornchurch",01708 204792
+"School Road, Necton","The Norfolk Agents, Fakenham",01328 803445
+"Anderson Close, Broxbourne","Kirby Colletti, Hoddesdon",01992 929856
+"Thrintofts, Blindmans Lane, Cheshunt, Hertfordshire, EN8","Morgan Alexander, Hertford",01992 661955
+"Dunwich Court, Chadwell Heath, RM6","AJ Dwellings, Ilford",020 3910 6066
+"Fletton Avenue, Peterborough","William H. Brown, Fletton",01733 964686
+"Church Mews, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Opposite the Cathedral, Norwich, NR3","AbbotFox, Norwich",01603 510582
+"Swale House, 563 High Road, Ilford, Essex, IG1","Woodland, Ilford",020 8554 5544
+"Fraserburgh Way, Peterborough, PE2","Purplebricks, covering Peterborough",020 3834 8087
+"Old Wickford Road, South Woodham Ferrers, Chelmsford","William H. Brown, Chelmsford",01245 945123
+"Thorpland Road, Fakenham, Norfolk, NR21","Savills Rural Sales, Ipswich",01473 943513
+"High Street, Cheshunt,","Shepherds Estate Agents, Cheshunt",01992 927877
+"Letheringsett Hill, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"Darkes Lane, Potters Bar, EN6","Home Counties, Potters Bar",01707 241387
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+"Mount Pleasant Road, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"The Causeway, Thorney, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"The Wilderness, Stratton Strawless, Norwich","William H. Brown Select, Norwich",01603 361639
+"Butt Lane, Burgh Castle","Bycroft Gorleston, Great Yarmouth",01493 801394
+"Wrights close, Dagenham, RM10","AJ Dwellings, Ilford",020 3910 6066
+"Abenberg Way, Hutton, Brentwood","Keith Ashton, Brentwood",01277 674388
+"Kingswood Court, 175 Chingford Mount Road, Chingford","Churchill Estates, South Chingford & Highams Park",020 3835 2295
+"Rosedale Close, Luton","Connells, Leagrave",01582 377044
+"PORTMAN ROAD, IPSWICH","Crofts Estate Agents, Cleethorpes",01472 404562
+"Swindon Close, Ilford","Yopa, London",0161 524 7996
+"Oakview Drive, Downham Market","William H. Brown, Downham Market",01366 312332
+"Rose Way, St Osyth","Stoneridge Estates, Clacton On Sea",01255 442138
+"Willows Green, Chelmsford","Fine & Country, Mid & South Essex",01246 387258
+"Robins Field, Wansford","Richardson Surveyors, Stamford",01780 431208
+"Feltwell, IP26","Elvin Estates, Mildenhall",01638 597092
+"Theobald Street, Radlett, Hertfordshire, WD7","Lumley Estates, Radlett",01923 961675
+"Land with Full PP for 2 dwellings, Adj. 51 The Poplars, PE11 2RJ","Longstaff, Spalding",01775 661101
+"Low Road, Spalding","Ark Property Centre, Spalding",01775 766888
+"Duke Street, Peterborough, Cambridgeshire, PE2","Freedom Homes, Peterborough",01733 964657
+"Dellow Close, Newbury Park, IG2","Woodland, Ilford",020 8554 5544
+"Bedford Bank, Welney, Wisbech","William H. Brown, March",01354 704614
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"St Marks Street, Peterborough, PE1","Belvoir, Peterborough",01733 964767
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"Pier Approach, Walton On The Naze","Sheen's, Frinton-On-Sea",01255 852555
+Orsett Village,"Chandler & Martin, Orsett",01375 891007
+"Southminster, Essex, CM0","Quickmove Properties, Wiltshire",01793 540551
+"Southminster, Essex, CM0","Quickmove Properties, Wiltshire",01793 540551
+"School Road, Upwell","Brown & Co, King's Lynn",01553 603337
+"Burgess Springs, Chelmsford","haart, Chelmsford",01245 945473
+Great Bromley,"Gyles & Rose, Colchester",01206 586104
+"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston",01493 807227
+"Epping Way, Luton","Connells, Leagrave",01582 377044
+"Gordon Road, Great Yarmouth, Norfolk, NR31","YOUR MOVE, Gorleston",01493 807227
+"Wratting Road, Haverhill","Cheffins Residential, Haverhill",01440 840459
+"Main Street, Yaxley, Peterborough","William H. Brown, Yaxley",01733 964831
+Residential Development Site PE12 7BZ,"Longstaff, Spalding",01775 661101
+"Norland House, High Street, March","Maxey Grounds, March",01354 704639
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"The, Old School, St Margarets Hill, Wereham PE33 9FN","EweMove, Covering South East England",01274 015965
+2 bedroom 2nd Floor and Above Flat in Southend on Sea,"PACE Property Lettings and Management Ltd, Southend-on-Sea",01702 967682
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"Reeves Lane, Roydon, CM19","Woodhouse, Cheshunt",01992 662281
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+Hobbswick Lane Turvey MK43 8AX,Inspired Villages Group Limited,01234 975918
+"High Street, Clacton-On-Sea","William H. Brown, Clacton On Sea",01255 442150
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+Great Hadham Country Club,"The Goodlife Lodge, Tallington",01580 236011
+"Albion Place, Wisbech","William H. Brown, Wisbech",01945 664477
+"Cuffley Hill, Goffs Oak","Banc Property, Cuffley",01707 241096
+"St Osyth Road, Clacton-On-Sea","haart, Clacton",01255 442111
+"Providence Place, Railway Street, Hertford","Steven Oates, Hertford",01992 661978
+"Herent Drive, Clayhall, IG5 0HH","Sandra Davidson Estate Agents, Redbridge",020 3909 9755
+"Church Street, Langford, Biggleswade","Latcham Dowling Estate Agents, St. Neots",01480 772012
+"Forester Close, Pinewood, Ipswich, IP8","Fenn Wright, Ipswich",01473 943943
+"St Stephens Road, Norwich","haart, Norwich",01603 937768
+"St. James Lane, Bury St. Edmunds, IP33","Hockeys, Newmarket",01638 597291
+"Bellmont Lodge, Sterling Court, Hertfordshire, AL7","Woodland, Ilford",020 8554 5544
+"Sheering Mill Lane, Sawbridgeworth, CM21","iad, Nationwide",03330 382150
+"Thornham Way, Eastrea, Whittlesey","Harrison Rose Estate Agents, Whittlesey",01733 202525
+"Heather Court, Beck Row, Bury St. Edmunds","Shires Estate & Letting Agents, Mildenhall",01638 597090
+"Baccara Grove, Bletchley, Milton Keynes, Buckinghamshire, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Mandarin Mead, Bedford","haart, Bedford",020 3840 3438
+"Morleys Leet, King's Lynn, Norfolk,","Bennett & Co Estate Agents, King's Lynn",01553 603486
+"Valentines House, 51-69 Ilford Hill, Ilford, Essex, IG1","Woodland, Ilford",020 8554 5544
+"Rickmansworth Road, Watford","Yopa, South East & London",01322 952994
+"Seaview Avenue, West Mersea","Game Estate Agents, West Mersea",01206 586072
+"The Elms, Lippitts Hill","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"Unit 279, Block B, Opto Village, 4 Dumfries Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Oundle Road, Peterborough","William H. Brown, Fletton",01733 964686
+Orsett Village,"Chandler & Martin, Orsett",01375 891007
+"Old St Michaels Drive, Braintree, CM7","Michaels Property Consultants Ltd, Braintree",01376 315794
+"Highfield Grange Holiday Park, London Road, Clacton-on-Sea","Mike Vincent & Son, Clacton On Sea",01255 442182
+"Hempstead Road, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"The Landmark, Flowers Way, Luton, Bedfordshire, LU1","Taylors Estate Agents, Luton",01582 377982
+"Exeter Close, Watford, Hertfordshire, WD24","Your Move, Watford",01923 961818
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich",01473 943579
+"Middleton, Saxmundham, Suffolk, IP17","Jackson-Stops, Ipswich",01473 943579
+"Haward Street, Lowestoft, NR32","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Bedford Bank, Welney, Wisbech","William H. Brown, March",01354 704614
+"Glebe Road, Cambridge, Cambridgeshire","Bidwells, Cambridge",01223 972773
+"** SIGNATURE HOMES ** Cory Drive, Hutton, Brentwood","Keith Ashton, Brentwood",01277 674388
+"High Street, Redbourn, AL3","Town & Country, Caddington",01582 841200
+"Elm Farm Country Park, Frinton Road, Thorpe-Le-Soken, Clacton-On-Sea","Kiln and Lodge Estates, Chelmsford",01245 945822
+"High Street, Mundesley","The Norfolk Agents, Kings Lynn",01553 603396
+"Turners Hill, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"Lucas Lane, Beaumont","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Bluebell Close, Watton, Thetford","William H. Brown, Watton",01953 667639
+"Widbury Gardens, Ware","Westwood Leber, Hertfordshire",01992 927906
+"Regents Court, Princes Street, Peterborough, PE1 2QR","Optimum Lettings & Property Management Ltd, Peterborough",01733 459132
+"Main Street, Littleport, Ely, Cambridgeshire, CB6","Abbotts, Ely",01353 887783
+"Alderton Hill, Loughton, Essex, IG10","Savills, Loughton",020 3869 5310
+"Elvedon Close, Ipswich, IP3","Yopa, East Anglia & London",01270 447764
+"Comberton Road, Harlton, Cambridge, CB23","Carter Jonas, Cambridge",01223 972782
+"Hardwicke Fields, Haddenham, Ely","Bush & Co, Cambridge",01223 972783
+"Hayes Road, Clacton-On-Sea","haart, Clacton",01255 442111
+"138A-140 St. Albans Road, Watford, Hertfordshire WD24 4FT","Blue Alpine, London",020 3909 3844
+"Dumfries Street, Luton, LU1","Taylors Estate Agents, Luton",01582 377982
+"Fletcher Way, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"Lime Tree Gardens, Chatteris","Kavanagh Hayes, Chatteris",01354 704640
+"Tye Green, Barking, Ipswich","Land & New Homes, Needham Market",01470 229995
+"The Crescent, Great Holland","Sheen's, Frinton-On-Sea",01255 852555
+Fakenham,"Sowerbys, Fakenham",01328 801643
+"The Causeway, Toppesfield, Halstead","William H. Brown, Halstead",01787 322336
+"South Street, Crowland, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"Garfield, Langford, Biggleswade, SG18","Lane & Bennetts, Langford",01462 700555
+"Morgans Close, Wilstead, Bedford","Leaders Sales, Bedford",01234 987237
+"Summerhouse Lane, Aldenham, Hertfordshire, WD25","Statons, Totteridge",020 3869 4080
+"Chappel, Colchester, Essex","David Burr Estate Agents, Leavenheath",01206 586065
+"Two Bed Stately Albion Warwick (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Two Bed Omar Alderney (40x20), Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Burrowmoor Road, March","William H. Brown, March",01354 704614
+"The Malt Store & Malt Kiln, The Maltings, High Street, Mistley, Essex, CO11","Kemsley LLP, Chelmsford",01245 945774
+"Milton Road, Lovell Lodge, CB4","Ensum Brown, Royston",01763 750000
+"Brackenbury Cliffs, Cliff Road, Felixstowe","Diamond Mills & Co, Felixstowe",01394 331695
+"South Hall Drive, Rainham, RM13","Yopa, East Anglia & London",01270 447764
+"Bakers Road, Belchamp St. Paul, Sudbury","William H. Brown, Sudbury",01787 321086
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Mayfield Gardens, Baston, Peterborough","Sharman Quinney, Market Deeping",01778 309997
+"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft",01502 448023
+"Harebell Way, Lowestoft, Suffolk, NR33","YOUR MOVE, Lowestoft",01502 448023
+"High Street, Mistley","Gyles & Rose, Colchester",01206 586104
+"WAVRING AVENUE, KIRBY CROSS","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Summerhouse Lane, WATFORD, WD25","Hamptons, St Albans",01727 222024
+Beach Hut 838,"Diamond Mills & Co, Felixstowe",01394 331695
+"Park Road, Diss","Whittley Parish, Diss",01379 777262
+"Steeple Bay Holiday Park, Canney Road, Steeple","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"London Road, Chalfont St. Giles","Colman & Co, Chalfont St Giles",01494 341318
+"South Beach, Heacham, King's Lynn, Norfolk, PE31","Abbotts, Hunstanton",01485 506847
+"Mill Drove South, Cowbit, COWBIT, PE12","Rosedale Land & New Homes, Peterborough",01733 964776
+"The Street, Kirtling, Newmarket, Suffolk, CB8","Jackson-Stops, Newmarket",01638 597214
+"Milton Road, Milton Keynes, MK10","Yopa, East Anglia & London",01270 447764
+"Ramnoth Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"The Street, Southolt, Eye, Suffolk, IP23","Savills, Ipswich",01473 943373
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Dumfries Street, Luton, Bedfordshire","Leaders Sales, Bedford",01234 987237
+"Steeple Bay Holiday Park, Steeple, Southminster","Barrett Estate & Letting Agents, Rayleigh",01268 203561
+"Towgood Close, Helpston, Peterborough","Sharman Quinney, Market Deeping",01778 309997
+"Cheltenham Drive, Leigh-on-Sea, Essex","Leaders Sales, Southend-On-Sea",01702 967359
+"Broxburn Drive, South Ockendon, RM15","Keller Williams Plus, Covering Nationwide",020 3892 9627
+"Colne Road, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"Various Locations, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"Marine Parade East, Clacton-On-Sea","haart, Clacton",01255 442111
+"Park House, Old Park Road, Hitchin","McCarthy & Stone Resales, Bournemouth",03455 564122
+"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+The Canopy - new properties also rentals available on selected properties,"Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell - rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"The Canopy, Lambourne Road, Chigwell- rental available on selected properties","Cognatum Property Limited, Wallingford",01491 527559
+"Potton Road, Eynesbury Hardwicke, St. Neots, Cambridgeshire, PE19","Michael Graham, Bedford",01234 676680
+"Burgess Springs, Chelmsford","haart, Chelmsford",01245 945473
+"Colchester Road, Thorpe-le-Soken, Clacton-on-sea, CO16 0LA","Joe Ross Properties, Powered by eXp, Maldon",01621 738966
+"Audley Court, 1 Forge Way, Southend-on-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"Old Ipswich Road, Yaxley, Eye","William H. Brown, Diss",01379 773565
+"Plot 90 , Sea End Caravan Park","Wilsonwood Properties, Canvey Island - Sales",01268 203476
+"Clifftown Parade, Southend-On-Sea","Home, Leigh on sea",01702 967219
+"Cross Road, Sutton St. Edmund, Spalding","William H. Brown, Spalding",01775 660913
+"St. Johns Road, Clacton-On-Sea, CO16","Town & Country Residential, Brightlingsea",01206 586068
+"North Beach, Heacham, PE31","Belton Duffey, Kings Lynn",01553 603677
+"Russett Way, Dunstable","Connells, Dunstable",01582 377795
+"St. Peters Close, Charsfield, Woodbridge, Suffolk, IP13","Fenn Wright, Woodbridge",01394 331099
+"Lynn Road, Grimston, King's Lynn, PE32 1AD","Homeworks, Dereham",01362 702202
+"Florida Holiday Park, Hemsby","Aldreds, Great Yarmouth",01493 801522
+"Stow Road, Wisbech, Cambridgeshire, PE13","Robert Hale Estates, Wisbech",01945 661608
+"Summerfields, Sible Hedingham, Halstead","William H. Brown, Halstead",01787 322336
+Thorney Lakes Golf Club,"The Goodlife Lodge, Tallington",01580 236011
+"Ousden, Newmarket, Suffolk, CB8","Jackson-Stops, Newmarket",01638 597214
+"St Peters Close, Charsfield, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"Maldon Road, WITHAM","Hardy-King Estate Agents, Tiptree",01621 731218
+"Wicken Bonhunt, Saffron Walden, CB11","iad, Nationwide",03330 382150
+"Daffodil Close, IP14","Maxwell Brown, Stowmarket",01449 673948
+"Clements Close, Puckeridge","Steven Oates, Hertford",01992 661978
+"St. Matthews Street, Ipswich, IP1","Tyron Ash International Real Estate, London",03330 164235
+"London Road, Peterborough","Connells, Peterborough",01733 964390
+"Varity House,Vicarage Farm Road, Peterborough, PE1","Belvoir, Peterborough",01733 964767
+"Trotwood, Chigwell, IG7","Wentworth Estates, London",020 3889 9106
+"Victoria Esplanade, West Mersea","Game Estate Agents, West Mersea",01206 586072
+"Passingham Avenue, Billericay, Essex, CM11","Ellis & Co, Sidcup",020 3907 2894
+"Green Farm Barns, Hindolveston Road, Melton Constable, Norfolk, NR24","Jackson-Stops, Burnham Market",01328 801651
+"Grosvenor Road, St. Albans, AL1 3AE",Crest Nicholson,01727 648486
+"Cranwell Crescent, Bletchley","Michael Anthony, Bletchley",01908 103606
+"Kingcup Avenue, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"Quilter Close, Luton","Connells, Leagrave",01582 377044
+"Clapham Park, Clapham, Bedford","Goodacres Residential, Kempston",01234 230058
+"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley",01582 377645
+"Bedwell Park, Witchford, Ely","William H. Brown, Ely",01353 881275
+Woodward Road Dagenham Essex,"Anisten Homes, Ilford",020 3889 9064
+"High Road, Buckhurst Hill, Essex, IG9","Bairstow Eves, Woodford Green",020 3835 6392
+Wisbech,"Fine & Country, King's Lynn",01553 603223
+Wisbech,"Fine & Country, King's Lynn",01553 603223
+"Kelvedon Road, Inworth, Colchester, Essex, CO5","Savills, Chelmsford",01245 945669
+"Plot 1 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall",01638 598599
+"Plot 2 Barway, Ely, Cambridgeshire, CB7","Balmforth, Mildenhall",01638 598599
+"Bedford View, Manea, March, Cambs., PE15 0US","T Payne & Co Ltd, Chatteris",01354 707494
+"Windmill Road, Bradfield, Manningtree","Baker Estates Essex Limited, Wickham Bishops",01376 319271
+"Church Green, Hinxton, Saffron Walden","Cheffins Residential, Saffron Walden",01799 619642
+"Dowsdale Bank, Whaplode Drove, Spalding","City & County (UK) Ltd, Crowland",01733 964706
+"Blindmans Lane, Cheshunt","Steven Oates, Hertford",01992 661978
+"Bridge Broad Close, Wroxham, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Hyland Close, HORNCHURCH","haart, Hornchurch",01708 973303
+"Edward Street, Luton, Bedfordshire, LU2","Giggs & Bell, Stopsley",01582 377645
+"Redmason Road, Ardleigh, Colchester, CO7","Michaels Property Consultants Ltd, Colchester",01206 586143
+"BEACH HUT, OLD HUNSTANTON BEACH","CRUSO AND WILKIN, Hunstanton",01485 506842
+"Gabrielle House, Perth Road, Gants Hill","Sandra Davidson Estate Agents, Redbridge",020 3909 9755
+"Manderston Road, Newmarket, Suffolk, CB8","Tylers Estate Agents, Newmarket",01638 597282
+"Green Tye, Much Hadham, SG10","Wright & Co, Sawbridgeworth",01279 976936
+"Maidstone Road, Norwich","AbbotFox, Norwich",01603 510582
+"Dovehouse Lodge, Wratten Road, Hitchin, SG5","Taylors Estate Agents, Hitchin",01462 415972
+"South street, Romford","Steps Estate Agents, Dagenham",020 3869 4094
+"High Street, Soham, Ely, Cambridgeshire, CB7","Carter Jonas, Cambridge",01223 972782
+"Low Road, Billingford","Durrants, Harleston",01379 777097
+"Eastcliff , Walton on the Naze, CO14","My Moving Places, Frinton On Sea",01255 442092
+"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Main Road, Tydd, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Main Road, Tydd, Wisbech, Cambridgeshire, PE13 5QD","Maxey Grounds, Wisbech",01945 661540
+"Chamberlin Court, Hoveton, Norwich","William H. Brown, Norwich",01603 361933
+"Chalk Hill Lane, Great Blakenham, Ipswich","Land & New Homes, Needham Market",01470 229995
+"High Wych Road, Sawbridgeworth, CM21","Wright & Co, Sawbridgeworth",01279 976936
+"Plot 5, Old Croft Place, Welney","Maxey Grounds, March",01354 704639
+"Siloam Place, Ipswich, Suffolk, IP3","Pennington Surveyors Limited, Ipswich",01473 943457
+"Mill Street, Hastingwood","Millers Estate Agents, Epping",01992 662310
+"Marine Parade East, Clacton-On-Sea","Sheen's, Clacton-on-sea",01255 475444
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Castle Acre Road, Great Massingham","William H. Brown, Swaffham",01760 302186
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Millfield Green, Millfield Lane, Caddington, LU1 4AR",Inspired Villages Group Limited,01582 377127
+"Roundwood Park, Harpenden","Whittaker & Co, Harpenden",01582 377722
+"Cross Penny Court, Bury St. Edmunds","Mark Ewin, Bury St Edmunds",01284 336099
+"Lower Road, Lavenham, Sudbury, Suffolk, CO10","Lacy Scott & Knight, Bury St Edmunds",01284 748600
+"Academy Way, Dagenham RM8 2FJ","haart, Dagenham",020 3840 3397
+"Bridgland Road, Purfleet-on-Thames, Essex, RM19","Bairstow Eves, South Ockendon",01708 205245
+"The Street, Clacton-On-Sea","haart, Clacton",01255 442111
+"The Street, Bintree","The Norfolk Agents, Fakenham",01328 803445
+"Battlefields Lane South, Holbeach, Spalding","Leaders, Holbeach",01406 431420
+"Walter Mead Close, Ongar","Millers Estate Agents, Epping",01992 662310
+"Parkhouse Court, Hatfield, Hertfordshire, AL10","EweMove, Covering East of England",01274 015915
+"5 Great Canney Court, Purleigh.","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flat 19,The Chorleywood Beaumont, Chorleywood Lodge Lane, Chorleywood, Rickmansworth, WD3 5BY","Barchester Healthcare Ltd, Finsbury Square",020 7382 2860
+"School Road, West Walton, Wisbech, Norfolk, PE14 7HA","Aspire Homes, Wisbech",01945 664478
+"Victoria Esplanade, West Mersea, CO5 8BP","Game Estate Agents, West Mersea",01206 586072
+"Tabors Avenue, Chelmsford, CM2","Beresfords, Chelmsford",01245 945593
+"Laporte Way, Luton, Bedfordshire, LU4","Giggs & Bell, Stopsley",01582 377645
+"Dowsdale Bank, Shepeau Stow, SHEPEAU STOW, PE12","Rosedale Land & New Homes, Peterborough",01733 964776
+"Plot 28 Walnut Close, Sutton St. James, Spalding, Lincolnshire, PE12","EweMove, Covering East Midlands",01274 015899
+"Chapel Lane, Elmstead, Colchester, CO7","Michaels Property Consultants Ltd, Wivenhoe",01206 586091
+"Plot 8 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"New Street, Oundle, Northamptonshire, PE8","Woodford & Co, Oundle",01832 274732
+"Morris Green, Sible Hedingham, Halstead, Essex, CO9","Savills, Chelmsford",01245 945669
+"Dragon Road, Hatfield, AL10","Country Properties, Hatfield",01707 271450
+"Brookmans Avenue, Brookmans Park, Hertfordshire, AL9","Statons, Brookmans Park",01707 954088
+"Church Street, Spalding","Longstaff, Spalding",01775 661101
+"High Street, Markyate, Hertfordshire","Fine & Country, Redbourn",01582 793116
+"Royston Road, Baldock, SG7","Country Properties, Baldock",01462 415848
+"Carnoustie Court, Tydd St Giles, Wisbech, Cambridgeshire, PE13 5NZ","Aspire Homes, Wisbech",01945 664478
+"St. Agnes Road, Billericay, Essex, ., CM12","Bairstow Eves, Billericay",01277 674183
+"Sewell, Dunstable","Cassidy & Tate, Marshalswick",01727 649730
+"Sewell, Dunstable","Cassidy & Tate, Marshalswick",01727 649730
+East Ruston NR12,"Aldreds, Stalham",01692 660100
+"Audley Court, 1 Forge Way, Southend-On-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"The Parks, March","Maxey Grounds, March",01354 704639
+"The Street, Little Clacton, Clacton-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"Prince Of Wales Road, Norwich","Think Property, Norwich",01603 361893
+"Manea Road, Wimblington, March","Maxey Grounds - Commercial, March",01354 707467
+"Spring Lane, Wickham Market, IP13 0SW","Cornerstone Residential, Woodbridge",01394 331534
+"24 High Street, Stilton, Huntingdon, PE7 3RA","Eddisons Commercial Limited, Peterborough",01733 964975
+"Eleanor House, London Road, St. Albans . AL1 1NR","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Chapel Lane, Elm, Wisbech","Sharman Quinney, March",01354 704623
+"Stour Close, Harwich","haart, Covering Harwich",01255 441760
+"Pound Lane, Laindon, Essex, SS15","Bairstow Eves, Billericay",01277 674183
+"Cordwainer Close, Norwich, NR7","Northwood, Norwich",01603 249247
+"Oxcroft Bank, Shepeau Stow, PE12 0TY","Longstaff, Spalding",01775 661101
+"Penwald Court, Peakirk, Peterborough, PE6","Rosedale Property Agents, Peterborough",01733 964671
+"Plot 3 (5) Foots Farm Lane, Clacton-on-Sea","Blake & Thickbroom, Clacton on sea",01255 688788
+"Channels, Chelmsford, CM3 3HA",Wimbush Waters,01702 967996
+"Pine Court, Impington, Cambridge, CB24","Tucker Gardner, Histon",01223 972820
+"Carr Street, Ipswich, IP4","Abbotts, Ipswich",01473 943898
+"The Street, Raydon","Grier & Partners, East Bergholt",01206 586076
+"Batchwood View, St. Albans","Connells, Marshalswick",01727 222160
+"Ash Close, Swaffham","William H. Brown, Swaffham",01760 302186
+"High Road, Buckhurst Hill, IG9","Yopa, East Anglia & London",01270 447764
+"Cats Lane, Great Cornard, Sudbury, CO10","Michaels Property Consultants Ltd, Halstead",01787 322107
+"Albany Gardens, Colchester, Essex, CO2","Saxons Estate Agents, Colchester",01206 586085
+"Turnpike Close, Doddington, March, Cambs, PE15 0FJ","T Payne & Co Ltd, Chatteris",01354 707494
+"The Lookout 2a Crescent Lane Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"Bakers Lane, Woodbridge, IP12","Fenn Wright, Woodbridge",01394 331099
+"Station Avenue, Southend-On-Sea","Colubrid, Thurrock & Basildon",01375 803788
+"Ipswich Road, Newbourne, Woodbridge","Grace Estate Agents, Ipswich",01473 943361
+"West End, Costessey, Norwich","Starkings & Watson, Costessey",01603 336446
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Chesham Road, Amersham, HP6","JNP, Amersham",01494 977148
+"Pockthorpe, Halvergate, Norwich, Norfolk, NR13","YOUR MOVE, Gorleston",01493 807227
+"Bradman Court, Abbeyfields","Martin & Co, Colchester",01206 586115
+"Osprey Court, Barnard Square, Ipswich IP2 8FF","First Step, Stotfold",01462 416014
+"Osprey Court, Barnard Square, Ipswich IP2 8FF","First Step, Stotfold",01462 416014
+"Aldeburgh, Suffolk","Flick & Son, Aldeburgh",01728 448693
+"The Retreat Lodges, St Marys Lane, Upminster, Essex","Sell My Group, Lytham",020 3910 6164
+"Leighton Avenue, Leigh-On-Sea","Ashleigh Stone, Leigh on Sea",01702 967591
+"Swannells Walk, Chorleywood.","Sewell & Gardner, Hertfordshire",01923 961618
+"Wheelwright House, Bedford MK42 9EX","First Step, Stotfold",01462 416014
+"Wheelwright House, Bedford MK42 9EX","First Step, Stotfold",01462 416014
+"High Street, Middlemarch Lodge, WD3","Trend & Thomas, Rickmansworth",01923 961920
+"Coales Lodge, Huntingdon Road, Thrapston NN14","Henderson Connellan, Kettering",01536 907222
+"High Road, Benfleet","Countryside Estates, Countryside Estates",01268 203737
+"Connaught Gardens, Connaught Gardens East, Clacton-On-Sea, Essex, CO15","Palmer & Partners, Colchester & Coast",01206 586084
+"Fridaybridge Road, Elm, Wisbech","Kavanagh Hayes, Chatteris",01354 704640
+"Bramfield, Halesworth","AbbotFox, Norwich",01603 510582
+"High Street, Old Town, Hemel Hempstead","Squire Estates, Hemel Hempstead",01442 974627
+"Denham Corner, Denham, Eye","Whittley Parish, Diss",01379 777262
+"St. Marys Lane, Upminster","Noble Residential, Covering Essex",01708 963063
+"St. Marys Lane, Upminster","Noble Residential, Covering Essex",01708 963063
+"St Clements Gate, Broadway, Leigh-On-Sea","Scott & Stapleton, Leigh-on-Sea",01702 471155
+"Waterhouse Street, Hemel Hempstead, HP1","Mulburries, Hemel Hempstead",01442 504258
+"Seaview Avenue, West Mersea, Colchester","Gyles & Rose, Colchester",01206 586104
+"Seaview Avenue, West Mersea, Colchester","Gyles & Rose, Colchester",01206 586104
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Aspen Country Park, IP28 6TT","Bruton Solutions, Bracknell",0118 230 4462
+"Orchard Crescent, Kirby Cross, Frinton on Sea","Paveys Estate Agents Ltd, Frinton On Sea",01255 442118
+"Two Bed Regal Retreat, Strangers Holiday Park, Bradfield, Manningtree, Essex, CO11 2US","Sell My Group, Lytham",020 3910 6164
+"Marshland Street, Terrington St. Clement, King's Lynn","William H. Brown, King's Lynn",01553 603650
+"Plot 9 Newland Street, Witham","Yaxley Homes, Witham",01376 315810
+"Whitley Road, Hoddesdon","William H. Brown, Hoddesdon",01992 927314
+"South Walsham Road, Acle, Norwich, NR13","The Property Shop, Acle",01493 800909
+"Byewaters, Watford, WD18","Trend & Thomas, Rickmansworth",01923 961920
+"Nightingale Close, Melton, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"City Centre, NR1","AbbotFox, Norwich",01603 510582
+"Felixstowe Beach Park, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Dovedale Road, Tacolneston","Minors & Brady, Diss",01376 297211
+"Denham Corner, Denham","Durrants, Harleston",01379 777097
+"Livingstone Walk, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"De Havilland Road, Wisbech, Cambridgeshire, PE13 3AN","Aspire Homes, Wisbech",01945 664478
+"Nightingale Close, Melton, Woodbridge, Suffolk, IP12","Fenn Wright, Woodbridge",01394 331099
+"Leys Avenue, Letchworth Garden City, SG6","Satchells Estate Agents, Letchworth",01462 415925
+"Stonham Aspal, Suffolk, IP14 6AT","Park Move, Nationwide",01780 432725
+"Plot G Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot B Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot I Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot H Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot F Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot A Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot C Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Plot E Factory Lane, CO11","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Whytefield Road, Ramsey, PE26","Lennon James Property, Abbots Ripton",01480 274333
+Fakenham,"Sowerbys, Fakenham",01328 801643
+"Bond Street, Cromer, Norfolk, NR27","YOUR MOVE - Bennetts, Norwich",01603 708978
+"Queen Street, Castle Hedingham, Essex","David Burr Estate Agents, Castle Hedingham",01787 322211
+"Jarrah Cottages, London Road, Purfleet, Essex, RM19","Woodland, Ilford",020 8554 5544
+"Rayleigh, Essex, SS6","Essex Guild Homes, Rayleigh",01268 777728
+"South Street, Crowland, Peterborough","City & County (UK) Ltd, Crowland",01733 964706
+"Fifth Avenue, Wisbech, Cambridgeshire, PE13 2BL","Aspire Homes, Wisbech",01945 664478
+"Crowsheath Estate, Billericay, CM11","Gibson & Brennan, Basildon",01268 437987
+"Collier Way, Southend-on-Sea, Essex, SS1","Bairstow Eves, Southend-on-Sea",01702 967948
+"Oxford Street, Exning, CB8","Hockeys, Newmarket",01638 597291
+"Lynn Road, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"Vineyards Road, Northaw, Potters Bar","Fine & Country, Brookmans Park",01707 241403
+"Burnham Lodge, Oakstead Close, Ipswich, IP4","Belvoir, Ipswich",01473 943916
+"Ringstead Road, Heacham","The Norfolk Agents, Dersingham",01485 506961
+"Second Avenue, Weeley, Clacton-On-Sea","William H. Brown, Clacton On Sea",01255 442150
+"Chancellor Court, Chelmsford","Retirement Homesearch, East of England",01425 209944
+"Manor Road , Chigwell ,","Lifestyle Property, Docklands",020 3897 8479
+"Manor Road, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Talbot Manor Gardens, Plot 4, Lynn Road, Fincham, Kings Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Talbot Manor Gardens, Plot 6, Lynn Road, Fincham, King Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Land At Pymoor - Lot 1, Main Drove, Little Downham, Ely, Cambridgeshire, CB6","Carter Jonas LLP - Rural, Cambridge",01223 972792
+"Wisbech Road, Thorney, Peterborough","Woodcock Holmes Estate Agents, Peterborough",01733 964839
+"Midland Road, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"City Gate House, Eastern Avenue, Ilford, IG2","Real Move Estates, Chadwell Heath",020 8590 5333
+"20, Basildon, SS16","Keller Williams Plus, Covering Nationwide",020 3892 9627
+Greenstead Green,"Zoe Napier Collection, Essex & South Suffolk",01621 731800
+"Oilmills Road, Ramsey Mereside, PE26","Lennon James Property, Abbots Ripton",01480 274333
+"Enfield Court, Eye, Peterborough, PE6","Rosedale Property Agents, Peterborough",01733 964671
+"Cambridge Road, Stretham, Ely, CB6","Abbotts, Ely",01353 887783
+"Berryfield, March","William H. Brown, March",01354 704614
+"AG14 Felixstowe Beach Holiday Park, Walton Avenue, Felixstowe, Suffolk, IP11","Joscelyne Chase, Essex & Suffolk",01376 315808
+"Tudor Place, Wimblington, March, Cambs., PE15 0PX","T Payne & Co Ltd, Chatteris",01354 707494
+"Deercote Court, Glen Luce, Turners Hill, Cheshunt, Waltham Cross","Kings Group, Cheshunt",01992 662238
+"Somersby Gardens, Ilford, IG4","Bairstow Eves, Barkingside",020 3869 5975
+"Ashville Road, Hampton Hargate, Peterborough","Connells, Peterborough",01733 964390
+"Green End Lane, Great Holland","Lamb & Co, Land & New Homes",01255 444228
+"Guthrie House, Bretton, Peterborough, PE3","Rosedale Property Agents, Peterborough",01733 964671
+"Barroway Drove, Downham Market","Fine & Country, King's Lynn",01553 603223
+"Englands Lane, Gorleston","Aldreds, Gorleston on Sea",01493 807284
+"Graham Road, Felixstowe","Nicholas Estates, Felixstowe",01394 331588
+"Uffen Way, Sawston","Pocock & Shaw, Cambridge",01223 972787
+"Westmead Avenue, Wisbech","Maxey Grounds, Wisbech",01945 661540
+"7a Queen Street, Town Centre","Shires Estate & Letting Agents, Haverhill",01440 840585
+"Taylors Loke, Hemsby","Bycroft Estate Agents, Great Yarmouth",01493 801538
+"Norton Place, Icknield Way, Baldock, SG7","Country Properties, Baldock",01462 415848
+"Pound Lane, Laindon, Essex, SS15","Bairstow Eves, Basildon",01268 202635
+"Chaffinch Way, Halstead, Essex, CO9","ST. GEORGE PROPERTY GROUP, Halstead",01787 321001
+"William Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"Tyhurst, Middleton, Milton Keynes","Connells, Milton Keynes",01908 087115
+"March Road, Friday Bridge, Wisbech","William H. Brown, Wisbech",01945 664477
+"Eastlands, Stradbroke, Eye","William H. Brown, Diss",01379 773565
+"Collins Cross, Bishop's Stortford, Hertfordshire, CM23","Park Lane Property Agents, Bishops Stortford",01279 594720
+"Nanterre Court, Cassiobury","Retirement Homesearch, East of England",01425 209944
+"Old Town, Hemel Hempstead","Clements Estate Agents, Covering Herts, Beds & Bucks",01442 501057
+"Mere View, Thompson Close, Haughley, Stowmarket, IP14","Lacy Scott & Knight, Stowmarket",01449 612384
+"Lower Olland Street, Bungay","William H. Brown Select, Norwich",01603 361639
+"354 Four Chimneys Crescent, Hampton Heights, Peterborough, PE7 8SR",Cala Homes North Counties,01733 964778
+"SYCAMORE WAY, KIRBY CROSS","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Mill Lane, Bacton, Norwich","William H. Brown, North Walsham",01692 660092
+"Ambleside, Langdale Avenue, Harpenden, AL5","Ashtons, Harpenden",01582 377552
+"Parkhouse Court, Hatfield, AL10","Moving Places, Hatfield",01707 954053
+"Braintree Road, Dunmow, Essex","Daniel Brewer Estate Agents, Essex",01371 708267
+"The Old Coal Yard, Snettisham, King's Lynn","William H. Brown, Hunstanton",01485 506836
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"Ness Road, Erith, Kent, DA8","Anthony Martin Estate Agents, Barnehurst",01322 952698
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"East Of England Way, Orton Northgate, Peterborough","Sharman Quinney, Hampton",01733 964948
+"Upwell Road, March","Ellis Winters Estate Agents, March",01354 707466
+"Whitehall Road, London","Coppermills, Walthamstow & Leyton",020 3910 6238
+"Whitehall Road, London","Coppermills, Walthamstow & Leyton",020 3910 6238
+"Park House, Old Park Road, Hitchin","McCarthy & Stone Resales, Bournemouth",03455 564122
+"High View, Bedford","Goodacres Residential, Kempston",01234 230058
+"Coniston Road, PETERBOROUGH","William H. Brown, Peterborough",01733 964717
+"Buntings Path, Burwell, Cambridge","Morris Armitage, Burwell",01630 410888
+"Colchester Road, St. Osyth, Clacton-on-Sea, Essex, CO16","Abbotts, Colchester",01206 586064
+"Channels, Chelmsford, CM3 3HA",Wimbush Waters,01702 967996
+"Aickmans Yard, King Street, King's Lynn, Norfolk, PE30","Bennett & Co Estate Agents, King's Lynn",01553 603486
+"The Common, Metfield, Harleston, Norfolk, IP20","Savills, Ipswich",01473 943373
+"Glanthams Close, Shenfield, CM15","Beresfords, Shenfield",01277 674308
+"Holy Acre, Roydon Mill, Roydon","Oliver Minton, Stanstead Abbotts",01920 455428
+"Greengage Rise, Melbourn, SG8","Ensum Brown, Royston",01763 750000
+"East Street, Huntingdon","Sharman Quinney, Godmanchester",01480 776297
+"Southsea Avenue, Watford, WD18","Proffitt & Holt Partnership, Watford",01923 961129
+"Wintringham, St. Neots","Harvey Robinson, St Neots",01480 278946
+"The Orchard, Kedington, Haverhill","William H. Brown, Halstead",01787 322336
+"Queen Elizabeth Way, Colchester","John Alexander Tiptree, Tiptree",01621 738588
+"Flat 17, Waterside Mead","Open House Estate Agents, Nationwide",020 3910 1882
+"Mill Road, Burnham-On-Crouch","S J Warren, Burnham-On-Crouch",01621 738592
+"St James' Park off St James' Way Whittington Way Bishop's Stortford, CM23 4AS",Bellway Homes Ltd (North London),01279 594775
+"Half Moon Lane, Pepperstock, Bedfordshire, LU1 4LW","L&D Estate Agents, Covering Luton",01582 377764
+"Wykes Bishop Street, Ipswich","Connells, Ipswich",01473 943139
+"Loates Lane, Watford, Hertfordshire, WD17","Your Move, Watford",01923 961818
+"Chenies Hill, Latimer, HP5","Bovingdons, Beaconsfield",01494 341026
+"Black Dyke Road, Hockwold, Norfolk, IP26 4JW","Elvin Estates, Mildenhall",01638 597092
+"Kentish Lane, Brookmans Park, Hertfordshire, AL9","Statons, Brookmans Park",01707 954088
+"Ashley Court, Hatfield, AL10","Wrights of Hatfield, Hatfield",01707 241242
+"Cherry Blossom Cottage, Wortham","Durrants, Diss",01379 777085
+"Redwood Grove, Bedford, MK42","Taylors Estate Agents, Bedford",020 3869 5951
+"Greenfields Road, East Dereham, NR20 3TE",Orbit,01362 702210
+"Prince Street, Wisbech, Cambridgeshire, PE13","Town & Country Letting Agents, Downham Market",01949 480441
+"Chingford Avenue, Chingford, E4","Coultons, London",020 3907 9959
+"The Leas, Frinton on Sea","Stoneridge Estates, Frinton on Sea",01255 441084
+"Beaumonds, St Albans, AL1","Northwood, St Albans",01727 222084
+"Bridgwater Drive, Westcliff-On-Sea","Abode, Covering Essex",01702 418793
+"South Beach Road, Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"Wimpole Street, CHATTERIS","Sharman Quinney, March",01354 704623
+"Main Road, Gedney, Spalding","William H. Brown, Long Sutton",01406 431140
+"Anglia Parkway North, IP1","Whybrow & Dodds Ltd, Colchester",01206 586173
+"Eagle Street, Cambridge, Cambridgeshire, CB1","Tucker Gardner, Cambridge",01223 972799
+"North Road, Hertford","Steven Oates, Hertford",01992 661978
+"Walton Road, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"38 Wellesley Road, Great Yarmnouth, NR30","One Estate Agents, Gorleston-on-Sea",01493 801387
+"Alder Court, Chesterton","Retirement Homesearch, West of England & Wales",01425 209962
+"Plot 56 Centurion Park, Moulton Chapel, Spalding","Firmin & Co, Crowland",01733 964254
+"Market Rasen Way, Holbeach, PE12","City & County (UK) Ltd, Crowland",01733 964706
+"Dudley Street, Luton, Bedfordshire","Leaders Sales, Bedford",01234 987237
+"Plot 20/39 Centurion Park Roman Road, Moulton Chapel, Spalding","Firmin & Co, Crowland",01733 964254
+"City View Road, Norwich","William H. Brown, Hellesdon",01603 361920
+"Hancock Drive, Luton, LU2","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Ballantyne Drive, Colchester","Jackson & Co, Covering Suffolk",01473 943847
+"Edinburgh House, Harlow, Harlow","Apple Property Services, Hornchurch",01708 704768
+"Brookend Drive, Barton-Le-Clay, MK45 4SQ","Love Homes, Barton-le-Clay",01582 297272
+"Rivendale, Werrington, Peterborough","Sharman Quinney, Werrington",01733 964878
+"Neatherd Moor, Dereham, NR20","Homeworks, Dereham",01362 702202
+"Broad Street, Great Cambourne, Cambridge","Sharman Quinney, Cambourne",01954 776148
+"Flag Hill, Great Bentley, Colchester, CO7","Michaels Property Consultants Ltd, Wivenhoe",01206 586091
+"John Bends Way, Parson Drove, Wisbech","William H. Brown, Wisbech",01945 664477
+"Berryfield, March","William H. Brown, March",01354 704614
+"South Green, Coates, PE7","Yopa, East Anglia & London",01270 447764
+"Poole Street, Great Yeldham, Essex, CO9","Savills, Chelmsford",01245 945669
+"Town Street, Upwell, Wisbech","William H. Brown, Downham Market",01366 312332
+"Hainault Road, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Wolsey Road, Hemel Hempstead","Connells, Hemel Hempstead",01442 504014
+"Cowdrie Way, Chelmer Village, Chelmsford","Connells, Chelmsford",01245 945312
+"Elmdale Drive, Carlton Colville, Lowestoft","Hardimans Estate Agents, Lowestoft",01502 448102
+"Flag Hill, Great Bentley, CO7","Town & Country Residential, Brightlingsea",01206 586068
+"Valley Way, Stevenage, Hertfordshire, SG2","Putterills, Stevenage",01438 901775
+"Woolram Wygate, Spalding, PE11","Belvoir, Spalding",01775 668874
+"Paynes Park, Hitchin, SG5","Country Properties, Hitchin",01462 416607
+"Palgrave Road, BEDFORD, Bedfordshire, MK42","Taylors Estate Agents, Bedford",020 3869 5951
+"Alexandra Street, Southend-on-sea, SS1","Gilbert & Rose, Leigh-on-sea",01702 967150
+"The Hamilton, Alder Meadow, Creeting St. Mary, Suffolk, IP6","Jackson-Stops, Ipswich",01473 943579
+"Chelmsford Road, Shenfield, CM15","Beresfords, Shenfield",01277 674308
+"Cranbrook Road, Ilford, IG1","Highcastle Estates, Ilford",024 7542 6094
+"Cranbrook Road, Ilford, IG1","Highcastle Estates, Ilford",024 7542 6094
+"Great Gregorie, Lee Chapel South, Basildon, SS16","Yopa, East Anglia & London",01270 447764
+"West Street, Hertford, SG13","Fine & Country, Ware",01920 455382
+"Plot 29, Berryfield, March","Maxey Grounds, March",01354 704639
+"Beach Road, Kessingland, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"The Street, Catfield NR29","Aldreds, Stalham",01692 660100
+"Marsworth Wharf, Marsworth","Cesare & Co, Tring",01442 504143
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Milliners Way, Luton","Esquire Estates, Luton",01582 377323
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"High Street, Gorleston","Howards, Gorleston",01634 563586
+"High Road, Buckhurst Hill, IG9","Farr O'Neil, Buckhurst Hill",020 3870 7037
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Kiln Shaw, Langdon Hills, Basildon","Colubrid, Thurrock & Basildon",01375 803788
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Duke Street, Ipswich","haart, Ipswich",01473 943783
+"The Gateway, Watford","Benjamin Stevens, Bushey",020 3834 8601
+"Park View, Brookside","Harvey Robinson, Huntingdon",01480 271779
+"The Street, Takeley, CM22","Beresfords, Land & New Homes",01245 945975
+"Hungate Road, Emneth , Wisbech, PE14","King & Partners, Downham Market",01366 385588
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"The Street, Tatterford, NR21","Belton Duffey, Fakenham",01328 800722
+"Land Off Broad Street, Green Road, Maldon, Essex, CM9 8NY",Bellway Homes (Thames Gateway),01623 700717
+"Station Road, North Chingford E4","Coultons, London",020 3907 9959
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"St James' Park off St James' Way Whittington Way Bishop's Stortford, CM23 4AS",Bellway Homes Ltd (North London),01279 594775
+"Salter Court, Colchester","Boydens, Colchester",01206 586167
+"Hart Hill Lane, Luton, Bedfordshire, LU2","Giggs & Bell, Stopsley",01582 377645
+"Skippers Way, Walton on the Naze, CO14","My Moving Places, Frinton On Sea",01255 442092
+"Pottersheath Road, Welwyn, Hertfordshire","Ashtons, Welwyn Garden City",01707 247349
+"Lydgate Court, Bury St. Edmunds","Mortimer & Gausden, Bury St. Edmunds",01284 333377
+"Old Road, Coggeshall, Essex, CO6","Heritage, Coggeshall",01376 315805
+"MEADOW VIEW, Epping Lane, Stapleford Tawney,","Millers Estate Agents, Epping",01992 662310
+"Constantine Road, Colchester, CO3","Beresfords, Colchester",01206 586080
+"St. Nicholas Place, Sheringham","Arnolds Keys, Coastal",01263 801360
+"Seton Gardens, Dagenham","Carter & Willow, Dagenham",020 3897 8474
+"Montague Avenue, Luton, Bedfordshire, LU4","EweMove, Covering East of England",01274 015915
+"Tavistock Street, Bedford, MK40","Compass Elevation, Bedford",01234 230843
+"Albany Court, LU1","VA Property Sales & Lettings, Luton",01582 377405
+"The Broadway, Bedford, MK40","Compass Elevation, Bedford",01234 230843
+"South Beach Road, Hunstanton, Norfolk, PE36","Birds Estate Agents, Hunstanton",01485 506965
+"East Street, Coggeshall, Colchester","William H. Brown, Coggeshall",01376 312574
+"Broadland Drive, Thorpe End, NR13","Northwood, Norwich",01603 249247
+"Gaultree Square, Emneth, Wisbech","William H. Brown, Wisbech",01945 664477
+"461 High Road, Ilford","Clarke Hillyer Limited, Loughton",020 3909 0348
+"Bawburgh, Norwich, NR9","AbbotFox, Norwich",01603 510582
+"Crawthorne Road, Peterborough, PE1","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Swan Mead, Luton","Esquire Estates, Luton",01582 377323
+"Felmersham Road, Carlton, Bedfordshire, MK43","Michael Graham, Bedford",01234 676680
+"Nether Street, Widford, Ware","Steven Oates, Hertford",01992 661978
+"Longmeadow Close, Griston, Thetford, Norfolk, IP25","Abbotts, Watton",01953 667624
+"Devonshire House, Repton Park, IG8","Durden & Hunt, Loughton",020 3840 3855
+"Dudley Street, Bedford","haart, Bedford",020 3840 3438
+"Shannock Court, Sheringham","Retirement Homesearch, East of England",01425 209944
+"Great Hallingbury, Bishop's Stortford","Noble Residential, Covering Essex",01708 963063
+"Hilltop Close, Rayleigh, SS6","Elliott & Smith Partnership, Rayleigh",01268 203676
+"Upper Green, Felsham, Bury St Edmunds, Suffolk, IP30","Jackson-Stops, Bury St Edmunds",01284 332555
+"The Crescent, Hemsby","Aldreds, Great Yarmouth",01493 801522
+"Kiln Field, Hook End, Brentwood","Keith Ashton, Kelvedon Hatch",01277 674395
+"Crocklands, Greenstead Green, Halstead, Essex, CO9","Jackson Stops, Colchester",01206 583491
+"Victoria Road, Lowestoft","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"Bullens Green Lane, Colney Heath, AL4 0QR",Taylor Wimpey,01727 648571
+"Mendham Lane, Harleston","Whittley Parish, Long Stratton",01508 505536
+"The Icon, Southernhay, Basildon, Essex, SS14","KINGSWOOD, Basildon",01268 203171
+"Eastfield Road, Peterborough","William H. Brown, Peterborough",01733 964717
+"Church Lane, Bocking, Braintree","Nicholas Percival, Colchester",01206 586122
+"Homestead Place, Upper Staithe Road, Stalham, Norwich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Grosvenor Road, Ilford","Calibre Estates, London",020 7183 1060
+"High Street, Clavering, Nr Saffron Walden, Essex, CB11","Mullucks, Saffron Walden",01799 611333
+"33 Eastland Grange, 16 Valentine Road, Hunstanton","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Tudor Court, Brentwood, CM14","Durden & Hunt, Ongar",020 3907 3723
+"Lambourne, Colchester","haart, covering Wivenhoe",01206 586082
+"The Drove, Barroway Drove, Downham Market, PE38","King & Partners, Downham Market",01366 385588
+"MALTING LANE, KIRBY-LE-SOKEN","Rouse Estate Agents, Frinton on Sea",01255 442176
+"Stanley Street, Bedford","Connells, Bedford",020 3869 5634
+"Hunstanton Road, Dersingham","The Norfolk Agents, Dersingham",01485 506961
+"Newland Street, Witham, CM8","Beresfords, Witham",01376 315792
+"Palmerston Road, Buckhurst Hill, Essex, IG9","Bairstow Eves, Woodford Green",020 3835 6392
+"Grove Road, Grays","haart, Grays",01375 803701
+"High Road, Benfleet","Aspire Estate Agents, Benfleet",01268 203954
+LOW WALL BEACH HUT NEAR CONNAUGHT AV.,"Boydens, Frinton-on-Sea",01259 235945
+"Station Road, Canvey Island","Richard Poyntz & Co, Canvey Island",01268 203590
+"The Leas, Frinton- On-Sea","Sheen's, Frinton-On-Sea",01255 852555
+"St. Albans Hill, Hemel Hempstead","Brown & Merry, Hemel Hempstead",01442 501568
+"King Street, Norwich","William H. Brown, Norwich",01603 361933
+"Sunson Place, Havelock Road, Luton","Nova Estate Agents, Luton",01582 377133
+"The Cottage, Basbow Lane, Bishops Stortford, Hertfordshire, CM23 2NA","Auction House London, Hampstead",020 3897 6030
+"Fentiman Way, Hornchurch, Essex","Douglas Allen, Hornchurch",01708 205425
+"Mandalay Park, Whittlesey PE7","Bruton Solutions, Bracknell",0118 230 4462
+"Miami House, Princes Road, Chelmsford, Essex, CM2 9GE","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Three Bed Willerby Malton (37x12) 2022, Belle Aire Holiday Park, Beach Rd, Hemsby, Norfolk, NR29 4HZ","Sell My Group, Lytham",020 3910 6164
+"Plot 1 The Cullinan Collection, The Ridgeway, Cuffley, Hertfordshire, EN6","Statons New Homes Showcase, Barnet",020 3907 9762
+"Plot 4 The Cullinan Collection, Cullinan Close, Cuffley, Hertfordshire, EN6","Statons New Homes Showcase, Barnet",020 3907 9762
+"Bedlars Green, Near Bishops Stortford","Park Lane Property Agents, Bishops Stortford",01279 594720
+"Clyde, East Tilbury, RM18","Chesters Estates, Grays",01375 803682
+"Clyde, East Tilbury, RM18","Chesters Estates, Grays",01375 803682
+Hall Road Copford Colchester CO6 1BN,Dandara Eastern,01206 489560
+"The Manor, Regents Drive, Woodford Green, Greater London, IG8","Madison Fox, Chigwell",020 3840 3992
+"The Hollies, London Road","Attik City Country Coast, Halesworth",01986 899532
+"Fridaybridge Road, Elm, Wisbech","William H. Brown, Wisbech",01945 664477
+"Park Drive, Marshalls Park, Romford, RM1","Davis Estates, Hornchurch",01708 205276
+"Highfield Drive, Littleport, Ely","William H. Brown, Ely",01353 881275
+"Keller Close, Stevenage, SG2","Express Estate Agency, Nationwide",03330 165458
+"Armstrong Road, Luton","Connells, Luton",01582 377356
+"Bankside Close, South Woodham Ferrers","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flag Hill, Great Bentley, Colchester","Lamb & Co, Tendring",01255 422240
+"Main Road, Mundon, Maldon, CM9 6PB","Joe Ross Properties, Powered by eXp, Maldon",01621 738966
+"Conduit Road, Bedford, Bedfordshire, MK40","Urban & Rural, Bedford",020 3892 9546
+"Chigwell Park, Chigwell, Essex, IG7","John Thoma Bespoke Estate Agency, Chigwell Branch",020 8340 8833
+"Harry Barber Close, Norwich","William H. Brown, Norwich",01603 361933
+Beach hut 1 Pier North,"Diamond Mills & Co, Felixstowe",01394 331695
+"High Street, Billericay","Quirks, Billericay",01277 674439
+"Flat 9, North Court, Rembrandt Way, Watford, Hertfordshire, WD18","Wynn Estates, Hounslow",020 3909 6626
+"Longbanks, Harlow, Harlow, CM18","Wright & Co, Sawbridgeworth",01279 976936
+"Brington Road, Old Weston. PE28 5LP","Southams, Barnwell",01832 778367
+"Homerton Street, Cambridge, Cambridgeshire","Bidwells, Cambridge",01223 972773
+"Plot 3 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Tolpits Lane, Watford","Brown & Merry, Watford",01923 961759
+"Coast Road, Corton, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Trafalgar Street, Norwich","William H. Brown, Norwich",01603 361933
+Second Avenue RM10,"Anisten Homes, Ilford",020 3889 9064
+"Links Avenue, Felixstowe, Suffolk, IP11","Ascot Estate Agency, Martlesham",01473 611460
+"Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Swan Lane, Barnby","Brown & Co, Norwich",01603 361667
+"Leighton Avenue, Leigh-On-Sea","Home, Leigh on sea",01702 967219
+"G14 Chapel House, 21-25 Chapel Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Fingringhoe Road, Rowhedge, Colchester, Essex","Strutt & Parker, National Country House Department",020 3879 5374
+"Centrum Court, Pooleys Yard","Martin & Co, Ipswich",01473 943877
+"Letheringsett Hill, Holt, Norfolk","Brown & Co, Holt",01263 801103
+"The Boulevard, Repton Park, IG8","Durden & Hunt, Loughton",020 3840 3855
+"Yarmouth Road, North Walsham","Minors & Brady, Wroxham",01603 361621
+"Parklands, Green Lane Estate, Pudding Norton, Fakenham, NR21","Abbotts, Fakenham",01328 800709
+"Pump Street, Orford, IP12","Suffolk Coastal, Aldeburgh",01728 443743
+"Edward House, Pegs Lane, Hertford","Shepherds, Hertford",01992 662103
+"South Street, Romford, RM1","Bairstow Eves, Romford",01708 961674
+"Hargate Way, Hampton Hargate, Peterborough, PE7","Belvoir, Peterborough",01733 964767
+"Goldcrest Way, Hampton Vale, Peterborough","Connells, Peterborough",01733 964390
+"Potters Court, Potters Bar","Raine & Co, Potters Bar",01707 954070
+"Aventine Court, Holywell Hill, St. Albans, AL1","Hamptons, St Albans",01727 222024
+"Connaught Avenue, Frinton-On-Sea, CO13 9PT","Boydens, Frinton-on-Sea",01259 235945
+"Green Lane, Peterborough, Cambridgeshire, PE1","Freedom Homes, Peterborough",01733 964657
+"Woodbine Close, Waltham Abbey","Rainbow Estate Agents (S.E.) Ltd, Essex",01992 662166
+"Mill Close, Salhouse, Norwich","Starkings & Watson, Brundall",01603 336556
+"Talbot Manor Garden, Plot 7, Lynn Road, Fincham, Kings Lynn, PE33","Abbotts, Downham Market",01366 312324
+"Ashton Court, Chingford","Churchill Estates, North Chingford & Sewardstone",020 3835 6473
+"Heron Walk, March","Sharman Quinney, March",01354 704623
+"Woodland View, Stratton Strawless, Norwich","William H. Brown, Norwich",01603 361933
+"Mary Munnion Quarter, Chelmsford","William H. Brown, Chelmsford South",01245 945288
+"London Road, Westcliff-on-sea","haart, Westcliff On Sea",01702 746972
+"Alexandra Street, Southend-on-Sea, SS1","Gilbert & Rose, Leigh-on-sea",01702 967150
+"Ely, Cambridgeshire, CB6","Quickmove Properties, Wiltshire",01793 540551
+"High Road, Newton-In-The-Isle, Wisbech","William H. Brown, Wisbech",01945 664477
+"Mafeking Avenue, Newbury Park","Sandra Davidson Estate Agents, Seven Kings",020 3834 8339
+"Gwyn Crescent, Fakenham","William H. Brown, Fakenham",01328 800703
+"Hookfield, Harlow, CM18","iad, Nationwide",03330 382150
+"Hookfield, Harlow","William H. Brown, Harlow",01279 976892
+"Factory Lane, Roydon, Diss","Whittley Parish, Diss",01379 777262
+"Hawkswood Road, Downham, Billericay","Cowling & Payne, Wickford",01268 202962
+"High Street, Mepal, Ely,","Maxey Grounds, March",01354 704639
+"Skipper House, Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Ermine Street South, Papworth Everard, Cambridge, Cambridgeshire, CB23 3QA","Eddisons Commercial Limited, Huntingdon",01480 271765
+"Sewardstone Road, Waltham Abbey, EN9 1NP",McCarthy Stone,01992 932565
+"Kempley Close, Hampton Centre, Peterborough, PE7 8QH","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Lime Cottages, High Cross - Parking Space","Taylor Phelps, Ware",01920 455452
+"Victoria Mill Road, Framlingham, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"The Glebe, Wells-next-the-Sea, NR23","Belton Duffey, Wells-next-the-Sea",01328 800726
+"Connaught Gardens East, Clacton-On-Sea, Essex, CO15","Palmer & Partners, Colchester & Coast",01206 586084
+"Bull Close, Chafford Hundred, Essex, RM16","Chesters Estates, Grays",01375 803682
+"Longbridge Road, Barking","William H. Brown Incorporating Porter Glenny, Barking",020 3871 3814
+"Bushmead Avenue, Bedford","Hollands Smith, Bedford",020 3835 6022
+"Between Nettlestead & Somersham, Nr Ipswich, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"Residential Development Plots , The Street, Marham, King's Lynn, Norfolk, PE33 9JN","Eddisons Commercial Limited, Huntingdon",01480 271765
+"Yarmouth Road, Ipswich, IP1","Northwood, Norwich",01603 249247
+"Slade Court, Watling Street, Radlett","Susmans Estates, Radlett",01923 961989
+"Chalkwell Esplanade, Chalkwell, SS0","Niche Homes, Leigh on Sea",01702 967888
+"Star Lane, Ipswich, Suffolk, IP4","Pennington Surveyors Limited, Ipswich",01473 943457
+"Passingham Close, Billericay, CM11","Tyler Estates, Billericay",01277 674562
+"Stromness Road, Southend-On-Sea, Essex, SS2","Ocean Residential, Westcliff-on-Sea",01702 967924
+"Hamels Mansion, Hamels Park, Buntingford, Hertfordshire, SG9","Savills, Bishops Stortford",01279 967996
+"Cole Green Lane, Welwyn Garden City","William H. Brown, Welwyn Garden City",01707 954063
+"Wigginton Bottom, Wigginton, Tring","Brown & Merry, Tring",01442 504077
+"Browne Street, Norwich","Pymm & Co, Norwich",01603 361642
+"Alexandra Road, Great Wakering, Southend-on-Sea, Essex, SS3","Hunt Roche, Coast & Country Homes",01702 967987
+"Eastern Esplanade, Thorpe Bay, Southend-On-Sea, Essex, SS1","Hunt Roche, Coast & Country Homes",01702 967987
+"Hamilton Court, Leighton Buzzard, LU7 1JF","M & M Properties, Leighton Buzzard",01525 664321
+"Main Road, Mundon, Maldon","Aspire Estate Agents, Benfleet",01268 203954
+"New North Road, Ilford, IG6","Accord Sales & Lettings, serving Havering",01708 205333
+"Smeeth Road, Marshland St. James, WISBECH","William H. Brown, Wisbech",01945 664477
+"Ballantyne Drive, Colchester","John Alexander, Colchester",01206 586126
+"Roslyn Court, Lisle Lane, Ely, Cambridgeshire, CB7 4FA","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Norwich, NR1","AbbotFox, Norwich",01603 510582
+"Skippers Way, WALTON ON THE NAZE","William H. Brown, Clacton On Sea",01255 442150
+"Homewood Court, Cedars Village, Chorleywood, Hertfordshire, WD3","Binks Estate Agents, Covering Chilterns",01923 961214
+"Gwyn Crescent, Fakenham","William H. Brown, Fakenham",01328 800703
+"Water Lane, Steeple Bumpstead, Haverhill, Essex, CB9","Intercounty, Saffron Walden",01799 619634
+"Marsh Road, Oulton Broad","Minors & Brady, Oulton Broad",01502 441421
+"Marsh Road, Oulton Broad","Minors & Brady, Oulton Broad",01502 441421
+"St. Georges Court, Huntingdon, Cambridgeshire.","Oliver James, Huntingdon",01480 776410
+"Gisleham, Lowestoft, Suffolk, NR33","Carter Jonas LLP - Rural, Cambridge",01223 972792
+"Willowbrook Drive, Whittlesey, Peterborough, PE7","Pennell & Partners, Whittlesey",01733 964097
+"Nup End Lane, Wingrave, Aylesbury","Alexander & Co, Aylesbury",01296 254903
+"G27 Park House 146 - 158 Park Street, Luton, LU1","Collective Property Co, Liverpool",0151 453 9857
+"Plot 1 Necton Road, Wheathampstead, AL4","Hamptons New Homes, Stanmore",020 3840 3604
+"High Street, Brentwood","Keith Ashton, Brentwood",01277 674388
+"Halstead Road, Kirby Cross","Sheen's, Frinton-On-Sea",01255 852555
+"Barrier Bank, Cowbit, Spalding","William H. Brown, Spalding",01775 660913
+"Horning Road West, Hoveton, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Ulverston, Purfleet-on-Thames, Essex, RM19","Bairstow Eves, South Ockendon",01708 205245
+Foremans Bridge Caravan Park,"Lets Get you Moving.co.uk, Holbeach",01406 431109
+"Bull Close, Norwich","William H. Brown, Norwich",01603 361933
+"Land Off Broad Street, Green Road, Maldon, Essex, CM9 8NY",Bellway Homes (Thames Gateway),01623 700717
+"The Street, Rickinghall","Mark Ewin, Bury St Edmunds",01284 336099
+"Wyndham Crescent, Clacton-On-Sea","Lamb & Co, Tendring",01255 422240
+"Laxfield Road, Fressingfield","Durrants, Harleston",01379 777097
+"Lynn Road, Wisbech","William H. Brown, Wisbech",01945 664477
+"Crafton, Leighton Buzzard, LU7","Stowhill Estates Ltd, Stowhill Estates Frilford",03330 165177
+"Heath Road, Warboys, Huntingdon, Cambridgeshire, PE28","Thomas Morris, Ramsey",01487 801934
+"Michigan Close, Turnford","Anthony Davies, Hoddesdon",01992 927992
+"Wattle Close, Lower Cambourne, Cambridge","Connells, Cambourne",01954 774652
+"Cambridge Road, Stretham, Ely","William H. Brown, Ely",01353 881275
+"Low Road, Sweffling, Saxmundham","Paul Hubbard Estate Agents, Lowestoft",01507 308559
+"Hertford Mews, Billy Lows Lane, Potters Bar","Auckland Estates Limited, Potters Bar",01707 241361
+"High Road, Gorefield","Maxey Grounds, Wisbech",01945 661540
+"Dunwich Farm, Stevenage SG1","Properly, London",020 3840 3405
+"Dunwich Farm, Stevenage, Hertfordshire, SG1","Putterills, Stevenage",01438 901775
+"Pound Avenue, Stevenage, Hertfordshire, SG1","Putterills, Stevenage",01438 901775
+"Wind Hill, Magdalen Laver","Butler & Stag, Theydon Bois",020 3897 2972
+"High Wall, Frinton on Sea","Stoneridge Estates, Frinton on Sea",01255 441084
+"Parker Crescent, Sawtry, Cambridgeshire.","Oliver James, Huntingdon",01480 776410
+"The Common, Metfield","TW Gaze, Diss",01371 708263
+"Chalkwell Esplanade, Westcliff-On-Sea","Home, Leigh on sea",01702 967219
+"** SIGNATURE HOMES ** Hook End Road, Hook End","Keith Ashton, Kelvedon Hatch",01277 674395
+"Dagless Way, March","William H. Brown, March",01354 704614
+"Express Drive, London, IG3","Tyron Ash International Real Estate, London",03330 164235
+"Dove House Close, Godmanchester, Huntingdon, PE29","Peter Lane & Partners, Huntingdon",01480 414800
+"Severn House, Riverside Maltings, Oundle, PE8","Woodford & Co, Oundle",01832 274732
+"Bockhill Road, Bury St Edmunds","Mark Ewin, Bury St Edmunds",01284 336099
+"Booth Court, Handford Road, Ipswich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Rainbow Road, Canvey Island","Aspire Estate Agents, Benfleet",01268 203954
+"Jubilee Way, Crowland, Peterborough","Sharman Quinney, Werrington",01733 964878
+Docking,"Sowerbys, Burnham Market",01328 803417
+"Hall Drive, Gosfield, CO9","Beresfords, Land & New Homes",01245 945975
+"Langshaw Close, Framlingham, Suffolk","Clarke and Simpson, Framlingham",01728 443978
+"Oak Tree Park, Attleborough","Hammond & Stratford, Attleborough",01953 667597
+"Withy Mead, London, E4","Dayfields, Enfield Town",020 8103 5678
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"Clarkson Avenue, Wisbech, PE13","Belton Duffey, Kings Lynn",01553 603677
+"Plot 7 Bureside Quay, The Rhond, Hoveton, Norwich, NR12","Savills New Homes, Norwich",01603 361854
+"Blyford Lane, Halesworth, IP19","Sefftons, Norfolk",01603 361026
+"Chiltern Road, Dunstable, Bedfordshire, LU6","Urban & Rural Property Services, Dunstable",01582 377032
+"Parkland Close, Horning, Norfolk","Stobart & Hurrell, Wroxham",01603 361930
+"Pegmire Lane, Aldenham, WD25","Purplebricks, covering Watford",020 3909 9701
+"High Road, Buckhurst Hill, Redbridge","Portico, Woodford",020 3909 0018
+"Mill Park Gardens, Mildenhall, Bury St. Edmunds, Suffolk, IP28","Balmforth, Mildenhall",01638 598599
+"Forster Park, North Road, Stevenage, SG1","Taylors Estate Agents, Stevenage",01438 901433
+"Grosvenor Road, St. Albans, Hertfordshire, AL1","Frost's, St. Albans",01727 649757
+"Pettaugh Road, Stonham Aspal, Stowmarket","Hamilton Smith, Needham Market",01449 709827
+"Back Lane, Stisted, Braintree","Paul Mason Associates, Essex",01245 945519
+"Staithe Road, Burgh St. Peter, Beccles, Norfolk, NR34","YOUR MOVE, Beccles",01502 273333
+"Money Bank, Wisbech, PE13 2JN","Robert Hale Estates, Wisbech",01945 661608
+"High Street, Mundesley, Norwich","William H. Brown, Cromer",01263 801120
+"Harvey Road, Bedford, Bedfordshire, MK41","Urban & Rural, Bedford",020 3892 9546
+"Poets Place, 11 Alderton Hill, Loughton, Essex, IG10","Lawlors Property Services, Loughton Sales",020 3873 8317
+"Stonham Barns Park, Stonham Aspal, IP14 6AT","Kavanagh Hayes, Chatteris",01354 704640
+"Lingfield Way, Watford, WD17","Proffitt & Holt Partnership, Watford",01923 961129
+"Connaught Road, Luton, Bedfordshire, England, LU4","Taylors Estate Agents, Luton",01582 377982
+"Main Road, PE12","Hix and Son, Holbeach",01406 431053
+East Ruston,"Fine & Country, Norwich",01603 361375
+"Holme Close, Ailsworth","Bellavie Homes, Peterborough",01733 964297
+"Pettaugh Road, Stonham Aspal, Stowmarket","P&H Estates, Ipswich",01479 787941
+"Stocks Road, Aldbury","Sterling Estate Agents, Tring",01442 504247
+"Ventnor Gardens, Luton, Bedfordshire, LU3","Taylors Estate Agents, Leagrave",01582 377100
+"Mores Lane, Pilgrims Hatch, Brentwood","Meacock & Jones, Shenfield",01277 674791
+"THE LEAS, SECOND ROW, FRINTON ON SEA","Boydens, Frinton-on-Sea",01259 235945
+"Crawthorne Road, Peterborough, PE1","Retirement Security Ltd, Stratford upon Avon",01789 335868
+"Woodland Road, Sawston, Cambridgeshire, CB22","Mullucks, Saffron Walden",01799 611333
+"Howe Green, Great Hallingbury, Nr Bishops Stortford, CM22","Mullucks, Bishop's Stortford",01279 594679
+"Chalk Lane, Sutton Bridge, PE12 9YF","Phoenix, Sutton Bridge",01406 431089
+"Mary Lane South, Great Bromley","Gyles & Rose, Colchester",01206 586104
+"Rectory Road, Great Holland","Lamb & Co, Land & New Homes",01255 444228
+"Ramsey Road, St. Ives, Cambridgeshire, PE27","Thomas Morris, St. Ives",01480 271866
+"Two Bed Manor Holcot Bay (44x20), Woodside Park, Woodside, Luton, Bedfordshire, LU1 4LP","Sell My Group, Lytham",020 3910 6164
+"Morston Road, Blakeney, Holt, Norfolk","Strutt & Parker, Norwich",01603 361891
+"May Road, Lowestoft","William H. Brown, Lowestoft",01502 442472
+"Albert Road, Buckhurst Hill, IG9","Durden & Hunt, Loughton",020 3840 3855
+"North Street, Wicken, CB7","The Good Estate Agent, National",01303 761722
+"Hammondstreet Road, Cheshunt, Hertfordshire, EN7 6PN",Croudace Homes,01702 655482
+"Rose Walk, Wisbech, PE13 1SG","Aspire Homes, Wisbech",01945 664478
+"Coopers Alley, Hitchin","Norgans Estate Agents, Hitchin",01462 415794
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Recorder Road, Norwich, Norfolk, NR1","Property Ladder, Norwich",01603 361657
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Bedford Bank, Wisbech, PE14","Charles Century, Crowborough",01892 362184
+"Dunstable Road, Luton, Bedfordshire, LU4","Taylors Estate Agents, Luton",01582 377982
+"Kenilworth Gardens, Seven Kings, IG3","Wentworth Estates, London",020 3889 9106
+"Barling Road, Great Wakering, Southend-on-Sea, Essex, SS3","Hunt Roche, Coast & Country Homes",01702 967987
+"Main Street, Welney, Wisbech, Norfolk, PE14","Abbotts, Ely",01353 887783
+"Station Road, Thorpe Bay, Essex, SS1","Hunt Roche, Coast & Country Homes",01702 967987
+"The Portway, King's Lynn","William H. Brown, King's Lynn",01553 603650
+"Linseed Walk, Downham Market","William H. Brown, Downham Market",01366 312332
+"Lammas Walk, Leighton Buzzard","Quarters Estate Agents, Leighton Buzzard",01525 302367
+"High Street, Southend-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"White Hart Drive, Hemel Hempstead, HP2","David Doyle Estate Agents, Boxmoor",01442 949959
+"Rayleigh Road, Eastwood, Leigh-On-Sea","Aspire Estate Agents, Benfleet",01268 203954
+"Two Bed Omar Westfield, St Osyth Place, Cockett Wick Lane, St Osyth, Essex, CO16 8SE","Sell My Group, Lytham",020 3910 6164
+"Brent Avenue, South Woodham Ferrers","Church & Hawes, South Woodham Ferrers",01245 945848
+"Flaunden Lane, Bovingdon, HP3","Whitewood Estates, Bovingdon",01440 840559
+"The Street, Freckenham, Bury St. Edmunds","Morris Armitage, Newmarket",01638 597098
+"Oxford Crescent, Clacton-on-Sea, Essex, CO15","Bairstow Eves, Clacton on Sea",01255 440524
+"Burgh Lane, Mattishall","Minors & Brady, Dereham",01362 702993
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"St. Peters Close, Charsfield, Woodbridge","IP Properties (Suffolk) Ltd, Woodbridge",01394 332436
+"Padholme Road, Peterborough","William H. Brown, Peterborough",01733 964717
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Wingate Road, Luton","Esquire Estates, Luton",01582 377323
+"Pyecroft Lane, Walpole St Peter","haart, Wisbech",01945 661637
+"Pino Way, Kings Head Hill, Chingford","The Stow Brothers New Homes, London",020 3840 3602
+"23 St. Peters Close, Charsfield, Woodbridge, Suffolk, IP13","Fenn Wright, Woodbridge",01394 331099
+"The Willows, Lynn Road, Downham Market, Norfolk, PE38 9QY",Persimmon Homes,01366 312330
+"Pino Way, North Chingford, E4","Butler & Stag, Land & New Homes, London & Home Counties",020 3909 6501
+"Station Road, Hoveton, Norwich, Norfolk, NR12","Abbotts, Wroxham",01603 361377
+"Tynan Close, Royston, SG8","Ensum Brown, Royston",01763 750000
+"Huntly Grove, Peterborough, Cambridgeshire, PE1","Freedom Homes, Peterborough",01733 964657
+"St. Philips Road, Norwich, NR2","Websters Estate Agents, Norwich",01603 361833
+"Homestead Place, Upper Staithe Road, Stalham, Norwich","McCarthy & Stone Resales, Bournemouth",03455 564122
+"Shortthorn Road, Stratton Strawless","Think Property, Norwich",01603 361893
+"118 Hall Road, Norwich, Norfolk NR1 3HP","Auction House, East Anglia",01603 361653
+"Next to 112 Bridge Road, Sutton Bridge, Spalding","Geoffrey Collings & Co, Long Sutton",01406 431502
+"Dereham Road, Norwich","Think Property, Norwich",01603 361893
+"Hitchin Road, Arlesey, SG15","Country Properties, Stotfold",01462 412883
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Church Street, Clifton, Shefford, Bedfordshire, SG17","Taylors Estate Agents, Bedford",020 3869 5951
+"Cunningham Avenue, Hatfield, AL10","Yopa, East Anglia & London",01270 447764
+"Butts Close, Somersham, Huntingdon, Cambridgeshire, PE28 3HB","Giggs & McGrath, St Ives",01480 776339
+"Waterhouse Moor, Harlow, CM18","Purplebricks, covering Chelmsford",020 3910 0889
+"Hamboro Gardens, Leigh-on-sea, SS9","Niche Homes, Leigh on Sea",01702 967888
+"Reform Street, Crowland","City & County (UK) Ltd, Crowland",01733 964706
+"Towse Close, Clacton on Sea","Stoneridge Estates, Clacton On Sea",01255 442138
+"Pettaugh Road, Stowmarket, IP14","Charles Century, Crowborough",01892 362184
+"Pettaugh Road, Stowmarket, IP14","Charles Century, Crowborough",01892 362184
+"Gillespie Close, Bedford, MK42","Belvoir, Bedford",01234 230441
+"Westwood Park Road, Peterborough","Hurfords, Castor",01733 964902
+"North Drive, Great Yarmouth, Norfolk, NR30","YOUR MOVE, Gorleston",01493 807227
+"Colin Mclean Road, Dereham","haart, Dereham",01362 702159
+"Totlands Drive, Great Clacton","Stoneridge Estates, Clacton On Sea",01255 442138
+"Pettaugh Road, Stonham Aspal, Stowmarket","P&H Estates, Ipswich",01479 787941
+"High Street, Wickford, SS12","Gilbert & Rose, Leigh-on-sea",01702 967150
+"Larch Place, Romford, RM3","Durden & Hunt, Hornchurch",01708 206998
+"Oakhill, Hollesley, Suffolk, IP12","Abbotts, Ipswich",01473 943898
+"Delta Cambridge Tydd St Giles Golf and Country Club, Tydd st Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Minster Norwood Tydd St Golf and Country Park, Tydd St Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Lakeland Lowther Tydd St Giles Golf and Country Club, Tydd st Giles PE13 5NZ","Bowland Properties Limited, Carnforth",01524 969612
+"Wormleybury, Hertfordshire","Fine & Country, Hoddesdon",01992 662239
+"Acorn Rise, Hollesley, Woodbridge, Suffolk, IP12","Fenn Wright, Woodbridge",01394 331099
+"354 Four Chimneys Crescent, Hampton Heights, Peterborough, PE7 8SR",Cala Homes North Counties,01733 964778
+"Cherrydown East, Basildon, SS16","Gibson & Brennan, Basildon",01268 437987
+"Upper Bedfords Farmhouse, Romford","Lanes, Cheshunt",01992 662123
+"Lexden Road, Colchester","Exquisite Home, Cambridge",03330 381844
+"Northumberland Avenue, Hornchurch, RM11","Durden & Hunt, Hornchurch",01708 206998
+"Brackenbury Cliffs, Adjacent Cliff Road","ScottBeckett, Felixstowe",01394 331688
+"Clarkson Court, Hatfield, AL10","Moving Places, Hatfield",01707 954053
+"Cromer Road, Hornchurch, RM11","Balgores, Hornchurch",01708 204755
+"Whittington Way, Bishop's Stortford CM23 4AS",Ashberry Homes (North London),01279 594591
+"Whittington Way, Bishop's Stortford CM23 4AS",Ashberry Homes (North London),01279 594591
+"Hundred Foot Washes, Pymoor, Welney","Cheffins Residential, Agricultural Ely",01353 654900
+"School Road, West Walton, Wisbech, PE14","Abbotts, Kings Lynn",01553 603463
+"London Road, Grays","haart, Grays",01375 803701
+"Main Street, Welney","Brown & Co, King's Lynn",01553 603337
+"The Harebreaks, Watford, WD24","Yopa, East Anglia & London",01270 447764
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+"Middleton Gardens, Princes Way, Bletchley, Milton Keynes, MK2","Taylors Estate Agents, Bletchley",01908 103526
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+Maple Creek Fobbing Stanford-Le-Hope SS17 9JU,Bellway Homes (Thames Gateway),01375 803740
+"Camps Road, Haverhill, Suffolk, CB9","Samuel's Independent Estate Agents, Haverhill",01440 847840
+"Coldham Bank, March, PE15","Hockeys, Wisbech",01945 661611
+"Wormleybury Manor, Broxbourne - WEALTH OF CHARACTER","Westwood Leber, Hertfordshire",01992 927906
+"Green Lane, Ilford, Essex","Calibre Estates, London",020 7183 1060
+"Edinburgh Gate, HARLOW","William H. Brown, Harlow",01279 976892
+"Elm Gardens, Mountnessing, CM15","Beresfords, Ingatestone",01277 674283
+"Leighton Road, Stoke Hammond, Buckinghamshire","Fine Homes Property, Great Brickhill",01525 659538

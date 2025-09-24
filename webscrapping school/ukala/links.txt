@@ -1,0 +1,16 @@
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E1244&transactionType=BUY&displayLocationIdentifier=St-Albans.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E61480&transactionType=BUY&displayLocationIdentifier=Brighton-and-Hove.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E1295&transactionType=BUY&displayLocationIdentifier=Sunderland.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E61338&transactionType=BUY&displayLocationIdentifier=Ayrshire.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E33&transactionType=BUY&displayLocationIdentifier=Altrincham.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E61285&transactionType=BUY&displayLocationIdentifier=Anglesey.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E888&transactionType=BUY&displayLocationIdentifier=Lytham-St-Annes.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E116&transactionType=BUY&displayLocationIdentifier=Bath.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E162&transactionType=BUY&displayLocationIdentifier=Birmingham.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E940&transactionType=BUY&displayLocationIdentifier=Milton-Keynes.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E194&transactionType=BUY&displayLocationIdentifier=Bournemouth.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E61480&transactionType=BUY&displayLocationIdentifier=Brighton-and-Hove.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E1114&transactionType=BUY&displayLocationIdentifier=Reading.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E258&transactionType=BUY&displayLocationIdentifier=Bury-St-Edmunds.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E93554&transactionType=BUY&displayLocationIdentifier=Brighton.html
+https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E168&transactionType=BUY&displayLocationIdentifier=Blackpool.html
