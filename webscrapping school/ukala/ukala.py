@@ -13,6 +13,9 @@ from selenium.webdriver.chrome.options import Options
 PROGRESS_FILE = "progress.txt"
 CSV_FILE = "ukala_agents.csv"
 
+# Global variable to control filter mode
+FILTER_MODE = "07"   # default
+
 def save_progress(page_number):
     with open(PROGRESS_FILE, "w") as f:
         f.write(str(page_number))
@@ -66,8 +69,14 @@ def collect_and_save(driver, current_page):
             # Print everything for confirmation
             print(f"[Page {current_page}] Found: {name} - {phone}")
 
-            # Save only numbers starting with 07
-            if phone.startswith("07"):
+            # Decide whether to save based on FILTER_MODE
+            should_save = False
+            if FILTER_MODE == "all":
+                should_save = bool(phone)  # save all non-empty numbers
+            elif FILTER_MODE == "07":
+                should_save = phone.startswith("07")
+
+            if should_save:
                 writer.writerow([name, phone])
                 f.flush()                # ✅ force flush immediately
                 os.fsync(f.fileno())     # ✅ ensure OS writes to disk
@@ -75,7 +84,7 @@ def collect_and_save(driver, current_page):
                 found_any = True
 
     if not found_any:
-        print(f"[Page {current_page}] No numbers starting with 07 were found.")
+        print(f"[Page {current_page}] No numbers matched the filter ({FILTER_MODE}).")
 
 def open_click_and_paginate():
     chrome_options = Options()
@@ -155,6 +164,14 @@ def open_click_and_paginate():
         driver.quit()
 
 if __name__ == "__main__":
+    # Ask filter preference
+    
+    filter_choice = input("👉 Do you want all contacts or only those starting with 07? (all/07): ").strip().lower()
+    if filter_choice in ["all", "07"]:
+        FILTER_MODE = filter_choice
+    else:
+        FILTER_MODE = "07"  # default
+
     # Ensure CSV file has header if starting fresh
     if not os.path.exists(CSV_FILE):
         with open(CSV_FILE, "w", newline="", encoding="utf-8") as f:
