@@ -1,5 +1,6 @@
 import time
 import csv
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -21,16 +22,24 @@ WebDriverWait(driver, 60).until(
 )
 print("✅ Pagination button appeared, start scrolling...")
 
-# Open CSV file for writing addresses
-with open("rightmove_addresses.csv", "w", newline="", encoding="utf-8") as csvfile:
+# CSV setup
+csv_file = "rightmove_addresses.csv"
+file_exists = os.path.isfile(csv_file)
+
+# Open CSV in append mode
+with open(csv_file, "a", newline="", encoding="utf-8") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=["address"])
-    writer.writeheader()
+    
+    # Write header only if file didn't exist
+    if not file_exists:
+        writer.writeheader()
+
+    collected = set()  # To avoid duplicates in this session
 
     # Scroll down slowly to load all properties
     scroll_height = driver.execute_script("return document.body.scrollHeight")
     step = 500
     current = 0
-    collected = set()  # to avoid duplicates
 
     while current < scroll_height:
         driver.execute_script(f"window.scrollBy(0, {step});")
@@ -43,18 +52,10 @@ with open("rightmove_addresses.csv", "w", newline="", encoding="utf-8") as csvfi
         for addr in addresses:
             text = addr.text.strip()
             if text and text not in collected:
-                writer.writerow({"address": text})
+                writer.writerow({"address": text})  # save immediately
+                csvfile.flush()  # ensure it's written to disk
                 collected.add(text)
                 print(text)  # print to terminal in real time
 
-    # One last extraction after finishing scroll
-    addresses = driver.find_elements(By.CLASS_NAME, "PropertyAddress_address__LYRPq")
-    for addr in addresses:
-        text = addr.text.strip()
-        if text and text not in collected:
-            writer.writerow({"address": text})
-            collected.add(text)
-            print(text)
-
-print("\n✅ All addresses saved to rightmove_addresses.csv")
+print("\n✅ All visible addresses saved/appended to rightmove_addresses.csv")
 driver.quit()
