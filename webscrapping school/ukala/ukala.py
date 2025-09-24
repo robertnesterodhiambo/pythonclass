@@ -71,17 +71,22 @@ def collect_and_save(driver, current_page):
                 name = ""
 
             try:
-                excerpt = item.find_element(By.CSS_SELECTOR, ".partner-item__excerpt").text.strip()
+                phone = item.find_element(
+                    By.CSS_SELECTOR,
+                    "li.list-with-icons__line.list-with-icons__line--phone"
+                ).text.strip()
             except:
-                excerpt = ""
+                phone = ""
 
             # Print everything for confirmation
-            print(f"[Page {current_page}] Found: {name} - {excerpt}")
+            print(f"[Page {current_page}] Found: {name} - {phone}")
 
             # Save only numbers starting with 07
-            if excerpt.startswith("07"):
-                writer.writerow([name, excerpt])
-                print(f"✅ Saved to CSV: {name} - {excerpt}")
+            if phone.startswith("07"):
+                writer.writerow([name, phone])
+                f.flush()                # ✅ force flush immediately
+                os.fsync(f.fileno())     # ✅ ensure OS writes to disk
+                print(f"✅ Saved to CSV: {name} - {phone}")
                 found_any = True
 
     if not found_any:
