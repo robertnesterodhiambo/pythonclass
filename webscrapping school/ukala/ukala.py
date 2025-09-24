@@ -1,13 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 
-def open_click_and_scroll():
+def open_click_and_paginate():
     chrome_options = Options()
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-gpu")
@@ -23,26 +22,32 @@ def open_click_and_scroll():
         # Let page load
         time.sleep(5)
 
-        # Find the link
+        # Click the search link (id="ag_search_name")
         link = driver.find_element(By.ID, "ag_search_name")
-
-        # Simulate a real user click with ActionChains
-        actions = ActionChains(driver)
-        actions.move_to_element(link).click().perform()
-
-        # Wait after click
+        ActionChains(driver).move_to_element(link).click().perform()
         time.sleep(3)
 
-        # Scroll to the bottom
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        page = 1
+        while True:
+            print(f"Currently on page {page}")
 
-        # Wait after scrolling
-        time.sleep(5)
+            # Scroll to bottom
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(3)
 
-        print("Clicked, scrolled to bottom, and waited!")
+            try:
+                # Look for the "Next >" button
+                next_button = driver.find_element(By.XPATH, "//a[@class='js-prevent' and contains(text(),'Next')]")
+                # Move and click it
+                ActionChains(driver).move_to_element(next_button).click().perform()
+                page += 1
+                time.sleep(3)
+            except:
+                print("No more Next button found. Pagination ended.")
+                break
 
     finally:
         driver.quit()
 
 if __name__ == "__main__":
-    open_click_and_scroll()
+    open_click_and_paginate()
