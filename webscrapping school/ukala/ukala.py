@@ -31,7 +31,11 @@ def open_click_and_paginate():
         while True:
             print(f"Currently on page {page}")
 
-            # Scroll to bottom
+            # Scroll to TOP
+            driver.execute_script("window.scrollTo(0, 0);")
+            time.sleep(2)
+
+            # Scroll to BOTTOM
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(3)
 
