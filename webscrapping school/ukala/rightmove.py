@@ -1,4 +1,5 @@
 import time
+import csv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -20,25 +21,40 @@ WebDriverWait(driver, 60).until(
 )
 print("✅ Pagination button appeared, start scrolling...")
 
-# Scroll down slowly to load all properties
-scroll_height = driver.execute_script("return document.body.scrollHeight")
-step = 500
-current = 0
+# Open CSV file for writing addresses
+with open("rightmove_addresses.csv", "w", newline="", encoding="utf-8") as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=["address"])
+    writer.writeheader()
 
-while current < scroll_height:
-    driver.execute_script(f"window.scrollBy(0, {step});")
-    current += step
-    time.sleep(0.5)
+    # Scroll down slowly to load all properties
     scroll_height = driver.execute_script("return document.body.scrollHeight")
+    step = 500
+    current = 0
+    collected = set()  # to avoid duplicates
 
-time.sleep(3)  # wait a bit at the bottom
+    while current < scroll_height:
+        driver.execute_script(f"window.scrollBy(0, {step});")
+        current += step
+        time.sleep(0.5)
+        scroll_height = driver.execute_script("return document.body.scrollHeight")
 
-# Extract all property addresses
-addresses = driver.find_elements(By.CLASS_NAME, "PropertyAddress_address__LYRPq")
-print(f"Found {len(addresses)} addresses:\n")
+        # Extract all addresses visible so far
+        addresses = driver.find_elements(By.CLASS_NAME, "PropertyAddress_address__LYRPq")
+        for addr in addresses:
+            text = addr.text.strip()
+            if text and text not in collected:
+                writer.writerow({"address": text})
+                collected.add(text)
+                print(text)  # print to terminal in real time
 
-for addr in addresses:
-    print(addr.text)
+    # One last extraction after finishing scroll
+    addresses = driver.find_elements(By.CLASS_NAME, "PropertyAddress_address__LYRPq")
+    for addr in addresses:
+        text = addr.text.strip()
+        if text and text not in collected:
+            writer.writerow({"address": text})
+            collected.add(text)
+            print(text)
 
-# Close browser
+print("\n✅ All addresses saved to rightmove_addresses.csv")
 driver.quit()
