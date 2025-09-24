@@ -43,21 +43,6 @@ def wait_for_pagination(driver, timeout=15):
         EC.presence_of_element_located((By.CSS_SELECTOR, "li.circle-pagination__item.current"))
     )
 
-def go_to_saved_page(driver, saved_page):
-    while True:
-        current_page = get_active_page(driver)
-        if not current_page:
-            break
-        if current_page >= saved_page:
-            print(f"Resumed at saved page {current_page}")
-            break
-        try:
-            next_button = driver.find_element(By.XPATH, "//a[@class='js-prevent' and contains(text(),'Next')]")
-            ActionChains(driver).move_to_element(next_button).click().perform()
-            wait_for_page_change(driver, current_page)
-        except:
-            break
-
 def collect_and_save(driver, current_page):
     items = driver.find_elements(By.CSS_SELECTOR, "div.partner-item.partner-item--small-padding")
     found_any = False
@@ -112,9 +97,27 @@ def open_click_and_paginate():
         print("Clicked agent search button, waiting for pagination...")
         wait_for_pagination(driver, timeout=20)
 
-        saved_page = load_progress()
-        if saved_page > 1:
-            go_to_saved_page(driver, saved_page)
+        # Ask user if they want to navigate manually
+        choice = input("👉 Do you want to navigate manually to a specific page? (y/n): ").strip().lower()
+        if choice == "y":
+            print("Please use the browser to navigate to the page you want.")
+            input("When you are ready, press ENTER here to start scraping from that page...")
+        else:
+            saved_page = load_progress()
+            if saved_page > 1:
+                print(f"Resuming from saved page {saved_page}...")
+                # auto navigation (optional)
+                while True:
+                    current_page = get_active_page(driver)
+                    if not current_page or current_page >= saved_page:
+                        print(f"Resumed at page {current_page}")
+                        break
+                    try:
+                        next_button = driver.find_element(By.XPATH, "//a[@class='js-prevent' and contains(text(),'Next')]")
+                        ActionChains(driver).move_to_element(next_button).click().perform()
+                        wait_for_page_change(driver, current_page)
+                    except:
+                        break
 
         while True:
             current_page = get_active_page(driver)
