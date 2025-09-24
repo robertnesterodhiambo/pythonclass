@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 
-def open_and_simulate_click():
+def open_click_and_scroll():
     chrome_options = Options()
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-gpu")
@@ -20,24 +20,29 @@ def open_and_simulate_click():
         url = "https://www.ukala.org.uk/agent-search/ukala-agent-directory/"
         driver.get(url)
 
-        # Wait for the page to load
+        # Let page load
         time.sleep(5)
 
         # Find the link
         link = driver.find_element(By.ID, "ag_search_name")
 
-        # --- Option 1: ActionChains (mouse click simulation) ---
+        # Simulate a real user click with ActionChains
         actions = ActionChains(driver)
         actions.move_to_element(link).click().perform()
 
-        # --- Option 2: Simulate pressing ENTER key ---
-        # link.send_keys(Keys.ENTER)
+        # Wait after click
+        time.sleep(3)
 
-        time.sleep(30)
-        print("Simulated a real user click on ag_search_name!")
+        # Scroll to the bottom
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+        # Wait after scrolling
+        time.sleep(5)
+
+        print("Clicked, scrolled to bottom, and waited!")
 
     finally:
         driver.quit()
 
 if __name__ == "__main__":
-    open_and_simulate_click()
+    open_click_and_scroll()
