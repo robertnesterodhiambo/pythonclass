@@ -1,75 +1,82 @@
+import os
 import time
 import csv
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Set up ChromeDriver
+# Setup ChromeDriver
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
-
-# Open Rightmove
-driver.get("https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E92048&transactionType=BUY&displayLocationIdentifier=East-Anglia.html")
 driver.maximize_window()
 
-# CSV setup
-csv_file = "rightmove_addresses.csv"
-file_exists = os.path.isfile(csv_file)
+# Open Rightmove page
+driver.get("https://www.rightmove.co.uk/property-for-sale/find.html?sortType=10&areaSizeUnit=sqft&channel=BUY&index=0&locationIdentifier=REGION%5E92048&transactionType=BUY&displayLocationIdentifier=East-Anglia.html")
 
-with open(csv_file, "a", newline="", encoding="utf-8") as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=["address"])
-    if not file_exists:
-        writer.writeheader()
+# Wait for pagination dropdown to appear
+WebDriverWait(driver, 60).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, "select[data-testid='paginationSelect']"))
+)
 
-    collected = set()  # To avoid duplicates in this session
+# CSV setup (append mode, add headers if file does not exist)
+csv_file = "rightmove_data.csv"
+if not os.path.exists(csv_file):
+    with open(csv_file, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Address", "Agent Name"])  # <-- column headers
 
-    while True:
-        # Wait for properties to load
-        try:
-            WebDriverWait(driver, 20).until(
-                EC.presence_of_all_elements_located((By.CLASS_NAME, "PropertyAddress_address__LYRPq"))
-            )
-        except TimeoutException:
-            print("⚠️ Timeout waiting for properties.")
-            break
+def save_to_csv(address, agent):
+    with open(csv_file, "a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([address, agent])
 
-        # Collect addresses on current page
-        addresses = driver.find_elements(By.CLASS_NAME, "PropertyAddress_address__LYRPq")
-        for addr in addresses:
-            text = addr.text.strip()
-            if text and text not in collected:
-                writer.writerow({"address": text})
-                csvfile.flush()  # Save immediately
-                collected.add(text)
-                print(text)
+def scrape_current_page():
+    # Scroll slowly to bottom to load all listings
+    scroll_height = driver.execute_script("return document.body.scrollHeight")
+    step = 500
+    current = 0
+    while current < scroll_height:
+        driver.execute_script(f"window.scrollBy(0, {step});")
+        current += step
+        time.sleep(0.3)
+        scroll_height = driver.execute_script("return document.body.scrollHeight")
 
-        # Identify last page from dropdown
-        try:
-            dropdown = driver.find_element(By.CSS_SELECTOR, "select[data-testid='paginationSelect']")
-            options = dropdown.find_elements(By.TAG_NAME, "option")
-            last_page_index = int(options[-1].get_attribute("value"))  # last page value
-            current_page_index = int(dropdown.find_element(By.CSS_SELECTOR, "option[selected]").get_attribute("value"))
+    # Extract property addresses
+    addresses = driver.find_elements(By.CSS_SELECTOR, "address.PropertyAddress_address__LYRPq")
+    # Extract agent names
+    marketed_elements = driver.find_elements(By.CLASS_NAME, "MarketedBy_joinedText__HTONp")
 
-            if current_page_index >= last_page_index:
-                print("✅ Reached last page.")
-                break  # stop scraping
+    # Loop through listings
+    for i in range(len(addresses)):
+        address_text = addresses[i].text.strip()
+        agent_text = ""
+        if i < len(marketed_elements):
+            full_text = marketed_elements[i].text.strip()
+            if " by " in full_text:
+                agent_text = full_text.split(" by ", 1)[1].strip()
+        print(address_text, "|", agent_text)
+        save_to_csv(address_text, agent_text)
 
-            # Click next page
-            next_button = driver.find_element(By.CSS_SELECTOR, "button[data-testid='nextPage']")
-            driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
-            time.sleep(0.5)
-            next_button.click()
-            print("➡️ Moved to next page...")
-            time.sleep(3)  # wait for next page to load
+# Get total pages from dropdown
+dropdown = driver.find_element(By.CSS_SELECTOR, "select[data-testid='paginationSelect']")
+options = dropdown.find_elements(By.TAG_NAME, "option")
+total_pages = len(options)
+print(f"Total pages detected: {total_pages}")
 
-        except (NoSuchElementException, TimeoutException):
-            print("❌ Cannot find pagination dropdown or next button, stopping.")
-            break
+current_page = 1
+while current_page <= total_pages:
+    print(f"\n📄 Scraping page {current_page} of {total_pages} ...")
+    scrape_current_page()
 
-print("\n✅ Scraping completed. Addresses saved/appended to rightmove_addresses.csv")
+    # Go to next page if not last
+    if current_page < total_pages:
+        next_button = driver.find_element(By.CSS_SELECTOR, "button[data-testid='nextPage']")
+        driver.execute_script("arguments[0].click();", next_button)
+        time.sleep(3)  # wait for page to load
+    current_page += 1
+
 driver.quit()
+print("✅ Scraping completed!")
