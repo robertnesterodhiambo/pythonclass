@@ -58,9 +58,22 @@ for city in cities:
         print(f"No results for {city}")
         continue
 
+    # --- Find total pages ---
+    try:
+        pagination = driver.find_elements(By.CSS_SELECTOR, "ul.pagination li a[data-paginatorpage]")
+        page_numbers = [int(p.get_attribute("data-paginatorpage")) for p in pagination if p.get_attribute("data-paginatorpage").isdigit()]
+        total_pages = max(page_numbers) if page_numbers else 1
+    except:
+        total_pages = 1
+
     page_num = 1
-    while True:
-        # Scroll all the way down
+    while page_num <= total_pages:
+        # --- Wait for companies to load ---
+        companies = WebDriverWait(driver, 15).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.company-item"))
+        )
+
+        # --- Scroll all the way down ---
         last_height = driver.execute_script("return document.body.scrollHeight")
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -76,7 +89,7 @@ for city in cities:
         for card in company_cards:
             # Company name + link
             try:
-                name_elem = card.find_element(By.CSS_SELECTOR, "h2.font-weight-bold.mb-0 a.company-name")
+                name_elem = card.find_element(By.CSS_SELECTOR, "h2 a.company-name")
                 name = name_elem.text.strip()
                 link = name_elem.get_attribute("href")
             except:
@@ -138,15 +151,12 @@ for city in cities:
                 for item in bottom_items:
                     link_tag = item.find_element(By.TAG_NAME, "a")
 
-                    # Phone
                     if "icon-telephone" in link_tag.get_attribute("class"):
                         phone = link_tag.get_attribute("data-original-title") or ""
 
-                    # Website
                     elif "icon-website" in link_tag.get_attribute("class"):
                         website = link_tag.get_attribute("href") or ""
 
-                    # Email
                     elif "icon-envelope" in link_tag.get_attribute("class"):
                         email = item.get_attribute("data-original-title") or link_tag.get_attribute("data-company-email") or ""
             except:
@@ -166,18 +176,22 @@ for city in cities:
 
         print(f"✅ {len(results)} companies collected for {city} (page {page_num})")
 
-        # --- Pagination: Check if "Next" button exists ---
-        try:
-            next_btn = driver.find_element(By.CSS_SELECTOR, "li.pagination-next a")
-            driver.execute_script("arguments[0].click();", next_btn)  # safe click
-            page_num += 1
-            WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.ID, "company-list"))
-            )
-            time.sleep(2)
-        except:
-            print(f"🔚 No more pages for {city}")
-            break
+        # --- Next page ---
+        page_num += 1
+        if page_num <= total_pages:
+            try:
+                current_first_id = companies[0].get_attribute("data-id")
+                next_page_link = driver.find_element(By.CSS_SELECTOR, f"ul.pagination li a[data-paginatorpage='{page_num}']")
+                driver.execute_script("arguments[0].click();", next_page_link)
+
+                # ✅ Wait until the first company changes (new page content)
+                WebDriverWait(driver, 15).until(
+                    lambda d: d.find_elements(By.CSS_SELECTOR, "li.company-item")[0].get_attribute("data-id") != current_first_id
+                )
+                time.sleep(1)
+            except:
+                print(f"⚠️ Could not click page {page_num} for {city}")
+                break
 
 driver.quit()
 print("🎉 Done! All results saved to results.csv")
