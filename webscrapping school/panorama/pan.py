@@ -23,7 +23,10 @@ cities = df["City"].dropna().tolist()
 output_file = "results.csv"
 with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
-    writer.writerow(["City", "Company", "CompanyLink", "StarRating", "RatingCount"])
+    writer.writerow([
+        "City", "Company", "CompanyLink", "StarRating", "RatingCount",
+        "AddaxText", "AddaxHref"
+    ])
 
 # --- Open Website ---
 driver.get("https://panoramafirm.pl/")
@@ -90,8 +93,15 @@ for city in cities:
         except:
             rating_count = ""
 
+        try:
+            addax_elem = card.find_element(By.CSS_SELECTOR, "div.trades a.addax")
+            addax_text = addax_elem.text.strip()
+            addax_href = addax_elem.get_attribute("href")
+        except:
+            addax_text, addax_href = "", ""
+
         if name:
-            results.append((city, name, link, star_rating, rating_count))
+            results.append((city, name, link, star_rating, rating_count, addax_text, addax_href))
 
     # Append to CSV
     with open(output_file, "a", newline="", encoding="utf-8") as f:
