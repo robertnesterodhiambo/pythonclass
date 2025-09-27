@@ -23,7 +23,7 @@ cities = df["City"].dropna().tolist()
 output_file = "results.csv"
 with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
-    writer.writerow(["City", "Company", "CompanyLink"])
+    writer.writerow(["City", "Company", "CompanyLink", "StarRating"])
 
 # --- Open Website ---
 driver.get("https://panoramafirm.pl/")
@@ -66,10 +66,26 @@ for city in cities:
             break
         last_height = new_height
 
-    # ✅ Collect company names + links
-    companies = driver.find_elements(By.CSS_SELECTOR, "h2.font-weight-bold.mb-0 a.company-name")
+    # ✅ Collect company blocks
+    company_cards = driver.find_elements(By.CSS_SELECTOR, "li.company-item")
 
-    results = [(city, c.text.strip(), c.get_attribute("href")) for c in companies if c.text.strip()]
+    results = []
+    for card in company_cards:
+        try:
+            name_elem = card.find_element(By.CSS_SELECTOR, "h2.font-weight-bold.mb-0 a.company-name")
+            name = name_elem.text.strip()
+            link = name_elem.get_attribute("href")
+        except:
+            name, link = "", ""
+
+        try:
+            rating_elem = card.find_element(By.CSS_SELECTOR, "div.rating-average")
+            star_rating = rating_elem.text.strip()
+        except:
+            star_rating = ""
+
+        if name:
+            results.append((city, name, link, star_rating))
 
     # Append to CSV
     with open(output_file, "a", newline="", encoding="utf-8") as f:
