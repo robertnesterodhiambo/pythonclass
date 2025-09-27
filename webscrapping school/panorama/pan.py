@@ -12,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 # URL and Excel file
 url = "https://panoramafirm.pl/"
 excel_file = "Project.xlsx"
-column_name = "City:"
+column_name = "City"
 
 # Load Excel file
 df = pd.read_excel(excel_file)
@@ -42,16 +42,22 @@ try:
     for city in cities:
         print(f"🔎 Searching for city: {city}")
 
-        # Re-locate search-where fresh every time (avoids stale reference)
+        # Always re-find input after reload
         search_where = wait.until(EC.presence_of_element_located((By.ID, "search-where")))
-        search_where.clear()
 
-        # Type letter by letter
+        # Focus using JS (avoids overlay click issue)
+        driver.execute_script("arguments[0].focus();", search_where)
+
+        # Select all + delete
+        search_where.send_keys(Keys.CONTROL, "a")
+        search_where.send_keys(Keys.BACKSPACE)
+
+        # Type city letter by letter
         for ch in str(city):
             search_where.send_keys(ch)
             time.sleep(0.2)
 
-        # Press Enter to search
+        # Press Enter
         search_where.send_keys(Keys.ENTER)
 
         # Wait for page load
@@ -59,7 +65,6 @@ try:
 
         print(f"✅ Loaded results for {city}")
 
-        # Small pause before next city
         time.sleep(2)
 
 finally:
