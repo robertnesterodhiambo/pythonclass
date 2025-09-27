@@ -26,7 +26,7 @@ with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer.writerow([
         "City", "Company", "CompanyLink", "StarRating", "RatingCount",
         "AddaxText", "AddaxHref", "LogoSrc", "Address", "Description",
-        "Phone", "Website", "Email"
+        "Phone", "Website", "Email", "GalleryCount"
     ])
 
 # --- Open Website ---
@@ -121,6 +121,14 @@ for city in cities:
         except:
             description = ""
 
+        # Gallery Count (only number)
+        try:
+            gallery_elem = card.find_element(By.CSS_SELECTOR, "div.gallery-count")
+            gallery_text = gallery_elem.text.strip()
+            gallery_count = "".join(filter(str.isdigit, gallery_text))  # extract only number
+        except:
+            gallery_count = ""
+
         # Bottom contact section
         phone, website, email = "", "", ""
         try:
@@ -146,7 +154,7 @@ for city in cities:
             results.append((
                 city, name, link, star_rating, rating_count,
                 addax_text, addax_href, logo_src, address, description,
-                phone, website, email
+                phone, website, email, gallery_count
             ))
 
     # Save results
