@@ -23,7 +23,7 @@ cities = df["City"].dropna().tolist()
 output_file = "results.csv"
 with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
-    writer.writerow(["City", "Company", "CompanyLink", "StarRating"])
+    writer.writerow(["City", "Company", "CompanyLink", "StarRating", "RatingCount"])
 
 # --- Open Website ---
 driver.get("https://panoramafirm.pl/")
@@ -84,8 +84,14 @@ for city in cities:
         except:
             star_rating = ""
 
+        try:
+            count_elem = card.find_element(By.CSS_SELECTOR, "div.rating-count")
+            rating_count = count_elem.text.strip()
+        except:
+            rating_count = ""
+
         if name:
-            results.append((city, name, link, star_rating))
+            results.append((city, name, link, star_rating, rating_count))
 
     # Append to CSV
     with open(output_file, "a", newline="", encoding="utf-8") as f:
