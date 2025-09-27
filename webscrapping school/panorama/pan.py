@@ -25,7 +25,7 @@ with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow([
         "City", "Company", "CompanyLink", "StarRating", "RatingCount",
-        "AddaxText", "AddaxHref"
+        "AddaxText", "AddaxHref", "LogoSrc"
     ])
 
 # --- Open Website ---
@@ -100,8 +100,14 @@ for city in cities:
         except:
             addax_text, addax_href = "", ""
 
+        try:
+            logo_elem = card.find_element(By.CSS_SELECTOR, "div.logo-container img")
+            logo_src = logo_elem.get_attribute("src") or logo_elem.get_attribute("data-src")
+        except:
+            logo_src = ""
+
         if name:
-            results.append((city, name, link, star_rating, rating_count, addax_text, addax_href))
+            results.append((city, name, link, star_rating, rating_count, addax_text, addax_href, logo_src))
 
     # Append to CSV
     with open(output_file, "a", newline="", encoding="utf-8") as f:
