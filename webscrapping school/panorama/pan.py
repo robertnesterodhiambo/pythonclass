@@ -25,7 +25,7 @@ with open(output_file, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow([
         "City", "Company", "CompanyLink", "StarRating", "RatingCount",
-        "AddaxText", "AddaxHref", "LogoSrc", "Address"
+        "AddaxText", "AddaxHref", "LogoSrc", "Address", "Description"
     ])
 
 # --- Open Website ---
@@ -112,8 +112,17 @@ for city in cities:
         except:
             address = ""
 
+        try:
+            desc_elem = card.find_element(By.CSS_SELECTOR, "div.pb-2.company-desc")
+            description = desc_elem.text.strip()
+        except:
+            description = ""
+
         if name:
-            results.append((city, name, link, star_rating, rating_count, addax_text, addax_href, logo_src, address))
+            results.append((
+                city, name, link, star_rating, rating_count,
+                addax_text, addax_href, logo_src, address, description
+            ))
 
     # Append to CSV
     with open(output_file, "a", newline="", encoding="utf-8") as f:
