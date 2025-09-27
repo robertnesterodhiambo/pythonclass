@@ -193,5 +193,15 @@ for city in cities:
                 print(f"⚠️ Could not click page {page_num} for {city}")
                 break
 
+    # --- Clear input after finishing all pages for this city ---
+    try:
+        where_input = driver.find_element(By.ID, "search-where")
+        where_input.click()
+        where_input.send_keys(Keys.CONTROL, "a")
+        where_input.send_keys(Keys.BACKSPACE)
+        time.sleep(0.5)
+    except:
+        pass
+
 driver.quit()
 print("🎉 Done! All results saved to results.csv")
