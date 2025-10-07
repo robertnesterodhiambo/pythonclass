@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f7;
+      color: #1d1d1f;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+      color: #1d1d1f;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      margin-left: 16px;
+      color: #0071e3;
+      font-weight: 500;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #004c99;
+      transform: scale(1.05);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead {
+      background: #f2f2f2;
+      border-bottom: 2px solid #ddd;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    tr:hover {
+      background: #f9f9f9;
+    }
+
+    th {
+      font-weight: 600;
+      color: #333;
+    }
+
+    td {
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #0071e3;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #005bb5;
+      transform: scale(1.05);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+    <div class="nav-links">
+      <a href="{{ url_for('profile') }}">👤 Profile</a>
+      <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>All Users & Properties</h2>
+
+    {% if users %}
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>User Type</th>
+            <th>Address</th>
+            <th>Beds</th>
+            <th>Baths</th>
+            <th>SqFt</th>
+            <th>Lot Size</th>
+            <th>County</th>
+            <th>Est. Value</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.user_type }}</td>
+            <td>{{ u.property_address or '—' }}</td>
+            <td>{{ u.beds or '-' }}</td>
+            <td>{{ u.baths or '-' }}</td>
+            <td>{{ u.sqft or '-' }}</td>
+            <td>{{ u.lot_size or '-' }}</td>
+            <td>{{ u.county or '-' }}</td>
+            <td>${{ "%.2f"|format(u.estimated_value) if u.estimated_value else 'N/A' }}</td>
+            <td>{{ u.created_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p class="empty">No users found.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

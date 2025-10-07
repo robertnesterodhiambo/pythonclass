@@ -124,6 +124,8 @@ def login():
             session["user_id"] = user["id"]
             session["username"] = user["username"]
             session["user_type"] = user["user_type"]
+            session["is_admin"] = bool(user.get("is_admin", 0))
+
             return redirect(url_for("profile"))
         else:
             flash("Invalid login credentials", "danger")
@@ -255,6 +257,27 @@ def estimate():
         price = float(model.predict(sample)[0])
 
     return render_template("estimate.html", price=price, user=user)
+
+
+@app.route("/admin")
+def admin_dashboard():
+    if "user_id" not in session or not session.get("is_admin"):
+        flash("Access denied. Admins only.", "danger")
+        return redirect(url_for("index"))
+
+    conn = mysql.connector.connect(**DB_CONFIG)
+    cur = conn.cursor(dictionary=True)
+    cur.execute("""
+        SELECT id, username, email, user_type, property_address, beds, baths, sqft, lot_size, year_built, county, estimated_value, created_at
+        FROM C9HLVaiEgVWu_User
+        ORDER BY created_at DESC
+    """)
+    users = cur.fetchall()
+    conn.close()
+
+    return render_template("admin_dashboard.html", users=users)
+
+
 
 # ----------------- RUN APP ------------------
 if __name__ == "__main__":
