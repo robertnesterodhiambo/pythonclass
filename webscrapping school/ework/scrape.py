@@ -1,61 +1,85 @@
-#!/usr/bin/env python3
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
+import time
 
-# === Target URL ===
-URL = "https://oferty.praca.gov.pl/portal/lista-ofert?sortowanie="
-
-# === Chrome setup ===
-options = Options()
+# === SETUP CHROME ===
+options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")
-options.add_argument("--disable-blink-features=AutomationControlled")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-# options.add_argument("--headless=new")  # Uncomment to run in headless mode
+options.add_argument("--disable-notifications")
+options.add_argument("--disable-infobars")
+options.add_argument("--disable-extensions")
 
-# === Auto-install ChromeDriver ===
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, 30)
 
-print(f"Opening {URL}")
-driver.get(URL)
+# === OPEN PAGE ===
+url = "https://oferty.praca.gov.pl/portal/lista-ofert?sortowanie="
+driver.get(url)
 
-# === Wait for full page load ===
-try:
-    WebDriverWait(driver, 30).until(
-        lambda d: d.execute_script("return document.readyState") == "complete"
-    )
-    print("✅ Page HTML fully loaded.")
-except TimeoutException:
-    print("⚠️ Timeout while waiting for page to fully load.")
+# === WAIT UNTIL MAIN TABLE OR CONTENT LOADS ===
+wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+print("✅ Main page loaded...")
 
-# === Wait for job rows to appear ===
-try:
-    rows = WebDriverWait(driver, 40).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tr.mat-mdc-row"))
-    )
-    print(f"✅ Found {len(rows)} job rows loaded on the page.")
-except TimeoutException:
-    print("⚠️ No job rows appeared within timeout.")
-    driver.quit()
-    exit()
+# === DYNAMICALLY WAIT FOR POPUP AND CLOSE IT IF APPEARS ===
+popup_closed = False
+end_time = time.time() + 30  # wait up to 30 seconds total for popup
 
-# === Example: Extract first few job postings ===
-for i, row in enumerate(rows[:5], start=1):
+while time.time() < end_time:
     try:
-        title = row.find_element(By.CSS_SELECTOR, "td.mat-column-stanowisko a").text.strip()
-        employer = row.find_element(By.CSS_SELECTOR, "td.mat-column-pracodawca").text.strip()
-        location = row.find_element(By.CSS_SELECTOR, "td.mat-column-miejscePracy").text.strip()
-        print(f"{i}. {title} | {employer} | {location}")
+        popup = driver.find_element(By.CSS_SELECTOR, "div.epraca-dialog-wrapper")
+        close_btn = popup.find_element(By.CSS_SELECTOR, "button.close-dialog")
+        if close_btn.is_displayed():
+            close_btn.click()
+            popup_closed = True
+            print("✅ Popup closed dynamically.")
+            break
     except Exception:
-        continue
+        pass
+    time.sleep(0.5)
 
-input("\nPress Enter to close browser...")
+if not popup_closed:
+    print("ℹ️ No popup detected or it auto-closed.")
+
+# === WAIT FOR JOB LINKS TO LOAD ===
+wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
+links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+print(f"✅ Found {len(links)} job offers.")
+
+# === ITERATE THROUGH EACH JOB ===
+for i in range(len(links)):
+    links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+    job = links[i]
+    job_title = job.text
+    print(f"\n➡️ Opening job {i + 1}: {job_title}")
+
+    driver.execute_script("arguments[0].click();", job)
+
+    # Wait for job details page
+    try:
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "h1, div.job-details")))
+        print("✅ Job details loaded.")
+    except:
+        print("⚠️ Could not confirm job details load.")
+
+    # Go back
+    driver.back()
+
+    # Wait for offers list to reload
+    wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
+
+    # Close popup again if it reappears
+    try:
+        close_btn = WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "button.close-dialog"))
+        )
+        close_btn.click()
+        print("✅ Popup closed again after navigating back.")
+    except:
+        pass
+
+print("\n✅ Finished processing all job offers.")
 driver.quit()
