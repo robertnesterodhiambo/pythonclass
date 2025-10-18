@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, StaleElementReferenceException
 from webdriver_manager.chrome import ChromeDriverManager
 
 # === SETUP CHROME ===
@@ -14,91 +14,136 @@ options.add_argument("--start-maximized")
 options.add_argument("--disable-notifications")
 options.add_argument("--disable-infobars")
 options.add_argument("--disable-extensions")
-# options.add_argument("--headless=new")  # Uncomment for headless mode
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 wait = WebDriverWait(driver, 30)
 
-# === OPEN PAGE ===
 url = "https://oferty.praca.gov.pl/portal/lista-ofert?sortowanie="
 print(f"Opening {url}")
 driver.get(url)
 
-# === WAIT UNTIL MAIN PAGE LOADS ===
+# === Wait for complete page load ===
+wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
 wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 print("✅ Main page loaded.")
 
-# === DYNAMICALLY WAIT FOR POPUP AND CLOSE IT ===
-popup_closed = False
-end_time = time.time() + 30  # up to 30s wait
-while time.time() < end_time:
-    try:
-        popup = driver.find_element(By.CSS_SELECTOR, "div.epraca-dialog-wrapper")
-        close_btn = popup.find_element(By.CSS_SELECTOR, "button.close-dialog")
-        if close_btn.is_displayed():
-            close_btn.click()
-            popup_closed = True
-            print("✅ Popup closed dynamically.")
+
+def scroll_to_bottom():
+    """Scroll to the bottom dynamically until no more content loads."""
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
             break
-    except Exception:
-        pass
-    time.sleep(0.5)
+        last_height = new_height
+    print("✅ Scrolled to bottom.")
 
-if not popup_closed:
-    print("ℹ️ No popup detected or it auto-closed.")
 
-# === WAIT FOR JOB LINKS TO LOAD ===
-wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
-links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-print(f"✅ Found {len(links)} job offers.")
+def close_popup_if_present():
+    """Close mobile app popup dynamically if it appears."""
+    end_time = time.time() + 10
+    while time.time() < end_time:
+        try:
+            popup = driver.find_element(By.CSS_SELECTOR, "div.epraca-dialog-wrapper")
+            close_btn = popup.find_element(By.CSS_SELECTOR, "button.close-dialog")
+            if close_btn.is_displayed():
+                close_btn.click()
+                print("✅ Popup closed.")
+                return
+        except Exception:
+            pass
+        time.sleep(0.5)
 
-# === ITERATE THROUGH EACH JOB LINK ===
-for i in range(len(links)):
-    # Re-fetch job links after navigation
-    links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-    job = links[i]
-    job_title = job.text.strip()
-    print(f"\n➡️ Opening job {i + 1}/{len(links)}: {job_title or '(no title)'}")
 
-    # Click the job
-    driver.execute_script("arguments[0].click();", job)
+def wait_for_jobs_to_load():
+    """Wait for job list to appear after full dynamic load."""
+    # Ensure full ready state first
+    wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
+    scroll_to_bottom()
+    wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
+    time.sleep(1)
+    print("✅ Job list fully loaded.")
 
-    # Wait for job detail page
-    try:
-        wait.until(
-            EC.presence_of_element_located(
-                (
-                    By.XPATH,
-                    "//h1 | //div[contains(@class,'oferta')] | //div[contains(@class,'offer-details')]",
+
+def process_jobs_on_page():
+    """Click each job link, view details, and return."""
+    wait_for_jobs_to_load()
+    job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+    print(f"✅ Found {len(job_links)} job offers on this page.")
+
+    for i in range(len(job_links)):
+        try:
+            job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+            job = job_links[i]
+            job_title = job.text.strip() or "(no title)"
+            print(f"\n➡️ Opening job {i + 1}/{len(job_links)}: {job_title}")
+
+            driver.execute_script("arguments[0].scrollIntoView(true);", job)
+            time.sleep(0.5)
+            driver.execute_script("arguments[0].click();", job)
+
+            # Wait for job detail page
+            wait.until(
+                EC.presence_of_element_located(
+                    (By.XPATH, "//h1 | //div[contains(@class,'oferta')] | //div[contains(@class,'offer-details')]")
                 )
             )
-        )
-        time.sleep(2)
-        print("✅ Job detail page loaded successfully.")
-    except TimeoutException:
-        print("⚠️ Timeout waiting for job details.")
-        continue
+            print("✅ Job details loaded.")
+            time.sleep(1)
 
-    # Go back to main list
-    driver.back()
+            driver.back()
+            wait_for_jobs_to_load()
+            print("↩️ Returned to job list.")
+            close_popup_if_present()
 
-    # Wait for list to reload
+        except (TimeoutException, StaleElementReferenceException):
+            print("⚠️ Skipped due to timeout or stale element.")
+            driver.back()
+            wait_for_jobs_to_load()
+            continue
+
+
+def get_total_pages():
+    """Wait until page is fully ready, then detect total pages."""
+    scroll_to_bottom()
+    wait_for_jobs_to_load()
     try:
-        wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
-        print("↩️ Returned to job list.")
-    except TimeoutException:
-        print("⚠️ Job list did not reload correctly.")
-        continue
-
-    # Re-close popup if it reappears
-    try:
-        close_btn = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "button.close-dialog"))
-        )
-        close_btn.click()
-        print("✅ Popup closed again after navigating back.")
+        page_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
+        total_pages = int(page_input.get_attribute("max") or 1)
+        print(f"📄 Total pages detected: {total_pages}")
+        return total_pages
     except Exception:
-        pass
+        print("⚠️ Could not determine total pages.")
+        return 1
 
-print("\n✅ Finished processing all job offers.")
+
+def go_to_page(page_number):
+    """Switch page dynamically by editing the input field."""
+    try:
+        page_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
+        driver.execute_script("arguments[0].value = '';", page_input)
+        page_input.send_keys(str(page_number))
+        page_input.send_keys("\n")
+        print(f"➡️ Switching to page {page_number}...")
+
+        wait_for_jobs_to_load()
+        close_popup_if_present()
+        print(f"✅ Page {page_number} loaded successfully.")
+    except Exception as e:
+        print(f"⚠️ Could not switch to page {page_number}: {e}")
+
+
+# === MAIN SCRIPT FLOW ===
+close_popup_if_present()
+total_pages = get_total_pages()
+
+for page in range(1, total_pages + 1):
+    print(f"\n=============================\n📄 Processing page {page}/{total_pages}\n=============================")
+    process_jobs_on_page()
+    if page < total_pages:
+        go_to_page(page + 1)
+
+print("\n✅ Finished all pages successfully.")
 driver.quit()
