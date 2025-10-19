@@ -139,15 +139,44 @@ def go_to_page(page_number):
         print(f"⚠️ Could not switch to page {page_number}: {e}")
 
 
+# === CHECKPOINT SYSTEM ===
+CHECKPOINT_FILE = "checkpoint.txt"
+
+def save_checkpoint(page):
+    with open(CHECKPOINT_FILE, "w") as f:
+        f.write(str(page))
+    print(f"💾 Checkpoint saved: page {page}")
+
+def load_checkpoint():
+    if os.path.exists(CHECKPOINT_FILE):
+        with open(CHECKPOINT_FILE, "r") as f:
+            try:
+                return int(f.read().strip())
+            except ValueError:
+                return 1
+    return 1
+
+
 # === MAIN FLOW ===
 close_popup_initially()  # Only once at start
 total_pages = get_total_pages()
 
-for page in range(1, total_pages + 1):
+start_page = load_checkpoint()
+if start_page > 1:
+    print(f"⏩ Resuming from saved checkpoint: page {start_page}")
+    go_to_page(start_page)
+
+for page in range(start_page, total_pages + 1):
     print(f"\n=============================\n📄 Processing page {page}/{total_pages}\n=============================")
     process_jobs_on_page()
+    save_checkpoint(page)
     if page < total_pages:
         go_to_page(page + 1)
+
+# Optionally reset checkpoint after finishing all pages
+if os.path.exists(CHECKPOINT_FILE):
+    os.remove(CHECKPOINT_FILE)
+    print("🧹 Checkpoint cleared after completion.")
 
 print("\n✅ Finished all pages successfully.")
 driver.quit()
