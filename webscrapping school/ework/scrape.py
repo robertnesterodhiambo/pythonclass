@@ -32,13 +32,13 @@ csv_file = "job_titles.csv"
 if not os.path.exists(csv_file):
     with open(csv_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["jobtitle"])  # header
+        writer.writerow(["jobtitle", "gross_salary"])  # header
 
 
-def save_job_title(title):
+def save_job_title(title, salary):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title])
-    print(f"💾 Saved job title: {title}")
+        csv.writer(f).writerow([title, salary])
+    print(f"💾 Saved job title: {title}, Gross salary: {salary}")
 
 
 def close_popup_initially():
@@ -92,10 +92,22 @@ def process_jobs_on_page(current_page):
                         EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
                     )
                     label_text = label.text.strip()
-                    save_job_title(label_text)
+
+                    # find gross salary (Polish: Wynagrodzenie brutto)
+                    try:
+                        gross_elem = driver.find_element(
+                            By.XPATH,
+                            "//ng-component[.//span[contains(., 'Wynagrodzenie brutto')]]//span[@class='details-row-value']"
+                        )
+                        gross_salary = gross_elem.text.strip()
+                    except Exception:
+                        gross_salary = "(not listed)"
+
+                    save_job_title(label_text, gross_salary)
+
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_title("(missing title)")
+                    save_job_title("(missing title)", "(not listed)")
 
                 driver.back()
                 wait_for_jobs_to_load()
