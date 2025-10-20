@@ -38,14 +38,15 @@ if not os.path.exists(csv_file):
             "job_openings",
             "phone_number",
             "email",
-            "contact_person"
+            "contact_person",
+            "employer"
         ])
 
 
-def save_job_data(title, salary, openings, phone, email, contact):
+def save_job_data(title, salary, openings, phone, email, contact, employer):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, salary, openings, phone, email, contact])
-    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email} | {contact}")
+        csv.writer(f).writerow([title, salary, openings, phone, email, contact, employer])
+    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email} | {contact} | {employer}")
 
 
 def close_popup_initially():
@@ -100,7 +101,7 @@ def process_jobs_on_page(current_page):
                     )
                     label_text = label.text.strip()
 
-                    # === Gross Salary or Scholarship ===
+                    # === Gross Salary / Stypendium brutto ===
                     try:
                         gross_elem = driver.find_element(
                             By.XPATH,
@@ -150,11 +151,21 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         contact_person = "(not found)"
 
-                    save_job_data(label_text, gross_salary, job_openings, phone_number, email, contact_person)
+                    # === Employer ===
+                    try:
+                        employer_elem = driver.find_element(
+                            By.XPATH,
+                            "//ng-component[.//span[contains(., 'Pracodawca:')]]//span[@class='details-row-value']"
+                        )
+                        employer = employer_elem.text.strip()
+                    except Exception:
+                        employer = "(not found)"
+
+                    save_job_data(label_text, gross_salary, job_openings, phone_number, email, contact_person, employer)
 
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_data("(missing title)", "(not listed)", "(not listed)", "(not found)", "(not found)", "(not found)")
+                    save_job_data("(missing title)", "(not listed)", "(not listed)", "(not found)", "(not found)", "(not found)", "(not found)")
 
                 driver.back()
                 wait_for_jobs_to_load()
@@ -175,7 +186,7 @@ def process_jobs_on_page(current_page):
         wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
         close_popup_initially()
         go_to_page(current_page)
-        process_jobs_on_page(current_page)  # retry same page
+        process_jobs_on_page(current_page)
 
 
 def get_total_pages():
