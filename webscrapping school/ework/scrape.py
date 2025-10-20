@@ -93,11 +93,11 @@ def process_jobs_on_page(current_page):
                     )
                     label_text = label.text.strip()
 
-                    # find gross salary (Polish: Wynagrodzenie brutto)
+                    # find gross salary or scholarship (Wynagrodzenie brutto / Stypendium brutto)
                     try:
                         gross_elem = driver.find_element(
                             By.XPATH,
-                            "//ng-component[.//span[contains(., 'Wynagrodzenie brutto')]]//span[@class='details-row-value']"
+                            "//ng-component[.//span[contains(., 'Wynagrodzenie brutto') or contains(., 'Stypendium brutto')]]//span[@class='details-row-value']"
                         )
                         gross_salary = gross_elem.text.strip()
                     except Exception:
