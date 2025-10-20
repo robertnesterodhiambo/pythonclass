@@ -36,14 +36,12 @@ if not os.path.exists(csv_file):
 
 
 def save_job_title(title):
-    """Save job title immediately to CSV."""
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
         csv.writer(f).writerow([title])
     print(f"💾 Saved job title: {title}")
 
 
 def close_popup_initially():
-    """Wait up to 2 minutes for the popup (only once, at start)."""
     print("⏳ Waiting for potential popup (max 2 minutes)...")
     end_time = time.time() + 120
     while time.time() < end_time:
@@ -61,7 +59,6 @@ def close_popup_initially():
 
 
 def wait_for_jobs_to_load():
-    """Ensure full page and job list are ready."""
     wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     try:
@@ -72,49 +69,57 @@ def wait_for_jobs_to_load():
         print("⚠️ Job list did not fully load.")
 
 
-def process_jobs_on_page():
-    """Click each job link, wait 5s, collect title, then return."""
-    wait_for_jobs_to_load()
-    job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-    print(f"✅ Found {len(job_links)} job offers on this page.")
+def process_jobs_on_page(current_page):
+    try:
+        wait_for_jobs_to_load()
+        job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+        print(f"✅ Found {len(job_links)} job offers on this page.")
 
-    for i in range(len(job_links)):
-        try:
-            job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-            job = job_links[i]
-            job_title_text = job.text.strip() or "(no title)"
-            print(f"\n➡️ Opening job {i + 1}/{len(job_links)}: {job_title_text}")
-
-            driver.execute_script("arguments[0].scrollIntoView(true);", job)
-            time.sleep(0.5)
-            driver.execute_script("arguments[0].click();", job)
-
-            # Wait for page to fully load
-            time.sleep(5)
-
-            # Extract breadcrumb job title
+        for i in range(len(job_links)):
             try:
-                label = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
-                )
-                label_text = label.text.strip()
-                save_job_title(label_text)
-            except Exception:
-                print("⚠️ Could not find job title label after 5 seconds.")
-                save_job_title("(missing title)")
+                job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
+                job = job_links[i]
+                job_title_text = job.text.strip() or "(no title)"
+                print(f"\n➡️ Opening job {i + 1}/{len(job_links)}: {job_title_text}")
 
-            driver.back()
-            wait_for_jobs_to_load()
+                driver.execute_script("arguments[0].scrollIntoView(true);", job)
+                time.sleep(0.5)
+                driver.execute_script("arguments[0].click();", job)
+                time.sleep(5)
 
-        except (TimeoutException, StaleElementReferenceException):
-            print("⚠️ Skipped due to timeout or stale element.")
-            driver.back()
-            wait_for_jobs_to_load()
-            continue
+                try:
+                    label = WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
+                    )
+                    label_text = label.text.strip()
+                    save_job_title(label_text)
+                except Exception:
+                    print("⚠️ Could not find job title label after 5 seconds.")
+                    save_job_title("(missing title)")
+
+                driver.back()
+                wait_for_jobs_to_load()
+
+            except (TimeoutException, StaleElementReferenceException):
+                print("⚠️ Skipped due to timeout or stale element.")
+                driver.back()
+                wait_for_jobs_to_load()
+                continue
+
+    except IndexError:
+        print("❌ IndexError: Job list became unstable.")
+        print("⏸️ Pausing for 5 minutes before retrying...")
+        time.sleep(300)
+
+        print("🔄 Reloading site and resuming from last page...")
+        driver.get(url)
+        wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
+        close_popup_initially()
+        go_to_page(current_page)
+        process_jobs_on_page(current_page)  # retry same page
 
 
 def get_total_pages():
-    """Wait for full page load and detect total pages."""
     try:
         wait_for_jobs_to_load()
         time.sleep(3)
@@ -127,7 +132,6 @@ def get_total_pages():
 
 
 def go_to_page(page_number):
-    """Change page via input box."""
     try:
         page_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
         driver.execute_script("arguments[0].value = '';", page_input)
@@ -158,7 +162,7 @@ def load_checkpoint():
 
 
 # === MAIN FLOW ===
-close_popup_initially()  # Only once at start
+close_popup_initially()
 total_pages = get_total_pages()
 
 start_page = load_checkpoint()
@@ -168,12 +172,11 @@ if start_page > 1:
 
 for page in range(start_page, total_pages + 1):
     print(f"\n=============================\n📄 Processing page {page}/{total_pages}\n=============================")
-    process_jobs_on_page()
+    process_jobs_on_page(page)
     save_checkpoint(page)
     if page < total_pages:
         go_to_page(page + 1)
 
-# Optionally reset checkpoint after finishing all pages
 if os.path.exists(CHECKPOINT_FILE):
     os.remove(CHECKPOINT_FILE)
     print("🧹 Checkpoint cleared after completion.")
