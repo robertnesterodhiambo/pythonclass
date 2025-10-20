@@ -39,14 +39,15 @@ if not os.path.exists(csv_file):
             "phone_number",
             "email",
             "contact_person",
-            "employer"
+            "employer",
+            "work_location"
         ])
 
 
-def save_job_data(title, salary, openings, phone, email, contact, employer):
+def save_job_data(title, salary, openings, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, salary, openings, phone, email, contact, employer])
-    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email} | {contact} | {employer}")
+        csv.writer(f).writerow([title, salary, openings, phone, email, contact, employer, work_location])
+    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email} | {contact} | {employer} | {work_location}")
 
 
 def close_popup_initially():
@@ -161,11 +162,39 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         employer = "(not found)"
 
-                    save_job_data(label_text, gross_salary, job_openings, phone_number, email, contact_person, employer)
+                    # === Work Location (Adres:) ===
+                    try:
+                        location_elem = driver.find_element(
+                            By.XPATH,
+                            "//cbop-row-map[.//span[contains(., 'Adres:')]]//div"
+                        )
+                        work_location = location_elem.text.strip()
+                    except Exception:
+                        work_location = "(not found)"
+
+                    save_job_data(
+                        label_text,
+                        gross_salary,
+                        job_openings,
+                        phone_number,
+                        email,
+                        contact_person,
+                        employer,
+                        work_location
+                    )
 
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_data("(missing title)", "(not listed)", "(not listed)", "(not found)", "(not found)", "(not found)", "(not found)")
+                    save_job_data(
+                        "(missing title)",
+                        "(not listed)",
+                        "(not listed)",
+                        "(not found)",
+                        "(not found)",
+                        "(not found)",
+                        "(not found)",
+                        "(not found)"
+                    )
 
                 driver.back()
                 wait_for_jobs_to_load()
