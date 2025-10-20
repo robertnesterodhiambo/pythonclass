@@ -32,13 +32,13 @@ csv_file = "job_titles.csv"
 if not os.path.exists(csv_file):
     with open(csv_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["jobtitle", "gross_salary", "job_openings"])  # added new column
+        writer.writerow(["jobtitle", "gross_salary", "job_openings", "telephone_number"])  # added new column
 
 
-def save_job_title(title, salary, openings):
+def save_job_title(title, salary, openings, phone):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, salary, openings])
-    print(f"💾 Saved job title: {title}, Gross salary: {salary}, Openings: {openings}")
+        csv.writer(f).writerow([title, salary, openings, phone])
+    print(f"💾 Saved job title: {title}, Gross salary: {salary}, Openings: {openings}, Phone: {phone}")
 
 
 def close_popup_initially():
@@ -113,11 +113,21 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         job_openings = "(not listed)"
 
-                    save_job_title(label_text, gross_salary, job_openings)
+                    # === Find telephone number (Numer telefonu) ===
+                    try:
+                        phone_elem = driver.find_element(
+                            By.XPATH,
+                            "//ng-component[.//span[contains(., 'Numer telefonu')]]//a[contains(@href, 'tel:')]"
+                        )
+                        telephone_number = phone_elem.text.strip()
+                    except Exception:
+                        telephone_number = "(not listed)"
+
+                    save_job_title(label_text, gross_salary, job_openings, telephone_number)
 
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_title("(missing title)", "(not listed)", "(not listed)")
+                    save_job_title("(missing title)", "(not listed)", "(not listed)", "(not listed)")
 
                 driver.back()
                 wait_for_jobs_to_load()
