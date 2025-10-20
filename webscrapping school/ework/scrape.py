@@ -34,6 +34,7 @@ if not os.path.exists(csv_file):
         writer = csv.writer(f)
         writer.writerow([
             "jobtitle",
+            "link",
             "gross_salary",
             "job_openings",
             "phone_number",
@@ -44,10 +45,10 @@ if not os.path.exists(csv_file):
         ])
 
 
-def save_job_data(title, salary, openings, phone, email, contact, employer, work_location):
+def save_job_data(title, link, salary, openings, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, salary, openings, phone, email, contact, employer, work_location])
-    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email} | {contact} | {employer} | {work_location}")
+        csv.writer(f).writerow([title, link, salary, openings, phone, email, contact, employer, work_location])
+    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {phone} | {email} | {contact} | {employer} | {work_location}")
 
 
 def close_popup_initially():
@@ -101,6 +102,7 @@ def process_jobs_on_page(current_page):
                         EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
                     )
                     label_text = label.text.strip()
+                    job_link = driver.current_url  # ✅ Capture current job link
 
                     # === Gross Salary / Stypendium brutto ===
                     try:
@@ -174,6 +176,7 @@ def process_jobs_on_page(current_page):
 
                     save_job_data(
                         label_text,
+                        job_link,
                         gross_salary,
                         job_openings,
                         phone_number,
@@ -187,6 +190,7 @@ def process_jobs_on_page(current_page):
                     print("⚠️ Could not find job title label after 5 seconds.")
                     save_job_data(
                         "(missing title)",
+                        driver.current_url,
                         "(not listed)",
                         "(not listed)",
                         "(not found)",
@@ -209,7 +213,6 @@ def process_jobs_on_page(current_page):
         print("❌ IndexError: Job list became unstable.")
         print("⏸️ Pausing for 5 minutes before retrying...")
         time.sleep(300)
-
         print("🔄 Reloading site and resuming from last page...")
         driver.get(url)
         wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
