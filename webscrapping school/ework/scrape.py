@@ -32,13 +32,13 @@ csv_file = "job_titles.csv"
 if not os.path.exists(csv_file):
     with open(csv_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["jobtitle", "gross_salary", "job_openings", "telephone_number"])  # added new column
+        writer.writerow(["jobtitle", "gross_salary", "job_openings", "phone_number", "email"])
 
 
-def save_job_title(title, salary, openings, phone):
+def save_job_data(title, salary, openings, phone, email):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, salary, openings, phone])
-    print(f"💾 Saved job title: {title}, Gross salary: {salary}, Openings: {openings}, Phone: {phone}")
+        csv.writer(f).writerow([title, salary, openings, phone, email])
+    print(f"💾 Saved: {title} | {salary} | {openings} | {phone} | {email}")
 
 
 def close_popup_initially():
@@ -93,7 +93,7 @@ def process_jobs_on_page(current_page):
                     )
                     label_text = label.text.strip()
 
-                    # === Find gross salary (Wynagrodzenie brutto / Stypendium brutto) ===
+                    # === Gross Salary or Scholarship ===
                     try:
                         gross_elem = driver.find_element(
                             By.XPATH,
@@ -103,31 +103,41 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         gross_salary = "(not listed)"
 
-                    # === Find number of job openings (Liczba miejsc pracy) ===
+                    # === Number of Job Openings ===
                     try:
                         openings_elem = driver.find_element(
                             By.XPATH,
-                            "//ng-component[.//span[contains(., 'Liczba miejsc pracy')]]//span[@class='details-row-value']"
+                            "//ng-component[.//span[contains(., 'Liczba miejsc pracy:')]]//span[@class='details-row-value']"
                         )
                         job_openings = openings_elem.text.strip()
                     except Exception:
                         job_openings = "(not listed)"
 
-                    # === Find telephone number (Numer telefonu) ===
+                    # === Phone Number ===
                     try:
                         phone_elem = driver.find_element(
                             By.XPATH,
-                            "//ng-component[.//span[contains(., 'Numer telefonu')]]//a[contains(@href, 'tel:')]"
+                            "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a"
                         )
-                        telephone_number = phone_elem.text.strip()
+                        phone_number = phone_elem.text.strip()
                     except Exception:
-                        telephone_number = "(not listed)"
+                        phone_number = "(not found)"
 
-                    save_job_title(label_text, gross_salary, job_openings, telephone_number)
+                    # === Email ===
+                    try:
+                        email_elem = driver.find_element(
+                            By.XPATH,
+                            "//ng-component[.//span[normalize-space()='E-mail:']]//span[@class='details-row-value']"
+                        )
+                        email = email_elem.text.strip() if email_elem.text.strip() else "(not found)"
+                    except Exception:
+                        email = "(not found)"
+
+                    save_job_data(label_text, gross_salary, job_openings, phone_number, email)
 
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_title("(missing title)", "(not listed)", "(not listed)", "(not listed)")
+                    save_job_data("(missing title)", "(not listed)", "(not listed)", "(not found)", "(not found)")
 
                 driver.back()
                 wait_for_jobs_to_load()
