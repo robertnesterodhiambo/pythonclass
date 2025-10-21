@@ -38,6 +38,7 @@ if not os.path.exists(csv_file):
             "gross_salary",
             "job_openings",
             "weekly_hours",
+            "monthly_hours",
             "phone_number",
             "email",
             "contact_person",
@@ -45,12 +46,10 @@ if not os.path.exists(csv_file):
             "work_location"
         ])
 
-
-def save_job_data(title, link, salary, openings, weekly_hours, phone, email, contact, employer, work_location):
+def save_job_data(title, link, salary, openings, weekly_hours, monthly_hours, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, link, salary, openings, weekly_hours, phone, email, contact, employer, work_location])
-    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {weekly_hours} | {phone} | {email} | {contact} | {employer} | {work_location}")
-
+        csv.writer(f).writerow([title, link, salary, openings, weekly_hours, monthly_hours, phone, email, contact, employer, work_location])
+    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {weekly_hours} | {monthly_hours} | {phone} | {email} | {contact} | {employer} | {work_location}")
 
 def close_popup_initially():
     print("⏳ Waiting for potential popup (max 2 minutes)...")
@@ -68,7 +67,6 @@ def close_popup_initially():
         time.sleep(1)
     print("⚠️ No popup appeared within 2 minutes.")
 
-
 def wait_for_jobs_to_load():
     wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -78,7 +76,6 @@ def wait_for_jobs_to_load():
         print("✅ Job list loaded.")
     except TimeoutException:
         print("⚠️ Job list did not fully load.")
-
 
 def process_jobs_on_page(current_page):
     try:
@@ -156,6 +153,37 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         weekly_hours = "(not listed)"
 
+                    # === Monthly Hours (Liczba godzin pracy w miesiącu:) ===
+                    monthly_hours = "(not listed)"
+                    try:
+                        all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                        for block in all_blocks:
+                            try:
+                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                if "Liczba godzin pracy w miesiącu:" in label_span.text:
+                                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                    monthly_hours = value_span.text.strip()
+                                    break
+                            except Exception:
+                                continue
+                        if monthly_hours == "(not listed)":
+                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                            time.sleep(1)
+                            all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                            for block in all_blocks:
+                                try:
+                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                    if "Liczba godzin pracy w miesiącu:" in label_span.text:
+                                        driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                        monthly_hours = value_span.text.strip()
+                                        break
+                                except Exception:
+                                    continue
+                    except Exception:
+                        monthly_hours = "(not listed)"
+
                     # === Phone Number ===
                     try:
                         phone_elem = driver.find_element(
@@ -212,6 +240,7 @@ def process_jobs_on_page(current_page):
                         gross_salary,
                         job_openings,
                         weekly_hours,
+                        monthly_hours,
                         phone_number,
                         email,
                         contact_person,
@@ -224,6 +253,7 @@ def process_jobs_on_page(current_page):
                     save_job_data(
                         "(missing title)",
                         driver.current_url,
+                        "(not listed)",
                         "(not listed)",
                         "(not listed)",
                         "(not listed)",
@@ -254,7 +284,6 @@ def process_jobs_on_page(current_page):
         go_to_page(current_page)
         process_jobs_on_page(current_page)
 
-
 def get_total_pages():
     try:
         wait_for_jobs_to_load()
@@ -266,7 +295,6 @@ def get_total_pages():
         print("⚠️ Could not determine total pages, defaulting to 1.")
         return 1
 
-
 def go_to_page(page_number):
     try:
         page_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
@@ -277,7 +305,6 @@ def go_to_page(page_number):
         wait_for_jobs_to_load()
     except Exception as e:
         print(f"⚠️ Could not switch to page {page_number}: {e}")
-
 
 # === CHECKPOINT SYSTEM ===
 CHECKPOINT_FILE = "checkpoint.txt"
@@ -295,7 +322,6 @@ def load_checkpoint():
             except ValueError:
                 return 1
     return 1
-
 
 # === MAIN FLOW ===
 close_popup_initially()
