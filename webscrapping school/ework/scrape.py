@@ -37,6 +37,7 @@ if not os.path.exists(csv_file):
             "link",
             "gross_salary",
             "job_openings",
+            "weekly_hours",
             "phone_number",
             "email",
             "contact_person",
@@ -45,10 +46,10 @@ if not os.path.exists(csv_file):
         ])
 
 
-def save_job_data(title, link, salary, openings, phone, email, contact, employer, work_location):
+def save_job_data(title, link, salary, openings, weekly_hours, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, link, salary, openings, phone, email, contact, employer, work_location])
-    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {phone} | {email} | {contact} | {employer} | {work_location}")
+        csv.writer(f).writerow([title, link, salary, openings, weekly_hours, phone, email, contact, employer, work_location])
+    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {weekly_hours} | {phone} | {email} | {contact} | {employer} | {work_location}")
 
 
 def close_popup_initially():
@@ -102,7 +103,7 @@ def process_jobs_on_page(current_page):
                         EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
                     )
                     label_text = label.text.strip()
-                    job_link = driver.current_url  # ✅ Capture current job link
+                    job_link = driver.current_url
 
                     # === Gross Salary / Stypendium brutto ===
                     try:
@@ -123,6 +124,37 @@ def process_jobs_on_page(current_page):
                         job_openings = openings_elem.text.strip()
                     except Exception:
                         job_openings = "(not listed)"
+
+                    # === Weekly Hours (Liczba godzin pracy w tygodniu:) ===
+                    weekly_hours = "(not listed)"
+                    try:
+                        all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                        for block in all_blocks:
+                            try:
+                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                if "Liczba godzin pracy w tygodniu:" in label_span.text:
+                                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                    weekly_hours = value_span.text.strip()
+                                    break
+                            except Exception:
+                                continue
+                        if weekly_hours == "(not listed)":
+                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                            time.sleep(1)
+                            all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                            for block in all_blocks:
+                                try:
+                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                    if "Liczba godzin pracy w tygodniu:" in label_span.text:
+                                        driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                        weekly_hours = value_span.text.strip()
+                                        break
+                                except Exception:
+                                    continue
+                    except Exception:
+                        weekly_hours = "(not listed)"
 
                     # === Phone Number ===
                     try:
@@ -179,6 +211,7 @@ def process_jobs_on_page(current_page):
                         job_link,
                         gross_salary,
                         job_openings,
+                        weekly_hours,
                         phone_number,
                         email,
                         contact_person,
@@ -191,6 +224,7 @@ def process_jobs_on_page(current_page):
                     save_job_data(
                         "(missing title)",
                         driver.current_url,
+                        "(not listed)",
                         "(not listed)",
                         "(not listed)",
                         "(not found)",
