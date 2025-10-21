@@ -40,6 +40,8 @@ if not os.path.exists(csv_file):
             "job_openings",
             "weekly_hours",
             "monthly_hours",
+            "date_of_addition",
+            "date_of_update",
             "phone_number",
             "email",
             "contact_person",
@@ -47,10 +49,13 @@ if not os.path.exists(csv_file):
             "work_location"
         ])
 
-def save_job_data(title, link, salary, openings, weekly_hours, monthly_hours, phone, email, contact, employer, work_location):
+def save_job_data(title, link, salary, openings, weekly_hours, monthly_hours, date_added, date_updated, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([title, link, salary, openings, weekly_hours, monthly_hours, phone, email, contact, employer, work_location])
-    print(f"💾 Saved: {title} | {link} | {salary} | {openings} | {weekly_hours} | {monthly_hours} | {phone} | {email} | {contact} | {employer} | {work_location}")
+        csv.writer(f).writerow([
+            title, link, salary, openings, weekly_hours, monthly_hours,
+            date_added, date_updated, phone, email, contact, employer, work_location
+        ])
+    print(f"💾 Saved: {title} | {salary} | {weekly_hours} | {monthly_hours} | {date_added} | {date_updated}")
 
 def close_popup_initially():
     print("⏳ Waiting for potential popup (max 2 minutes)...")
@@ -86,6 +91,35 @@ def extract_number(text):
         return re.sub(r"\s+", "", match.group(1))
     return "(not listed)"
 
+def extract_block_value(label_text):
+    """Generic extractor for <ng-component> blocks by label text"""
+    try:
+        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+        for block in blocks:
+            try:
+                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                if label_text in label_span.text.strip():
+                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                    return value_span.text.strip()
+            except Exception:
+                continue
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+        for block in blocks:
+            try:
+                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                if label_text in label_span.text.strip():
+                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                    return value_span.text.strip()
+            except Exception:
+                continue
+        return "(not listed)"
+    except Exception:
+        return "(not listed)"
+
 def process_jobs_on_page(current_page):
     try:
         wait_for_jobs_to_load()
@@ -111,112 +145,15 @@ def process_jobs_on_page(current_page):
                     label_text = label.text.strip()
                     job_link = driver.current_url
 
-                    # === Salary (Wynagrodzenie brutto:) ===
-                    gross_salary = "(not listed)"
-                    try:
-                        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                        for block in blocks:
-                            try:
-                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                if "Wynagrodzenie brutto" in label_span.text:
-                                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", block)
-                                    time.sleep(0.5)
-                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                    gross_salary = extract_number(value_span.text.strip())
-                                    break
-                            except Exception:
-                                continue
-                        if gross_salary == "(not listed)":
-                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                            time.sleep(1)
-                            blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                            for block in blocks:
-                                try:
-                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                    if "Wynagrodzenie brutto" in label_span.text:
-                                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", block)
-                                        time.sleep(0.5)
-                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                        gross_salary = extract_number(value_span.text.strip())
-                                        break
-                                except Exception:
-                                    continue
-                    except Exception:
-                        gross_salary = "(not listed)"
+                    # === Extract Fields ===
+                    gross_salary = extract_number(extract_block_value("Wynagrodzenie brutto"))
+                    job_openings = extract_block_value("Liczba miejsc pracy:")
+                    weekly_hours = extract_block_value("Liczba godzin pracy w tygodniu:")
+                    monthly_hours = extract_block_value("Liczba godzin pracy w miesiącu:")
+                    date_of_addition = extract_block_value("Data publikacji:")
+                    date_of_update = extract_block_value("Data aktualizacji:")
 
-                    # === Number of Job Openings ===
-                    try:
-                        openings_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[contains(., 'Liczba miejsc pracy:')]]//span[@class='details-row-value']"
-                        )
-                        job_openings = openings_elem.text.strip()
-                    except Exception:
-                        job_openings = "(not listed)"
-
-                    # === Weekly Hours (Liczba godzin pracy w tygodniu:) ===
-                    weekly_hours = "(not listed)"
-                    try:
-                        all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                        for block in all_blocks:
-                            try:
-                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                if "Liczba godzin pracy w tygodniu:" in label_span.text:
-                                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
-                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                    weekly_hours = value_span.text.strip()
-                                    break
-                            except Exception:
-                                continue
-                        if weekly_hours == "(not listed)":
-                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                            time.sleep(1)
-                            all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                            for block in all_blocks:
-                                try:
-                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                    if "Liczba godzin pracy w tygodniu:" in label_span.text:
-                                        driver.execute_script("arguments[0].scrollIntoView(true);", block)
-                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                        weekly_hours = value_span.text.strip()
-                                        break
-                                except Exception:
-                                    continue
-                    except Exception:
-                        weekly_hours = "(not listed)"
-
-                    # === Monthly Hours (Liczba godzin pracy w miesiącu:) ===
-                    monthly_hours = "(not listed)"
-                    try:
-                        all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                        for block in all_blocks:
-                            try:
-                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                if "Liczba godzin pracy w miesiącu:" in label_span.text:
-                                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
-                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                    monthly_hours = value_span.text.strip()
-                                    break
-                            except Exception:
-                                continue
-                        if monthly_hours == "(not listed)":
-                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                            time.sleep(1)
-                            all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-                            for block in all_blocks:
-                                try:
-                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                                    if "Liczba godzin pracy w miesiącu:" in label_span.text:
-                                        driver.execute_script("arguments[0].scrollIntoView(true);", block)
-                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                                        monthly_hours = value_span.text.strip()
-                                        break
-                                except Exception:
-                                    continue
-                    except Exception:
-                        monthly_hours = "(not listed)"
-
-                    # === Phone, Email, Contact, Employer, Work Location ===
+                    # === Phone, Email, Contact, Employer, Location ===
                     try:
                         phone_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a")
                         phone_number = phone_elem.text.strip()
@@ -247,6 +184,7 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         work_location = "(not found)"
 
+                    # === Save ===
                     save_job_data(
                         label_text,
                         job_link,
@@ -254,6 +192,8 @@ def process_jobs_on_page(current_page):
                         job_openings,
                         weekly_hours,
                         monthly_hours,
+                        date_of_addition,
+                        date_of_update,
                         phone_number,
                         email,
                         contact_person,
@@ -264,7 +204,7 @@ def process_jobs_on_page(current_page):
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
                     save_job_data("(missing title)", driver.current_url, "(not listed)", "(not listed)", "(not listed)", "(not listed)",
-                                  "(not found)", "(not found)", "(not found)", "(not found)", "(not found)")
+                                  "(not listed)", "(not listed)", "(not found)", "(not found)", "(not found)", "(not found)", "(not found)")
 
                 driver.back()
                 wait_for_jobs_to_load()
