@@ -2,6 +2,7 @@
 import time
 import csv
 import os
+import re
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -77,6 +78,14 @@ def wait_for_jobs_to_load():
     except TimeoutException:
         print("⚠️ Job list did not fully load.")
 
+def extract_number(text):
+    if not text:
+        return "(not listed)"
+    match = re.search(r"(\d[\d\s]*)", text)
+    if match:
+        return re.sub(r"\s+", "", match.group(1))
+    return "(not listed)"
+
 def process_jobs_on_page(current_page):
     try:
         wait_for_jobs_to_load()
@@ -102,13 +111,36 @@ def process_jobs_on_page(current_page):
                     label_text = label.text.strip()
                     job_link = driver.current_url
 
-                    # === Gross Salary / Stypendium brutto ===
+                    # === Salary (Wynagrodzenie brutto:) ===
+                    gross_salary = "(not listed)"
                     try:
-                        gross_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[contains(., 'Wynagrodzenie brutto') or contains(., 'Stypendium brutto')]]//span[@class='details-row-value']"
-                        )
-                        gross_salary = gross_elem.text.strip()
+                        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                        for block in blocks:
+                            try:
+                                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                if "Wynagrodzenie brutto" in label_span.text:
+                                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", block)
+                                    time.sleep(0.5)
+                                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                    gross_salary = extract_number(value_span.text.strip())
+                                    break
+                            except Exception:
+                                continue
+                        if gross_salary == "(not listed)":
+                            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                            time.sleep(1)
+                            blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+                            for block in blocks:
+                                try:
+                                    label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
+                                    if "Wynagrodzenie brutto" in label_span.text:
+                                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", block)
+                                        time.sleep(0.5)
+                                        value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
+                                        gross_salary = extract_number(value_span.text.strip())
+                                        break
+                                except Exception:
+                                    continue
                     except Exception:
                         gross_salary = "(not listed)"
 
@@ -184,52 +216,33 @@ def process_jobs_on_page(current_page):
                     except Exception:
                         monthly_hours = "(not listed)"
 
-                    # === Phone Number ===
+                    # === Phone, Email, Contact, Employer, Work Location ===
                     try:
-                        phone_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a"
-                        )
+                        phone_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a")
                         phone_number = phone_elem.text.strip()
                     except Exception:
                         phone_number = "(not found)"
 
-                    # === Email ===
                     try:
-                        email_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[normalize-space()='E-mail:']]//span[@class='details-row-value']"
-                        )
+                        email_elem = driver.find_element(By.XPATH, "//ng-component[.//span[normalize-space()='E-mail:']]//span[@class='details-row-value']")
                         email = email_elem.text.strip() if email_elem.text.strip() else "(not found)"
                     except Exception:
                         email = "(not found)"
 
-                    # === Contact Person ===
                     try:
-                        contact_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[contains(., 'Osoba do kontaktu Pracodawcy:')]]//span[@class='details-row-value']"
-                        )
+                        contact_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Osoba do kontaktu Pracodawcy:')]]//span[@class='details-row-value']")
                         contact_person = contact_elem.text.strip()
                     except Exception:
                         contact_person = "(not found)"
 
-                    # === Employer ===
                     try:
-                        employer_elem = driver.find_element(
-                            By.XPATH,
-                            "//ng-component[.//span[contains(., 'Pracodawca:')]]//span[@class='details-row-value']"
-                        )
+                        employer_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Pracodawca:')]]//span[@class='details-row-value']")
                         employer = employer_elem.text.strip()
                     except Exception:
                         employer = "(not found)"
 
-                    # === Work Location (Adres:) ===
                     try:
-                        location_elem = driver.find_element(
-                            By.XPATH,
-                            "//cbop-row-map[.//span[contains(., 'Adres:')]]//div"
-                        )
+                        location_elem = driver.find_element(By.XPATH, "//cbop-row-map[.//span[contains(., 'Adres:')]]//div")
                         work_location = location_elem.text.strip()
                     except Exception:
                         work_location = "(not found)"
@@ -250,19 +263,8 @@ def process_jobs_on_page(current_page):
 
                 except Exception:
                     print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_data(
-                        "(missing title)",
-                        driver.current_url,
-                        "(not listed)",
-                        "(not listed)",
-                        "(not listed)",
-                        "(not listed)",
-                        "(not found)",
-                        "(not found)",
-                        "(not found)",
-                        "(not found)",
-                        "(not found)"
-                    )
+                    save_job_data("(missing title)", driver.current_url, "(not listed)", "(not listed)", "(not listed)", "(not listed)",
+                                  "(not found)", "(not found)", "(not found)", "(not found)", "(not found)")
 
                 driver.back()
                 wait_for_jobs_to_load()
@@ -274,10 +276,8 @@ def process_jobs_on_page(current_page):
                 continue
 
     except IndexError:
-        print("❌ IndexError: Job list became unstable.")
-        print("⏸️ Pausing for 5 minutes before retrying...")
+        print("❌ IndexError: Job list unstable. Retrying in 5 minutes...")
         time.sleep(300)
-        print("🔄 Reloading site and resuming from last page...")
         driver.get(url)
         wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
         close_popup_initially()
