@@ -42,6 +42,7 @@ if not os.path.exists(csv_file):
             "monthly_hours",
             "date_of_addition",
             "date_of_update",
+            "kraz_number",
             "phone_number",
             "email",
             "contact_person",
@@ -49,13 +50,10 @@ if not os.path.exists(csv_file):
             "work_location"
         ])
 
-def save_job_data(title, link, salary, openings, weekly_hours, monthly_hours, date_added, date_updated, phone, email, contact, employer, work_location):
+def save_job_data(title, link, salary, openings, weekly_hours, monthly_hours, date_add, date_update, kraz, phone, email, contact, employer, work_location):
     with open(csv_file, "a", newline="", encoding="utf-8") as f:
-        csv.writer(f).writerow([
-            title, link, salary, openings, weekly_hours, monthly_hours,
-            date_added, date_updated, phone, email, contact, employer, work_location
-        ])
-    print(f"💾 Saved: {title} | {salary} | {weekly_hours} | {monthly_hours} | {date_added} | {date_updated}")
+        csv.writer(f).writerow([title, link, salary, openings, weekly_hours, monthly_hours, date_add, date_update, kraz, phone, email, contact, employer, work_location])
+    print(f"💾 Saved: {title} | {link}")
 
 def close_popup_initially():
     print("⏳ Waiting for potential popup (max 2 minutes)...")
@@ -91,29 +89,18 @@ def extract_number(text):
         return re.sub(r"\s+", "", match.group(1))
     return "(not listed)"
 
-def extract_block_value(label_text):
-    """Generic extractor for <ng-component> blocks by label text"""
+def extract_detail_value(label_text):
+    """Finds the block where span.details-row-label == label_text and returns the value."""
     try:
-        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-        for block in blocks:
+        all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
+        for block in all_blocks:
             try:
                 label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
                 if label_text in label_span.text.strip():
-                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
+                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", block)
+                    time.sleep(0.5)
                     value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                    return value_span.text.strip()
-            except Exception:
-                continue
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(1)
-        blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
-        for block in blocks:
-            try:
-                label_span = block.find_element(By.CSS_SELECTOR, "span.details-row-label")
-                if label_text in label_span.text.strip():
-                    driver.execute_script("arguments[0].scrollIntoView(true);", block)
-                    value_span = block.find_element(By.CSS_SELECTOR, "span.details-row-value")
-                    return value_span.text.strip()
+                    return value_span.text.strip() or "(not listed)"
             except Exception:
                 continue
         return "(not listed)"
@@ -138,73 +125,72 @@ def process_jobs_on_page(current_page):
                 driver.execute_script("arguments[0].click();", job)
                 time.sleep(5)
 
+                label_text = "(missing title)"
+                job_link = driver.current_url
                 try:
                     label = WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.CSS_SELECTOR, "label.xng-breadcrumb-trail"))
                     )
                     label_text = label.text.strip()
-                    job_link = driver.current_url
+                except:
+                    pass
 
-                    # === Extract Fields ===
-                    gross_salary = extract_number(extract_block_value("Wynagrodzenie brutto"))
-                    job_openings = extract_block_value("Liczba miejsc pracy:")
-                    weekly_hours = extract_block_value("Liczba godzin pracy w tygodniu:")
-                    monthly_hours = extract_block_value("Liczba godzin pracy w miesiącu:")
-                    date_of_addition = extract_block_value("Data publikacji:")
-                    date_of_update = extract_block_value("Data aktualizacji:")
+                # === Extract details ===
+                gross_salary = extract_number(extract_detail_value("Wynagrodzenie brutto"))
+                job_openings = extract_detail_value("Liczba miejsc pracy:")
+                weekly_hours = extract_detail_value("Liczba godzin pracy w tygodniu:")
+                monthly_hours = extract_detail_value("Liczba godzin pracy w miesiącu:")
+                date_of_addition = extract_detail_value("Data publikacji:")
+                date_of_update = extract_detail_value("Data aktualizacji:")
+                kraz_number = extract_detail_value("Kraz No:")
 
-                    # === Phone, Email, Contact, Employer, Location ===
-                    try:
-                        phone_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a")
-                        phone_number = phone_elem.text.strip()
-                    except Exception:
-                        phone_number = "(not found)"
-
-                    try:
-                        email_elem = driver.find_element(By.XPATH, "//ng-component[.//span[normalize-space()='E-mail:']]//span[@class='details-row-value']")
-                        email = email_elem.text.strip() if email_elem.text.strip() else "(not found)"
-                    except Exception:
-                        email = "(not found)"
-
-                    try:
-                        contact_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Osoba do kontaktu Pracodawcy:')]]//span[@class='details-row-value']")
-                        contact_person = contact_elem.text.strip()
-                    except Exception:
-                        contact_person = "(not found)"
-
-                    try:
-                        employer_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Pracodawca:')]]//span[@class='details-row-value']")
-                        employer = employer_elem.text.strip()
-                    except Exception:
-                        employer = "(not found)"
-
-                    try:
-                        location_elem = driver.find_element(By.XPATH, "//cbop-row-map[.//span[contains(., 'Adres:')]]//div")
-                        work_location = location_elem.text.strip()
-                    except Exception:
-                        work_location = "(not found)"
-
-                    # === Save ===
-                    save_job_data(
-                        label_text,
-                        job_link,
-                        gross_salary,
-                        job_openings,
-                        weekly_hours,
-                        monthly_hours,
-                        date_of_addition,
-                        date_of_update,
-                        phone_number,
-                        email,
-                        contact_person,
-                        employer,
-                        work_location
-                    )
-
+                # === Phone, Email, Contact, Employer, Work Location ===
+                try:
+                    phone_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a")
+                    phone_number = phone_elem.text.strip()
                 except Exception:
-                    print("⚠️ Could not find job title label after 5 seconds.")
-                    save_job_data("(missing title)", driver.current_url, "(not listed)", "(not listed)", "(not listed)", "(not listed)",
-                                  "(not listed)", "(not listed)", "(not found)", "(not found)", "(not found)", "(not found)", "(not found)")
+                    phone_number = "(not found)"
+
+                try:
+                    email_elem = driver.find_element(By.XPATH, "//ng-component[.//span[normalize-space()='E-mail:']]//span[@class='details-row-value']")
+                    email = email_elem.text.strip() if email_elem.text.strip() else "(not found)"
+                except Exception:
+                    email = "(not found)"
+
+                try:
+                    contact_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Osoba do kontaktu Pracodawcy:')]]//span[@class='details-row-value']")
+                    contact_person = contact_elem.text.strip()
+                except Exception:
+                    contact_person = "(not found)"
+
+                try:
+                    employer_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Pracodawca:')]]//span[@class='details-row-value']")
+                    employer = employer_elem.text.strip()
+                except Exception:
+                    employer = "(not found)"
+
+                try:
+                    location_elem = driver.find_element(By.XPATH, "//cbop-row-map[.//span[contains(., 'Adres:')]]//div")
+                    work_location = location_elem.text.strip()
+                except Exception:
+                    work_location = "(not found)"
+
+                save_job_data(
+                    label_text,
+                    job_link,
+                    gross_salary,
+                    job_openings,
+                    weekly_hours,
+                    monthly_hours,
+                    date_of_addition,
+                    date_of_update,
+                    kraz_number,
+                    phone_number,
+                    email,
+                    contact_person,
+                    employer,
+                    work_location
+                )
 
                 driver.back()
                 wait_for_jobs_to_load()
