@@ -24,9 +24,24 @@ wait = WebDriverWait(driver, 30)
 url = "https://oferty.praca.gov.pl/portal/lista-ofert?sortowanie="
 print(f"Opening {url}")
 driver.get(url)
-
 wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
 print("✅ Main page loaded.")
+
+# === USER INPUT ===
+def ask_for_days():
+    while True:
+        try:
+            user_input = input("Enter one or more days for 'Dostępne od:' filter (comma-separated, e.g., 1,2,5): ").strip()
+            days = [d.strip() for d in user_input.split(",") if d.strip().isdigit()]
+            if days:
+                return set(days)
+            print("⚠️ Please enter at least one numeric value separated by commas.")
+        except KeyboardInterrupt:
+            print("\nExiting.")
+            exit()
+
+TARGET_DAYS = ask_for_days()
+print(f"✅ Filtering only jobs where 'Dostępne od:' matches: {', '.join(TARGET_DAYS)}")
 
 # === CSV SETUP ===
 csv_file = "job_titles.csv"
@@ -75,7 +90,7 @@ def wait_for_jobs_to_load():
     wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     try:
-        wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.icon-link")))
+        wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "tr.element-row")))
         time.sleep(1)
         print("✅ Job list loaded.")
     except TimeoutException:
@@ -90,7 +105,6 @@ def extract_number(text):
     return "(not listed)"
 
 def extract_detail_value(label_text):
-    """Finds the block where span.details-row-label == label_text and returns the value."""
     try:
         all_blocks = driver.find_elements(By.CSS_SELECTOR, "ng-component.p-1-l.stor-details-row.ng-star-inserted")
         for block in all_blocks:
@@ -110,19 +124,32 @@ def extract_detail_value(label_text):
 def process_jobs_on_page(current_page):
     try:
         wait_for_jobs_to_load()
-        job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-        print(f"✅ Found {len(job_links)} job offers on this page.")
+        job_rows = driver.find_elements(By.CSS_SELECTOR, "tr.element-row")
+        print(f"✅ Found {len(job_rows)} job rows on this page.")
 
-        for i in range(len(job_links)):
+        for i, row in enumerate(job_rows, start=1):
             try:
-                job_links = driver.find_elements(By.CSS_SELECTOR, "a.icon-link")
-                job = job_links[i]
-                job_title_text = job.text.strip() or "(no title)"
-                print(f"\n➡️ Opening job {i + 1}/{len(job_links)}: {job_title_text}")
+                # === FILTER BY 'Dostępne od:' ===
+                try:
+                    available_from = row.find_element(By.XPATH, ".//td[contains(@class,'dataDodaniaCbop')]//span[last()]").text.strip()
+                except Exception:
+                    available_from = ""
 
-                driver.execute_script("arguments[0].scrollIntoView(true);", job)
+                # extract numeric day portion (like 5 from "5 dni temu")
+                day_match = re.search(r"\b(\d{1,2})\b", available_from)
+                day_num = day_match.group(1) if day_match else None
+
+                # skip non-matching days
+                if not day_num or day_num not in TARGET_DAYS:
+                    continue
+
+                job_link_elem = row.find_element(By.CSS_SELECTOR, "a.icon-link")
+                job_title_text = job_link_elem.text.strip() or "(no title)"
+                print(f"\n➡️ Opening job {i}/{len(job_rows)}: {job_title_text} | Dostępne od: {available_from}")
+
+                driver.execute_script("arguments[0].scrollIntoView(true);", job_link_elem)
                 time.sleep(0.5)
-                driver.execute_script("arguments[0].click();", job)
+                driver.execute_script("arguments[0].click();", job_link_elem)
                 time.sleep(5)
 
                 label_text = "(missing title)"
@@ -144,7 +171,7 @@ def process_jobs_on_page(current_page):
                 date_of_update = extract_detail_value("Data aktualizacji:")
                 kraz_number = extract_detail_value("Kraz No:")
 
-                # === Phone, Email, Contact, Employer, Work Location ===
+                # === Contact info ===
                 try:
                     phone_elem = driver.find_element(By.XPATH, "//ng-component[.//span[contains(., 'Numer telefonu:')]]//a")
                     phone_number = phone_elem.text.strip()
