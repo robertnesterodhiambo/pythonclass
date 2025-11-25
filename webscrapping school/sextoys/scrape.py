@@ -10,7 +10,7 @@ import os
 geckodriver_path = './geckodriver'
 
 # Load the Excel file
-file_path = 'navigation_links.xlsx'
+file_path = 'C:\Users\Dragon\Documents\Github\pythonclass\webscrapping school\sextoys\navigation_links.xlsx'
 df = pd.read_excel(file_path)
 
 # Ensure the 'link' column exists in the DataFrame
