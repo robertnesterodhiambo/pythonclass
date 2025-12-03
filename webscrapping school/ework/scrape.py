@@ -3,6 +3,7 @@ import time
 import csv
 import os
 import re
+import sys
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -17,7 +18,7 @@ options.add_argument("--start-maximized")
 options.add_argument("--disable-notifications")
 options.add_argument("--disable-infobars")
 options.add_argument("--disable-extensions")
-
+sys.stdout.reconfigure(encoding='utf-8')
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 wait = WebDriverWait(driver, 30)
 
