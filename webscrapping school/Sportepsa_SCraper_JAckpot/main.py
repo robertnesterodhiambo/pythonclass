@@ -10,7 +10,7 @@ options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
 
 try:
-    driver.get("https://www.ke.sportpesa.com/en/mega-jackpot-pro/results")
+    driver.get("https://www.ke.sportpesa.com/en/mega-jackpot-pro/results")  # Replace with the actual URL you want to test
 
     # Manually interact with the page
     input("Interact with the website, then press ENTER here...")
@@ -27,30 +27,47 @@ try:
 
     print("Switched into iframe.")
 
-    # Now search INSIDE the iframe
-    link = WebDriverWait(driver, 30).until(
-        EC.presence_of_element_located((
-            By.CSS_SELECTOR,
-            "div.simple-horizontal-carousel__container > a.simple-horizontal-carousel__btn"
-        ))
-    )
+    # Keep clicking the Next button
+    while True:
 
-    print("Found link:")
-    print(link.get_attribute("href"))
+        # Find the Next button again on every iteration
+        link = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((
+                By.CSS_SELECTOR,
+                "div.simple-horizontal-carousel__container > a.simple-horizontal-carousel__btn"
+            ))
+        )
 
-    # Scroll it into view
-    driver.execute_script(
-        "arguments[0].scrollIntoView({block: 'center'});",
-        link
-    )
+        print("Found Next button.")
 
-    # Click it
-    link.click()
+        # Get the href before clicking
+        print("Link:")
+        print(link.get_attribute("href"))
 
-    print("Link clicked.")
-    print("Current URL:", driver.current_url)
+        # Scroll it into view
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block: 'center'});",
+            link
+        )
 
-    input("Press ENTER to close...")
+        # Click Next
+        link.click()
+
+        print("Next clicked.")
+
+        # Wait for the new content to appear
+        WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((
+                By.CSS_SELECTOR,
+                "div.simple-horizontal-carousel__container > a.simple-horizontal-carousel__btn"
+            ))
+        )
+
+        print("New content loaded.")
+        print("-" * 50)
+
+except KeyboardInterrupt:
+    print("\nStopped by user.")
 
 finally:
     driver.quit()
