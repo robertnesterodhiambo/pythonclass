@@ -58,6 +58,7 @@ try:
 
     driver.get("https://www.ke.sportpesa.com/en/mega-jackpot-pro/results")
 
+    # Manually interact with the page
     input(
         "Interact with the website, then press ENTER here..."
     )
@@ -73,6 +74,7 @@ try:
         )
     )
 
+    # Switch Selenium into the iframe
     driver.switch_to.frame(iframe)
 
     print("Switched into iframe.")
@@ -89,9 +91,8 @@ try:
 
 
         # -------------------------------------------------
-        # GET ONLY REAL EVENT ROWS
-        # EXCLUDE:
-        # jackpot-event-row__header
+        # FIND ONLY REAL EVENT ROWS
+        # EXCLUDE THE HEADER
         # -------------------------------------------------
 
         rows = wait.until(
@@ -103,7 +104,7 @@ try:
             )
         )
 
-        print(f"Found {len(rows)} real event(s).")
+        print(f"Found {len(rows)} event(s).")
 
 
         # -------------------------------------------------
@@ -120,56 +121,57 @@ try:
         )
 
 
-        # Get the link for this page
+        # -------------------------------------------------
+        # GET LINK
+        # -------------------------------------------------
+
         link = next_button.get_attribute("href")
+
+        print(f"Link: {link}")
 
 
         # -------------------------------------------------
-        # EXTRACT DATA
+        # EXTRACT EACH EVENT
         # -------------------------------------------------
 
         for row in rows:
 
             try:
 
+                # DATE
                 date = row.find_element(
                     By.CSS_SELECTOR,
                     "div.jackpot-event-row__date"
                 ).text.strip()
 
 
+                # TEAMS / GAME
                 teams = row.find_element(
                     By.CSS_SELECTOR,
                     "div.jackpot-event-row__event-name"
                 ).text.strip()
 
 
+                # RESULT
+                # Gets ONLY the second span
+                # Example: 3:2
                 result = row.find_element(
                     By.CSS_SELECTOR,
-                    "div.jackpot-event-row__result"
+                    "div.jackpot-event-row__result span:nth-child(2)"
                 ).text.strip()
 
 
+                # OUTCOME
+                # Gets ONLY the second span
+                # Example: Home
                 outcome = row.find_element(
                     By.CSS_SELECTOR,
-                    "div.jackpot-event-row__winning-pick"
+                    "div.jackpot-event-row__winning-pick span:nth-child(2)"
                 ).text.strip()
-
-
-                # Remove labels
-                result = result.replace(
-                    "RESULT :",
-                    ""
-                ).strip()
-
-                outcome = outcome.replace(
-                    "OUTCOME :",
-                    ""
-                ).strip()
 
 
                 # -------------------------------------------------
-                # SAVE IMMEDIATELY
+                # SAVE IMMEDIATELY TO CSV
                 # -------------------------------------------------
 
                 writer.writerow({
@@ -180,15 +182,21 @@ try:
                     "link": link
                 })
 
+                # Force the data to be written immediately
                 csv_file.flush()
 
 
+                # -------------------------------------------------
+                # PRINT WHAT WAS SAVED
+                # -------------------------------------------------
+
                 print(
-                    f"Saved: {date} | "
-                    f"{teams} | "
-                    f"{result} | "
-                    f"{outcome} | "
-                    f"{link}"
+                    f"Saved:"
+                    f" {date} |"
+                    f" {teams} |"
+                    f" {result} |"
+                    f" {outcome} |"
+                    f" {link}"
                 )
 
 
@@ -224,7 +232,7 @@ try:
 
 
         # -------------------------------------------------
-        # WAIT FOR NEW EVENTS
+        # WAIT FOR NEW CONTENT
         # -------------------------------------------------
 
         wait.until(
