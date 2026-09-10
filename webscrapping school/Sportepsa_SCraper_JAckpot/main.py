@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 import csv
 import os
@@ -227,8 +228,9 @@ try:
         # -------------------------------------------------
 
         next_button.click()
-
+        time.sleep(2)
         print("NEXT clicked.")
+        time.sleep(2)
 
 
         # -------------------------------------------------
