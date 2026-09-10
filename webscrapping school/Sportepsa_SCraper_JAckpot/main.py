@@ -22,7 +22,7 @@ wait = WebDriverWait(driver, 30)
 
 
 # ---------------------------------------------------------
-# CREATE CSV IF IT DOES NOT EXIST
+# CREATE CSV
 # ---------------------------------------------------------
 
 csv_exists = os.path.exists(CSV_FILE)
@@ -58,7 +58,6 @@ try:
 
     driver.get("https://www.ke.sportpesa.com/en/mega-jackpot-pro/results")
 
-    # Manually interact with the page
     input(
         "Interact with the website, then press ENTER here..."
     )
@@ -74,7 +73,6 @@ try:
         )
     )
 
-    # Switch into iframe
     driver.switch_to.frame(iframe)
 
     print("Switched into iframe.")
@@ -89,17 +87,23 @@ try:
 
         print("Looking for event rows...")
 
-        # Find all event rows currently displayed
+
+        # -------------------------------------------------
+        # GET ONLY REAL EVENT ROWS
+        # EXCLUDE:
+        # jackpot-event-row__header
+        # -------------------------------------------------
+
         rows = wait.until(
             EC.presence_of_all_elements_located(
                 (
                     By.CSS_SELECTOR,
-                    "div.jackpot-event-row"
+                    "div.jackpot-event-row:not(.jackpot-event-row__header)"
                 )
             )
         )
 
-        print(f"Found {len(rows)} event(s).")
+        print(f"Found {len(rows)} real event(s).")
 
 
         # -------------------------------------------------
@@ -115,12 +119,13 @@ try:
             )
         )
 
-        # Save the link before clicking
+
+        # Get the link for this page
         link = next_button.get_attribute("href")
 
 
         # -------------------------------------------------
-        # EXTRACT EACH EVENT
+        # EXTRACT DATA
         # -------------------------------------------------
 
         for row in rows:
@@ -144,19 +149,19 @@ try:
                     "div.jackpot-event-row__result"
                 ).text.strip()
 
-                # Remove "RESULT :" if present
-                result = result.replace(
-                    "RESULT :",
-                    ""
-                ).strip()
-
 
                 outcome = row.find_element(
                     By.CSS_SELECTOR,
                     "div.jackpot-event-row__winning-pick"
                 ).text.strip()
 
-                # Remove "OUTCOME :" if present
+
+                # Remove labels
+                result = result.replace(
+                    "RESULT :",
+                    ""
+                ).strip()
+
                 outcome = outcome.replace(
                     "OUTCOME :",
                     ""
@@ -164,7 +169,7 @@ try:
 
 
                 # -------------------------------------------------
-                # SAVE IMMEDIATELY TO CSV
+                # SAVE IMMEDIATELY
                 # -------------------------------------------------
 
                 writer.writerow({
@@ -175,7 +180,6 @@ try:
                     "link": link
                 })
 
-                # Force data to disk immediately
                 csv_file.flush()
 
 
@@ -191,7 +195,7 @@ try:
             except Exception as e:
 
                 print(
-                    f"Could not extract one event: {e}"
+                    f"Could not extract event: {e}"
                 )
 
 
@@ -220,15 +224,14 @@ try:
 
 
         # -------------------------------------------------
-        # WAIT FOR NEW CONTENT
+        # WAIT FOR NEW EVENTS
         # -------------------------------------------------
 
-        # Wait until the page has event rows again
         wait.until(
             EC.presence_of_all_elements_located(
                 (
                     By.CSS_SELECTOR,
-                    "div.jackpot-event-row"
+                    "div.jackpot-event-row:not(.jackpot-event-row__header)"
                 )
             )
         )
