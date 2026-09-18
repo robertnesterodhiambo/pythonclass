@@ -1,0 +1,548 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "b611fd193e3e6b31f84fe6a30a222a25",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"building-the-digital-twin\">Building the Digital Twin</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "d2886617214addeb0b565a85ea740e55",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">A farm you cannot measure is a farm you cannot automate. This week you build the <strong>logic layer</strong> of Maji Ndogo's Digital Twin \u2014 the code that counts what has been planted, decides when a tractor needs fuel, drives a machine down a row until it meets an obstacle, and keeps every farm's harvest on record. Conditionals, loops, comprehensions, sets, and nested dictionaries: the moving parts that turn a static model of the land into one that can reason about itself.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "65854ca172c5ad350b327541515d96c3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u26a0\ufe0f <strong>This challenge is graded and contributes to your overall marks for this module.</strong></span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook. Do not edit or remove the <code>### START FUNCTION</code> or <code>### END FUNCTION</code> comments. Do not add any code outside of the functions you are required to edit. Doing any of this will result in a mark of 0%.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided test cells to verify your output before submitting.</li>\n<li>Do not hard-code answers \u2014 your functions must work on unseen inputs.</li>\n<li>You may only use tools introduced up to this week: variables and data types, conditionals, loops, comprehensions, and the built-in data structures (lists, tuples, sets, dictionaries). The function definitions are provided for you \u2014 you only fill in the bodies.</li>\n<li>The use of StackOverflow, Google, and other online resources is permitted. The use of Generative AI tools \u2014 including ChatGPT, Claude, Copilot, and others \u2014 is also allowed and encouraged as a learning partner. However, the code you submit must reflect your own understanding. Copying a fellow student's code is a breach of the honor code. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>. Submitting code you do not understand is also a breach.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "bed2eb49e730be87caff76c85bad4210",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Three days after the ministry meeting, Sanaa takes you to the land itself.</span>\n<span class=\"paragraph\">You walk the northern plot with her and two engineers from the automation team. The field stretches two hundred meters in every direction \u2014 wheat stubble, red soil, a rusted irrigation pipe running along the western edge. One of the engineers points at a tractor parked near the gate. \"That machine needs to know where it is,\" she says. \"What it has and hasn't covered. Right now it doesn't know anything \u2014 it just moves when someone pushes a button.\"</span>\n<span class=\"paragraph\">The plan, Sanaa explains on the drive back, is to build a <strong>Digital Twin</strong> of Maji Ndogo's farms: a live, programmable model that mirrors the physical reality. Last week you turned a notepad into clean records. This week you give those records <em>behaviour</em> \u2014 logic that makes decisions, loops that do the repetitive work, and structures that hold a whole region's worth of farms. No libraries, no databases. Just Python deciding, counting, and remembering.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "c5ba0bf497f87636cb02ee93123fe7ea",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-1-read-the-fuel-gauge\">Challenge 1: Read the fuel gauge</h2>\n<span class=\"paragraph\">Before a tractor sets off, the system checks its fuel. The decision is a classic <strong>conditional</strong>: the same input (a fuel level) produces different outcomes depending on which range it falls into.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>fuel_status(fuel_level, fuel_capacity)</code>. Compute the fraction of the tank that is full (<code>fuel_level / fuel_capacity</code>) and return a status string using these rules, checked in order:</span>\n<table>\n<thead>\n<tr>\n<th>Condition</th>\n<th>Return</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>fuel_level</code> is exactly <code>0</code></td>\n<td><code>'Empty'</code></td>\n</tr>\n<tr>\n<td>fraction is <strong>less than 0.25</strong></td>\n<td><code>'Low'</code></td>\n</tr>\n<tr>\n<td>fraction is <strong>less than 1.0</strong></td>\n<td><code>'OK'</code></td>\n</tr>\n<tr>\n<td>otherwise (tank full or over-full)</td>\n<td><code>'Full'</code></td>\n</tr>\n</tbody>\n</table>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>fuel_status</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>fuel_status(10, 60)</code> \u2192 <code>'Low'</code>  <em>(fraction \u2248 0.17)</em></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>fuel_status(60, 60)</code> \u2192 <code>'Full'</code>  <em>(fraction = 1.0)</em></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "88d937561bbbd5c818278d053380bb02",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "72632eea4294f60138ec9e456c5f61af",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&#x27;Low&#x27;</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "dcec53b37b123c3773da3cc2966ac64c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&#x27;Full&#x27;</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "f26fc3ae79064c7224d340de16f0010b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-2-count-what-is-planted\">Challenge 2: Count what is planted</h2>\n<span class=\"paragraph\">A field in the Digital Twin is a grid \u2014 a <strong>list of lists</strong> \u2014 where <code>0</code> is bare soil and <code>1</code> is a planted cell. To report progress, the system needs to count every planted cell across every row. That means stepping through the grid with <strong>nested loops</strong>: the outer loop over rows, the inner loop over the cells in each row.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>count_planted_cells(field)</code>. Return the total number of cells equal to <code>1</code>. It must work for any grid size, including an empty field.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>count_planted_cells</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>count_planted_cells([[1, 0, 1], [0, 1, 0]])</code> \u2192 <code>3</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>count_planted_cells([[0, 0], [0, 0]])</code> \u2192 <code>0</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "b9441d03a174d4df86b5b9b20ccf0638",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "1cbcedfa7555b78d8773ce2bca1c5022",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>3</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "35bdfa2d54ada1701a89edcc197a1a96",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>0</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "516f7d2533006cc8c77e017e69ee2747",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-3-drive-the-tractor-down-a-row\">Challenge 3: Drive the tractor down a row</h2>\n<span class=\"paragraph\">Now the machine moves. A row is a list of cells: <code>0</code> is soil to plant, <code>1</code> is already planted, and <code>-1</code> is an obstacle \u2014 that rusted irrigation pipe. The tractor starts at index <code>0</code> and drives <strong>left to right</strong>, planting each cell as it goes, until it reaches an obstacle, at which point it must stop. It never plants the obstacle or anything beyond it.</span>\n<span class=\"paragraph\">This is a natural fit for a <strong><code>while</code> loop</strong> with a <code>break</code>: keep advancing until the obstacle (or the end of the row) stops you.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>drive_and_plant(row)</code>. Move from index <code>0</code> rightward; set each cell you reach to <code>1</code>; the moment you reach a cell equal to <code>-1</code>, stop. Return the updated row. Cells already equal to <code>1</code> simply stay <code>1</code>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>drive_and_plant</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>drive_and_plant([0, 1, 0, -1, 0])</code> \u2192 <code>[1, 1, 1, -1, 0]</code>  <em>(stops at the pipe)</em></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>drive_and_plant([0, 0, 0, 0])</code> \u2192 <code>[1, 1, 1, 1]</code>  <em>(clear run to the end)</em></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "9c3d1e55d338da398bc45b61edaf3a65",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "f1c7fe3b4e749ba40a0969655680ffa5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[1, 1, 1, -1, 0]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "25ed4df394aa697664f6c76cd6945a32",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[1, 1, 1, 1]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "a04243d1eb9ce2530d0ce0990be6d1bb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-4-total-fleet-power\">Challenge 4: Total fleet power</h2>\n<span class=\"paragraph\">The fleet is a <strong>list of dictionaries</strong> \u2014 one dictionary per vehicle. To report the combined power of everything in the yard, iterate the list with a <strong><code>for</code> loop</strong> and add up each vehicle's <code>horsepower</code>.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>total_horsepower(fleet)</code>. Return the sum of the <code>'horsepower'</code> value across every vehicle. An empty fleet returns <code>0</code>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>total_horsepower</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">fleet</span> <span class=\"o\">=</span> <span class=\"p\">[</span>\n    <span class=\"p\">{</span><span class=\"s1\">&#39;model&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;TX-1300&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;colour&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;Green&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;horsepower&#39;</span><span class=\"p\">:</span> <span class=\"mi\">150</span><span class=\"p\">,</span> <span class=\"s1\">&#39;fuel_capacity&#39;</span><span class=\"p\">:</span> <span class=\"mi\">60</span><span class=\"p\">},</span>\n    <span class=\"p\">{</span><span class=\"s1\">&#39;model&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;RX-850&#39;</span><span class=\"p\">,</span>  <span class=\"s1\">&#39;colour&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;Red&#39;</span><span class=\"p\">,</span>   <span class=\"s1\">&#39;horsepower&#39;</span><span class=\"p\">:</span> <span class=\"mi\">120</span><span class=\"p\">,</span> <span class=\"s1\">&#39;fuel_capacity&#39;</span><span class=\"p\">:</span> <span class=\"mi\">45</span><span class=\"p\">},</span>\n    <span class=\"p\">{</span><span class=\"s1\">&#39;model&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;SX-750&#39;</span><span class=\"p\">,</span>  <span class=\"s1\">&#39;colour&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;White&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;horsepower&#39;</span><span class=\"p\">:</span> <span class=\"mi\">180</span><span class=\"p\">,</span> <span class=\"s1\">&#39;fuel_capacity&#39;</span><span class=\"p\">:</span> <span class=\"mi\">80</span><span class=\"p\">},</span>\n<span class=\"p\">]</span>\n<span class=\"n\">total_horsepower</span><span class=\"p\">(</span><span class=\"n\">fleet</span><span class=\"p\">)</span>\n</code></pre></div>\n<code>450</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>total_horsepower([])</code> \u2192 <code>0</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "0fc5a1393936b378b6b6af619cac48a0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "977530dc97f369047a2c5109dfc342dd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>450</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "1b462d0052902b1dcbbbefb161f3b6b9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>0</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "2fd0cb74fe847e674e4e75e34fa3be9c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-5-which-machines-are-running-low\">Challenge 5: Which machines are running low?</h2>\n<span class=\"paragraph\">Before a long shift, dispatch wants the models of every vehicle whose tank is smaller than some threshold. A <strong>list comprehension</strong> expresses this in one readable line: build a list of models, filtered by a condition.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>low_fuel_models(fleet, threshold)</code>. Return a list of the <code>'model'</code> values for every vehicle whose <code>'fuel_capacity'</code> is <strong>strictly less than</strong> <code>threshold</code>, keeping the original fleet order. Use a list comprehension.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>low_fuel_models</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\">Using the same <code>fleet</code> as Challenge 4 (capacities 60, 45, 80):</span>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>low_fuel_models(fleet, 50)</code> \u2192 <code>['RX-850']</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>low_fuel_models(fleet, 70)</code> \u2192 <code>['TX-1300', 'RX-850']</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "be637b84d9926cd5661c136f4dbf88e7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "2337a3e7dd7feb9191aa960641eedee8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"RX-850\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "16811f39e360cdb159f2dfd5ae9f69d9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"TX-1300\", \"RX-850\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "83986fdcce8dd8d7b5788435fd0792dc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-6-revenue-for-every-crop\">Challenge 6: Revenue for every crop</h2>\n<span class=\"paragraph\">Last week you priced two crops by hand. Now the model holds many crops at once: one dictionary of harvest weights and one of prices. A <strong>dictionary comprehension</strong> turns them into a revenue figure for each crop in a single expression.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>revenue_by_crop(harvest_kg, price_per_kg)</code>. Both arguments are dictionaries keyed by crop name. Return a new dictionary mapping each crop in <code>harvest_kg</code> to its revenue (<code>kilograms \u00d7 price</code>). You may assume every crop in <code>harvest_kg</code> also appears in <code>price_per_kg</code>. Use a dictionary comprehension.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>revenue_by_crop</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">revenue_by_crop</span><span class=\"p\">({</span><span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">:</span> <span class=\"mi\">2050</span><span class=\"p\">,</span> <span class=\"s1\">&#39;potato&#39;</span><span class=\"p\">:</span> <span class=\"mi\">3600</span><span class=\"p\">},</span> <span class=\"p\">{</span><span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">:</span> <span class=\"mi\">2</span><span class=\"p\">,</span> <span class=\"s1\">&#39;potato&#39;</span><span class=\"p\">:</span> <span class=\"mf\">1.4</span><span class=\"p\">})</span>\n</code></pre></div>\n<code>{'wheat': 4100, 'potato': 5040.0}</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">revenue_by_crop</span><span class=\"p\">({</span><span class=\"s1\">&#39;maize&#39;</span><span class=\"p\">:</span> <span class=\"mi\">2400</span><span class=\"p\">},</span> <span class=\"p\">{</span><span class=\"s1\">&#39;maize&#39;</span><span class=\"p\">:</span> <span class=\"mf\">1.5</span><span class=\"p\">,</span> <span class=\"s1\">&#39;rice&#39;</span><span class=\"p\">:</span> <span class=\"mi\">2</span><span class=\"p\">})</span>\n</code></pre></div>\n<code>{'maize': 3600.0}</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "f1df62021113b98fb7c08661fef2f717",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "91315bf8fdd128330f33291e04374e88",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"wheat\": 4100, \"potato\": \"text/plain+float:5040.0\"}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "e8ee1404c205961a1ebc5b9062392fbc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"maize\": \"text/plain+float:3600.0\"}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "c9dd06ccdcae1ec5ae19199e381ce54c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-7-compare-two-farms-crop-plans\">Challenge 7: Compare two farms' crop plans</h2>\n<span class=\"paragraph\">Two neighbouring farms send in the crops they intend to plant. The lists are messy \u2014 free text with repeats. <strong>Sets</strong> answer the planning questions cleanly: what both farms grow (<strong>intersection</strong>), what only the first grows (<strong>difference</strong>), and the full catalogue across both (<strong>union</strong>) \u2014 with duplicates removed automatically.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>compare_crop_plans(farm_a_crops, farm_b_crops)</code>. Both arguments are lists of crop-name strings (possibly with duplicates). Return a dictionary with exactly these three keys, each a <strong>sorted list</strong>:</span>\n<ul>\n<li><code>'shared'</code>: crops grown by <strong>both</strong> farms.</li>\n<li><code>'only_in_a'</code>: crops grown by farm A but <strong>not</strong> farm B.</li>\n<li><code>'all_crops'</code>: every distinct crop across both farms.</li>\n</ul>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>compare_crop_plans</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">compare_crop_plans</span><span class=\"p\">([</span><span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;potato&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;maize&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">],</span> <span class=\"p\">[</span><span class=\"s1\">&#39;potato&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;rice&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;maize&#39;</span><span class=\"p\">])</span>\n</code></pre></div>\n<code>{'shared': ['maize', 'potato'], 'only_in_a': ['wheat'], 'all_crops': ['maize', 'potato', 'rice', 'wheat']}</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">compare_crop_plans</span><span class=\"p\">([</span><span class=\"s1\">&#39;tea&#39;</span><span class=\"p\">],</span> <span class=\"p\">[</span><span class=\"s1\">&#39;coffee&#39;</span><span class=\"p\">])</span>\n</code></pre></div>\n<code>{'shared': [], 'only_in_a': ['tea'], 'all_crops': ['coffee', 'tea']}</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "2ad11cf6612053219cee2a77cc258351",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "c4259247cb8396c89429c741c97f92cf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"shared\": [\"maize\", \"potato\"], \"only_in_a\": [\"wheat\"], \"all_crops\": [\"maize\", \"potato\", \"rice\", \"wheat\"]}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "e15f1759a30706bed1464033eba1fd9a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"shared\": [], \"only_in_a\": [\"tea\"], \"all_crops\": [\"coffee\", \"tea\"]}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "ef9e9e6ddc48cf59e54ceafc2bd5f156",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-8-the-regional-harvest-registry\">Challenge 8: The regional harvest registry</h2>\n<span class=\"paragraph\">The Digital Twin must remember every farm's harvest as the season unfolds. The natural structure is a <strong>nested dictionary</strong>: each farm ID maps to its own dictionary of crop \u2192 kilograms. New readings either start a fresh record or <strong>add to</strong> an existing one \u2014 which is exactly where a <strong>conditional</strong> decides between the two.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>record_harvest(registry, farm_id, crop, kg)</code>:</span>\n<ol>\n<li>If <code>farm_id</code> is not yet in <code>registry</code>, create an empty record for it.</li>\n<li>If that farm already has a figure for <code>crop</code>, <strong>add</strong> <code>kg</code> to the existing total; otherwise set it to <code>kg</code>.</li>\n<li>Return the updated registry.</li>\n</ol>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>record_harvest</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> (new farm, new crop)\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">record_harvest</span><span class=\"p\">({},</span> <span class=\"mi\">18442</span><span class=\"p\">,</span> <span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">,</span> <span class=\"mi\">2050</span><span class=\"p\">)</span>\n</code></pre></div>\n<code>{18442: {'wheat': 2050}}</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> (same farm and crop again \u2014 totals accumulate)\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">record_harvest</span><span class=\"p\">({</span><span class=\"mi\">18442</span><span class=\"p\">:</span> <span class=\"p\">{</span><span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">:</span> <span class=\"mi\">2050</span><span class=\"p\">}},</span> <span class=\"mi\">18442</span><span class=\"p\">,</span> <span class=\"s1\">&#39;wheat&#39;</span><span class=\"p\">,</span> <span class=\"mi\">500</span><span class=\"p\">)</span>\n</code></pre></div>\n<code>{18442: {'wheat': 2550}}</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "62d3f1ed6b724edaf5b2978f4aea33e4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "c0a6b50322a39e3d94c323b36c9b6919",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"text/plain+int:18442\": {\"wheat\": 2050}}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kqZH",
+      "code_hash": "5f2223a411299aa641804ac5bc3df484",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"text/plain+int:18442\": {\"wheat\": 2550}}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "wAgl",
+      "code_hash": "df488ffda13eeac75d88dae1003364e7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">The Digital Twin can now <em>reason</em>. It checks a fuel gauge, counts what is planted, drives a tractor down a row and stops at the pipe, sums the fleet's power, flags the machines running low, prices a whole season's crops, compares two farms' plans, and keeps a growing registry of every harvest across the region.</span>\n<span class=\"paragraph\">Look back at what made each one work: a decision, a loop, a comprehension, a set, a nested dictionary. These are the control structures every program you write from here will lean on. Next, you'll stop writing the same logic twice and start packaging it \u2014 wrapping these behaviours into reusable, well-designed tools of your own.</span>\n<span class=\"paragraph\">Save this notebook. Alongside last week's records, it's the second asset in your Maji Ndogo portfolio \u2014 and the first that shows you can make data <em>do</em> something.</span>\n<span class=\"paragraph\">Make sure every cell runs without errors before submitting.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "rEll",
+      "code_hash": "b881a350f93cc22b53229f27b77a475d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `compare_crop_plans` \u2014 defined with parameters ['farm_a_crops', 'farm_b_crops']\n  \u2713 `count_planted_cells` \u2014 defined with parameters ['field']\n  \u2713 `drive_and_plant` \u2014 defined with parameters ['row']\n  \u2713 `fuel_status` \u2014 defined with parameters ['fuel_level', 'fuel_capacity']\n  \u2713 `low_fuel_models` \u2014 defined with parameters ['fleet', 'threshold']\n  \u2713 `record_harvest` \u2014 defined with parameters ['registry', 'farm_id', 'crop', 'kg']\n  \u2713 `revenue_by_crop` \u2014 defined with parameters ['harvest_kg', 'price_per_kg']\n  \u2713 `total_horsepower` \u2014 defined with parameters ['fleet']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "YOoA",
+      "code_hash": "0d97b6ade2fb5a7c8ddd5731d081172c",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "syntax",
+          "evalue": "line 1\n    compare_crop_plans(['tea', 'coffee'], ['coffee', 'tea']) return?\n                                                             ^^^^^^\nSyntaxError: invalid syntax\n",
+          "traceback": []
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "tykO",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

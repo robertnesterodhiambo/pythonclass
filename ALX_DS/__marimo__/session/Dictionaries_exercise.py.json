@@ -1,0 +1,592 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "b05fbb8df28790afdac5ea784924bd4b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/master/Python-Notebook-Banners/Exercise.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "53a3c98b3962b6ec980262add4a0620e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"exercise-dictionaries\">Exercise: Dictionaries</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "ecebf1a363e888cfc01875b45d2632db",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">In this exercise, we'll be exploring problems involving dictionaries \u2013 how to create, manipulate, and use their characteristics to create efficient code.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "152d7e577eb2c998caf6ee17df810465",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"learning-objectives\">Learning objectives</h2>\n<span class=\"paragraph\">Following this exercise, we will:</span>\n<ul>\n<li>Understand how to create dictionaries.</li>\n<li>Be able to manipulate the key-value pairs using assignment and slicing.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "460876d03bbac01d00ae0b543ad5a5e0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"exercises\">Exercises</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "109514d1f8d70438cdec711e57ba3697",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"exercise-1\">Exercise 1</h3>\n<ol>\n<li>Create a dictionary called <code>tree</code> with the following key-value pairs: <br></li>\n</ol>\n<ul>\n<li><code>tree_type \u2013 Pepper-bark tree</code></li>\n<li><code>age \u2013 15</code></li>\n<li><code>family \u2013 Canellaceae</code></li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "6389a92b93d1ae304c44ca56934e4c3a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "1b18d0f034e8849ebde267cd32437791",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"2\">\n<li>Print the value associated with the key <code>age</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "a25cc5df0a693534737b62c32baefae8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "15\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "c162dc14c58606c9157e600f706bfb11",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"3\">\n<li>When we created this dictionary in the first step, we accidentally left out one of the information categories, namely 'kingdom'. Fortunately, dictionaries are mutable, and we can add a new key-value pair to the dictionary: <code>kingdom \u2013 Plantae</code>. Do this in the code cell below.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "fce6995c1e2bec7dc3426aba7444bb00",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"4\">\n<li>We have found that people are no longer interested in one of the key-value pairs in our dictionary. Remove the <code>family</code> key-value pair from the dictionary.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "a6a3d9f6ff61e914154e25dc3ffa1f99",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"5\">\n<li>Update the dictionary by changing the <code>tree_type</code> key to <code>Wild Cinnamon</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "d2db21869aafaa03b847592ffbf69191",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"6\">\n<li>Extract the keys and values from our <code>tree</code> dictionary, and store the values in two separate lists, <code>key_list</code> and <code>value_list</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "9b3057184ec8d89374de99e0de879999",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><ol start=\"7\">\n<li>Extract the key-value pairs from our <code>tree</code> dictionary in tuples, and store the values in a single list, <code>item_list</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "07adb5f6bd4d3a0abfedbc4075b31819",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"exercise-2\">Exercise 2</h3>\n<ol>\n<li>We have been provided with a basic nested dictionary containing African tree species. We have just received more detailed information on these trees and need to add it to this nested dictionary. Use the code provided as a starting point, adding in the extra information where required.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "fb1363cecf32deb3840e48182cf3391c",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "1c42ea3b982dcd88045c09d32bed8ab6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>New information</strong></span>\n<span class=\"paragraph\">Baobab:</span>\n<ul>\n<li>country \u2013 Zimbabwe</li>\n<li>average_height \u2013 25</li>\n</ul>\n<span class=\"paragraph\">Acacia:</span>\n<ul>\n<li>country \u2013 South Africa</li>\n<li>average_height \u2013 15</li>\n</ul>\n<span class=\"paragraph\"><strong>Hint</strong>:</span>\n<ul>\n<li>Print the dictionary to view the current structure.</li>\n<li>Use the keys to access the Baobab and Acacia dictionaries and append the additional information.</li>\n<li>The new keys will be <code>country</code> and <code>average_height</code>.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "497157df7d76babdf2d8a815ae3ef433",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "8ed3337b91392724118e469f1daa4cf0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"solutions\">Solutions</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "109514d1f8d70438cdec711e57ba3697",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"exercise-1\">Exercise 1</h3>\n<ol>\n<li>Create a dictionary called <code>tree</code> with the following key-value pairs: <br></li>\n</ol>\n<ul>\n<li><code>tree_type \u2013 Pepper-bark tree</code></li>\n<li><code>age \u2013 15</code></li>\n<li><code>family \u2013 Canellaceae</code></li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "b9b0757b01c4b138e89e8b47e0e3e730",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "multiple-defs",
+          "evalue": "The variable 'tree' was defined by another cell",
+          "traceback": []
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "5f9676581278a0cd9eabf9000b45fda2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Here we have shown two different ways of initialising our dictionary \u2013 the first with the curly brackets, the second using the built-in <code>dict()</code> function. Note that when we use the <code>dict()</code> function, <strong>the keys are automatically recognised without the need to place them in quotes</strong>.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "5084cffabcdcd68dada5b3471c32af73",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"2\">\n<li>Print the value associated with the key <code>age</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "f6bdf3fb9b714026df3408a3bbfb4d13",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "c2eda707826175f4a80a890b734e6231",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"3\">\n<li>When we created this dictionary in the first step, we accidentally left out one of the information categories, namely 'kingdom'. Fortunately, dictionaries are mutable, and we can add a new key-value pair to the dictionary: <code>kingdom \u2013 Plantae</code>. Do this in the code cell below.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "0cad1ffb5816697042f32e83e1c16ea9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "c8cbff23137984274d478ad29b180dc9",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "fed6658db7a892a16ac1101e60788034",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can add new key-value pairs to the dictionary by specifying the key (<code>kingdom</code>) and its value, or create a new dictionary and use <code>update()</code> to include it in the original.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "bec8266949141c570155c888c0893970",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"4\">\n<li>We have found that people are no longer interested in one of the key-value pairs in our dictionary. Remove the <code>family</code> key-value pair from the dictionary.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "081c638d09f0bc8aa3740a6395f760d2",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "wlCL",
+      "code_hash": "9104d6725dad142727a79b372dd3a03b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can use the <code>del</code> keyword to remove the <code>family</code> key-value pair from the dictionary. If the key cannot be found, it will result in a key error.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "kqZH",
+      "code_hash": "f9f2963a073cbab588e0bf835cf16bc2",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "wAgl",
+      "code_hash": "782febe1b3c3b10ee6430f3e411969eb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">We can also use the <code>pop()</code> method to remove the value associated with the <code>family</code> key.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "rEll",
+      "code_hash": "eea3e80df341b58d6c7ff767e20bf532",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"5\">\n<li>Update the dictionary by changing the <code>tree_type</code> key to <code>Wild Cinnamon</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dGlV",
+      "code_hash": "043e85bbdc917e5ff2d86e18fe05d696",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SdmI",
+      "code_hash": "06604ec457a5f066c41d17e2532c67a7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"6\">\n<li>Extract the keys and values from our <code>tree</code> dictionary, and store the values in two separate lists, <code>key_list</code> and <code>value_list</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lgWD",
+      "code_hash": "d5bfa55f2d7354b1314b496c7a844502",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "yOPj",
+      "code_hash": "ae01bc733cc94b994e0a5710dc959386",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The attributes of dictionaries can be accessed with the <code>keys()</code> and <code>values()</code> methods, making it easy to extract them. These methods return <code>dict_keys</code> and <code>dict_values</code> objects, respectively. While these objects resemble lists, we can't access their elements using indexing. If you'd like to use indexing on them, it's best to convert the object to a list and access the elements from there.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "fwwy",
+      "code_hash": "5c63e017977f152165de03f0b81b6212",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<ol start=\"7\">\n<li>Extract the key-value pairs from our <code>tree</code> dictionary in tuples, and store the values in a single list, <code>item_list</code>.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "LJZf",
+      "code_hash": "167ffa79ed54dbfa40e4d1449692506d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "urSm",
+      "code_hash": "0924373e0f461180ded1e7325173e601",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Here we extracted a <code>dict_items</code> object and converted it to a list. We can see that our <code>item_list</code> variable is a list of tuples with two elements each, containing the key-value pairs from our dictionary in each tuple.</span>\n<span class=\"paragraph\">The <code>dict_items</code> object shares the attributes of the <code>dict_keys</code> and <code>dict_values</code> objects, meaning that while <code>dict_items</code> objects are iterable, we cannot use an index to access their elements.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "jxvo",
+      "code_hash": "eefce72cd7a7d6753b613e15eceb6497",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><br></span>\n<h3 id=\"exercise-2\">Exercise 2</h3>\n<ol>\n<li>We have been provided with a basic nested dictionary containing African tree species. We have just received more detailed information on these trees and need to add it to this nested dictionary. Use the code provided as a starting point, adding in the extra information where required.</li>\n</ol></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "mWxS",
+      "code_hash": "5cd769e27b63e5356a32d146578f059d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "CcZR",
+      "code_hash": "1c42ea3b982dcd88045c09d32bed8ab6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>New information</strong></span>\n<span class=\"paragraph\">Baobab:</span>\n<ul>\n<li>country \u2013 Zimbabwe</li>\n<li>average_height \u2013 25</li>\n</ul>\n<span class=\"paragraph\">Acacia:</span>\n<ul>\n<li>country \u2013 South Africa</li>\n<li>average_height \u2013 15</li>\n</ul>\n<span class=\"paragraph\"><strong>Hint</strong>:</span>\n<ul>\n<li>Print the dictionary to view the current structure.</li>\n<li>Use the keys to access the Baobab and Acacia dictionaries and append the additional information.</li>\n<li>The new keys will be <code>country</code> and <code>average_height</code>.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "YWSi",
+      "code_hash": "231a21c60feee7404774ee1806689ba5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "zlud",
+      "code_hash": "f14033000ea4fb73ff95759b8347b46b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">In the solution we first created two new dictionaries with the additional information, and then accessed the two keys of interest, <code>Baobab</code> and <code>Acacia</code>. We then used the <code>update()</code> method to add the additional dictionaries.</span>\n<span class=\"paragraph\">Nested dictionaries are especially useful for storing multi-level information and retaining the structure of the data. The same rules for accessing keys and values apply, making them easy to work with, despite the complex look!</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "tZnO",
+      "code_hash": "cb3d89ad5679a0cca5649d0eb47f1eb6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"summary\">Summary</h2>\n<span class=\"paragraph\">Dictionaries provide a <strong>fast and efficient</strong> way to work with <strong>structured data</strong>. In this exercise, we looked at ways of creating dictionaries, how to update them, and how to extract their attributes. Remember to look into the Python documentation to learn more about these data structures!</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xvXZ",
+      "code_hash": "0665436210754a88ab340152e51903e3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"_1\"></h1>\n<div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/ALX_banners/ALX_Navy.png\"  style=\"width:140px\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
