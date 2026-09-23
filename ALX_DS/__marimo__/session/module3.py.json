@@ -1,0 +1,438 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "1dc7c31ead067b269ce847867bfc9540",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"tractor-traversal\">Tractor Traversal</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "9baf5b181909575f45970fd966066690",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Last week the farm could <em>reason</em>; this week it <em>moves on its own</em>. You'll write the path-planning <strong>functions</strong> that sweep a tractor across any field without wasting a metre \u2014 and turn the loose logic of earlier weeks into clean, reusable functions with default arguments, variable inputs, and multiple return values. That is the difference between code that runs once and code a team can build on. The project closes with the step that makes three weeks of work shareable and safe: putting the whole thing under <strong>version control</strong>.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "d98d2d2a529913494681ef305800c2e5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u26a0\ufe0f <strong>This challenge is graded and contributes to your overall marks for this module.</strong></span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook. Do not edit or remove the <code>### START FUNCTION</code> or <code>### END FUNCTION</code> comments. Do not add any code outside of the functions you are required to edit. Doing any of this will result in a mark of 0%.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided test cells to verify your output before submitting.</li>\n<li>Do not hard-code answers \u2014 your functions must work on unseen inputs.</li>\n<li>You may use everything introduced across this module: variables and data types, conditionals, loops, comprehensions, the built-in data structures, and \u2014 the focus of this week \u2014 functions, including default arguments, <code>*args</code>, and <code>**kwargs</code>.</li>\n<li>The use of StackOverflow, Google, and other online resources is permitted. The use of Generative AI tools \u2014 including ChatGPT, Claude, Copilot, and others \u2014 is also allowed and encouraged as a learning partner. However, the code you submit must reflect your own understanding. Copying a fellow student's code is a breach of the honor code. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>. Submitting code you do not understand is also a breach.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "b100e944ff0ee9c3ec967c0f5d78e909",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">It happens on a Tuesday afternoon, three weeks into the pilot.</span>\n<span class=\"paragraph\">One of the test tractors completes its first row, turns to begin the second \u2014 and drives straight back the way it came. Then it does it again. And again. By the time the operator kills the engine, the tractor has ploughed a perfectly tidy strip down the middle of the field and left the rest untouched.</span>\n<span class=\"paragraph\">The hardware is fine. The soil sensors are fine. The issue is the path-planning algorithm. Nobody wrote one.</span>\n<span class=\"paragraph\">That is the problem you are being asked to solve today. How does a tractor move so that it covers every cell of a field exactly once, wastes as little fuel as possible on turns, and does it the same way every single time regardless of the field's dimensions?</span>\n<span class=\"paragraph\">The answer, it turns out, is not complicated once you know the right pattern. Farmers have been doing it for centuries with ox-drawn ploughs. They call it the <strong>boustrophedon sweep</strong>: left to right on the first pass, right to left on the second, alternating until the whole field is done. No backtracking. No missed rows. Maximum efficiency.</span>\n<span class=\"paragraph\">This week you'll build it the right way \u2014 not as one long script, but as small, named <strong>functions</strong> that each do one job and can be reused, tested, and trusted. Your job is to code it.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "d71337f125276daac959afa866e297f3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-1-standard-sweep\">Challenge 1: Standard sweep</h2>\n<span class=\"paragraph\">The simplest traversal strategy: the tractor starts at <code>(row=0, col=0)</code> and visits every cell left to right, then moves to the next row and starts from the left again \u2014 like reading a page of text.</span>\n<span class=\"paragraph\">The field is a list of lists. Each cell is identified by its <code>(row, col)</code> position: <code>row</code> is the index into the outer list, <code>col</code> is the index into the inner list.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>tractor_movement_standard(field)</code>. It must <strong>return</strong> a list of <code>(row, col)</code> tuples covering every cell in the field in left-to-right, top-to-bottom order. It must work for any field size, including irregular and empty fields.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>tractor_movement_standard</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> the 10\u00d75 <code>field_standard</code> \u2192 <code>[(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 0), ... , (9, 4)]</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> the irregular <code>field_wide</code> (row 0 has 15 columns, row 1 has 7) \u2192 <code>[(0, 0), ... , (0, 14), (1, 0), ... , (1, 6)]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "b8a33b72a7b22bf23d1bcf80175d1c7c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "cba68c5d1c81bc19a81e46e1fdc8d3bb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [4, 0], [4, 1], [4, 2], [4, 3], [4, 4], [5, 0], [5, 1], [5, 2], [5, 3], [5, 4], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [9, 0], [9, 1], [9, 2], [9, 3], [9, 4]]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "5e9c93dd0e82cb359325fb2ef33c88c2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9], [0, 10], [0, 11], [0, 12], [0, 13], [0, 14], [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6]]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "9c205e479198e806ccd280243184ec6e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-2-reverse-a-row\">Challenge 2: Reverse a row</h2>\n<span class=\"paragraph\">Before implementing the boustrophedon sweep, we need a small reusable <strong>helper function</strong>: one that reverses a list. When the tractor finishes a row moving left to right, it traverses the next row right to left \u2014 which means reversing the column indices before it drives. Writing this as its own function is the whole point of modular code: one job, one name, reused wherever it's needed.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>reverse_list(input_list)</code>. It must <strong>return a new list</strong> with the elements in reverse order.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>reverse_list</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>reverse_list([0, 1, 2, 3, 4])</code> \u2192 <code>[4, 3, 2, 1, 0]</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>reverse_list([1, 3, 2, 0, 4])</code> \u2192 <code>[4, 0, 2, 3, 1]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "d1b2c39013e6d35485289d3b752140d4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "8aabe0997f92533da002bc90fe85ed5b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[4, 3, 2, 1, 0]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "62d9ad655584aa3cabe22c5b30922b66",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[4, 0, 2, 3, 1]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "6f170f4a21e2212c7a080b119839764d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-3-boustrophedon-sweep\">Challenge 3: Boustrophedon sweep</h2>\n<span class=\"paragraph\">Now put Challenges 1 and 2 together \u2014 one function <strong>calling another</strong>. The tractor alternates direction every row, and a <strong>default argument</strong> lets the caller choose which way it sets off without forcing every caller to specify it.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>tractor_movement_realistic(field, start_direction='right')</code>. The parameter <code>start_direction</code> defaults to <code>'right'</code>:</span>\n<ul>\n<li><code>start_direction='right'</code> (the default): row 0 goes <strong>left \u2192 right</strong>, row 1 goes <strong>right \u2192 left</strong>, alternating. Even-indexed rows go left\u2192right; odd-indexed rows go right\u2192left.</li>\n<li><code>start_direction='left'</code>: the pattern is flipped \u2014 even-indexed rows go right\u2192left, odd-indexed rows go left\u2192right.</li>\n</ul>\n<span class=\"paragraph\">You <strong>must call <code>reverse_list()</code></strong> inside your implementation to reverse a row's column order.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>tractor_movement_realistic</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>tractor_movement_realistic(field_standard)</code> (default direction) \u2192 <code>[(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 4), (1, 3), (1, 2), (1, 1), (1, 0), (2, 0), ... , (9, 0)]</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>tractor_movement_realistic([['x','x','x'], ['x','x','x']], 'left')</code> \u2192 <code>[(0, 2), (0, 1), (0, 0), (1, 0), (1, 1), (1, 2)]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "69cfae96c9eafa81688d0ffee61e39df",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "9eaca5b8608b85be9712acaf5de34699",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 4], [1, 3], [1, 2], [1, 1], [1, 0], [2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [3, 4], [3, 3], [3, 2], [3, 1], [3, 0], [4, 0], [4, 1], [4, 2], [4, 3], [4, 4], [5, 4], [5, 3], [5, 2], [5, 1], [5, 0], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 4], [7, 3], [7, 2], [7, 1], [7, 0], [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [9, 4], [9, 3], [9, 2], [9, 1], [9, 0]]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "a41274b952664a34103bd922f45bb950",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[[0, 2], [0, 1], [0, 0], [1, 0], [1, 1], [1, 2]]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "9a00a0dda6e3b3b42e4993c839cd8360",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-4-summarise-a-field\">Challenge 4: Summarise a field</h2>\n<span class=\"paragraph\">Dispatch wants a quick read on any field before sending a machine out. A single function can hand back several facts at once by <strong>returning multiple values</strong>, which the caller then <strong>unpacks</strong> into separate variables.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>field_summary(field)</code>. Return <strong>three values, in this order</strong>:</span>\n<ol>\n<li><code>num_rows</code> \u2014 the number of rows.</li>\n<li><code>total_cells</code> \u2014 the total number of cells across all rows (works even when rows differ in length).</li>\n<li><code>is_rectangular</code> \u2014 <code>True</code> if every row has the same length (an empty field counts as rectangular), otherwise <code>False</code>.</li>\n</ol>\n<span class=\"paragraph\">The caller will unpack the result like this: <code>rows, cells, rectangular = field_summary(field)</code>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>field_summary</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>field_summary(field_standard)</code> \u2192 <code>(10, 50, True)</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>field_summary(field_wide)</code> \u2192 <code>(2, 22, False)</code>  <em>(rows of length 15 and 7)</em></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "15b0d66429feca65b9f4783acabd0197",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "8a7ec903fb9b4c96a4b4e306555b131e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[10, 50, true]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "2d08ab5901adb16dc1f4e24a628d09b9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[2, 22, false]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "cb537ee7ead91041f68a25023736da67",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-5-add-up-the-fuel\">Challenge 5: Add up the fuel</h2>\n<span class=\"paragraph\">A single run burns fuel in pieces \u2014 driving each row, turning at each end, idling at the gate. Sometimes there are three figures to add, sometimes ten. A function that accepts <strong>a variable number of positional arguments</strong> with <code>*args</code> handles any number of segments without the caller packing them into a list first.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>total_fuel_used(*segment_costs)</code>. It must <strong>return the sum</strong> of however many segment costs are passed in. With no arguments at all, it returns <code>0</code>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>total_fuel_used</code>, and keep the <code>*segment_costs</code> parameter.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>total_fuel_used(2.5, 1.0, 0.5)</code> \u2192 <code>4.0</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>total_fuel_used()</code> \u2192 <code>0</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "4253e659771ad42b44629c7db4170d72",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "fb493ae0ea95ac040ec430b2f58071f8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>4.0</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "f849cc15102d92b5da75e59ea1547b62",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>0</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "81961e61c112684eaa1d7efda6d870c7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-6-log-a-completed-trip\">Challenge 6: Log a completed trip</h2>\n<span class=\"paragraph\">When a tractor finishes, the system records the run. Every log needs a <code>tractor_id</code>, but the rest of the details vary from trip to trip \u2014 rows covered, fuel used, time taken, whatever was measured. <strong><code>**kwargs</code></strong> lets one function accept any set of named details and fold them into a single record.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>log_trip(tractor_id, **details)</code>. It must <strong>return a dictionary</strong> that starts with the key <code>'tractor_id'</code> (set to the value passed in) and then includes every keyword detail that was supplied.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>log_trip</code>, and keep the <code>**details</code> parameter.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>log_trip('TX-1300', rows_covered=10, fuel_used=4.0)</code> \u2192 <code>{'tractor_id': 'TX-1300', 'rows_covered': 10, 'fuel_used': 4.0}</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>log_trip('RX-850')</code> \u2192 <code>{'tractor_id': 'RX-850'}</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "ba0f17254f1347dd990f2556124ff506",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "6dacb8c6d5ba6218f3c0eb54f4b62a52",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"tractor_id\": \"TX-1300\", \"rows_covered\": 10, \"fuel_used\": \"text/plain+float:4.0\"}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "f6dbc7b10c18e4aa5edfa6a31b6e5562",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "{\"tractor_id\": \"RX-850\"}"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "38140a285dabfbdfff8b119801ebc4d6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">The tractor traversal algorithm is complete \u2014 and, more importantly, it's built the right way. Any field, any size, covered in the most fuel-efficient pattern possible, by a handful of small functions that each do one job: one sweeps, one reverses, one composes the two, one summarises, one totals fuel from any number of segments, and one logs a trip from any set of details.</span>\n<span class=\"paragraph\">Before submitting, check that:</span>\n<ul>\n<li>All functions run without errors.</li>\n<li><code>tractor_movement_realistic</code> calls <code>reverse_list</code> internally and respects the <code>start_direction</code> default.</li>\n<li><code>field_summary</code> returns three values that unpack cleanly.</li>\n<li><code>total_fuel_used</code> and <code>log_trip</code> accept any number of inputs via <code>*args</code> and <code>**kwargs</code>.</li>\n</ul>\n<span class=\"paragraph\">The Digital Twin is alive.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "71eadeb7fb3b4d373c248ab8e1fdc5e7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `field_summary` \u2014 defined with parameters ['field']\n  \u26a0\ufe0f `log_trip` \u2014 parameter mismatch: expected ['tractor_id'], got ['tractor_id', 'details']\n  \u2713 `reverse_list` \u2014 defined with parameters ['input_list']\n  \u2713 `total_fuel_used` \u2014 defined with parameters ['segment_costs']\n  \u2713 `tractor_movement_realistic` \u2014 defined with parameters ['field', 'start_direction']\n  \u2713 `tractor_movement_standard` \u2014 defined with parameters ['field']\n\nSome functions need fixing before submitting (0 stub(s), 1 signature mismatch(es)).\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "duxn",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

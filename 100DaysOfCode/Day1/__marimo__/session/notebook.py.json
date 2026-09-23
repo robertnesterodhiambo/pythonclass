@@ -1,0 +1,450 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "fbaaeb6b004973907b0270b77c912c72",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"farm-harvest-management\">Farm harvest management</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "2d3f4f84dc9af83eded2f236633301ec",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">It's 6:47 a.m., the minister's meeting is at eight, and a notepad of harvest figures needs to become numbers a ministry can trust. Your first job in Maji Ndogo: turn two test fields' worth of scribbles into a clean season record \u2014 harvest, costs, revenue, and profit \u2014 using nothing but Python's raw building blocks.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "7b53c72b4f7bcd879e15c11d4bae000d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>This challenge is graded.</strong> It tests your mastery of Python fundamentals: data types, operators, strings, string formatting, and core data structures (lists, tuples, sets, dictionaries).</span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook.</li>\n<li>Do not edit or remove the <code>### START FUNCTION</code> or <code>### END FUNCTION</code> comments.</li>\n<li>Do not add any code outside of the functions you are required to complete.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>You will only use tools introduced this week: variables, data types, type casting, operators, strings, string formatting, and the core data structures (lists, tuples, sets, dictionaries). No loops, conditionals, or functions yet \u2014 those come later.</li>\n<li>The use of StackOverflow, Google, Generative AI tools, and any other online resources is permitted. Use AI to help you understand \u2014 not to shortcut the thinking. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "f9a71144f233dc1d8262477a0674a873",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">You did not expect your first day at the Maji Ndogo Ministry of Agriculture to involve a spreadsheet crisis, but here you are.</span>\n<span class=\"paragraph\">Sanaa, the ministry's data team lead, meets you at the door with a coffee and a problem. \"Our field teams submitted harvest numbers this morning,\" she says, sliding a notepad across the table. \"Two test fields \u2014 wheat and potato. I need the total harvest, the cost, the revenue, and the profit before the minister's meeting at eight. Finance needs it in code, not a napkin \u2014 our programmer takes over next week and has to understand every number.\"</span>\n<span class=\"paragraph\">You open your laptop. It is 6:47 a.m.</span>\n<hr />\n<span class=\"paragraph\"><strong>Welcome to Maji Ndogo.</strong></span>\n<span class=\"paragraph\">Maji Ndogo is a region of about 5,654 smallholder farms spread across highlands, river plains, and dry plateaus. Tea and coffee grow in the cool upper elevations; wheat, potato, cassava, maize, rice, and banana dominate the warmer lowlands. Farming is the economic backbone of the region \u2014 and it is in trouble. Yields vary wildly from field to field with no clear explanation. Some plots are contaminated. Others are underperforming despite good soil. The Ministry has launched an initiative to fix this with data science, and you have just been hired as the consultant.</span>\n<span class=\"paragraph\">This first task is deliberately simple. No databases, no libraries, no functions yet \u2014 just the raw building blocks of Python. By the end you will have turned a notepad into a clean, readable season record: exactly the kind of artifact a ministry can trust \u2014 and the foundation everything later builds on.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "45bed1d348b28bcc235afb4a6c1dd1ab",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-1-total-harvest\">Challenge 1: Total harvest</h2>\n<span class=\"paragraph\">Sanaa's notepad shows two entries:</span>\n<ul>\n<li><strong>Field 18442 (wheat):</strong> 2,050 kg harvested this season</li>\n<li><strong>Field 52711 (potato):</strong> 3,600 kg harvested this season</li>\n</ul>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>calculate_total_harvest</code> that takes two harvest values (wheat and potato) and returns their sum.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">5650</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "a720bf35d6acdd46221afd42d93cac30",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "5650\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "af956e4a74c4c5028a06654a5efa790c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-2-total-expenses\">Challenge 2: Total expenses</h2>\n<span class=\"paragraph\">Running both fields this season cost:</span>\n<ul>\n<li>Seeds: $650</li>\n<li>Labour: $3,070</li>\n</ul>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>calculate_total_expenses</code> that takes seed and labour costs and returns their sum.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">3720</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "01af7f595bf352a5d44e16ef9b03ef3c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "3720\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "dde349351083b103ecb1124624b2fcdb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-3-total-revenue\">Challenge 3: Total revenue</h2>\n<span class=\"paragraph\">Market prices this season:</span>\n<ul>\n<li>Wheat: $2.00 per kg</li>\n<li>Potato: $1.40 per kg</li>\n</ul>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>calculate_revenue</code> that takes harvest quantities and prices, then returns total revenue.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">9140.0</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "0905a51d6eea8a3585fd4549536fe8cd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "9140.0\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "c5c8e1a80116441ae72755430af68289",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-4-profit\">Challenge 4: Profit</h2>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>calculate_profit</code> that takes revenue and expenses and returns net profit.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">5420.0</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "10f076cd550b30370886612f47550381",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "5420.0\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "iLit",
+      "code_hash": "bf9ddbe5b5cbf683ba76d4f02b08f1c3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-5-clean-crop-names\">Challenge 5: Clean crop names</h2>\n<span class=\"paragraph\">Field data comes in messy: <code>\"  WhEaT  \"</code> with random spacing and case. Clean it up.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>clean_crop_name</code> that takes a raw crop string and returns it cleaned (stripped and lowercased).</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>wheat\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "6d89bf8f29452aa7a789a7d19e7e55cc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "wheat\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "5d3de188241e4cf8f8927a67fee2200b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-6-season-summary-with-formatting\">Challenge 6: Season summary with formatting</h2>\n<span class=\"paragraph\">Sanaa needs a readable summary for Finance. Format harvest, revenue, and profit with proper currency and precision.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>format_season_summary</code> that creates a formatted multi-line summary string. It must include total harvest, revenue (with 2 decimal places and comma separators), profit (with 2 decimal places and comma separators), and profit margin as a percentage.</span>\n<h3 id=\"expected-output-first-line-of-the-string\">Expected output (first line of the string)</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Season summary \u2014 Maji Ndogo test fields\nTotal harvest: 5650 kg\nTotal revenue: $9,140.00\nTotal profit: $5,420.00\nProfit margin: 59.3%\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "2afd94f4c98d54dbc10f74f4f269e2ce",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Season summary \u2014 Maji Ndogo test fields\nTotal harvest: 5650 kg\nTotal revenue: $9,140.00\nTotal profit: $5,420.00\nProfit margin: 59.3%\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "15813375c09b6b36037611df8407ee58",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-7-list-operations-on-harvest-data\">Challenge 7: List operations on harvest data</h2>\n<span class=\"paragraph\">As more fields report in, organize their harvests in a list. Extract specific records, find the largest, and rank them.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>analyze_field_harvests</code> that:</span>\n<ul>\n<li>Takes a list of harvests.</li>\n<li>Appends 2400 (maize) to the list.</li>\n<li>Returns a dictionary with keys: <code>all_harvests</code>, <code>first_two</code>, <code>largest</code>, <code>total</code>, <code>ranked</code>.</li>\n</ul>\n<h3 id=\"expected-output-repr-of-return-dict\">Expected output (repr of return dict)</h3>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>{&#39;all_harvests&#39;: [2050, 3600, 1875, 2400], &#39;first_two&#39;: [2050, 3600], &#39;largest&#39;: 3600, &#39;total&#39;: 9925, &#39;ranked&#39;: [1875, 2050, 2400, 3600]}\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "48e7d05c851e53c4bbe14f7ac5b68ca3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "{'all_harvests': [2050, 3600, 1875, 2400], 'first_two': [2050, 3600], 'largest': 3600, 'total': 9925, 'ranked': [3600, 2400, 2050, 1875]}\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "410d28e239e7b4dad7b29080ca91c094",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-8-tuple-unpacking-for-field-records\">Challenge 8: Tuple unpacking for field records</h2>\n<span class=\"paragraph\">Create an immutable field record and unpack it.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>create_field_record</code> that takes a field ID, crop, and harvest amount, creates a tuple, and returns it unpacked as three separate values.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">18442</span><span class=\"w\"> </span><span class=\"n\">wheat</span><span class=\"w\"> </span><span class=\"mf\">2050</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "788feada39e9f928d21a2ce07ee5eb97",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "18442 wheat 2050\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "69f910962ded5e74744632e347fbce39",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-9-count-unique-crops-with-sets\">Challenge 9: Count unique crops with sets</h2>\n<span class=\"paragraph\">How many distinct crops are in today's log?</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>count_unique_crops</code> that takes a list of crop names and returns the count of unique crops.</span>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-cbmbas codehilite\"><pre><span></span><code><span class=\"mf\">3</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "86513c3c1d8c3c5b4e5b6afba61103a5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "3\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "29eb8753db9c8c5f90cc566cb822084f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-10-dictionary-lookups\">Challenge 10: Dictionary lookups</h2>\n<span class=\"paragraph\">Look up harvest by field ID and count the records.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete the function <code>lookup_field_harvest</code> that:</span>\n<ul>\n<li>Takes a dictionary mapping field IDs to harvests.</li>\n<li>Takes a field ID to look up.</li>\n<li>Returns a tuple: (harvest_value, total_fields_on_record).</li>\n</ul>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>(2050, 3)\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "36bfac61d7a3a211ad8d45c516859d45",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "(2050, 3)\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "41858bfc4545ccce676e1cf728c2d80e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">Sanaa looks over the screen. \"That's more than I asked for \u2014 and exactly what I'll need next.\" She forwards the summary to Finance before the meeting starts.</span>\n<span class=\"paragraph\">You started with a notepad and ended with a clean, readable season record: totals and profit, the right data types, tidy crop names, a formatted summary, and the same numbers organised four different ways \u2014 a list, a tuple, a set, and a dictionary. Every one of these is a tool you'll lean on for the rest of the project.</span>\n<span class=\"paragraph\">This is where it begins \u2014 not with algorithms or neural networks, but with the discipline of expressing a real-world question in code that anyone can read, run, and trust. Save this notebook \u2014 you'll want these building blocks close at hand for what's coming.</span>\n<span class=\"paragraph\">Make sure every cell produces the expected output before you move on.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "78a679b02a49da182efd7e48333b4ef0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `analyze_field_harvests` \u2014 defined with parameters ['harvests']\n  \u2713 `calculate_profit` \u2014 defined with parameters ['revenue', 'expenses']\n  \u2713 `calculate_revenue` \u2014 defined with parameters ['wheat_kg', 'potato_kg', 'wheat_price', 'potato_price']\n  \u2713 `calculate_total_expenses` \u2014 defined with parameters ['seed_cost', 'labour_cost']\n  \u2713 `calculate_total_harvest` \u2014 defined with parameters ['wheat_kg', 'potato_kg']\n  \u2713 `clean_crop_name` \u2014 defined with parameters ['raw_crop']\n  \u2713 `count_unique_crops` \u2014 defined with parameters ['crops_logged']\n  \u2713 `create_field_record` \u2014 defined with parameters ['field_id', 'crop', 'harvest_kg']\n  \u2713 `format_season_summary` \u2014 defined with parameters ['total_harvest', 'revenue', 'profit']\n  \u2713 `lookup_field_harvest` \u2014 defined with parameters ['harvest_dict', 'field_id']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    }
+  ]
+}

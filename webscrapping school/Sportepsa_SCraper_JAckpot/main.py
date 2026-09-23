@@ -23,10 +23,45 @@ wait = WebDriverWait(driver, 30)
 
 
 # ---------------------------------------------------------
-# CREATE CSV
+# CREATE / LOAD CSV
 # ---------------------------------------------------------
 
 csv_exists = os.path.exists(CSV_FILE)
+
+# Store all existing links from the CSV
+existing_links = set()
+
+if csv_exists:
+
+    with open(
+        CSV_FILE,
+        "r",
+        newline="",
+        encoding="utf-8"
+    ) as existing_file:
+
+        reader = csv.DictReader(existing_file)
+
+        for existing_row in reader:
+
+            existing_link = existing_row.get("link")
+
+            if existing_link:
+                existing_links.add(existing_link)
+
+    print(
+        f"Existing CSV found."
+        f" {len(existing_links)} existing link(s) loaded."
+    )
+
+else:
+
+    print("CSV does not exist. A new CSV will be created.")
+
+
+# ---------------------------------------------------------
+# OPEN CSV FOR APPENDING
+# ---------------------------------------------------------
 
 csv_file = open(
     CSV_FILE,
@@ -47,6 +82,7 @@ writer = csv.DictWriter(
 )
 
 if not csv_exists:
+
     writer.writeheader()
     csv_file.flush()
 
@@ -57,7 +93,9 @@ try:
     # OPEN WEBSITE
     # -----------------------------------------------------
 
-    driver.get("https://www.ke.sportpesa.com/en/mega-jackpot-pro/results")
+    driver.get(
+        "https://www.ke.sportpesa.com/en/mega-jackpot-pro/results"
+    )
 
     # Manually interact with the page
     input(
@@ -132,84 +170,121 @@ try:
 
 
         # -------------------------------------------------
-        # EXTRACT EACH EVENT
+        # CHECK IF THIS PAGE ALREADY EXISTS
         # -------------------------------------------------
 
-        for row in rows:
+        if link in existing_links:
 
-            try:
+            print(
+                f"SKIPPED:"
+                f" Link already exists in CSV."
+            )
 
-                # DATE
-                date = row.find_element(
-                    By.CSS_SELECTOR,
-                    "div.jackpot-event-row__date"
-                ).text.strip()
+            print(
+                f"Already existing link: {link}"
+            )
 
-
-                # TEAMS / GAME
-                teams = row.find_element(
-                    By.CSS_SELECTOR,
-                    "div.jackpot-event-row__event-name"
-                ).text.strip()
+            print("-" * 60)
+            print("No new data saved from this page.")
 
 
-                # RESULT
-                # Gets ONLY the second span
-                # Example: 3:2
-                result = row.find_element(
-                    By.CSS_SELECTOR,
-                    "div.jackpot-event-row__result span:nth-child(2)"
-                ).text.strip()
+        else:
+
+            print(
+                "New link found."
+                " Saving events..."
+            )
 
 
-                # OUTCOME
-                # Gets ONLY the second span
-                # Example: Home
-                outcome = row.find_element(
-                    By.CSS_SELECTOR,
-                    "div.jackpot-event-row__winning-pick span:nth-child(2)"
-                ).text.strip()
+            # -------------------------------------------------
+            # EXTRACT EACH EVENT
+            # -------------------------------------------------
+
+            for row in rows:
+
+                try:
+
+                    # DATE
+                    date = row.find_element(
+                        By.CSS_SELECTOR,
+                        "div.jackpot-event-row__date"
+                    ).text.strip()
 
 
-                # -------------------------------------------------
-                # SAVE IMMEDIATELY TO CSV
-                # -------------------------------------------------
-
-                writer.writerow({
-                    "date": date,
-                    "teams": teams,
-                    "result": result,
-                    "outcome": outcome,
-                    "link": link
-                })
-
-                # Force the data to be written immediately
-                csv_file.flush()
+                    # TEAMS / GAME
+                    teams = row.find_element(
+                        By.CSS_SELECTOR,
+                        "div.jackpot-event-row__event-name"
+                    ).text.strip()
 
 
-                # -------------------------------------------------
-                # PRINT WHAT WAS SAVED
-                # -------------------------------------------------
-
-                print(
-                    f"Saved:"
-                    f" {date} |"
-                    f" {teams} |"
-                    f" {result} |"
-                    f" {outcome} |"
-                    f" {link}"
-                )
+                    # RESULT
+                    # Gets ONLY the second span
+                    # Example: 3:2
+                    result = row.find_element(
+                        By.CSS_SELECTOR,
+                        "div.jackpot-event-row__result span:nth-child(2)"
+                    ).text.strip()
 
 
-            except Exception as e:
+                    # OUTCOME
+                    # Gets ONLY the second span
+                    # Example: Home
+                    outcome = row.find_element(
+                        By.CSS_SELECTOR,
+                        "div.jackpot-event-row__winning-pick span:nth-child(2)"
+                    ).text.strip()
 
-                print(
-                    f"Could not extract event: {e}"
-                )
+
+                    # -------------------------------------------------
+                    # SAVE IMMEDIATELY TO CSV
+                    # -------------------------------------------------
+
+                    writer.writerow({
+                        "date": date,
+                        "teams": teams,
+                        "result": result,
+                        "outcome": outcome,
+                        "link": link
+                    })
+
+                    # Force the data to be written immediately
+                    csv_file.flush()
+
+
+                    # -------------------------------------------------
+                    # PRINT WHAT WAS SAVED
+                    # -------------------------------------------------
+
+                    print(
+                        f"Saved:"
+                        f" {date} |"
+                        f" {teams} |"
+                        f" {result} |"
+                        f" {outcome} |"
+                        f" {link}"
+                    )
+
+
+                except Exception as e:
+
+                    print(
+                        f"Could not extract event: {e}"
+                    )
+
+
+            # -------------------------------------------------
+            # ADD LINK TO EXISTING LINKS
+            # -------------------------------------------------
+
+            existing_links.add(link)
+
+
+            print("-" * 60)
+            print("Current page saved.")
 
 
         print("-" * 60)
-        print("Current page saved.")
         print("Clicking NEXT...")
 
 
@@ -228,8 +303,11 @@ try:
         # -------------------------------------------------
 
         next_button.click()
+
         time.sleep(2)
+
         print("NEXT clicked.")
+
         time.sleep(2)
 
 

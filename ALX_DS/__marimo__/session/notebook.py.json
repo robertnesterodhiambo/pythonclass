@@ -526,20 +526,20 @@
       ]
     },
     {
-      "id": "YOoA",
+      "id": "dGlV",
       "code_hash": "0d97b6ade2fb5a7c8ddd5731d081172c",
       "outputs": [
         {
           "type": "error",
-          "ename": "syntax",
+          "ename": "exception",
           "evalue": "line 1\n    compare_crop_plans(['tea', 'coffee'], ['coffee', 'tea']) return?\n                                                             ^^^^^^\nSyntaxError: invalid syntax\n",
-          "traceback": []
+          "traceback": null
         }
       ],
       "console": []
     },
     {
-      "id": "tykO",
+      "id": "SdmI",
       "code_hash": null,
       "outputs": [],
       "console": []
