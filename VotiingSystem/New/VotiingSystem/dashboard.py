@@ -87,10 +87,15 @@ def get_user(user_id):
         return None
 
 
-def get_location_names(province_id, county_id, constituency_id, ward_id):
+def get_location_names(
+    province_id,
+    county_id,
+    constituency_id,
+    ward_id
+):
     """
-    Convert the geographic IDs stored in user.db into readable names
-    using voting.db.
+    Convert geographic IDs stored in user.db
+    into readable names using voting.db.
     """
 
     try:
@@ -110,13 +115,21 @@ def get_location_names(province_id, county_id, constituency_id, ward_id):
         county = cursor.fetchone()
 
         cursor.execute(
-            "SELECT constituency_name FROM constituencies WHERE id=?",
+            """
+            SELECT constituency_name
+            FROM constituencies
+            WHERE id=?
+            """,
             (constituency_id,)
         )
         constituency = cursor.fetchone()
 
         cursor.execute(
-            "SELECT ward_name FROM wards WHERE id=?",
+            """
+            SELECT ward_name
+            FROM wards
+            WHERE id=?
+            """,
             (ward_id,)
         )
         ward = cursor.fetchone()
@@ -142,12 +155,13 @@ def get_location_names(province_id, county_id, constituency_id, ward_id):
 def check_vote_status(user_id):
     """
     Check whether the current user has already voted.
-
-    vote.db is optional at this stage. If it does not exist yet,
-    the dashboard simply reports that voting status is unavailable.
     """
 
-    vote_db = os.path.join(BASE_DIR, "databases", "vote.db")
+    vote_db = os.path.join(
+        BASE_DIR,
+        "databases",
+        "vote.db"
+    )
 
     if not os.path.exists(vote_db):
         return False
@@ -211,13 +225,17 @@ def open_dashboard(user_id):
     # Geographic names
     # --------------------------------------------------------
 
-    province_name, county_name, constituency_name, ward_name = \
-        get_location_names(
-            province_id,
-            county_id,
-            constituency_id,
-            ward_id
-        )
+    (
+        province_name,
+        county_name,
+        constituency_name,
+        ward_name
+    ) = get_location_names(
+        province_id,
+        county_id,
+        constituency_id,
+        ward_id
+    )
 
     # --------------------------------------------------------
     # Voting status
@@ -231,26 +249,45 @@ def open_dashboard(user_id):
 
     dashboard = tk.Tk()
 
-    dashboard.title("Votiing System — Dashboard")
-    dashboard.geometry("1180x720")
-    dashboard.minsize(1000, 650)
-    dashboard.configure(bg=BG)
+    dashboard.title(
+        "Votiing System — Dashboard"
+    )
+
+    dashboard.geometry(
+        "1180x720"
+    )
+
+    dashboard.minsize(
+        1000,
+        650
+    )
+
+    dashboard.configure(
+        bg=BG
+    )
 
     # --------------------------------------------------------
-    # Window icon / close handling
+    # Window close
     # --------------------------------------------------------
 
     def on_close():
         dashboard.destroy()
 
-    dashboard.protocol("WM_DELETE_WINDOW", on_close)
+    dashboard.protocol(
+        "WM_DELETE_WINDOW",
+        on_close
+    )
 
     # ========================================================
     # STYLE
     # ========================================================
 
     style = ttk.Style()
-    style.theme_use("clam")
+
+    try:
+        style.theme_use("clam")
+    except tk.TclError:
+        pass
 
     style.configure(
         "Modern.TButton",
@@ -289,10 +326,12 @@ def open_dashboard(user_id):
     # ========================================================
 
     def clear_content():
+
         for widget in content_area.winfo_children():
             widget.destroy()
 
     def create_card(parent, **kwargs):
+
         return tk.Frame(
             parent,
             bg=CARD,
@@ -300,412 +339,6 @@ def open_dashboard(user_id):
             highlightthickness=1,
             **kwargs
         )
-
-    def show_home():
-        clear_content()
-
-        # --------------------------------------------
-        # Header
-        # --------------------------------------------
-
-        header = tk.Frame(content_area, bg=BG)
-        header.pack(fill="x", pady=(0, 25))
-
-        tk.Label(
-            header,
-            text=f"Good to see you, {first_name}!",
-            font=("Helvetica", 25, "bold"),
-            fg=TEXT,
-            bg=BG
-        ).pack(anchor="w")
-
-        tk.Label(
-            header,
-            text="Welcome to your secure election dashboard.",
-            font=("Helvetica", 11),
-            fg=SECONDARY_TEXT,
-            bg=BG
-        ).pack(anchor="w", pady=(5, 0))
-
-        # --------------------------------------------
-        # Status banner
-        # --------------------------------------------
-
-        status_card = create_card(content_area)
-        status_card.pack(fill="x", pady=(0, 20))
-
-        status_left = tk.Frame(status_card, bg=CARD)
-        status_left.pack(
-            side="left",
-            fill="both",
-            expand=True,
-            padx=20,
-            pady=18
-        )
-
-        status_icon = "✓" if already_voted else "●"
-
-        status_color = SUCCESS if already_voted else WARNING
-
-        tk.Label(
-            status_left,
-            text=status_icon,
-            font=("Helvetica", 22, "bold"),
-            fg=status_color,
-            bg=CARD
-        ).pack(side="left", padx=(0, 15))
-
-        status_text_frame = tk.Frame(status_left, bg=CARD)
-        status_text_frame.pack(side="left")
-
-        if already_voted:
-            status_title = "Your vote has been recorded"
-            status_description = (
-                "Your ballot is already present in the voting database."
-            )
-        else:
-            status_title = "You have not voted yet"
-            status_description = (
-                "You are eligible to proceed to the voting panel."
-            )
-
-        tk.Label(
-            status_text_frame,
-            text=status_title,
-            font=("Helvetica", 12, "bold"),
-            fg=TEXT,
-            bg=CARD
-        ).pack(anchor="w")
-
-        tk.Label(
-            status_text_frame,
-            text=status_description,
-            font=("Helvetica", 9),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", pady=(4, 0))
-
-        # --------------------------------------------
-        # Information cards
-        # --------------------------------------------
-
-        stats_frame = tk.Frame(content_area, bg=BG)
-        stats_frame.pack(fill="x", pady=(0, 20))
-
-        stats_frame.columnconfigure(0, weight=1)
-        stats_frame.columnconfigure(1, weight=1)
-        stats_frame.columnconfigure(2, weight=1)
-
-        # Location card
-        location_card = create_card(stats_frame)
-        location_card.grid(
-            row=0,
-            column=0,
-            sticky="nsew",
-            padx=(0, 8)
-        )
-
-        tk.Label(
-            location_card,
-            text="LOCATION",
-            font=("Helvetica", 9, "bold"),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18, pady=(16, 5))
-
-        tk.Label(
-            location_card,
-            text=ward_name,
-            font=("Helvetica", 15, "bold"),
-            fg=TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18)
-
-        tk.Label(
-            location_card,
-            text=f"{constituency_name}\n{county_name}",
-            font=("Helvetica", 9),
-            fg=SECONDARY_TEXT,
-            bg=CARD,
-            justify="left"
-        ).pack(anchor="w", padx=18, pady=(4, 16))
-
-        # Voter card
-        voter_card = create_card(stats_frame)
-        voter_card.grid(
-            row=0,
-            column=1,
-            sticky="nsew",
-            padx=8
-        )
-
-        tk.Label(
-            voter_card,
-            text="VOTER ID",
-            font=("Helvetica", 9, "bold"),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18, pady=(16, 5))
-
-        tk.Label(
-            voter_card,
-            text=id_number,
-            font=("Helvetica", 18, "bold"),
-            fg=TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18)
-
-        tk.Label(
-            voter_card,
-            text="Registered voter",
-            font=("Helvetica", 9),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18, pady=(4, 16))
-
-        # Election card
-        election_card = create_card(stats_frame)
-        election_card.grid(
-            row=0,
-            column=2,
-            sticky="nsew",
-            padx=(8, 0)
-        )
-
-        tk.Label(
-            election_card,
-            text="ELECTION STATUS",
-            font=("Helvetica", 9, "bold"),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18, pady=(16, 5))
-
-        election_status = "VOTED" if already_voted else "READY"
-
-        tk.Label(
-            election_card,
-            text=election_status,
-            font=("Helvetica", 18, "bold"),
-            fg=SUCCESS if already_voted else ACCENT,
-            bg=CARD
-        ).pack(anchor="w", padx=18)
-
-        tk.Label(
-            election_card,
-            text="Ballot status",
-            font=("Helvetica", 9),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=18, pady=(4, 16))
-
-        # --------------------------------------------
-        # Quick actions
-        # --------------------------------------------
-
-        actions_card = create_card(content_area)
-        actions_card.pack(fill="both", expand=True)
-
-        tk.Label(
-            actions_card,
-            text="Quick Actions",
-            font=("Helvetica", 14, "bold"),
-            fg=TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=20, pady=(18, 4))
-
-        tk.Label(
-            actions_card,
-            text="Access the main election services.",
-            font=("Helvetica", 9),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", padx=20)
-
-        actions = tk.Frame(actions_card, bg=CARD)
-        actions.pack(fill="x", padx=20, pady=20)
-
-        actions.columnconfigure(0, weight=1)
-        actions.columnconfigure(1, weight=1)
-        actions.columnconfigure(2, weight=1)
-
-        # Vote
-        vote_btn = tk.Button(
-            actions,
-            text="🗳  CAST YOUR VOTE",
-            command=lambda: open_vote_panel(id_number),
-            font=("Helvetica", 10, "bold"),
-            fg="white",
-            bg=ACCENT,
-            activebackground=ACCENT_HOVER,
-            activeforeground="white",
-            relief="flat",
-            bd=0,
-            cursor="hand2",
-            padx=15,
-            pady=14
-        )
-        vote_btn.grid(
-            row=0,
-            column=0,
-            sticky="ew",
-            padx=(0, 6)
-        )
-
-        # Aspirant
-        aspirant_btn = tk.Button(
-            actions,
-            text="👤  APPLY AS ASPIRANT",
-            command=lambda: open_apply_popup(id_number),
-            font=("Helvetica", 10, "bold"),
-            fg=TEXT,
-            bg=INPUT,
-            activebackground=CARD_HOVER,
-            activeforeground=TEXT,
-            relief="flat",
-            bd=0,
-            cursor="hand2",
-            padx=15,
-            pady=14
-        )
-        aspirant_btn.grid(
-            row=0,
-            column=1,
-            sticky="ew",
-            padx=6
-        )
-
-        # Results
-        results_btn = tk.Button(
-            actions,
-            text="📊  VIEW RESULTS",
-            command=run_results_script,
-            font=("Helvetica", 10, "bold"),
-            fg=TEXT,
-            bg=INPUT,
-            activebackground=CARD_HOVER,
-            activeforeground=TEXT,
-            relief="flat",
-            bd=0,
-            cursor="hand2",
-            padx=15,
-            pady=14
-        )
-        results_btn.grid(
-            row=0,
-            column=2,
-            sticky="ew",
-            padx=(6, 0)
-        )
-
-    # ========================================================
-    # PROFILE PAGE
-    # ========================================================
-
-    def show_profile():
-        clear_content()
-
-        tk.Label(
-            content_area,
-            text="My Profile",
-            font=("Helvetica", 25, "bold"),
-            fg=TEXT,
-            bg=BG
-        ).pack(anchor="w")
-
-        tk.Label(
-            content_area,
-            text="Your registered voter information.",
-            font=("Helvetica", 11),
-            fg=SECONDARY_TEXT,
-            bg=BG
-        ).pack(anchor="w", pady=(5, 20))
-
-        profile_card = create_card(content_area)
-        profile_card.pack(fill="x")
-
-        # Avatar
-        avatar = tk.Label(
-            profile_card,
-            text=first_name[0].upper() if first_name else "?",
-            font=("Helvetica", 28, "bold"),
-            fg="white",
-            bg=ACCENT,
-            width=3,
-            height=2
-        )
-        avatar.pack(side="left", padx=25, pady=25)
-
-        profile_name = tk.Frame(profile_card, bg=CARD)
-        profile_name.pack(side="left", pady=25)
-
-        tk.Label(
-            profile_name,
-            text=f"{first_name} {second_name} {last_name}",
-            font=("Helvetica", 18, "bold"),
-            fg=TEXT,
-            bg=CARD
-        ).pack(anchor="w")
-
-        tk.Label(
-            profile_name,
-            text=f"Voter ID: {id_number}",
-            font=("Helvetica", 10),
-            fg=SECONDARY_TEXT,
-            bg=CARD
-        ).pack(anchor="w", pady=(5, 0))
-
-        # Details
-        details = create_card(content_area)
-        details.pack(fill="x", pady=20)
-
-        profile_rows = [
-            ("Date of Birth", date_of_birth),
-            ("Place of Birth", place_of_birth),
-            ("Province", province_name),
-            ("County", county_name),
-            ("Constituency", constituency_name),
-            ("Ward", ward_name),
-            ("Registered", created_at)
-        ]
-
-        for label, value in profile_rows:
-
-            row = tk.Frame(details, bg=CARD)
-            row.pack(fill="x", padx=25, pady=8)
-
-            tk.Label(
-                row,
-                text=label,
-                font=("Helvetica", 10),
-                fg=SECONDARY_TEXT,
-                bg=CARD,
-                width=18,
-                anchor="w"
-            ).pack(side="left")
-
-            tk.Label(
-                row,
-                text=str(value),
-                font=("Helvetica", 10, "bold"),
-                fg=TEXT,
-                bg=CARD,
-                anchor="w"
-            ).pack(side="left")
-
-    # ========================================================
-    # VOTING PAGE
-    # ========================================================
-
-    def show_voting():
-
-        if already_voted:
-            messagebox.showinfo(
-                "Already Voted",
-                "Your vote has already been recorded."
-            )
-            return
-
-        open_vote_panel(id_number)
 
     # ========================================================
     # RESULTS
@@ -719,18 +352,22 @@ def open_dashboard(user_id):
         )
 
         if not os.path.exists(results_script):
+
             messagebox.showerror(
                 "Results",
                 "results.py could not be found."
             )
+
             return
 
         try:
+
             subprocess.Popen(
                 [sys.executable, results_script]
             )
 
         except Exception as error:
+
             messagebox.showerror(
                 "Results Error",
                 f"Unable to open results.\n\n{error}"
@@ -743,28 +380,54 @@ def open_dashboard(user_id):
     def open_apply_popup(user_id):
 
         popup = tk.Toplevel(dashboard)
-        popup.title("Aspirant Application")
-        popup.geometry("520x650")
-        popup.minsize(500, 600)
-        popup.configure(bg=BG)
 
-        popup.transient(dashboard)
+        popup.title(
+            "Aspirant Application"
+        )
+
+        popup.geometry(
+            "560x700"
+        )
+
+        popup.minsize(
+            500,
+            500
+        )
+
+        popup.configure(
+            bg=BG
+        )
+
+        popup.transient(
+            dashboard
+        )
+
         popup.grab_set()
 
-        # --------------------------------------------
-        # Header
-        # --------------------------------------------
+        # ====================================================
+        # HEADER
+        # ====================================================
 
-        header = tk.Frame(popup, bg=BG)
-        header.pack(fill="x", padx=30, pady=(25, 15))
+        header = tk.Frame(
+            popup,
+            bg=BG
+        )
+
+        header.pack(
+            fill="x",
+            padx=30,
+            pady=(20, 10)
+        )
 
         tk.Label(
             header,
             text="♟",
-            font=("Helvetica", 30),
+            font=("Helvetica", 28),
             fg=ACCENT,
             bg=BG
-        ).pack(anchor="w")
+        ).pack(
+            anchor="w"
+        )
 
         tk.Label(
             header,
@@ -772,7 +435,10 @@ def open_dashboard(user_id):
             font=("Helvetica", 21, "bold"),
             fg=TEXT,
             bg=BG
-        ).pack(anchor="w", pady=(5, 0))
+        ).pack(
+            anchor="w",
+            pady=(3, 0)
+        )
 
         tk.Label(
             header,
@@ -780,29 +446,181 @@ def open_dashboard(user_id):
             font=("Helvetica", 9),
             fg=SECONDARY_TEXT,
             bg=BG
-        ).pack(anchor="w")
+        ).pack(
+            anchor="w"
+        )
 
-        # --------------------------------------------
-        # Form
-        # --------------------------------------------
+        # ====================================================
+        # SCROLLABLE CONTAINER
+        # ====================================================
+
+        scroll_container = tk.Frame(
+            popup,
+            bg=BG
+        )
+
+        scroll_container.pack(
+            fill="both",
+            expand=True,
+            padx=30,
+            pady=(5, 20)
+        )
+
+        # ====================================================
+        # CANVAS
+        # ====================================================
+
+        canvas = tk.Canvas(
+            scroll_container,
+            bg=BG,
+            highlightthickness=0,
+            bd=0
+        )
+
+        canvas.pack(
+            side="left",
+            fill="both",
+            expand=True
+        )
+
+        # ====================================================
+        # SCROLLBAR
+        # ====================================================
+
+        scrollbar = ttk.Scrollbar(
+            scroll_container,
+            orient="vertical",
+            command=canvas.yview
+        )
+
+        scrollbar.pack(
+            side="right",
+            fill="y"
+        )
+
+        canvas.configure(
+            yscrollcommand=scrollbar.set
+        )
+
+        # ====================================================
+        # FORM
+        # ====================================================
 
         form = tk.Frame(
-            popup,
+            canvas,
             bg=CARD,
             highlightbackground=BORDER,
             highlightthickness=1
         )
-        form.pack(
-            fill="both",
-            expand=True,
-            padx=30,
-            pady=(0, 25)
+
+        canvas_window = canvas.create_window(
+            (0, 0),
+            window=form,
+            anchor="nw"
         )
 
-        form.columnconfigure(0, weight=1)
-        form.columnconfigure(1, weight=1)
+        # ====================================================
+        # UPDATE SCROLL REGION
+        # ====================================================
 
-        def field_label(text, row, column):
+        def update_scroll_region(event=None):
+
+            canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
+
+        form.bind(
+            "<Configure>",
+            update_scroll_region
+        )
+
+        # ====================================================
+        # KEEP FORM WIDTH EQUAL TO CANVAS
+        # ====================================================
+
+        def resize_form(event):
+
+            canvas.itemconfig(
+                canvas_window,
+                width=event.width
+            )
+
+        canvas.bind(
+            "<Configure>",
+            resize_form
+        )
+
+        # ====================================================
+        # MOUSE WHEEL
+        # ====================================================
+
+        def mousewheel(event):
+
+            canvas.yview_scroll(
+                int(-1 * (event.delta / 120)),
+                "units"
+            )
+
+        # Windows / generic Tk
+        canvas.bind(
+            "<MouseWheel>",
+            mousewheel
+        )
+
+        form.bind(
+            "<MouseWheel>",
+            mousewheel
+        )
+
+        # Linux
+        canvas.bind(
+            "<Button-4>",
+            lambda event:
+                canvas.yview_scroll(-1, "units")
+        )
+
+        canvas.bind(
+            "<Button-5>",
+            lambda event:
+                canvas.yview_scroll(1, "units")
+        )
+
+        form.bind(
+            "<Button-4>",
+            lambda event:
+                canvas.yview_scroll(-1, "units")
+        )
+
+        form.bind(
+            "<Button-5>",
+            lambda event:
+                canvas.yview_scroll(1, "units")
+        )
+
+        # ====================================================
+        # FORM CONFIGURATION
+        # ====================================================
+
+        form.columnconfigure(
+            0,
+            weight=1
+        )
+
+        form.columnconfigure(
+            1,
+            weight=1
+        )
+
+        # ====================================================
+        # FIELD HELPERS
+        # ====================================================
+
+        def field_label(
+            text,
+            row,
+            column
+        ):
+
             tk.Label(
                 form,
                 text=text,
@@ -817,7 +635,11 @@ def open_dashboard(user_id):
                 pady=(15, 5)
             )
 
-        def entry_widget(row, column):
+        def entry_widget(
+            row,
+            column
+        ):
+
             entry = tk.Entry(
                 form,
                 font=("Helvetica", 10),
@@ -839,14 +661,45 @@ def open_dashboard(user_id):
 
             return entry
 
-        field_label("First Name", 0, 0)
-        first_name_entry = entry_widget(0, 0)
+        # ====================================================
+        # FIRST NAME
+        # ====================================================
 
-        field_label("Last Name", 0, 1)
-        last_name_entry = entry_widget(0, 1)
+        field_label(
+            "First Name",
+            0,
+            0
+        )
 
-        # Position
-        field_label("Position", 2, 0)
+        first_name_entry = entry_widget(
+            0,
+            0
+        )
+
+        # ====================================================
+        # LAST NAME
+        # ====================================================
+
+        field_label(
+            "Last Name",
+            0,
+            1
+        )
+
+        last_name_entry = entry_widget(
+            0,
+            1
+        )
+
+        # ====================================================
+        # POSITION
+        # ====================================================
+
+        field_label(
+            "Position",
+            2,
+            0
+        )
 
         position_combobox = ttk.Combobox(
             form,
@@ -863,17 +716,38 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # Age
-        field_label("Age", 4, 0)
-        age_entry = entry_widget(4, 0)
+        # ====================================================
+        # AGE
+        # ====================================================
 
-        # Gender
-        field_label("Gender", 4, 1)
+        field_label(
+            "Age",
+            4,
+            0
+        )
+
+        age_entry = entry_widget(
+            4,
+            0
+        )
+
+        # ====================================================
+        # GENDER
+        # ====================================================
+
+        field_label(
+            "Gender",
+            4,
+            1
+        )
 
         gender_combobox = ttk.Combobox(
             form,
             state="readonly",
-            values=["Male", "Female"],
+            values=[
+                "Male",
+                "Female"
+            ],
             font=("Helvetica", 10)
         )
 
@@ -885,8 +759,15 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # Province
-        field_label("Province", 6, 0)
+        # ====================================================
+        # PROVINCE
+        # ====================================================
+
+        field_label(
+            "Province",
+            6,
+            0
+        )
 
         province_combobox = ttk.Combobox(
             form,
@@ -903,8 +784,15 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # County
-        field_label("County", 8, 0)
+        # ====================================================
+        # COUNTY
+        # ====================================================
+
+        field_label(
+            "County",
+            8,
+            0
+        )
 
         county_combobox = ttk.Combobox(
             form,
@@ -921,8 +809,15 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # Constituency
-        field_label("Constituency", 10, 0)
+        # ====================================================
+        # CONSTITUENCY
+        # ====================================================
+
+        field_label(
+            "Constituency",
+            10,
+            0
+        )
 
         constituency_combobox = ttk.Combobox(
             form,
@@ -939,8 +834,15 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # Ward
-        field_label("Ward", 12, 0)
+        # ====================================================
+        # WARD
+        # ====================================================
+
+        field_label(
+            "Ward",
+            12,
+            0
+        )
 
         ward_combobox = ttk.Combobox(
             form,
@@ -957,18 +859,26 @@ def open_dashboard(user_id):
             pady=(0, 5)
         )
 
-        # --------------------------------------------
-        # Database functions for application
-        # --------------------------------------------
+        # ====================================================
+        # DATABASE FUNCTIONS
+        # ====================================================
 
         def fetch_positions():
 
             try:
-                conn = sqlite3.connect(VOTING_DB)
+
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
+
                 cursor = conn.cursor()
 
                 cursor.execute(
-                    "SELECT position_name FROM positions"
+                    """
+                    SELECT position_name
+                    FROM positions
+                    ORDER BY position_name
+                    """
                 )
 
                 positions = [
@@ -980,17 +890,32 @@ def open_dashboard(user_id):
 
                 return positions
 
-            except sqlite3.Error:
+            except sqlite3.Error as error:
+
+                messagebox.showerror(
+                    "Database Error",
+                    f"Unable to load positions.\n\n{error}",
+                    parent=popup
+                )
+
                 return []
 
         def fetch_provinces():
 
             try:
-                conn = sqlite3.connect(VOTING_DB)
+
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
+
                 cursor = conn.cursor()
 
                 cursor.execute(
-                    "SELECT name FROM Provinces"
+                    """
+                    SELECT name
+                    FROM Provinces
+                    ORDER BY name
+                    """
                 )
 
                 provinces = [
@@ -1002,166 +927,291 @@ def open_dashboard(user_id):
 
                 return provinces
 
+            except sqlite3.Error as error:
+
+                messagebox.showerror(
+                    "Database Error",
+                    f"Unable to load provinces.\n\n{error}",
+                    parent=popup
+                )
+
+                return []
+
+        def fetch_counties(
+            province_name
+        ):
+
+            try:
+
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
+
+                cursor = conn.cursor()
+
+                cursor.execute(
+                    """
+                    SELECT id
+                    FROM Provinces
+                    WHERE name=?
+                    """,
+                    (province_name,)
+                )
+
+                result = cursor.fetchone()
+
+                if not result:
+
+                    conn.close()
+                    return []
+
+                province_id_value = result[0]
+
+                cursor.execute(
+                    """
+                    SELECT name
+                    FROM Counties
+                    WHERE province_id=?
+                    ORDER BY name
+                    """,
+                    (province_id_value,)
+                )
+
+                counties = [
+                    row[0]
+                    for row in cursor.fetchall()
+                ]
+
+                conn.close()
+
+                return counties
+
             except sqlite3.Error:
                 return []
 
-        def fetch_counties(province_name):
+        def fetch_constituencies(
+            county_name
+        ):
 
-            conn = sqlite3.connect(VOTING_DB)
-            cursor = conn.cursor()
+            try:
 
-            cursor.execute(
-                "SELECT id FROM Provinces WHERE name=?",
-                (province_name,)
-            )
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
 
-            result = cursor.fetchone()
+                cursor = conn.cursor()
 
-            if not result:
+                cursor.execute(
+                    """
+                    SELECT id
+                    FROM Counties
+                    WHERE name=?
+                    """,
+                    (county_name,)
+                )
+
+                result = cursor.fetchone()
+
+                if not result:
+
+                    conn.close()
+                    return []
+
+                county_id_value = result[0]
+
+                cursor.execute(
+                    """
+                    SELECT constituency_name
+                    FROM constituencies
+                    WHERE county_id=?
+                    ORDER BY constituency_name
+                    """,
+                    (county_id_value,)
+                )
+
+                constituencies = [
+                    row[0]
+                    for row in cursor.fetchall()
+                ]
+
                 conn.close()
+
+                return constituencies
+
+            except sqlite3.Error:
                 return []
 
-            province_id = result[0]
+        def fetch_wards(
+            constituency_name
+        ):
 
-            cursor.execute(
-                "SELECT name FROM Counties WHERE province_id=?",
-                (province_id,)
-            )
+            try:
 
-            counties = [
-                row[0]
-                for row in cursor.fetchall()
-            ]
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
 
-            conn.close()
+                cursor = conn.cursor()
 
-            return counties
+                cursor.execute(
+                    """
+                    SELECT id
+                    FROM constituencies
+                    WHERE constituency_name=?
+                    """,
+                    (constituency_name,)
+                )
 
-        def fetch_constituencies(county_name):
+                result = cursor.fetchone()
 
-            conn = sqlite3.connect(VOTING_DB)
-            cursor = conn.cursor()
+                if not result:
 
-            cursor.execute(
-                "SELECT id FROM Counties WHERE name=?",
-                (county_name,)
-            )
+                    conn.close()
+                    return []
 
-            result = cursor.fetchone()
+                constituency_id_value = result[0]
 
-            if not result:
+                cursor.execute(
+                    """
+                    SELECT ward_name
+                    FROM wards
+                    WHERE constituency_id=?
+                    ORDER BY ward_name
+                    """,
+                    (constituency_id_value,)
+                )
+
+                wards = [
+                    row[0]
+                    for row in cursor.fetchall()
+                ]
+
                 conn.close()
+
+                return wards
+
+            except sqlite3.Error:
                 return []
 
-            county_id = result[0]
+        # ====================================================
+        # LOAD DROPDOWNS
+        # ====================================================
 
-            cursor.execute(
-                """
-                SELECT constituency_name
-                FROM constituencies
-                WHERE county_id=?
-                """,
-                (county_id,)
+        position_combobox["values"] = (
+            fetch_positions()
+        )
+
+        province_combobox["values"] = (
+            fetch_provinces()
+        )
+
+        # ====================================================
+        # CASCADING DROPDOWNS
+        # ====================================================
+
+        def update_counties(
+            event=None
+        ):
+
+            selected = (
+                province_combobox
+                .get()
+                .strip()
             )
 
-            constituencies = [
-                row[0]
-                for row in cursor.fetchall()
-            ]
-
-            conn.close()
-
-            return constituencies
-
-        def fetch_wards(constituency_name):
-
-            conn = sqlite3.connect(VOTING_DB)
-            cursor = conn.cursor()
-
-            cursor.execute(
-                """
-                SELECT id
-                FROM constituencies
-                WHERE constituency_name=?
-                """,
-                (constituency_name,)
-            )
-
-            result = cursor.fetchone()
-
-            if not result:
-                conn.close()
-                return []
-
-            constituency_id = result[0]
-
-            cursor.execute(
-                """
-                SELECT ward_name
-                FROM wards
-                WHERE constituency_id=?
-                """,
-                (constituency_id,)
-            )
-
-            wards = [
-                row[0]
-                for row in cursor.fetchall()
-            ]
-
-            conn.close()
-
-            return wards
-
-        # --------------------------------------------
-        # Load dropdowns
-        # --------------------------------------------
-
-        position_combobox["values"] = fetch_positions()
-        province_combobox["values"] = fetch_provinces()
-
-        # --------------------------------------------
-        # Cascading dropdowns
-        # --------------------------------------------
-
-        def update_counties(event=None):
-
-            selected = province_combobox.get()
-
-            counties = fetch_counties(selected)
-
-            county_combobox["values"] = counties
-            county_combobox.config(state="readonly")
             county_combobox.set("")
 
             constituency_combobox.set("")
-            constituency_combobox.config(state="disabled")
 
             ward_combobox.set("")
-            ward_combobox.config(state="disabled")
 
-        def update_constituencies(event=None):
+            constituency_combobox["values"] = []
 
-            selected = county_combobox.get()
+            ward_combobox["values"] = []
 
-            constituencies = fetch_constituencies(selected)
+            constituency_combobox.config(
+                state="disabled"
+            )
 
-            constituency_combobox["values"] = constituencies
-            constituency_combobox.config(state="readonly")
+            ward_combobox.config(
+                state="disabled"
+            )
+
+            counties = fetch_counties(
+                selected
+            )
+
+            county_combobox["values"] = (
+                counties
+            )
+
+            if counties:
+
+                county_combobox.config(
+                    state="readonly"
+                )
+
+        def update_constituencies(
+            event=None
+        ):
+
+            selected = (
+                county_combobox
+                .get()
+                .strip()
+            )
+
             constituency_combobox.set("")
 
             ward_combobox.set("")
-            ward_combobox.config(state="disabled")
 
-        def update_wards(event=None):
+            ward_combobox["values"] = []
 
-            selected = constituency_combobox.get()
+            ward_combobox.config(
+                state="disabled"
+            )
 
-            wards = fetch_wards(selected)
+            constituencies = (
+                fetch_constituencies(
+                    selected
+                )
+            )
 
-            ward_combobox["values"] = wards
-            ward_combobox.config(state="readonly")
+            constituency_combobox["values"] = (
+                constituencies
+            )
+
+            if constituencies:
+
+                constituency_combobox.config(
+                    state="readonly"
+                )
+
+        def update_wards(
+            event=None
+        ):
+
+            selected = (
+                constituency_combobox
+                .get()
+                .strip()
+            )
+
             ward_combobox.set("")
+
+            wards = fetch_wards(
+                selected
+            )
+
+            ward_combobox["values"] = (
+                wards
+            )
+
+            if wards:
+
+                ward_combobox.config(
+                    state="readonly"
+                )
 
         province_combobox.bind(
             "<<ComboboxSelected>>",
@@ -1178,21 +1228,69 @@ def open_dashboard(user_id):
             update_wards
         )
 
-        # --------------------------------------------
-        # Submit
-        # --------------------------------------------
+        # ====================================================
+        # SUBMIT
+        # ====================================================
 
         def submit():
 
-            first_name_value = first_name_entry.get().strip()
-            last_name_value = last_name_entry.get().strip()
-            position_value = position_combobox.get().strip()
-            age_value = age_entry.get().strip()
-            gender_value = gender_combobox.get().strip()
-            province_value = province_combobox.get().strip()
-            county_value = county_combobox.get().strip()
-            constituency_value = constituency_combobox.get().strip()
-            ward_value = ward_combobox.get().strip()
+            first_name_value = (
+                first_name_entry
+                .get()
+                .strip()
+            )
+
+            last_name_value = (
+                last_name_entry
+                .get()
+                .strip()
+            )
+
+            position_value = (
+                position_combobox
+                .get()
+                .strip()
+            )
+
+            age_value = (
+                age_entry
+                .get()
+                .strip()
+            )
+
+            gender_value = (
+                gender_combobox
+                .get()
+                .strip()
+            )
+
+            province_value = (
+                province_combobox
+                .get()
+                .strip()
+            )
+
+            county_value = (
+                county_combobox
+                .get()
+                .strip()
+            )
+
+            constituency_value = (
+                constituency_combobox
+                .get()
+                .strip()
+            )
+
+            ward_value = (
+                ward_combobox
+                .get()
+                .strip()
+            )
+
+            # --------------------------------------------
+            # Validation
+            # --------------------------------------------
 
             if not all([
                 first_name_value,
@@ -1205,50 +1303,133 @@ def open_dashboard(user_id):
                 constituency_value,
                 ward_value
             ]):
+
                 messagebox.showwarning(
                     "Incomplete Application",
-                    "Please complete all fields.",
+                    "Please complete all fields before submitting.",
                     parent=popup
                 )
+
                 return
 
             try:
+
                 age = int(age_value)
 
             except ValueError:
+
                 messagebox.showerror(
                     "Invalid Age",
-                    "Age must be a number.",
+                    "Age must be a valid number.",
                     parent=popup
                 )
+
                 return
 
+            # --------------------------------------------
+            # Database
+            # --------------------------------------------
+
+            conn = None
+
             try:
-                conn = sqlite3.connect(VOTING_DB)
+
+                conn = sqlite3.connect(
+                    VOTING_DB
+                )
+
                 cursor = conn.cursor()
 
-                # Get geographic IDs
-                cursor.execute(
-                    "SELECT id FROM Provinces WHERE name=?",
-                    (province_value,)
-                )
-                province_id_value = cursor.fetchone()[0]
+                # ----------------------------------------
+                # Province
+                # ----------------------------------------
 
                 cursor.execute(
-                    "SELECT id FROM Counties WHERE name=?",
-                    (county_value,)
+                    """
+                    SELECT id
+                    FROM Provinces
+                    WHERE name=?
+                    """,
+                    (province_value,)
                 )
-                county_id_value = cursor.fetchone()[0]
+
+                province_result = cursor.fetchone()
+
+                if not province_result:
+
+                    raise ValueError(
+                        "Selected province could not be found."
+                    )
+
+                province_id_value = (
+                    province_result[0]
+                )
+
+                # ----------------------------------------
+                # County
+                # ----------------------------------------
+
+                cursor.execute(
+                    """
+                    SELECT id
+                    FROM Counties
+                    WHERE name=?
+                    AND province_id=?
+                    """,
+                    (
+                        county_value,
+                        province_id_value
+                    )
+                )
+
+                county_result = (
+                    cursor.fetchone()
+                )
+
+                if not county_result:
+
+                    raise ValueError(
+                        "Selected county could not be found."
+                    )
+
+                county_id_value = (
+                    county_result[0]
+                )
+
+                # ----------------------------------------
+                # Constituency
+                # ----------------------------------------
 
                 cursor.execute(
                     """
                     SELECT id
                     FROM constituencies
                     WHERE constituency_name=?
+                    AND county_id=?
                     """,
-                    (constituency_value,)
+                    (
+                        constituency_value,
+                        county_id_value
+                    )
                 )
-                constituency_id_value = cursor.fetchone()[0]
+
+                constituency_result = (
+                    cursor.fetchone()
+                )
+
+                if not constituency_result:
+
+                    raise ValueError(
+                        "Selected constituency could not be found."
+                    )
+
+                constituency_id_value = (
+                    constituency_result[0]
+                )
+
+                # ----------------------------------------
+                # Ward
+                # ----------------------------------------
 
                 cursor.execute(
                     """
@@ -1263,16 +1444,24 @@ def open_dashboard(user_id):
                     )
                 )
 
-                ward_result = cursor.fetchone()
+                ward_result = (
+                    cursor.fetchone()
+                )
 
                 if not ward_result:
+
                     raise ValueError(
                         "Selected ward could not be found."
                     )
 
-                ward_id_value = ward_result[0]
+                ward_id_value = (
+                    ward_result[0]
+                )
 
-                # Insert application
+                # ----------------------------------------
+                # Insert aspirant
+                # ----------------------------------------
+
                 cursor.execute(
                     """
                     INSERT INTO aspirant (
@@ -1304,7 +1493,6 @@ def open_dashboard(user_id):
                 )
 
                 conn.commit()
-                conn.close()
 
                 messagebox.showinfo(
                     "Application Submitted",
@@ -1316,6 +1504,9 @@ def open_dashboard(user_id):
 
             except sqlite3.Error as error:
 
+                if conn:
+                    conn.rollback()
+
                 messagebox.showerror(
                     "Database Error",
                     f"Unable to submit application.\n\n{error}",
@@ -1324,11 +1515,23 @@ def open_dashboard(user_id):
 
             except Exception as error:
 
+                if conn:
+                    conn.rollback()
+
                 messagebox.showerror(
                     "Application Error",
                     str(error),
                     parent=popup
                 )
+
+            finally:
+
+                if conn:
+                    conn.close()
+
+        # ====================================================
+        # SUBMIT BUTTON
+        # ====================================================
 
         submit_button = tk.Button(
             form,
@@ -1351,7 +1554,651 @@ def open_dashboard(user_id):
             columnspan=2,
             sticky="ew",
             padx=15,
+            pady=(20, 30)
+        )
+
+        # ====================================================
+        # INITIAL SCROLL POSITION
+        # ====================================================
+
+        popup.update_idletasks()
+
+        canvas.configure(
+            scrollregion=canvas.bbox("all")
+        )
+
+        canvas.yview_moveto(0)
+
+    # ========================================================
+    # HOME PAGE
+    # ========================================================
+
+    def show_home():
+
+        clear_content()
+
+        # ----------------------------------------------------
+        # Header
+        # ----------------------------------------------------
+
+        header = tk.Frame(
+            content_area,
+            bg=BG
+        )
+
+        header.pack(
+            fill="x",
+            pady=(0, 25)
+        )
+
+        tk.Label(
+            header,
+            text=f"Good to see you, {first_name}!",
+            font=("Helvetica", 25, "bold"),
+            fg=TEXT,
+            bg=BG
+        ).pack(
+            anchor="w"
+        )
+
+        tk.Label(
+            header,
+            text="Welcome to your secure election dashboard.",
+            font=("Helvetica", 11),
+            fg=SECONDARY_TEXT,
+            bg=BG
+        ).pack(
+            anchor="w",
+            pady=(5, 0)
+        )
+
+        # ----------------------------------------------------
+        # Status banner
+        # ----------------------------------------------------
+
+        status_card = create_card(
+            content_area
+        )
+
+        status_card.pack(
+            fill="x",
+            pady=(0, 20)
+        )
+
+        status_left = tk.Frame(
+            status_card,
+            bg=CARD
+        )
+
+        status_left.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=18
+        )
+
+        status_icon = (
+            "✓"
+            if already_voted
+            else "●"
+        )
+
+        status_color = (
+            SUCCESS
+            if already_voted
+            else WARNING
+        )
+
+        tk.Label(
+            status_left,
+            text=status_icon,
+            font=("Helvetica", 22, "bold"),
+            fg=status_color,
+            bg=CARD
+        ).pack(
+            side="left",
+            padx=(0, 15)
+        )
+
+        status_text_frame = tk.Frame(
+            status_left,
+            bg=CARD
+        )
+
+        status_text_frame.pack(
+            side="left"
+        )
+
+        if already_voted:
+
+            status_title = (
+                "Your vote has been recorded"
+            )
+
+            status_description = (
+                "Your ballot is already present in the voting database."
+            )
+
+        else:
+
+            status_title = (
+                "You have not voted yet"
+            )
+
+            status_description = (
+                "You are eligible to proceed to the voting panel."
+            )
+
+        tk.Label(
+            status_text_frame,
+            text=status_title,
+            font=("Helvetica", 12, "bold"),
+            fg=TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w"
+        )
+
+        tk.Label(
+            status_text_frame,
+            text=status_description,
+            font=("Helvetica", 9),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            pady=(4, 0)
+        )
+
+        # ----------------------------------------------------
+        # Information cards
+        # ----------------------------------------------------
+
+        stats_frame = tk.Frame(
+            content_area,
+            bg=BG
+        )
+
+        stats_frame.pack(
+            fill="x",
+            pady=(0, 20)
+        )
+
+        stats_frame.columnconfigure(
+            0,
+            weight=1
+        )
+
+        stats_frame.columnconfigure(
+            1,
+            weight=1
+        )
+
+        stats_frame.columnconfigure(
+            2,
+            weight=1
+        )
+
+        # ----------------------------------------------------
+        # Location card
+        # ----------------------------------------------------
+
+        location_card = create_card(
+            stats_frame
+        )
+
+        location_card.grid(
+            row=0,
+            column=0,
+            sticky="nsew",
+            padx=(0, 8)
+        )
+
+        tk.Label(
+            location_card,
+            text="LOCATION",
+            font=("Helvetica", 9, "bold"),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(16, 5)
+        )
+
+        tk.Label(
+            location_card,
+            text=ward_name,
+            font=("Helvetica", 15, "bold"),
+            fg=TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18
+        )
+
+        tk.Label(
+            location_card,
+            text=f"{constituency_name}\n{county_name}",
+            font=("Helvetica", 9),
+            fg=SECONDARY_TEXT,
+            bg=CARD,
+            justify="left"
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(4, 16)
+        )
+
+        # ----------------------------------------------------
+        # Voter card
+        # ----------------------------------------------------
+
+        voter_card = create_card(
+            stats_frame
+        )
+
+        voter_card.grid(
+            row=0,
+            column=1,
+            sticky="nsew",
+            padx=8
+        )
+
+        tk.Label(
+            voter_card,
+            text="VOTER ID",
+            font=("Helvetica", 9, "bold"),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(16, 5)
+        )
+
+        tk.Label(
+            voter_card,
+            text=id_number,
+            font=("Helvetica", 18, "bold"),
+            fg=TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18
+        )
+
+        tk.Label(
+            voter_card,
+            text="Registered voter",
+            font=("Helvetica", 9),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(4, 16)
+        )
+
+        # ----------------------------------------------------
+        # Election card
+        # ----------------------------------------------------
+
+        election_card = create_card(
+            stats_frame
+        )
+
+        election_card.grid(
+            row=0,
+            column=2,
+            sticky="nsew",
+            padx=(8, 0)
+        )
+
+        tk.Label(
+            election_card,
+            text="ELECTION STATUS",
+            font=("Helvetica", 9, "bold"),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(16, 5)
+        )
+
+        election_status = (
+            "VOTED"
+            if already_voted
+            else "READY"
+        )
+
+        tk.Label(
+            election_card,
+            text=election_status,
+            font=("Helvetica", 18, "bold"),
+            fg=(
+                SUCCESS
+                if already_voted
+                else ACCENT
+            ),
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18
+        )
+
+        tk.Label(
+            election_card,
+            text="Ballot status",
+            font=("Helvetica", 9),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=18,
+            pady=(4, 16)
+        )
+
+        # ----------------------------------------------------
+        # Quick actions
+        # ----------------------------------------------------
+
+        actions_card = create_card(
+            content_area
+        )
+
+        actions_card.pack(
+            fill="both",
+            expand=True
+        )
+
+        tk.Label(
+            actions_card,
+            text="Quick Actions",
+            font=("Helvetica", 14, "bold"),
+            fg=TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=20,
+            pady=(18, 4)
+        )
+
+        tk.Label(
+            actions_card,
+            text="Access the main election services.",
+            font=("Helvetica", 9),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            padx=20
+        )
+
+        actions = tk.Frame(
+            actions_card,
+            bg=CARD
+        )
+
+        actions.pack(
+            fill="x",
+            padx=20,
             pady=20
+        )
+
+        actions.columnconfigure(
+            0,
+            weight=1
+        )
+
+        actions.columnconfigure(
+            1,
+            weight=1
+        )
+
+        actions.columnconfigure(
+            2,
+            weight=1
+        )
+
+        # Vote
+        vote_btn = tk.Button(
+            actions,
+            text="🗳  CAST YOUR VOTE",
+            command=lambda:
+                open_vote_panel(id_number),
+            font=("Helvetica", 10, "bold"),
+            fg="white",
+            bg=ACCENT,
+            activebackground=ACCENT_HOVER,
+            activeforeground="white",
+            relief="flat",
+            bd=0,
+            cursor="hand2",
+            padx=15,
+            pady=14
+        )
+
+        vote_btn.grid(
+            row=0,
+            column=0,
+            sticky="ew",
+            padx=(0, 6)
+        )
+
+        # Aspirant
+        aspirant_btn = tk.Button(
+            actions,
+            text="👤  APPLY AS ASPIRANT",
+            command=lambda:
+                open_apply_popup(id_number),
+            font=("Helvetica", 10, "bold"),
+            fg=TEXT,
+            bg=INPUT,
+            activebackground=CARD_HOVER,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            cursor="hand2",
+            padx=15,
+            pady=14
+        )
+
+        aspirant_btn.grid(
+            row=0,
+            column=1,
+            sticky="ew",
+            padx=6
+        )
+
+        # Results
+        results_btn = tk.Button(
+            actions,
+            text="📊  VIEW RESULTS",
+            command=run_results_script,
+            font=("Helvetica", 10, "bold"),
+            fg=TEXT,
+            bg=INPUT,
+            activebackground=CARD_HOVER,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            cursor="hand2",
+            padx=15,
+            pady=14
+        )
+
+        results_btn.grid(
+            row=0,
+            column=2,
+            sticky="ew",
+            padx=(6, 0)
+        )
+
+    # ========================================================
+    # PROFILE PAGE
+    # ========================================================
+
+    def show_profile():
+
+        clear_content()
+
+        tk.Label(
+            content_area,
+            text="My Profile",
+            font=("Helvetica", 25, "bold"),
+            fg=TEXT,
+            bg=BG
+        ).pack(
+            anchor="w"
+        )
+
+        tk.Label(
+            content_area,
+            text="Your registered voter information.",
+            font=("Helvetica", 11),
+            fg=SECONDARY_TEXT,
+            bg=BG
+        ).pack(
+            anchor="w",
+            pady=(5, 20)
+        )
+
+        profile_card = create_card(
+            content_area
+        )
+
+        profile_card.pack(
+            fill="x"
+        )
+
+        # Avatar
+        avatar = tk.Label(
+            profile_card,
+            text=(
+                first_name[0].upper()
+                if first_name
+                else "?"
+            ),
+            font=("Helvetica", 28, "bold"),
+            fg="white",
+            bg=ACCENT,
+            width=3,
+            height=2
+        )
+
+        avatar.pack(
+            side="left",
+            padx=25,
+            pady=25
+        )
+
+        profile_name = tk.Frame(
+            profile_card,
+            bg=CARD
+        )
+
+        profile_name.pack(
+            side="left",
+            pady=25
+        )
+
+        tk.Label(
+            profile_name,
+            text=f"{first_name} {second_name} {last_name}",
+            font=("Helvetica", 18, "bold"),
+            fg=TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w"
+        )
+
+        tk.Label(
+            profile_name,
+            text=f"Voter ID: {id_number}",
+            font=("Helvetica", 10),
+            fg=SECONDARY_TEXT,
+            bg=CARD
+        ).pack(
+            anchor="w",
+            pady=(5, 0)
+        )
+
+        # Details
+        details = create_card(
+            content_area
+        )
+
+        details.pack(
+            fill="x",
+            pady=20
+        )
+
+        profile_rows = [
+            ("Date of Birth", date_of_birth),
+            ("Place of Birth", place_of_birth),
+            ("Province", province_name),
+            ("County", county_name),
+            ("Constituency", constituency_name),
+            ("Ward", ward_name),
+            ("Registered", created_at)
+        ]
+
+        for label, value in profile_rows:
+
+            row = tk.Frame(
+                details,
+                bg=CARD
+            )
+
+            row.pack(
+                fill="x",
+                padx=25,
+                pady=8
+            )
+
+            tk.Label(
+                row,
+                text=label,
+                font=("Helvetica", 10),
+                fg=SECONDARY_TEXT,
+                bg=CARD,
+                width=18,
+                anchor="w"
+            ).pack(
+                side="left"
+            )
+
+            tk.Label(
+                row,
+                text=str(value),
+                font=("Helvetica", 10, "bold"),
+                fg=TEXT,
+                bg=CARD,
+                anchor="w"
+            ).pack(
+                side="left"
+            )
+
+    # ========================================================
+    # VOTING PAGE
+    # ========================================================
+
+    def show_voting():
+
+        if already_voted:
+
+            messagebox.showinfo(
+                "Already Voted",
+                "Your vote has already been recorded."
+            )
+
+            return
+
+        open_vote_panel(
+            id_number
         )
 
     # ========================================================
@@ -1369,13 +2216,19 @@ def open_dashboard(user_id):
         fill="y"
     )
 
-    sidebar.pack_propagate(False)
+    sidebar.pack_propagate(
+        False
+    )
 
+    # --------------------------------------------------------
     # Logo
+    # --------------------------------------------------------
+
     logo_frame = tk.Frame(
         sidebar,
         bg=SIDEBAR
     )
+
     logo_frame.pack(
         fill="x",
         padx=22,
@@ -1390,13 +2243,19 @@ def open_dashboard(user_id):
         bg=ACCENT,
         width=2,
         height=1
-    ).pack(side="left")
+    ).pack(
+        side="left"
+    )
 
     logo_text = tk.Frame(
         logo_frame,
         bg=SIDEBAR
     )
-    logo_text.pack(side="left", padx=10)
+
+    logo_text.pack(
+        side="left",
+        padx=10
+    )
 
     tk.Label(
         logo_text,
@@ -1404,7 +2263,9 @@ def open_dashboard(user_id):
         font=("Helvetica", 15, "bold"),
         fg=TEXT,
         bg=SIDEBAR
-    ).pack(anchor="w")
+    ).pack(
+        anchor="w"
+    )
 
     tk.Label(
         logo_text,
@@ -1412,13 +2273,19 @@ def open_dashboard(user_id):
         font=("Helvetica", 7, "bold"),
         fg=SECONDARY_TEXT,
         bg=SIDEBAR
-    ).pack(anchor="w")
+    ).pack(
+        anchor="w"
+    )
 
-    # User mini-profile
+    # --------------------------------------------------------
+    # User mini profile
+    # --------------------------------------------------------
+
     user_card = tk.Frame(
         sidebar,
         bg=CARD
     )
+
     user_card.pack(
         fill="x",
         padx=15,
@@ -1427,13 +2294,18 @@ def open_dashboard(user_id):
 
     avatar = tk.Label(
         user_card,
-        text=first_name[0].upper() if first_name else "?",
+        text=(
+            first_name[0].upper()
+            if first_name
+            else "?"
+        ),
         font=("Helvetica", 17, "bold"),
         fg="white",
         bg=ACCENT,
         width=2,
         height=1
     )
+
     avatar.pack(
         side="left",
         padx=12,
@@ -1444,6 +2316,7 @@ def open_dashboard(user_id):
         user_card,
         bg=CARD
     )
+
     user_info.pack(
         side="left",
         fill="x",
@@ -1456,7 +2329,9 @@ def open_dashboard(user_id):
         font=("Helvetica", 10, "bold"),
         fg=TEXT,
         bg=CARD
-    ).pack(anchor="w")
+    ).pack(
+        anchor="w"
+    )
 
     tk.Label(
         user_info,
@@ -1464,21 +2339,35 @@ def open_dashboard(user_id):
         font=("Helvetica", 8),
         fg=SECONDARY_TEXT,
         bg=CARD
-    ).pack(anchor="w")
+    ).pack(
+        anchor="w"
+    )
 
     # --------------------------------------------------------
     # Sidebar buttons
     # --------------------------------------------------------
 
-    def sidebar_button(text, command, active=False):
+    def sidebar_button(
+        text,
+        command,
+        active=False
+    ):
 
         button = tk.Button(
             sidebar,
             text=text,
             command=command,
             font=("Helvetica", 10, "bold"),
-            fg=TEXT if active else SECONDARY_TEXT,
-            bg=ACCENT if active else SIDEBAR,
+            fg=(
+                TEXT
+                if active
+                else SECONDARY_TEXT
+            ),
+            bg=(
+                ACCENT
+                if active
+                else SIDEBAR
+            ),
             activebackground=CARD_HOVER,
             activeforeground=TEXT,
             relief="flat",
@@ -1497,7 +2386,7 @@ def open_dashboard(user_id):
 
         return button
 
-    home_button = sidebar_button(
+    sidebar_button(
         "⌂    Dashboard",
         show_home,
         active=True
@@ -1515,7 +2404,8 @@ def open_dashboard(user_id):
 
     sidebar_button(
         "♟    Aspirant",
-        lambda: open_apply_popup(id_number)
+        lambda:
+            open_apply_popup(id_number)
     )
 
     sidebar_button(
@@ -1523,17 +2413,24 @@ def open_dashboard(user_id):
         run_results_script
     )
 
-    # Spacer
+    # ========================================================
+    # SPACER
+    # ========================================================
+
     spacer = tk.Frame(
         sidebar,
         bg=SIDEBAR
     )
+
     spacer.pack(
         fill="both",
         expand=True
     )
 
-    # Logout
+    # ========================================================
+    # LOGOUT
+    # ========================================================
+
     def logout():
 
         result = messagebox.askyesno(
@@ -1542,6 +2439,7 @@ def open_dashboard(user_id):
         )
 
         if result:
+
             dashboard.destroy()
 
             login_script = os.path.join(
@@ -1550,7 +2448,10 @@ def open_dashboard(user_id):
             )
 
             subprocess.Popen(
-                [sys.executable, login_script]
+                [
+                    sys.executable,
+                    login_script
+                ]
             )
 
     logout_button = tk.Button(
@@ -1591,7 +2492,10 @@ def open_dashboard(user_id):
         expand=True
     )
 
+    # --------------------------------------------------------
     # Top bar
+    # --------------------------------------------------------
+
     topbar = tk.Frame(
         main,
         bg=BG,
@@ -1604,7 +2508,9 @@ def open_dashboard(user_id):
         pady=(20, 0)
     )
 
-    topbar.pack_propagate(False)
+    topbar.pack_propagate(
+        False
+    )
 
     tk.Label(
         topbar,
@@ -1612,7 +2518,9 @@ def open_dashboard(user_id):
         font=("Helvetica", 10),
         fg=SECONDARY_TEXT,
         bg=BG
-    ).pack(side="left")
+    ).pack(
+        side="left"
+    )
 
     tk.Label(
         topbar,
@@ -1620,9 +2528,14 @@ def open_dashboard(user_id):
         font=("Helvetica", 9, "bold"),
         fg=SUCCESS,
         bg=BG
-    ).pack(side="right")
+    ).pack(
+        side="right"
+    )
 
-    # Scrollable content
+    # ========================================================
+    # SCROLLABLE MAIN CONTENT
+    # ========================================================
+
     canvas = tk.Canvas(
         main,
         bg=BG,
@@ -1642,9 +2555,10 @@ def open_dashboard(user_id):
 
     content_area.bind(
         "<Configure>",
-        lambda event: canvas.configure(
-            scrollregion=canvas.bbox("all")
-        )
+        lambda event:
+            canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
     )
 
     canvas_window = canvas.create_window(
@@ -1654,6 +2568,7 @@ def open_dashboard(user_id):
     )
 
     def resize_content(event):
+
         canvas.itemconfig(
             canvas_window,
             width=event.width
@@ -1683,19 +2598,38 @@ def open_dashboard(user_id):
         pady=(0, 25)
     )
 
-    # Mouse wheel
+    # ========================================================
+    # MAIN CONTENT MOUSE WHEEL
+    # ========================================================
+
     def mousewheel(event):
+
         canvas.yview_scroll(
             int(-1 * (event.delta / 120)),
             "units"
         )
 
-    canvas.bind_all(
+    canvas.bind(
         "<MouseWheel>",
         mousewheel
     )
 
-    # Display home page
+    canvas.bind(
+        "<Button-4>",
+        lambda event:
+            canvas.yview_scroll(-1, "units")
+    )
+
+    canvas.bind(
+        "<Button-5>",
+        lambda event:
+            canvas.yview_scroll(1, "units")
+    )
+
+    # ========================================================
+    # DISPLAY HOME
+    # ========================================================
+
     show_home()
 
     dashboard.mainloop()
@@ -1708,9 +2642,15 @@ def open_dashboard(user_id):
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print("Usage: python dashboard.py <id_number>")
+
+        print(
+            "Usage: python dashboard.py <id_number>"
+        )
+
         sys.exit(1)
 
     user_id = sys.argv[1]
 
-    open_dashboard(user_id)
+    open_dashboard(
+        user_id
+    )
