@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.23.6+alx.1"
+__generated_with = "0.24.0"
 app = marimo.App()
 
 
@@ -154,31 +154,42 @@ def _(mo):
 
 @app.cell
 def _():
+
     ### START FUNCTION
     class Field:
         """Represents a surveyed field with validated pollution monitoring."""
 
         def __init__(self, field_id, plot_size, standard_yield, pollution_level=0.0):
             # Insert your code here
+            self.field_id = field_id
+            self.plot_size = plot_size
+            self.standard_yield = standard_yield
+            self.pollution_level = pollution_level
             return
 
         @property
         def pollution_level(self):
             # Insert your code here
-            return
+            return self._pollution_level
 
         @pollution_level.setter
         def pollution_level(self, value):
             # Insert your code here
+            if not 0 <= value <= 1:
+                raise ValueError("Pollution level must be between 0 and 1.")
+            self._pollution_level = value
             return
 
         def describe(self):
             # Insert your code here
-            return
+            return (
+                f"Field {self.field_id}: {self.plot_size} Ha "
+                f"(standard yield {self.standard_yield})"
+            )
 
         def calculate_yield(self):
             # Insert your code here
-            return
+            return round(self.plot_size * self.standard_yield, 2)
     ### END FUNCTION
     return (Field,)
 
@@ -239,6 +250,7 @@ def _(mo):
 
 @app.cell
 def _(Field):
+
     ### START FUNCTION
     class TeaField(Field):
         """Tea crop field."""
@@ -246,11 +258,14 @@ def _(Field):
 
         def describe(self):
             # Insert your code here
-            return
+            return (
+                f"Tea field {self.field_id}: {self.plot_size} Ha "
+                f"(standard yield {self.standard_yield})"
+            )
 
         def projected_revenue(self):
             # Insert your code here
-            return
+            return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
 
     class CoffeeField(Field):
         """Coffee crop field."""
@@ -258,11 +273,14 @@ def _(Field):
 
         def describe(self):
             # Insert your code here
-            return
+            return (
+                f"Coffee field {self.field_id}: {self.plot_size} Ha "
+                f"(standard yield {self.standard_yield})"
+            )
 
         def projected_revenue(self):
             # Insert your code here
-            return
+            return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
 
     class WheatField(Field):
         """Wheat crop field."""
@@ -270,13 +288,16 @@ def _(Field):
 
         def describe(self):
             # Insert your code here
-            return
+            return (
+                f"Wheat field {self.field_id}: {self.plot_size} Ha "
+                f"(standard yield {self.standard_yield})"
+            )
 
         def projected_revenue(self):
             # Insert your code here
-            return
+            return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
     ### END FUNCTION
-    return (TeaField,)
+    return CoffeeField, TeaField, WheatField
 
 
 @app.cell
@@ -330,6 +351,7 @@ def _(mo):
 
 @app.cell
 def _():
+
     ### START FUNCTION
     from abc import ABC, abstractmethod
 
@@ -338,6 +360,9 @@ def _():
 
         def __init__(self, field_id, plot_size, standard_yield):
             # Insert your code here
+            self.field_id = field_id
+            self.plot_size = plot_size
+            self.standard_yield = standard_yield
             return
 
         @abstractmethod
@@ -347,14 +372,14 @@ def _():
 
         def calculate_yield(self):
             # Insert your code here
-            return
+            return round(self.plot_size * self.standard_yield, 2)
 
     class MaizeField(AbstractCropField):
         """Concrete maize field."""
 
         def crop_name(self):
             # Insert your code here
-            return
+            return "maize"
     ### END FUNCTION
     return AbstractCropField, MaizeField
 
@@ -419,12 +444,33 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(CoffeeField, TeaField, WheatField):
+
     ### START FUNCTION
     def build_field(record):
+        """Create the appropriate crop-specific field from a survey record."""
         # Insert your code here
-        return
+        crop_type = record['Crop_type'].strip().lower()
+
+        field_classes = {
+            'tea': TeaField,
+            'coffee': CoffeeField,
+            'wheat': WheatField
+        }
+
+        field_class = field_classes.get(crop_type)
+
+        if field_class is None:
+            return None
+
+        return field_class(
+            field_id=record['Field_ID'],
+            plot_size=record['Plot_size'],
+            standard_yield=record['Standard_yield'],
+            pollution_level=record.get('Pollution_level', 0.0)
+        )
     ### END FUNCTION
+
     return (build_field,)
 
 
@@ -476,26 +522,39 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(build_field):
+
     ### START FUNCTION
     class FieldRegistry:
         """Registry of priced crop-field objects built from the survey dataset."""
 
         def __init__(self, records):
             # Insert your code here
+            self.fields = [
+                field
+                for record in records
+                if (field := build_field(record)) is not None
+            ]
             return
 
         def size(self):
+            """Return the number of priced fields in the registry."""
             # Insert your code here
-            return
+            return len(self.fields)
 
         def total_projected_yield(self):
+            """Return the total projected yield, rounded to two decimals."""
             # Insert your code here
-            return
+            return round(
+                sum(field.calculate_yield() for field in self.fields), 2
+            )
 
         def total_projected_revenue(self):
+            """Return the total projected revenue, rounded to two decimals."""
             # Insert your code here
-            return
+            return round(
+                sum(field.projected_revenue() for field in self.fields), 2
+            )
     ### END FUNCTION
     return (FieldRegistry,)
 
@@ -537,21 +596,6 @@ def _(mo):
     """)
     return
 
-
-
-
-# ════════════════════════════════════════════════════════════════════════
-# Pre-submission readiness check
-#
-# This cell has NO declared dependencies — it runs even when other cells
-# have not. It uses dynamic name lookup (eval + try/except) so the learner
-# always gets actionable feedback, including a "run all cells first" hint
-# when nothing has been defined yet.
-#
-# The spec below is auto-generated at conversion time from the test_suite
-# (which functions pytest references) and the model solution (the canonical
-# parameter names + body characteristics).
-# ════════════════════════════════════════════════════════════════════════
 
 @app.cell
 def cell_readiness():
@@ -638,6 +682,10 @@ def cell_readiness():
     return
 
 
+@app.cell
+def _():
+    return
+
+
 if __name__ == "__main__":
     app.run()
-
