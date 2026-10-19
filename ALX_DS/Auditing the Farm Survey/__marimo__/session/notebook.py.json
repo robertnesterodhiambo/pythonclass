@@ -1,0 +1,492 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "933c3ef12840f396b5fa082e437429f9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"auditing-the-farm-survey\">Auditing the Farm Survey</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "470b5d250baa797c75a0c2c302bdb255",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">A working answer is not the same as a usable one. When a survey grows from 5,654 fields toward a million, the gap between <code>O(n)</code> and <code>O(log n)</code> is the gap between an inspector getting her reading and missing her window. In this project you build an <strong>auditing engine</strong> for the Maji Ndogo farm survey: linear and binary search to find a field, a recursive merge sort to rank the harvest, lambda-powered <code>map</code> and <code>filter</code> to flag and project, and the Big O vocabulary to say precisely why each choice scales. It is exactly the kind of efficiency-minded work on real data that belongs in a data-science portfolio.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "e17e9cf39b200218f119b63a1d35849d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u26a0\ufe0f <strong>This challenge is graded and contributes to your overall marks for this module.</strong></span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook. Do not edit or remove the <code>### START FUNCTION</code> or <code>### END FUNCTION</code> comments. Do not add any code outside of the functions you are required to edit. Doing any of this will result in a mark of 0%.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided test cells to verify your output before submitting.</li>\n<li>Do not hard-code answers \u2014 your functions must work on unseen inputs.</li>\n<li>The use of StackOverflow, Google, and other online resources is permitted. The use of Generative AI tools \u2014 including ChatGPT, Claude, Copilot, and others \u2014 is also allowed and encouraged as a learning partner. However, the code you submit must reflect your own understanding. Copying a fellow student's code is a breach of the honor code. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>. Submitting code you do not understand is also a breach.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "be57d0a8679c671ca87d59ec1bfe85e8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The radio crackles at 2:14 p.m.</span>\n<span class=\"paragraph\">\"Field 672. Pollution level. Now.\"</span>\n<span class=\"paragraph\">The inspector is standing in the middle of a potato field in the Sokoto lowlands with a clipboard and a deadline. Her truck's satellite link is down. She needs the pollution reading for that specific field \u2014 out of 5,654 records \u2014 in under ten seconds, or she misses her reporting window and the entire audit gets rescheduled.</span>\n<span class=\"paragraph\">On your laptop, you have the farm survey database. You have Python. You have a list of 5,654 dictionaries.</span>\n<span class=\"paragraph\">You also have a problem: the code you have right now loops through every single record from the first to the last, checking each one. On this dataset, that takes less than a second. But Maji Ndogo's ambition is to grow this system to cover one million farms across the region within five years. At that scale, the same loop takes minutes. The inspector does not have minutes.</span>\n<span class=\"paragraph\"><strong>This is the challenge of algorithmic efficiency.</strong> The question is not just \"does this code work?\" \u2014 it is \"does this code work <em>fast enough</em> when the data is ten times larger? A hundred times larger? A million records?\" The Big O notation you are about to learn is the vocabulary for answering that question precisely.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "188babf6599fade57cb37ef4fc44ad6a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>Setup:</strong> Execute the cell below.</span>\n<span class=\"paragraph\"><strong>Download:</strong> <a href=\"https://raw.githubusercontent.com/Explore-AI/Public-Data/master/Maji_Ndogo/Maji_Ndogo_farm_survey_small.db\" rel=\"noopener noreferrer\" target=\"_blank\">Maji_Ndogo_farm_survey_small.db</a> \u2014 save it in the same folder as this notebook before running.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "0603e6cd39114a68519818a4020346dc",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "no such table: farm_management_features",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_133169/__marimo__cell_SFPL_.py&quot;</span>, line <span class=\"m\">10</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">cursor</span><span class=\"o\">.</span><span class=\"n\">execute</span><span class=\"p\">(</span>\n<span class=\"w\">    </span><span class=\"pm\">~~~~~~~~~~~~~~^</span>\n<span class=\"w\">    </span>    <span class=\"s2\">&quot;&quot;&quot;SELECT Field_ID, Pollution_level, Plot_size, Annual_yield, Crop_type, Standard_yield</span>\n<span class=\"w\">        </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n<span class=\"w\">    </span>       <span class=\"n\">FROM</span> <span class=\"n\">farm_management_features</span><span class=\"s2\">&quot;&quot;&quot;</span>\n<span class=\"w\">           </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n<span class=\"w\">    </span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">^</span>\n<span class=\"gr\">sqlite3.OperationalError</span>: <span class=\"n\">no such table: farm_management_features</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "5ef0319dbebbbb6304a5c28fb37e5bf7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The expected outputs for each challenge use a five-record sample. Execute the cell below to create it.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "ba5bdd814fe4ce8047032d9a5567b81e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "c777c4dcc5db6dbd7dc3aee9c111d87b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-1-linear-search\">Challenge 1: Linear search</h2>\n<span class=\"paragraph\">The survey records are stored in the order the teams submitted them \u2014 no sorting, no index. When an inspector calls in a <code>Field_ID</code>, we start at record one and check every record until we find a match. This is a <strong>linear search</strong>: <code>O(n)</code> \u2014 in the worst case, it inspects every record.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>linear_search_field(field_list, target_id)</code>. It must:</span>\n<ul>\n<li>Iterate through <code>field_list</code>.</li>\n<li>Return the <code>Pollution_level</code> of the first record whose <code>Field_ID</code> matches <code>target_id</code>.</li>\n<li>Return <code>None</code> if no match is found.</li>\n</ul>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>linear_search_field</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>linear_search_field(maji_ndogo_sample, 39924)</code> \u2192 <code>0.358</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>print(linear_search_field(maji_ndogo_sample, 99999))</code> \u2192 <code>None</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "f2f6d9a29929aad752a28920b5f91a17",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "667048615539f6a77c3eac104315abd9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>0.358</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "0ada82b1907be8c89cca61cfe7d7dea8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "None\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "iLit",
+      "code_hash": "a9ac589064f7dbe17a883da02929788c",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (OperationalError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "27c9879a76815a8e5c1984d0745527b6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-2-binary-search\">Challenge 2: Binary search</h2>\n<span class=\"paragraph\">If the records are <strong>sorted by <code>Field_ID</code></strong>, we can do much better. Jump to the middle record. Is the target ID higher or lower? Discard half the list. Repeat. This is a <strong>binary search</strong>: <code>O(log n)</code> \u2014 at one million records, it takes roughly 20 comparisons instead of one million.</span>\n<span class=\"paragraph\">The cost: the data must be sorted first.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>binary_search_yield(sorted_field_list, target_id)</code>. Assume the input is already sorted by <code>Field_ID</code> in ascending order. Return the <code>Annual_yield</code> of the matching record, or <code>None</code> if not found.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>binary_search_yield</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">sorted_sample</span> <span class=\"o\">=</span> <span class=\"nb\">sorted</span><span class=\"p\">(</span><span class=\"n\">maji_ndogo_sample</span><span class=\"p\">,</span> <span class=\"n\">key</span><span class=\"o\">=</span><span class=\"k\">lambda</span> <span class=\"n\">f</span><span class=\"p\">:</span> <span class=\"n\">f</span><span class=\"p\">[</span><span class=\"s1\">&#39;Field_ID&#39;</span><span class=\"p\">])</span>\n<span class=\"n\">binary_search_yield</span><span class=\"p\">(</span><span class=\"n\">sorted_sample</span><span class=\"p\">,</span> <span class=\"mi\">30629</span><span class=\"p\">)</span>\n</code></pre></div>\n<code>1.0699</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong>\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">sorted_sample</span> <span class=\"o\">=</span> <span class=\"nb\">sorted</span><span class=\"p\">(</span><span class=\"n\">maji_ndogo_sample</span><span class=\"p\">,</span> <span class=\"n\">key</span><span class=\"o\">=</span><span class=\"k\">lambda</span> <span class=\"n\">f</span><span class=\"p\">:</span> <span class=\"n\">f</span><span class=\"p\">[</span><span class=\"s1\">&#39;Field_ID&#39;</span><span class=\"p\">])</span>\n<span class=\"nb\">print</span><span class=\"p\">(</span><span class=\"n\">binary_search_yield</span><span class=\"p\">(</span><span class=\"n\">sorted_sample</span><span class=\"p\">,</span> <span class=\"mi\">11111</span><span class=\"p\">))</span>\n</code></pre></div>\n<code>None</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "d0fab0346737574c81b7a3feb7853bd2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>Note</strong>: lambda is explained in Challenge 4 \u2014 here it just tells sorted() what value to sort by.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "5ee27b329f9b7b271359080b8f3c1a53",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "3c2517d999bef632e311ddea8232e51e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>1.0699</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "867d44be84eeffd8035c6c169099f2f4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "None\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "8042c4ccfb2576effbee0cde62e3dba5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-3-merge-sort\">Challenge 3: Merge sort</h2>\n<span class=\"paragraph\">Binary search needs sorted data. We need a sorter. Bubble sort is <code>O(n\u00b2)</code>: double the records, quadruple the work. <strong>Merge sort</strong> is <code>O(n log n)</code>: it splits the list in half, sorts each half <strong>recursively</strong>, then merges the two sorted halves.</span>\n<span class=\"paragraph\">Pseudocode:\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>merge_sort(list):\n    if len(list) &lt;= 1: return list\n    mid   = len(list) // 2\n    left  = merge_sort(list[:mid])\n    right = merge_sort(list[mid:])\n    return merge(left, right)\n</code></pre></div></span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>merge_sort_yields(field_list)</code> and the helper <code>merge(left, right)</code>. Sort records into <strong>descending</strong> order of <code>Annual_yield</code> (highest yield first). <code>merge_sort_yields</code> must be recursive and must call <code>merge</code>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change either function name.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>merge_sort_yields(maji_ndogo_sample)</code> \u2192\n<div class=\"language-carbon codehilite\"><pre><span></span><code><span class=\"p\">[{</span><span class=\"err\">&#39;</span><span class=\"nx\">Field_ID</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">39924</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Pollution_level</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.358</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Plot_size</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">3.4</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Crop_type</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">tea</span><span class=\"err\">&#39;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Annual_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">2.2088</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Standard_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.6496</span><span class=\"p\">},</span>\n<span class=\"w\"> </span><span class=\"p\">{</span><span class=\"err\">&#39;</span><span class=\"nx\">Field_ID</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">5754</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Pollution_level</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.2867</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Plot_size</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">2.4</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Crop_type</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">cassava</span><span class=\"err\">&#39;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Annual_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">1.2776</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Standard_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.5323</span><span class=\"p\">},</span>\n<span class=\"w\"> </span><span class=\"p\">{</span><span class=\"err\">&#39;</span><span class=\"nx\">Field_ID</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">30629</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Pollution_level</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.3997</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Plot_size</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">2.2</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Crop_type</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">cassava</span><span class=\"err\">&#39;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Annual_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">1.0699</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Standard_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.4863</span><span class=\"p\">},</span>\n<span class=\"w\"> </span><span class=\"p\">{</span><span class=\"err\">&#39;</span><span class=\"nx\">Field_ID</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">14146</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Pollution_level</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.0432</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Plot_size</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">1.5</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Crop_type</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">wheat</span><span class=\"err\">&#39;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Annual_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.8326</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Standard_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.5551</span><span class=\"p\">},</span>\n<span class=\"w\"> </span><span class=\"p\">{</span><span class=\"err\">&#39;</span><span class=\"nx\">Field_ID</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"mi\">40734</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Pollution_level</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.0853</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Plot_size</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">1.3</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Crop_type</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">cassava</span><span class=\"err\">&#39;</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Annual_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.7514</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"err\">&#39;</span><span class=\"nx\">Standard_yield</span><span class=\"err\">&#39;</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"m m-Double\">0.578</span><span class=\"p\">}]</span>\n</code></pre></div></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>[f['Annual_yield'] for f in merge_sort_yields(maji_ndogo_sample)[:3]]</code> \u2192 <code>[2.2088, 1.2776, 1.0699]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "949d455faf5c6171e821a6b3c60a573f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "cb054367e696c41faf279561b584d172",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[{\"Field_ID\": 39924, \"Pollution_level\": \"text/plain+float:0.358\", \"Plot_size\": \"text/plain+float:3.4\", \"Crop_type\": \"tea\", \"Annual_yield\": \"text/plain+float:2.2088\", \"Standard_yield\": \"text/plain+float:0.6496\"}, {\"Field_ID\": 5754, \"Pollution_level\": \"text/plain+float:0.2867\", \"Plot_size\": \"text/plain+float:2.4\", \"Crop_type\": \"cassava\", \"Annual_yield\": \"text/plain+float:1.2776\", \"Standard_yield\": \"text/plain+float:0.5323\"}, {\"Field_ID\": 30629, \"Pollution_level\": \"text/plain+float:0.3997\", \"Plot_size\": \"text/plain+float:2.2\", \"Crop_type\": \"cassava\", \"Annual_yield\": \"text/plain+float:1.0699\", \"Standard_yield\": \"text/plain+float:0.4863\"}, {\"Field_ID\": 14146, \"Pollution_level\": \"text/plain+float:0.0432\", \"Plot_size\": \"text/plain+float:1.5\", \"Crop_type\": \"wheat\", \"Annual_yield\": \"text/plain+float:0.8326\", \"Standard_yield\": \"text/plain+float:0.5551\"}, {\"Field_ID\": 40734, \"Pollution_level\": \"text/plain+float:0.0853\", \"Plot_size\": \"text/plain+float:1.3\", \"Crop_type\": \"cassava\", \"Annual_yield\": \"text/plain+float:0.7514\", \"Standard_yield\": \"text/plain+float:0.578\"}]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "a0efab54f6d6c37f126b80373208eb7c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"text/plain+float:2.2088\", \"text/plain+float:1.2776\", \"text/plain+float:1.0699\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "2558a12058c7de4db01a53ac63260e25",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-4-lambda-and-filter-flagging-polluted-fields\">Challenge 4: Lambda and filter \u2014 flagging polluted fields</h2>\n<span class=\"paragraph\">Any field above a pollution threshold needs an inspection visit, and the list must update as thresholds change. Python's <code>filter()</code> with a <code>lambda</code> makes this one readable line.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>identify_high_pollution(field_list, threshold)</code>. Use <code>filter()</code> and a <code>lambda</code> to return only the records whose <code>Pollution_level</code> is <strong>strictly greater than</strong> <code>threshold</code>. Return the result as a list.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>identify_high_pollution</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>identify_high_pollution(maji_ndogo_sample, 0.3)</code> \u2192\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"p\">[{</span><span class=\"s1\">&#39;Field_ID&#39;</span><span class=\"p\">:</span> <span class=\"mi\">30629</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Pollution_level&#39;</span><span class=\"p\">:</span> <span class=\"mf\">0.3997</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Plot_size&#39;</span><span class=\"p\">:</span> <span class=\"mf\">2.2</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Crop_type&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;cassava&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Annual_yield&#39;</span><span class=\"p\">:</span> <span class=\"mf\">1.0699</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Standard_yield&#39;</span><span class=\"p\">:</span> <span class=\"mf\">0.4863</span><span class=\"p\">},</span>\n <span class=\"p\">{</span><span class=\"s1\">&#39;Field_ID&#39;</span><span class=\"p\">:</span> <span class=\"mi\">39924</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Pollution_level&#39;</span><span class=\"p\">:</span> <span class=\"mf\">0.358</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Plot_size&#39;</span><span class=\"p\">:</span> <span class=\"mf\">3.4</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Crop_type&#39;</span><span class=\"p\">:</span> <span class=\"s1\">&#39;tea&#39;</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Annual_yield&#39;</span><span class=\"p\">:</span> <span class=\"mf\">2.2088</span><span class=\"p\">,</span> <span class=\"s1\">&#39;Standard_yield&#39;</span><span class=\"p\">:</span> <span class=\"mf\">0.6496</span><span class=\"p\">}]</span>\n</code></pre></div></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>identify_high_pollution(maji_ndogo_sample, 0.5)</code> \u2192 <code>[]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "e6bf3fced571413fa8e0964b580e0002",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "99851fdc428a94081b06bbaff4689a19",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[{\"Field_ID\": 30629, \"Pollution_level\": \"text/plain+float:0.3997\", \"Plot_size\": \"text/plain+float:2.2\", \"Crop_type\": \"cassava\", \"Annual_yield\": \"text/plain+float:1.0699\", \"Standard_yield\": \"text/plain+float:0.4863\"}, {\"Field_ID\": 39924, \"Pollution_level\": \"text/plain+float:0.358\", \"Plot_size\": \"text/plain+float:3.4\", \"Crop_type\": \"tea\", \"Annual_yield\": \"text/plain+float:2.2088\", \"Standard_yield\": \"text/plain+float:0.6496\"}]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "5be14b9524bc601a8b4ade4878eec830",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "25374e19e17adb6863ba89e1833fa337",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "An ancestor raised an exception (OperationalError): ",
+          "traceback": null
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "13a3190f1356329e263b3e45d14ee48b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-5-lambda-and-map-projecting-harvests\">Challenge 5: Lambda and map \u2014 projecting harvests</h2>\n<span class=\"paragraph\">If <code>filter()</code> decides which items to <em>keep</em>, <code>map()</code> transforms <em>every</em> item. The Ministry of Agriculture wants a quick harvest projection for each field: <code>Plot_size</code> \u00d7 <code>Standard_yield</code>, rounded to 2 decimal places.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>project_harvests(field_list)</code>. Use <code>map()</code> and a <code>lambda</code> to compute each field's projected yield (<code>Plot_size * Standard_yield</code>, rounded to 2 decimals). Return the result as a list.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>project_harvests</code>.</span>\n</blockquote>\n<h3 id=\"expected-outputs\">Expected outputs</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>project_harvests(maji_ndogo_sample)</code> \u2192 <code>[0.75, 1.07, 2.21, 1.28, 0.83]</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>project_harvests(maji_ndogo_sample[2:4])</code> \u2192 <code>[2.21, 1.28]</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "ad0613fc0fff64270f4af2e8a582f649",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "11ab253df4946814b4f55583ad495425",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"text/plain+float:0.75\", \"text/plain+float:1.07\", \"text/plain+float:2.21\", \"text/plain+float:1.28\", \"text/plain+float:0.83\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "10bd95fb03f03a5cd9396aef27dd08b3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"text/plain+float:2.21\", \"text/plain+float:1.28\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "4ab3583c2ebcab163978bb0c9d2caf30",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">The auditing engine is complete. Six functions: find any field by ID two different ways, rank the harvest with a recursive sort, flag the polluted land, project production, and name the computational cost of each approach \u2014 all in code that stays fast as the survey grows.</span>\n<span class=\"paragraph\">That last point is the real deliverable. Anyone can write a loop that works on 5,654 records. Writing code whose cost you can <em>predict and defend</em> as the data heads toward a million records is what separates a script from an engine \u2014 and it is the third asset in your Maji Ndogo portfolio.</span>\n<span class=\"paragraph\">Make sure every function runs without errors and matches the expected outputs before submitting.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "b2a95870c91841474a4025db349e2d70",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `binary_search_yield` \u2014 defined with parameters ['sorted_field_list', 'target_id']\n  \u2713 `identify_high_pollution` \u2014 defined with parameters ['field_list', 'threshold']\n  \u2713 `linear_search_field` \u2014 defined with parameters ['field_list', 'target_id']\n  \u2713 `merge` \u2014 defined with parameters ['left', 'right']\n  \u2713 `merge_sort_yields` \u2014 defined with parameters ['field_list']\n  \u2713 `project_harvests` \u2014 defined with parameters ['field_list']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    }
+  ]
+}
