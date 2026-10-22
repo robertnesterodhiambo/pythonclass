@@ -160,6 +160,7 @@ def _():
         """Represents a surveyed field with validated pollution monitoring."""
 
         def __init__(self, field_id, plot_size, standard_yield, pollution_level=0.0):
+            """Initialize the field's attributes."""
             # Insert your code here
             self.field_id = field_id
             self.plot_size = plot_size
@@ -169,25 +170,26 @@ def _():
 
         @property
         def pollution_level(self):
+            """Return the field's pollution level."""
             # Insert your code here
             return self._pollution_level
 
         @pollution_level.setter
         def pollution_level(self, value):
+            """Validate and set the field's pollution level."""
             # Insert your code here
             if not 0 <= value <= 1:
-                raise ValueError("Pollution level must be between 0 and 1.")
+                raise ValueError('Pollution level must be between 0 and 1.')
             self._pollution_level = value
             return
 
         def describe(self):
+            """Return a formatted description of the field."""
             # Insert your code here
-            return (
-                f"Field {self.field_id}: {self.plot_size} Ha "
-                f"(standard yield {self.standard_yield})"
-            )
+            return f'Field {self.field_id}: {self.plot_size} Ha (standard yield {self.standard_yield})'
 
         def calculate_yield(self):
+            """Calculate the projected yield rounded to two decimal places."""
             # Insert your code here
             return round(self.plot_size * self.standard_yield, 2)
     ### END FUNCTION
@@ -257,13 +259,12 @@ def _(Field):
         PRICE_PER_TON = 1180
 
         def describe(self):
+            """Return a description of the tea field."""
             # Insert your code here
-            return (
-                f"Tea field {self.field_id}: {self.plot_size} Ha "
-                f"(standard yield {self.standard_yield})"
-            )
+            return f'Tea field {self.field_id}: {self.plot_size} Ha (standard yield {self.standard_yield})'
 
         def projected_revenue(self):
+            """Calculate the projected revenue from tea production."""
             # Insert your code here
             return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
 
@@ -272,13 +273,12 @@ def _(Field):
         PRICE_PER_TON = 2400
 
         def describe(self):
+            """Return a description of the coffee field."""
             # Insert your code here
-            return (
-                f"Coffee field {self.field_id}: {self.plot_size} Ha "
-                f"(standard yield {self.standard_yield})"
-            )
+            return f'Coffee field {self.field_id}: {self.plot_size} Ha (standard yield {self.standard_yield})'
 
         def projected_revenue(self):
+            """Calculate the projected revenue from coffee production."""
             # Insert your code here
             return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
 
@@ -287,13 +287,12 @@ def _(Field):
         PRICE_PER_TON = 320
 
         def describe(self):
+            """Return a description of the wheat field."""
             # Insert your code here
-            return (
-                f"Wheat field {self.field_id}: {self.plot_size} Ha "
-                f"(standard yield {self.standard_yield})"
-            )
+            return f'Wheat field {self.field_id}: {self.plot_size} Ha (standard yield {self.standard_yield})'
 
         def projected_revenue(self):
+            """Calculate the projected revenue from wheat production."""
             # Insert your code here
             return round(self.calculate_yield() * self.PRICE_PER_TON, 2)
     ### END FUNCTION
@@ -359,6 +358,7 @@ def _():
         """Abstract base - every concrete crop field must implement crop_name()."""
 
         def __init__(self, field_id, plot_size, standard_yield):
+            """Initialize the field's identifying and yield attributes."""
             # Insert your code here
             self.field_id = field_id
             self.plot_size = plot_size
@@ -367,10 +367,12 @@ def _():
 
         @abstractmethod
         def crop_name(self):
+            """Return the name of the crop grown in this field."""
             # Insert your code here
             pass
 
         def calculate_yield(self):
+            """Calculate the projected yield rounded to two decimal places."""
             # Insert your code here
             return round(self.plot_size * self.standard_yield, 2)
 
@@ -378,8 +380,9 @@ def _():
         """Concrete maize field."""
 
         def crop_name(self):
+            """Return the name of the maize crop."""
             # Insert your code here
-            return "maize"
+            return 'maize'
     ### END FUNCTION
     return AbstractCropField, MaizeField
 
@@ -448,9 +451,9 @@ def _(CoffeeField, TeaField, WheatField):
 
     ### START FUNCTION
     def build_field(record):
-        """Create the appropriate crop-specific field from a survey record."""
+        """Build the appropriate priced crop field from a survey record."""
         # Insert your code here
-        crop_type = record['Crop_type'].strip().lower()
+        crop_type = record.get('Crop_type', '').strip().lower()
 
         field_classes = {
             'tea': TeaField,
@@ -470,7 +473,6 @@ def _(CoffeeField, TeaField, WheatField):
             pollution_level=record.get('Pollution_level', 0.0)
         )
     ### END FUNCTION
-
     return (build_field,)
 
 
@@ -529,33 +531,32 @@ def _(build_field):
         """Registry of priced crop-field objects built from the survey dataset."""
 
         def __init__(self, records):
-            # Insert your code here
-            self.fields = [
-                field
-                for record in records
-                if (field := build_field(record)) is not None
-            ]
+            """Build and store supported crop-field objects from raw records."""
+            self.fields = []
+
+            for record in records:
+                field = build_field(record)
+
+                if field is not None:
+                    self.fields.append(field)
+
             return
 
         def size(self):
             """Return the number of priced fields in the registry."""
-            # Insert your code here
             return len(self.fields)
 
         def total_projected_yield(self):
-            """Return the total projected yield, rounded to two decimals."""
-            # Insert your code here
-            return round(
-                sum(field.calculate_yield() for field in self.fields), 2
-            )
+            """Return the total projected yield rounded to two decimal places."""
+            total = sum(field.calculate_yield() for field in self.fields)
+            return round(total, 2)
 
         def total_projected_revenue(self):
-            """Return the total projected revenue, rounded to two decimals."""
-            # Insert your code here
-            return round(
-                sum(field.projected_revenue() for field in self.fields), 2
-            )
+            """Return the total projected revenue rounded to two decimal places."""
+            total = sum(field.projected_revenue() for field in self.fields)
+            return round(total, 2)
     ### END FUNCTION
+
     return (FieldRegistry,)
 
 

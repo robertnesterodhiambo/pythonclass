@@ -131,7 +131,7 @@
     },
     {
       "id": "RGSE",
-      "code_hash": "a76964340e8b582efce0bd64f2c470ff",
+      "code_hash": "9a70639d9ae9f196bef129fc2431bc88",
       "outputs": [
         {
           "type": "data",
@@ -216,7 +216,7 @@
     },
     {
       "id": "ZHCJ",
-      "code_hash": "cc6213f9e99af15ff8dcb47da766fa03",
+      "code_hash": "7e9961538a0149fbf3be1f2ea7459cef",
       "outputs": [
         {
           "type": "data",
@@ -268,7 +268,7 @@
     },
     {
       "id": "Vxnm",
-      "code_hash": "813b4276a4e8dcba39f119d76a6bd22b",
+      "code_hash": "f8e45dd54709d5592cf6e469ae1435b4",
       "outputs": [
         {
           "type": "data",
@@ -340,7 +340,7 @@
     },
     {
       "id": "ZBYS",
-      "code_hash": "f7c427063176e6ceee08ec11c5ee7a5b",
+      "code_hash": "624eafbbc28a20be31d9fdfc0eabd675",
       "outputs": [
         {
           "type": "data",
@@ -392,7 +392,7 @@
     },
     {
       "id": "AjVT",
-      "code_hash": "277d096207ee10678c25045ac066fbfb",
+      "code_hash": "68a7486dbbac6197edd484038bad79e1",
       "outputs": [
         {
           "type": "data",
@@ -470,15 +470,22 @@
         {
           "type": "stream",
           "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_597135/__marimo__cell_TXez_.py&quot;</span>, line <span class=\"m\">38</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">_body</span> <span class=\"o\">=</span> <span class=\"n\">_tree</span><span class=\"o\">.</span><span class=\"n\">body</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">body</span> <span class=\"k\">if</span> <span class=\"n\">_tree</span><span class=\"o\">.</span><span class=\"n\">body</span> <span class=\"k\">else</span> <span class=\"p\">[]</span>\n<span class=\"w\">            </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^</span>\n<span class=\"gr\">AttributeError</span>: <span class=\"n\">&#39;Assign&#39; object has no attribute &#39;body&#39;</span>\n</pre></div>\n</span>",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/tmp/marimo_33218/__marimo__cell_TXez_.py&quot;</span>, line <span class=\"m\">38</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">_body</span> <span class=\"o\">=</span> <span class=\"n\">_tree</span><span class=\"o\">.</span><span class=\"n\">body</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">]</span><span class=\"o\">.</span><span class=\"n\">body</span> <span class=\"k\">if</span> <span class=\"n\">_tree</span><span class=\"o\">.</span><span class=\"n\">body</span> <span class=\"k\">else</span> <span class=\"p\">[]</span>\n<span class=\"w\">            </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^</span>\n<span class=\"gr\">AttributeError</span>: <span class=\"n\">&#39;Assign&#39; object has no attribute &#39;body&#39;</span>\n</pre></div>\n</span>",
           "mimetype": "application/vnd.marimo+traceback"
         }
       ]
     },
     {
-      "id": "VuHk",
+      "id": "dNNg",
       "code_hash": null,
-      "outputs": [],
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     }
   ]
