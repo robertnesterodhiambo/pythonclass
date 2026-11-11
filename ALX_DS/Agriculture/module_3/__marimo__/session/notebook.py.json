@@ -1,0 +1,413 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.24.0",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "a22f8f5e29c3056f6a4611cf4a7270df",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"understanding-maji-ndogos-agriculture\">Understanding Maji Ndogo's Agriculture</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "7889246b34ee64ae0a69e629a3bf9952",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The Minister wants a planting recommendation by Friday morning, and the answer is sitting in a database nobody can question fast enough. This week you turn four raw survey tables into a single <strong>Pandas</strong> DataFrame and interrogate it: which crop thrives in the highlands, which soils are most productive, and exactly which fields meet every condition for a strong harvest. Loading and joining SQL tables, cleaning the messy real-world entries, then grouping, filtering, sorting, and querying your way to an answer \u2014 the core data-analysis loop, on real data, delivered against a deadline. The closing piece of your Maji Ndogo engagement, and the one the Minister will actually read.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "13b325db7ea85dbe8b6d813e96e1c531",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u26a0\ufe0f <strong>This challenge is graded and contributes to your overall marks for this module.</strong></span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook. Do not edit or remove the <code>### START FUNCTION</code> or <code>### END FUNCTION</code> comments. Do not add any code outside of the functions you are required to edit. Doing any of this will result in a mark of 0%.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided test cells to verify your output before submitting.</li>\n<li>Do not hard-code answers.</li>\n<li>The use of StackOverflow, Google, and other online resources is permitted. The use of Generative AI tools \u2014 including ChatGPT, Claude, Copilot, and others \u2014 is also allowed and encouraged as a learning partner. However, the code you submit must reflect your own understanding. Copying a fellow student's code is a breach of the honor code. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>. Submitting code you do not understand is also a breach.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "3f32ab837f3d7d78c44a560f17729113",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Sanaa's phone rings on Thursday afternoon.</span>\n<span class=\"paragraph\">\"The Minister needs a crop recommendation for the northern highland plots by Friday morning,\" the assistant says. \"Specifically: which crop performs best up there, what soil types are most productive, and which fields should be prioritized for the next planting cycle.\"</span>\n<span class=\"paragraph\">Sanaa puts the phone down and looks at you. \"We have the data. We have the Field Registry. What we do not have is a fast way to ask it questions.\"</span>\n<span class=\"paragraph\">That changes today. The tools you need are already installed: <strong>Pandas</strong> turns the farm survey database into a structured DataFrame that you can filter, group, sort, and transform with single lines of code. The analysis that takes an afternoon with raw Python takes twenty minutes with Pandas.</span>\n<span class=\"paragraph\">The Ministry is waiting.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "188babf6599fade57cb37ef4fc44ad6a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>Setup:</strong> Execute the cell below.</span>\n<span class=\"paragraph\"><strong>Download:</strong> <a href=\"https://raw.githubusercontent.com/Explore-AI/Public-Data/master/Maji_Ndogo/Maji_Ndogo_farm_survey_small.db\" rel=\"noopener noreferrer\" target=\"_blank\">Maji_Ndogo_farm_survey_small.db</a> \u2014 save it in the same folder as this notebook before running.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "55b4a210aa98d1553b41532f98af306a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Loaded: 5654 rows \u00d7 18 columns\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "09ef7a12e6a04fdeba420dd7051d4dc6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"data-dictionary\">Data dictionary</h3>\n<span class=\"paragraph\"><strong>Geographic features</strong>\n| Column | Description | Type |\n|--------|-------------|------|\n| Field_ID | Unique identifier for each field | BigInt |\n| Elevation | Elevation above sea level in meters | Float |\n| Latitude / Longitude | Geographic coordinates in degrees | Float |\n| Location | Province the field is in | Text |\n| Slope | Slope of the land in degrees | Float |</span>\n<span class=\"paragraph\"><strong>Weather features</strong>\n| Column | Description | Type |\n|--------|-------------|------|\n| Rainfall | Annual rainfall in mm | Float |\n| Min_temperature_C | Average minimum temperature in \u00b0C | Float |\n| Max_temperature_C | Average maximum temperature in \u00b0C | Float |\n| Ave_temps | Average temperature in \u00b0C \u2014 mean of Min and Max | Float |</span>\n<span class=\"paragraph\"><strong>Soil features</strong>\n| Column | Description | Type |\n|--------|-------------|------|\n| Soil_fertility | Normalized fertility index, 0\u20131 | Float |\n| Soil_type | Categorical soil classification | Text |\n| pH | Soil pH level | Float |</span>\n<span class=\"paragraph\"><strong>Farm management features</strong>\n| Column | Description | Type |\n|--------|-------------|------|\n| Pollution_level | Normalized pollution index, 0\u20131 | Float |\n| Plot_size | Field area in hectares | Float |\n| Crop_type | Type of crop grown | Text |\n| Annual_yield | Total annual yield in tonnes | Float |\n| Standard_yield | Normalized yield score, 0\u20131 | Float |</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "6128b329731a743ab2f9c8100db49119",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-1-crop-distribution\">Challenge 1: Crop distribution</h2>\n<span class=\"paragraph\">Before recommending where to plant, we need to understand where crops currently grow and what conditions they share. For a given crop type, the average rainfall and average elevation immediately tells us whether it is a highland or lowland species.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>explore_crop_distribution(df, crop_filter)</code>. It must filter the DataFrame to rows where <code>Crop_type</code> matches <code>crop_filter</code>, then return a <strong>tuple</strong> of <code>(mean Rainfall, mean Elevation)</code> as plain Python floats.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>explore_crop_distribution</code>.</span>\n</blockquote>\n<h3 id=\"expected-output\">Expected output</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>explore_crop_distribution(MD_agric_df, 'tea')</code> \u2192 <code>(1534.5079956188388, 775.208667535597)</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>explore_crop_distribution(MD_agric_df, 'wheat')</code> \u2192 <code>(1010.2859910581222, 595.8384148002981)</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "d34b338f8d96ec8a25054e423043e0ad",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "aa799af7a706bb3335d2caeb0000c5ba",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"text/plain+float:1534.5079956188388\", \"text/plain+float:775.208667535597\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "a48be0440cbdeb49393eec8f485e1396",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[\"text/plain+float:1010.2859910581222\", \"text/plain+float:595.8384148002981\"]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "458061c15c4bd964003e6156e699f5cd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-2-soil-fertility-by-type\">Challenge 2: Soil fertility by type</h2>\n<span class=\"paragraph\">Soil type is one of the strongest predictors of crop success.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>analyse_soil_fertility(df)</code>. It must group the DataFrame by <code>Soil_type</code>, calculate the mean <code>Soil_fertility</code> per group, and return the result as a <strong>Pandas Series</strong>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>analyse_soil_fertility</code>.</span>\n</blockquote>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-carbon codehilite\"><pre><span></span><code><span class=\"nx\">Soil_type</span>\n<span class=\"nx\">Loamy</span><span class=\"w\">       </span><span class=\"m m-Double\">0.585868</span>\n<span class=\"nx\">Peaty</span><span class=\"w\">       </span><span class=\"m m-Double\">0.604882</span>\n<span class=\"nx\">Rocky</span><span class=\"w\">       </span><span class=\"m m-Double\">0.582368</span>\n<span class=\"nx\">Sandy</span><span class=\"w\">       </span><span class=\"m m-Double\">0.595669</span>\n<span class=\"nx\">Silt</span><span class=\"w\">        </span><span class=\"m m-Double\">0.652654</span>\n<span class=\"nx\">Volcanic</span><span class=\"w\">    </span><span class=\"m m-Double\">0.648894</span>\n<span class=\"nx\">Name</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">Soil_fertility</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"nx\">dtype</span><span class=\"p\">:</span><span class=\"w\"> </span><span class=\"nx\">float64</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "f24af608e1c6941a73f2db437faf1a48",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "b44f4fb74cb461f6cee86721065c21f9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='ZHCJ-0' random-id='8195b2c9-abb5-4d85-3585-ae693ad6db16'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Loamy&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.5858684480986639},{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Peaty&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.6048823529411764},{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Rocky&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.5823684210526315},{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Sandy&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.5956685860524632},{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Silt&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.6526539923954373},{&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;Soil_fertility&#92;&quot;:0.6488939051918736}]&quot;' data-total-rows='6' data-total-columns='1' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;Soil_fertility&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;Soil_type&quot;,[&quot;string&quot;,&quot;object&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "db511e0656f65b8f1691d0e5dad58111",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-3-climate-and-geography-by-crop\">Challenge 3: Climate and geography by crop</h2>\n<span class=\"paragraph\">For every crop type, we need the average elevation, minimum temperature, maximum temperature, and rainfall.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>climate_geography_influence(df, column)</code>. It must group the DataFrame by <code>column</code>, calculate the mean of <code>Elevation</code>, <code>Min_temperature_C</code>, <code>Max_temperature_C</code>, and <code>Rainfall</code> \u2014 <strong>in that order</strong> \u2014 and return the result as a <strong>DataFrame</strong>.</span>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>climate_geography_influence</code>.</span>\n</blockquote>\n<h3 id=\"expected-output\">Expected output</h3>\n<div class=\"language-carbon codehilite\"><pre><span></span><code><span class=\"w\">             </span><span class=\"nx\">Elevation</span><span class=\"w\">  </span><span class=\"nx\">Min_temperature_C</span><span class=\"w\">  </span><span class=\"nx\">Max_temperature_C</span><span class=\"w\">    </span><span class=\"nx\">Rainfall</span>\n<span class=\"nx\">Crop_type</span>\n<span class=\"nx\">banana</span><span class=\"w\">      </span><span class=\"m m-Double\">487.973572</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">5.354344</span><span class=\"w\">          </span><span class=\"m m-Double\">31.988152</span><span class=\"w\">  </span><span class=\"m m-Double\">1659.905687</span>\n<span class=\"nx\">cassava</span><span class=\"w\">     </span><span class=\"m m-Double\">682.903008</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">3.992113</span><span class=\"w\">          </span><span class=\"m m-Double\">30.902381</span><span class=\"w\">  </span><span class=\"m m-Double\">1210.543006</span>\n<span class=\"nx\">coffee</span><span class=\"w\">      </span><span class=\"m m-Double\">647.047734</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">4.028007</span><span class=\"w\">          </span><span class=\"m m-Double\">30.855189</span><span class=\"w\">  </span><span class=\"m m-Double\">1527.265074</span>\n<span class=\"nx\">maize</span><span class=\"w\">       </span><span class=\"m m-Double\">680.596982</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">4.497995</span><span class=\"w\">          </span><span class=\"m m-Double\">30.576692</span><span class=\"w\">   </span><span class=\"m m-Double\">681.010276</span>\n<span class=\"nx\">potato</span><span class=\"w\">      </span><span class=\"m m-Double\">696.313917</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">4.375334</span><span class=\"w\">          </span><span class=\"m m-Double\">30.300608</span><span class=\"w\">   </span><span class=\"m m-Double\">660.289064</span>\n<span class=\"nx\">rice</span><span class=\"w\">        </span><span class=\"m m-Double\">352.858053</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">6.610566</span><span class=\"w\">          </span><span class=\"m m-Double\">32.727170</span><span class=\"w\">  </span><span class=\"m m-Double\">1632.382642</span>\n<span class=\"nx\">tea</span><span class=\"w\">         </span><span class=\"m m-Double\">775.208668</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">2.862651</span><span class=\"w\">          </span><span class=\"m m-Double\">29.950383</span><span class=\"w\">  </span><span class=\"m m-Double\">1534.507996</span>\n<span class=\"nx\">wheat</span><span class=\"w\">       </span><span class=\"m m-Double\">595.838415</span><span class=\"w\">          </span><span class=\"o\">-</span><span class=\"m m-Double\">4.968107</span><span class=\"w\">          </span><span class=\"m m-Double\">30.973845</span><span class=\"w\">  </span><span class=\"m m-Double\">1010.285991</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "4a5cf58b370833adb5d9b94ebea6fed0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "ade4496a97bb70df3e49fc0ff0cbda41",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='TqIu-0' random-id='a477f4eb-38b0-d519-d79c-4c446809365a'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;banana&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:487.9735717440758,&#92;&quot;Min_temperature_C&#92;&quot;:-5.35434439178515,&#92;&quot;Max_temperature_C&#92;&quot;:31.988151658767773,&#92;&quot;Rainfall&#92;&quot;:1659.9056872037916},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;cassava&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:682.9030081845239,&#92;&quot;Min_temperature_C&#92;&quot;:-3.992113095238095,&#92;&quot;Max_temperature_C&#92;&quot;:30.902380952380955,&#92;&quot;Rainfall&#92;&quot;:1210.543005952381},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;coffee&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:647.0477342668863,&#92;&quot;Min_temperature_C&#92;&quot;:-4.028006589785832,&#92;&quot;Max_temperature_C&#92;&quot;:30.855189456342668,&#92;&quot;Rainfall&#92;&quot;:1527.2650741350906},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;maize&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:680.596981904762,&#92;&quot;Min_temperature_C&#92;&quot;:-4.4979949874686715,&#92;&quot;Max_temperature_C&#92;&quot;:30.576691729323308,&#92;&quot;Rainfall&#92;&quot;:681.010275689223},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;potato&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:696.3139169258809,&#92;&quot;Min_temperature_C&#92;&quot;:-4.375334143377886,&#92;&quot;Max_temperature_C&#92;&quot;:30.30060753341434,&#92;&quot;Rainfall&#92;&quot;:660.289064398542},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;rice&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:352.858052664151,&#92;&quot;Min_temperature_C&#92;&quot;:-6.610566037735849,&#92;&quot;Max_temperature_C&#92;&quot;:32.727169811320756,&#92;&quot;Rainfall&#92;&quot;:1632.382641509434},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:775.208667535597,&#92;&quot;Min_temperature_C&#92;&quot;:-2.8626506024096385,&#92;&quot;Max_temperature_C&#92;&quot;:29.950383351588172,&#92;&quot;Rainfall&#92;&quot;:1534.507995618839},{&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;wheat&#92;&quot;,&#92;&quot;Elevation&#92;&quot;:595.8384148002981,&#92;&quot;Min_temperature_C&#92;&quot;:-4.968107302533532,&#92;&quot;Max_temperature_C&#92;&quot;:30.973845007451565,&#92;&quot;Rainfall&#92;&quot;:1010.2859910581222}]&quot;' data-total-rows='8' data-total-columns='4' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;Elevation&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Min_temperature_C&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Max_temperature_C&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Rainfall&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;Crop_type&quot;,[&quot;string&quot;,&quot;object&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "c1526c3cd645238af46029962518b421",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-4-top-performing-crop\">Challenge 4: Top-performing crop</h2>\n<span class=\"paragraph\">Time to identify Maji Ndogo's single best-performing crop \u2014 the one with the most fields exceeding the average <code>Standard_yield</code>.</span>\n<span class=\"paragraph\"><strong>Hint:</strong> After grouping, the labels of the grouping column can be accessed with <code>.index</code>. For example:\n<div class=\"language-python codehilite\"><pre><span></span><code><span class=\"n\">grouped_df</span> <span class=\"o\">=</span> <span class=\"n\">MD_agric_df</span><span class=\"o\">.</span><span class=\"n\">groupby</span><span class=\"p\">(</span><span class=\"s1\">&#39;Soil_type&#39;</span><span class=\"p\">)</span><span class=\"o\">.</span><span class=\"n\">mean</span><span class=\"p\">(</span><span class=\"n\">numeric_only</span><span class=\"o\">=</span><span class=\"kc\">True</span><span class=\"p\">)</span><span class=\"o\">.</span><span class=\"n\">sort_values</span><span class=\"p\">(</span><span class=\"s1\">&#39;Elevation&#39;</span><span class=\"p\">,</span> <span class=\"n\">ascending</span><span class=\"o\">=</span><span class=\"kc\">False</span><span class=\"p\">)</span>\n<span class=\"nb\">print</span><span class=\"p\">(</span><span class=\"n\">grouped_df</span><span class=\"o\">.</span><span class=\"n\">index</span><span class=\"p\">[</span><span class=\"mi\">0</span><span class=\"p\">])</span>\n</code></pre></div></span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>find_ideal_fields(df)</code>. It must:</span>\n<ol>\n<li>Filter to fields with an above-average <code>Standard_yield</code>.</li>\n<li>Group by <code>Crop_type</code> and count records per group.</li>\n<li>Sort to put the highest count first.</li>\n<li>Return the <code>Crop_type</code> name at index 0 as a <strong>string</strong>.</li>\n</ol>\n<blockquote>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>find_ideal_fields</code>.</span>\n</blockquote>\n<h3 id=\"expected-output\">Expected output</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>type(find_ideal_fields(MD_agric_df))</code> \u2192 <code>&lt;class 'str'&gt;</code></span>\n<span class=\"paragraph\"><strong>Input 2:</strong> <code>print('Top-performing crop:', find_ideal_fields(MD_agric_df))</code> \u2192 <code>Top-performing crop: tea</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "d452141b4f150e4f5ca814103b533266",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "fa4deee0f43668c5fed809b4787dfe67",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>&lt;class &#x27;str&#x27;&gt;</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "178d879c1a406703cf00d0da138dd6bf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Top-performing crop: tea\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "e49660ccf28259ce16815daf8cecde34",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"challenge-5-ideal-growing-conditions\">Challenge 5: Ideal growing conditions</h2>\n<span class=\"paragraph\">Given a crop type, return only the fields that meet all four quality criteria simultaneously. This is a natural fit for the <code>.query()</code> method, which reads almost like the sentence above \u2014 though a boolean mask works just as well.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Complete <code>find_good_conditions(df, crop_type)</code>. Filter to rows where:</span>\n<ol>\n<li><code>Crop_type</code> matches <code>crop_type</code>.</li>\n<li><code>Standard_yield</code> is above that crop's own mean <code>Standard_yield</code>.</li>\n<li><code>Ave_temps</code> is between 12 and 15 (inclusive).</li>\n<li><code>Pollution_level</code> is below 0.0001.</li>\n</ol>\n<span class=\"paragraph\">Return the filtered <strong>DataFrame</strong>.</span>\n<blockquote>\n<span class=\"paragraph\">\ud83d\udccc <code>Ave_temps</code> is pre-computed in the database as the average of <code>Min_temperature_C</code> and <code>Max_temperature_C</code>.</span>\n<span class=\"paragraph\">\u26a0\ufe0f Do not change the function name <code>find_good_conditions</code>.</span>\n</blockquote>\n<h3 id=\"expected-output\">Expected output</h3>\n<span class=\"paragraph\"><strong>Input 1:</strong> <code>find_good_conditions(MD_agric_df, 'tea').shape</code> \u2192 <code>(14, 18)</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "727c46ddf64c2b9698a5413addddf6ea",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "803882f6e353062ea507d92d27661cae",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "application/json": "[14, 18]"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "65977a59a96227b04067d01f08a57ee2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='nHfw-0' random-id='52909ea4-672c-fa27-c0c5-3347cea13454'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Index0&#92;&quot;:197,&#92;&quot;Field_ID&#92;&quot;:16235,&#92;&quot;Elevation&#92;&quot;:688.63477,&#92;&quot;Latitude&#92;&quot;:-14.585503175377893,&#92;&quot;Longitude&#92;&quot;:-5.948055100405089,&#92;&quot;Location&#92;&quot;:&#92;&quot;Rural_Hawassa&#92;&quot;,&#92;&quot;Slope&#92;&quot;:2.5060813,&#92;&quot;Rainfall&#92;&quot;:1569.9,&#92;&quot;Min_temperature_C&#92;&quot;:-3.6,&#92;&quot;Max_temperature_C&#92;&quot;:31.6,&#92;&quot;Ave_temps&#92;&quot;:14.0,&#92;&quot;Soil_fertility&#92;&quot;:0.62,&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;pH&#92;&quot;:4.117729226245691,&#92;&quot;Pollution_level&#92;&quot;:1.007224240218782e-08,&#92;&quot;Plot_size&#92;&quot;:10.4,&#92;&quot;Annual_yield&#92;&quot;:7.48428353656934,&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Standard_yield&#92;&quot;:0.7196426477470519},{&#92;&quot;Index0&#92;&quot;:852,&#92;&quot;Field_ID&#92;&quot;:16330,&#92;&quot;Elevation&#92;&quot;:739.4273,&#92;&quot;Latitude&#92;&quot;:-14.405275446005769,&#92;&quot;Longitude&#92;&quot;:-6.267882728944766,&#92;&quot;Location&#92;&quot;:&#92;&quot;Rural_Hawassa&#92;&quot;,&#92;&quot;Slope&#92;&quot;:7.132496,&#92;&quot;Rainfall&#92;&quot;:1687.9,&#92;&quot;Min_temperature_C&#92;&quot;:-3.1,&#92;&quot;Max_temperature_C&#92;&quot;:31.1,&#92;&quot;Ave_temps&#92;&quot;:14.0,&#92;&quot;Soil_fertility&#92;&quot;:0.64,&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;pH&#92;&quot;:4.538485230352215,&#92;&quot;Pollution_level&#92;&quot;:7.108529225801467e-09,&#92;&quot;Plot_size&#92;&quot;:2.1,&#92;&quot;Annual_yield&#92;&quot;:1.6644789939202311,&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Standard_yield&#92;&quot;:0.7926090447239196},{&#92;&quot;Index0&#92;&quot;:869,&#92;&quot;Field_ID&#92;&quot;:27813,&#92;&quot;Elevation&#92;&quot;:691.2452,&#92;&quot;Latitude&#92;&quot;:-14.400769752771463,&#92;&quot;Longitude&#92;&quot;:-5.966073558350986,&#92;&quot;Location&#92;&quot;:&#92;&quot;Rural_Hawassa&#92;&quot;,&#92;&quot;Slope&#92;&quot;:11.563782,&#92;&quot;Rainfall&#92;&quot;:1640.5,&#92;&quot;Min_temperature_C&#92;&quot;:-3.5,&#92;&quot;Max_temperature_C&#92;&quot;:32.7,&#92;&quot;Ave_temps&#92;&quot;:14.6,&#92;&quot;Soil_fertility&#92;&quot;:0.65,&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;pH&#92;&quot;:4.12386939907078,&#92;&quot;Pollution_level&#92;&quot;:1.6918899279620927e-08,&#92;&quot;Plot_size&#92;&quot;:3.0,&#92;&quot;Annual_yield&#92;&quot;:2.21957019200814,&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Standard_yield&#92;&quot;:0.7398567306693801},{&#92;&quot;Index0&#92;&quot;:943,&#92;&quot;Field_ID&#92;&quot;:13657,&#92;&quot;Elevation&#92;&quot;:713.74615,&#92;&quot;Latitude&#92;&quot;:-14.549457629503468,&#92;&quot;Longitude&#92;&quot;:-6.051661233593999,&#92;&quot;Location&#92;&quot;:&#92;&quot;Rural_Hawassa&#92;&quot;,&#92;&quot;Slope&#92;&quot;:14.432365,&#92;&quot;Rainfall&#92;&quot;:1604.0,&#92;&quot;Min_temperature_C&#92;&quot;:-3.4000000000000004,&#92;&quot;Max_temperature_C&#92;&quot;:27.7,&#92;&quot;Ave_temps&#92;&quot;:12.15,&#92;&quot;Soil_fertility&#92;&quot;:0.66,&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;pH&#92;&quot;:5.14791133141575,&#92;&quot;Pollution_level&#92;&quot;:7.575034690946127e-09,&#92;&quot;Plot_size&#92;&quot;:0.7,&#92;&quot;Annual_yield&#92;&quot;:0.5549495041940514,&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Standard_yield&#92;&quot;:0.792785005991502},{&#92;&quot;Index0&#92;&quot;:1293,&#92;&quot;Field_ID&#92;&quot;:18498,&#92;&quot;Elevation&#92;&quot;:648.13605,&#92;&quot;Latitude&#92;&quot;:-14.29713880838249,&#92;&quot;Longitude&#92;&quot;:-6.146258137809959,&#92;&quot;Location&#92;&quot;:&#92;&quot;Rural_Hawassa&#92;&quot;,&#92;&quot;Slope&#92;&quot;:9.684363,&#92;&quot;Rainfall&#92;&quot;:1648.5,&#92;&quot;Min_temperature_C&#92;&quot;:-3.8,&#92;&quot;Max_temperature_C&#92;&quot;:29.5,&#92;&quot;Ave_temps&#92;&quot;:12.85,&#92;&quot;Soil_fertility&#92;&quot;:0.65,&#92;&quot;Soil_type&#92;&quot;:&#92;&quot;Volcanic&#92;&quot;,&#92;&quot;pH&#92;&quot;:5.154659479369749,&#92;&quot;Pollution_level&#92;&quot;:1.3878641995162552e-08,&#92;&quot;Plot_size&#92;&quot;:2.5,&#92;&quot;Annual_yield&#92;&quot;:2.0954464884486628,&#92;&quot;Crop_type&#92;&quot;:&#92;&quot;tea&#92;&quot;,&#92;&quot;Standard_yield&#92;&quot;:0.838178595379465}]&quot;' data-total-rows='5' data-total-columns='18' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;Field_ID&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;Elevation&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Latitude&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Longitude&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Location&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;Slope&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Rainfall&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Min_temperature_C&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Max_temperature_C&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Ave_temps&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Soil_fertility&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Soil_type&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;pH&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Pollution_level&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Plot_size&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Annual_yield&quot;,[&quot;number&quot;,&quot;float64&quot;]],[&quot;Crop_type&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;Standard_yield&quot;,[&quot;number&quot;,&quot;float64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;Index0&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "b67abd35e578e6b8e49558380fa2577b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">Five functions. Together they answer the questions the Ministry put on the table:</span>\n<ol>\n<li>What conditions define each crop? \u2192 <code>explore_crop_distribution</code> and <code>climate_geography_influence</code></li>\n<li>Which soil types are most productive? \u2192 <code>analyse_soil_fertility</code></li>\n<li>Which crop performs best and under what precise conditions? \u2192 <code>find_ideal_fields</code> and <code>find_good_conditions</code></li>\n</ol>\n<span class=\"paragraph\">The recommendation writes itself: <strong>tea</strong>, in the cool, clean, high-elevation plots of the northern highlands. And the work behind it \u2014 joining four tables, cleaning the data, then grouping, filtering, sorting, and querying \u2014 is the everyday loop of a working data analyst. Across this course you went from raw algorithms to objects to a real Pandas analysis delivered on a deadline, proof you can take a question from a decision-maker and return an answer they can act on.</span>\n<span class=\"paragraph\">Make sure all cells run without errors before submitting. The Ministry meeting is at eight.</span>\n<span class=\"paragraph\">\u2014 Sanaa \ud83c\udf3e</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "e06743cf6dea0f4f4c6eeae1221424e4",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `analyse_soil_fertility` \u2014 defined with parameters ['df']\n  \u2713 `climate_geography_influence` \u2014 defined with parameters ['df', 'column']\n  \u2713 `explore_crop_distribution` \u2014 defined with parameters ['df', 'crop_filter']\n  \u2713 `find_good_conditions` \u2014 defined with parameters ['df', 'crop_type']\n  \u2713 `find_ideal_fields` \u2014 defined with parameters ['df']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "IvTB",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}
