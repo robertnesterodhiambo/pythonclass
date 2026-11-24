@@ -1,0 +1,308 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.2",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "25cf7bdfb4a65e67e5c1a193dac63b99",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"understanding-the-shortfall-part-b\">Understanding the Shortfall \u2014 Part B</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "3867ef0545a7f584acafb113cc590bf0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">A single-variable baseline isn\u2019t enough; now it's time to see the whole picture. To help grid operators manage supply, the Ministry needs models that process national weather patterns simultaneously. In this project, you build your first Multiple Linear Regression (MLR) model using scikit-learn to handle multi-city inputs. You will isolate redundant weather drivers using Variance Inflation Factors (VIF), implement an 80/20 train-test split, run Durbin-Watson diagnostics to check time-series independence, and plot residuals to test for homoscedasticity. It is the exact diagnostic checkpoint that scales the work from simple baselines to multi-variable models.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "84ef88ea836553f4726a6d29aa8a4bdc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>This challenge is not graded.</strong> It is here to build your footing before the graded work begins.</span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided <strong>Expected output</strong> blocks and test cells to verify your work before continuing.</li>\n<li>Use the tools introduced in this course: pandas, NumPy, scikit-learn, statsmodels, and Matplotlib \u2014 for simple and multiple linear regression, model evaluation (R\u00b2, MAE, MSE, RMSE), regularisation, and model persistence.</li>\n<li>The use of StackOverflow, Google, Generative AI tools, and any other online resources is permitted. Use AI to help you understand \u2014 not to shortcut the thinking. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "ff36692b031df4b5fb4af0f5f2c1eeb8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The government of Spain has reviewed your Part A findings. They appreciate the honesty \u2014 simple linear regression using a single predictor explained only about 3% of the variance in the energy shortfall. But they need more than an honest baseline. They need a model that the grid operators can actually use.</span>\n<span class=\"paragraph\">Your contact at the Ministry of Energy puts it plainly: \"Temperature drops in Madrid on the same day it drops in Seville. Wind picks up along the coast while the interior stays still. These patterns are what drive the shortfall. We need your model to see all of it at once.\"</span>\n<span class=\"paragraph\">This is exactly what <strong>Multiple Linear Regression (MLR)</strong> is built for. Instead of fitting one line through one predictor, MLR fits a hyperplane through many predictors simultaneously \u2014 letting the model separate the contribution of each city's weather while accounting for the others.</span>\n<span class=\"paragraph\">But more predictors come with new responsibilities. When predictors are too similar to each other \u2014 a condition called <strong>multicollinearity</strong> \u2014 the model's coefficients become unreliable and interpretations break down. And because Spain's energy data is a time series recorded every three hours, we must check that residuals are not autocorrelated, which would violate the independence assumption of linear regression.</span>\n<span class=\"paragraph\">By the end of this notebook you will have:</span>\n<ul>\n<li>Fit your first MLR model using scikit-learn with five simultaneous predictors.</li>\n<li>Diagnosed multicollinearity using the Variance Inflation Factor (VIF).</li>\n<li>Applied the train-test split to evaluate out-of-sample performance.</li>\n<li>Tested residual independence using the Durbin-Watson statistic.</li>\n<li>Assessed homoscedasticity by plotting residuals against fitted values.</li>\n</ul>\n<blockquote>\n<span class=\"paragraph\"><strong>AI assist:</strong> This module introduces MLR diagnostics that can feel abstract. Good prompts: <em>\"Explain the Variance Inflation Factor in plain language \u2014 what does a VIF of 9,000 actually mean for a regression model?\"</em> <em>\"What is the Durbin-Watson test checking, and why does it matter for time-series regression data?\"</em></span>\n</blockquote></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "e7e96fd3ab43788b456b428656850dbf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"data-setup\">Data Setup</h2>\n<h3 id=\"data-dictionary\">Data Dictionary</h3>\n<span class=\"paragraph\">The dataset contains 3-hourly weather readings from five Spanish cities \u2014 Madrid, Seville, Valencia, Bilbao, and Barcelona \u2014 alongside the corresponding energy shortfall.</span>\n<span class=\"paragraph\"><strong>Target variable</strong></span>\n<ul>\n<li><code>load_shortfall_3h</code>: The shortfall between fossil fuel and renewable energy generation over 3 hours (Float). This is what we are predicting.</li>\n</ul>\n<span class=\"paragraph\"><strong>Weather features (per city)</strong></span>\n<ul>\n<li><code>{city}_temp</code>: Average temperature in Kelvin (Float).</li>\n<li><code>{city}_humidity</code>: Relative humidity as a percentage (Float).</li>\n<li><code>{city}_wind_speed</code>: Wind speed in m/s (Float).</li>\n<li><code>{city}_pressure</code>: Atmospheric pressure in hPa (Float, except <code>Seville_pressure</code> which is categorical string).</li>\n<li><code>{city}_clouds_all</code>: Cloud coverage as a percentage (Float).</li>\n</ul>\n<span class=\"paragraph\"><strong>Columns requiring preprocessing</strong></span>\n<ul>\n<li><code>Valencia_wind_deg</code>: Encoded as string levels (<code>level_1</code> through <code>level_10</code>) \u2014 extract the numeric value.</li>\n<li><code>Seville_pressure</code>: Encoded as strings (<code>sp1</code> through <code>sp25</code>) \u2014 extract the numeric value.</li>\n<li><code>Valencia_pressure</code>: Contains approximately 2,000 missing values \u2014 rows will be dropped.</li>\n</ul>\n<span class=\"paragraph\"><strong>Setup:</strong> Run the cell below to load and prepare the data before attempting any challenge.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "dc0f2d19cf9bc9713c84aa540ec1ce9d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "d6f3625ca1ff9f5605a7353f7877549b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-1-fitting-a-multiple-linear-regression-model\">Challenge 1: Fitting a Multiple Linear Regression Model</h2>\n<span class=\"paragraph\">Temperature is recorded across all five cities in our dataset. Rather than choosing just one city's temperature as we did in Part A, we can bring all five in simultaneously. This allows the model to learn the <em>combined</em> influence of temperature conditions across Spain \u2014 Madrid's continental climate, Seville's heat, the coastal moderation in Barcelona.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>fit_temperature_mlr</code> that:</span>\n<ul>\n<li>Takes a DataFrame as input.</li>\n<li>Uses the following five features as predictors: <code>Madrid_temp</code>, <code>Seville_temp</code>, <code>Valencia_temp</code>, <code>Bilbao_temp</code>, <code>Barcelona_temp</code>.</li>\n<li>Fits a multiple linear regression model on the <strong>full dataset</strong>.</li>\n<li>Returns a tuple <code>(model, r2, rmse)</code> containing the fitted model object, R-squared on the full dataset, and RMSE on the full dataset.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong></span>\n<ul>\n<li>Use <code>LinearRegression</code> from <code>sklearn.linear_model</code>.</li>\n<li>Return format: <code>(model, r2, rmse)</code>.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>R-squared: 0.06820610764408985\nRMSE: 5091.726004672317\nCoefficients: {&#39;Madrid_temp&#39;: np.float64(121.5574), &#39;Seville_temp&#39;: np.float64(-78.9912), &#39;Valencia_temp&#39;: np.float64(-6.8158), &#39;Bilbao_temp&#39;: np.float64(29.1241), &#39;Barcelona_temp&#39;: np.float64(113.1248)}\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "1e50203678d26b309a019b80ff497760",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "d3d73bb8db8d13f7b0a6d40847321cfb",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "b838d0be4426388a46ae88d4e58da018",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Compare this R-squared to Part A's single-predictor model (~0.028 for humidity). Adding four more temperature predictors improved the fit \u2014 but modestly. Five predictors, and we have barely doubled the explanatory power. This is a warning sign: the five city temperatures may be measuring the same underlying phenomenon \u2014 Spain's national weather pattern \u2014 just from different vantage points. We will investigate this next.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "9718633635761c0adcafc88af2fed615",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-2-diagnosing-multicollinearity-with-vif\">Challenge 2: Diagnosing Multicollinearity with VIF</h2>\n<span class=\"paragraph\">Before trusting any coefficient in an MLR model, we need to check for <strong>multicollinearity</strong> \u2014 the condition where two or more predictors are highly correlated with each other. When predictors move together, the model cannot isolate each one's individual contribution, and coefficients become statistically unstable.</span>\n<span class=\"paragraph\">The <strong>Variance Inflation Factor (VIF)</strong> measures this directly. For each predictor, VIF answers: \"How much larger is the variance of this coefficient than it would be if this predictor were uncorrelated with all the others?\"</span>\n<span class=\"paragraph\"><strong>Rules of thumb:</strong></span>\n<ul>\n<li>VIF &lt; 5: Low multicollinearity \u2014 acceptable.</li>\n<li>VIF 5\u201310: Moderate \u2014 worth monitoring.</li>\n<li>VIF &gt; 10: High \u2014 the predictor is likely redundant.</li>\n</ul>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>calculate_vif</code> that:</span>\n<ul>\n<li>Takes a DataFrame and a list of feature column names as input.</li>\n<li>Calculates the VIF for each feature.</li>\n<li>Returns a DataFrame with columns <code>feature</code> and <code>VIF</code>, sorted by VIF in descending order with the index reset.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong> Use <code>variance_inflation_factor</code> from <code>statsmodels.stats.outliers_influence</code>.</span>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>          feature           VIF\n0   Valencia_temp  14491.975682\n1  Barcelona_temp  12796.330493\n2    Seville_temp   9105.434827\n3     Bilbao_temp   8624.932391\n4     Madrid_temp   7006.728704\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "021f6d4c15cb5fe13c90d5d5b80b4b4c",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "6d25abea3e21bb6ef9f1908b6b0d88da",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "7d8ece9c187633f3b165740945ddd1d2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">VIF values in the thousands confirm that the five temperature columns are essentially measuring the same thing: Spain's nationwide temperature pattern. Temperature in Madrid and Seville rise and fall together \u2014 so the model cannot assign a stable coefficient to either. In Module 3, variable selection will help us choose the most informative, least redundant predictors and reduce this multicollinearity to acceptable levels.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "190fdee787fe19748892477afa3a5291",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-3-train-test-split-and-performance-evaluation\">Challenge 3: Train-Test Split and Performance Evaluation</h2>\n<span class=\"paragraph\">Fitting and evaluating on the same data, as we did in Challenge 1, can give an overly optimistic view of performance. A model that has seen every training example can fit those points closely, but then fail when it encounters new data it has never seen.</span>\n<span class=\"paragraph\">The train-test split gives us an honest estimate: train on 80%, evaluate on the held-out 20%. If test performance is close to training performance, the model is generalizing. If test performance is dramatically worse, the model is overfitting.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>mlr_train_test_evaluate</code> that:</span>\n<ul>\n<li>Takes a DataFrame as input.</li>\n<li>Uses <code>Madrid_temp</code>, <code>Seville_temp</code>, <code>Valencia_temp</code>, <code>Bilbao_temp</code>, <code>Barcelona_temp</code> as predictors and <code>load_shortfall_3h</code> as the target.</li>\n<li>Splits the data with <code>test_size=0.2</code> and <code>random_state=42</code>.</li>\n<li>Trains on the training set, evaluates on the test set.</li>\n<li>Returns <code>(r2, rmse), (predictions, y_test)</code>.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong> The second tuple <code>(predictions, y_test)</code> will be used directly in Challenges 4 and 5.</span>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Test R-squared: 0.07184913973567075\nTest RMSE: 5098.7257157969025\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "feb175d2776c3f2acf55e925a8ff1435",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "8682c333ea5d8d11d40f6ff387fa9435",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "3e614c5e67222bb490897f975a02005d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The test-set performance is very close to what we saw on the full dataset in Challenge 1 \u2014 a sign that our model is not overfitting, even though it is still quite weak. When train and test performance are similar, we can trust the metrics. When test performance is dramatically worse, that gap tells us the model has memorized the training data rather than learned generalizable patterns.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "7a0d133937604b2e7141e1cd92df381d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-4-checking-residual-independence-durbin-watson\">Challenge 4: Checking Residual Independence \u2014 Durbin-Watson</h2>\n<span class=\"paragraph\">Our dataset is a <strong>time series</strong> \u2014 energy readings recorded every 3 hours over multiple years. This creates a specific risk: the error our model makes at 9 a.m. might predict the error it makes at noon. If residuals are correlated across time (<strong>autocorrelation</strong>), the independence assumption of linear regression is violated, and our standard errors \u2014 and therefore our p-values and confidence intervals \u2014 are unreliable.</span>\n<span class=\"paragraph\">The <strong>Durbin-Watson statistic</strong> detects this. It ranges from 0 to 4:</span>\n<table>\n<thead>\n<tr>\n<th>Value</th>\n<th>Interpretation</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>~2</td>\n<td>No autocorrelation \u2014 independence assumption holds \u2705</td>\n</tr>\n<tr>\n<td>&lt; 1.5</td>\n<td>Positive autocorrelation \u2014 model is missing a time trend</td>\n</tr>\n<tr>\n<td>&gt; 2.5</td>\n<td>Negative autocorrelation \u2014 over-correction between consecutive residuals</td>\n</tr>\n</tbody>\n</table>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>check_residual_independence</code> that:</span>\n<ul>\n<li>Takes <code>predictions</code> and <code>y_test</code> (from Challenge 3).</li>\n<li>Calculates the residuals as <code>y_test - predictions</code>.</li>\n<li>Computes and returns the Durbin-Watson statistic as a float.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong> Use <code>durbin_watson</code> from <code>statsmodels.stats.stattools</code>.</span>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Durbin-Watson statistic: 1.9733091268157688\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "d272a4d6279b726d32e828df56e6079d",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "a04dcc19f1b9d8349a97c72d7bbd48d5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "231da002defd7027e41df3f697dbc6c1",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">A Durbin-Watson value near 1.97 is very close to 2 \u2014 the independence assumption is not being seriously violated. Even though the energy data is a time series, after removing the temperature signal the residuals do not carry a detectable trend from one 3-hour period to the next. This is an important green light: we can proceed with standard linear regression without needing time-series corrections like ARIMA.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "6f21a05cf425e8ce2f4a272b5667e902",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-5-assessing-homoscedasticity-residuals-vs-fitted\">Challenge 5: Assessing Homoscedasticity \u2014 Residuals vs. Fitted</h2>\n<span class=\"paragraph\">The final diagnostic we need is <strong>homoscedasticity</strong>: the assumption that the variance of residuals is roughly constant across all predicted values. A model that is highly accurate at low predicted values but wildly off at high predicted values violates this assumption \u2014 and tells us the model structure is missing something.</span>\n<span class=\"paragraph\">The standard check is a scatter plot of residuals against fitted values (predictions). In a well-specified model, this plot should look like a horizontal band of roughly equal scatter around the zero line, with no obvious funnel, curve, or cluster.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>plot_residuals_vs_fitted</code> that:</span>\n<ul>\n<li>Takes <code>predictions</code> and <code>y_test</code> (from Challenge 3).</li>\n<li>Calculates residuals as <code>y_test - predictions</code>.</li>\n<li>Creates a scatter plot of residuals (y-axis) against fitted values (x-axis), with a horizontal red dashed line at zero, axis labels, and a title.</li>\n<li>Returns a tuple <code>(mean_residual, std_residual)</code>.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Mean residual: -145.18258649860152\nStd of residuals: 5096.658311237494\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "3d1e3d4a132e7d4527cfd3823a6ad196",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "4e74edcddb1d8959751700ac33b46fb6",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "8214fc75aedd4a4550707fd4b306cba6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">What patterns do you observe in the residuals vs. fitted plot? A perfectly homoscedastic model would show a horizontal band of equal scatter. Any funneling (wider spread at higher fitted values) or curvature suggests the model is missing non-linear structure. The mean residual near zero confirms no systematic bias, but the large standard deviation (~5,000 MW\u00b7h) confirms we still have a lot of unexplained variance \u2014 more predictors and smarter feature selection are needed.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "be5e80cf47b74f5d349276678ba92333",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">Multiple Linear Regression gave us our first look at multi-predictor modeling, but this module's diagnostics told an important story about the limits of our current predictor set.</span>\n<table>\n<thead>\n<tr>\n<th>Diagnostic</th>\n<th>Result</th>\n<th>Interpretation</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>R-squared (5 temps)</td>\n<td>~0.068</td>\n<td>7% of variance explained \u2014 weak but better than Part A</td>\n</tr>\n<tr>\n<td>VIF (all temps)</td>\n<td>7,000\u201314,000</td>\n<td>Extreme multicollinearity \u2014 predictors are redundant</td>\n</tr>\n<tr>\n<td>Durbin-Watson</td>\n<td>~1.97</td>\n<td>Residual independence holds \u2705</td>\n</tr>\n<tr>\n<td>Residuals vs. Fitted</td>\n<td>Roughly uniform band</td>\n<td>No obvious heteroscedasticity</td>\n</tr>\n</tbody>\n</table>\n<span class=\"paragraph\">More predictors do not automatically mean a better model. When predictors carry the same information, they compete with each other rather than complementing each other. The model's R-squared barely moved despite quadrupling the predictor count.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "64da216f67085b921f0872b1953e6410",
+      "outputs": [],
+      "console": []
+    }
+  ]
+}
