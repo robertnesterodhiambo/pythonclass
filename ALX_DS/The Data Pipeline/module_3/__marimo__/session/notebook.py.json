@@ -163,7 +163,7 @@
     },
     {
       "id": "Hstk",
-      "code_hash": "c9c94ecf801d79ef6fc303b0777a34c4",
+      "code_hash": "149625bec3d043cf38e17304d0a16693",
       "outputs": [
         {
           "type": "data",
@@ -198,24 +198,24 @@
       "code_hash": "acbee9af736121debf8bb918eda510cc",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "[Errno 2] No such file or directory: 'weather_mapping.csv'",
-          "traceback": null
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": [
         {
           "type": "stream",
           "name": "stderr",
-          "text": "2026-11-15 07:31:29,102 - data_ingestion - INFO - Database engine created successfully.\n2026-11-15 07:31:29,199 - data_ingestion - INFO - Query executed successfully.\n2026-11-15 07:31:29,200 - field_data_processor.FieldDataProcessor - INFO - Sucessfully loaded data.\n2026-11-15 07:31:29,206 - field_data_processor.FieldDataProcessor - INFO - Swapped columns: Annual_yield with Crop_type\n2026-11-15 07:31:29,213 - data_ingestion - ERROR - Failed to read CSV from the web. Error: [Errno 2] No such file or directory: 'weather_mapping.csv'\n",
+          "text": "2026-11-15 07:46:55,247 - data_ingestion - INFO - Database engine created successfully.\n2026-11-15 07:46:55,340 - data_ingestion - INFO - Query executed successfully.\n2026-11-15 07:46:55,341 - field_data_processor.FieldDataProcessor - INFO - Sucessfully loaded data.\n2026-11-15 07:46:55,343 - field_data_processor.FieldDataProcessor - INFO - Swapped columns: Annual_yield with Crop_type\n2026-11-15 07:46:56,171 - data_ingestion - INFO - CSV file read successfully from the web.\n",
           "mimetype": "text/plain"
         },
         {
           "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Temp\\marimo_11388\\__marimo__cell_ZHCJ_.py&quot;</span>, line <span class=\"m\">7</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">processor</span><span class=\"o\">.</span><span class=\"n\">process</span><span class=\"p\">()</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\3D Objects\\my-repos\\pythonclass\\ALX_DS\\The Data Pipeline\\module_3\\field_data_processor.py&quot;</span>, line <span class=\"m\">186</span>, in <span class=\"n\">process</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">weather_station_mapping</span><span class=\"p\">()</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\3D Objects\\my-repos\\pythonclass\\ALX_DS\\The Data Pipeline\\module_3\\field_data_processor.py&quot;</span>, line <span class=\"m\">165</span>, in <span class=\"n\">weather_station_mapping</span>\n<span class=\"w\">    </span><span class=\"n\">weather_map_df</span> <span class=\"o\">=</span> <span class=\"n\">read_from_web_CSV</span><span class=\"p\">(</span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">weather_map_data</span><span class=\"p\">)</span>\n<span class=\"w\">                     </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\3D Objects\\my-repos\\pythonclass\\ALX_DS\\The Data Pipeline\\module_3\\data_ingestion.py&quot;</span>, line <span class=\"m\">109</span>, in <span class=\"n\">read_from_web_CSV</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"n\">e</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\3D Objects\\my-repos\\pythonclass\\ALX_DS\\The Data Pipeline\\module_3\\data_ingestion.py&quot;</span>, line <span class=\"m\">101</span>, in <span class=\"n\">read_from_web_CSV</span>\n<span class=\"w\">    </span><span class=\"n\">df</span> <span class=\"o\">=</span> <span class=\"n\">pd</span><span class=\"o\">.</span><span class=\"n\">read_csv</span><span class=\"p\">(</span><span class=\"n\">URL</span><span class=\"p\">)</span>\n<span class=\"w\">         </span><span class=\"pm\">^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\pandas\\io\\parsers\\readers.py&quot;</span>, line <span class=\"m\">1866</span>, in <span class=\"n\">read_csv</span>\n<span class=\"w\">    </span><span class=\"k\">return</span> <span class=\"n\">_read</span><span class=\"p\">(</span><span class=\"n\">filepath_or_buffer</span><span class=\"p\">,</span> <span class=\"n\">kwds</span><span class=\"p\">)</span>\n<span class=\"w\">           </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\pandas\\io\\parsers\\readers.py&quot;</span>, line <span class=\"m\">423</span>, in <span class=\"n\">_read</span>\n<span class=\"w\">    </span><span class=\"n\">parser</span> <span class=\"o\">=</span> <span class=\"n\">TextFileReader</span><span class=\"p\">(</span><span class=\"n\">filepath_or_buffer</span><span class=\"p\">,</span> <span class=\"o\">**</span><span class=\"n\">kwds</span><span class=\"p\">)</span>\n<span class=\"w\">             </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\pandas\\io\\parsers\\readers.py&quot;</span>, line <span class=\"m\">2721</span>, in <span class=\"n\">__init__</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_engine</span> <span class=\"o\">=</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">_make_engine</span><span class=\"p\">(</span><span class=\"n\">f</span><span class=\"p\">,</span> <span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">engine</span><span class=\"p\">)</span>\n<span class=\"w\">                   </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\pandas\\io\\parsers\\readers.py&quot;</span>, line <span class=\"m\">2988</span>, in <span class=\"n\">_make_engine</span>\n<span class=\"w\">    </span><span class=\"bp\">self</span><span class=\"o\">.</span><span class=\"n\">handles</span> <span class=\"o\">=</span> <span class=\"n\">get_handle</span><span class=\"p\">(</span>\n<span class=\"w\">                   </span><span class=\"pm\">^^^^^^^^^^^</span>\n  File <span class=\"nb\">&quot;C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\pandas\\io\\common.py&quot;</span>, line <span class=\"m\">954</span>, in <span class=\"n\">get_handle</span>\n<span class=\"w\">    </span><span class=\"n\">handle</span> <span class=\"o\">=</span> <span class=\"nb\">open</span><span class=\"p\">(</span><span class=\"n\">handle</span><span class=\"p\">,</span> <span class=\"n\">ioargs</span><span class=\"o\">.</span><span class=\"n\">mode</span><span class=\"p\">)</span>\n<span class=\"w\">             </span><span class=\"pm\">^^^^^^^^^^^^^^^^^^^^^^^^^</span>\n<span class=\"gr\">FileNotFoundError</span>: <span class=\"n\">[Errno 2] No such file or directory: &#39;weather_mapping.csv&#39;</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
+          "name": "stdout",
+          "text": "Shape: (5654, 19)\n",
+          "mimetype": "text/plain"
         }
       ]
     },
@@ -234,9 +234,29 @@
     },
     {
       "id": "qnkX",
-      "code_hash": "65dc715db465c1d3c42ba007bbd62b11",
-      "outputs": [],
-      "console": []
+      "code_hash": "927d04a3fcb89b9aee581bc4e26f2480",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "2026-11-15 07:47:28,307 - data_ingestion - INFO - CSV file read successfully from the web.\n2026-11-15 07:47:28,307 - weather_data_processor.WeatherDataProcessor - INFO - Successfully loaded weather station data from the web.\n2026-11-15 07:47:28,354 - weather_data_processor.WeatherDataProcessor - INFO - Messages processed and measurements extracted.\n2026-11-15 07:47:28,354 - weather_data_processor.WeatherDataProcessor - INFO - Data processing completed.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Shape: (1843, 4)\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "TqIu",
@@ -253,15 +273,36 @@
     },
     {
       "id": "Vxnm",
-      "code_hash": "8ec38762720551702bab25d33058db36",
-      "outputs": [],
+      "code_hash": "204ce4f1bd272429e1b4fd22c4a59d84",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
       "console": []
     },
     {
       "id": "DnEU",
       "code_hash": "13acf67ecb9569fade4081390190c68e",
-      "outputs": [],
-      "console": []
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "No significant difference in Temperature at Station 0 (P-value: 0.90761 > 0.05). H\u2080 not rejected.\nNo significant difference in Rainfall at Station 0 (P-value: 0.21621 > 0.05). H\u2080 not rejected.\nNo significant difference in Pollution_level at Station 0 (P-value: 0.56418 > 0.05). H\u2080 not rejected.\nNo significant difference in Temperature at Station 1 (P-value: 0.47241 > 0.05). H\u2080 not rejected.\nNo significant difference in Rainfall at Station 1 (P-value: 0.54499 > 0.05). H\u2080 not rejected.\nNo significant difference in Pollution_level at Station 1 (P-value: 0.24410 > 0.05). H\u2080 not rejected.\nNo significant difference in Temperature at Station 2 (P-value: 0.88671 > 0.05). H\u2080 not rejected.\nNo significant difference in Rainfall at Station 2 (P-value: 0.36466 > 0.05). H\u2080 not rejected.\nNo significant difference in Pollution_level at Station 2 (P-value: 0.99388 > 0.05). H\u2080 not rejected.\nNo significant difference in Temperature at Station 3 (P-value: 0.66445 > 0.05). H\u2080 not rejected.\nNo significant difference in Rainfall at Station 3 (P-value: 0.39847 > 0.05). H\u2080 not rejected.\nNo significant difference in Pollution_level at Station 3 (P-value: 0.15466 > 0.05). H\u2080 not rejected.\nNo significant difference in Temperature at Station 4 (P-value: 0.88575 > 0.05). H\u2080 not rejected.\nNo significant difference in Rainfall at Station 4 (P-value: 0.33237 > 0.05). H\u2080 not rejected.\nNo significant difference in Pollution_level at Station 4 (P-value: 0.21508 > 0.05). H\u2080 not rejected.\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "ulZA",
@@ -305,6 +346,26 @@
     {
       "id": "ZBYS",
       "code_hash": "29a0d837ddc4b8113608c41f2f00391b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `filter_field_data` \u2014 defined with parameters ['df', 'station_id', 'measurement']\n  \u2713 `filter_weather_data` \u2014 defined with parameters ['df', 'station_id', 'measurement']\n  \u2713 `print_ttest_results` \u2014 defined with parameters ['station_id', 'measurement', 'p_val', 'alpha']\n  \u2713 `run_ttest` \u2014 defined with parameters ['column_a', 'column_b']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "kwvI",
+      "code_hash": null,
       "outputs": [],
       "console": []
     }

@@ -1,0 +1,478 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.2",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><marimo-ui-element object-id='Hbol-0' random-id='230e517f-0eab-8fa6-0be8-f6c60841519f'><marimo-anywidget data-initial-value='{&quot;model_id&quot;:&quot;36e68e857d2044db9e15ffb34ad3e7dc&quot;}' data-label='null' data-model-id='&quot;36e68e857d2044db9e15ffb34ad3e7dc&quot;'></marimo-anywidget></marimo-ui-element></div>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "85380f4ca6e7a6f4a3e060fa42baa412",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><div align=\"center\" style=\" font-size: 80%; text-align: center; margin: 0 auto\">\n<img src=\"https://raw.githubusercontent.com/Explore-AI/Pictures/refs/heads/master/Python-Notebook-Banners/Code_challenge.png\"  style=\"display: block; margin-left: auto; margin-right: auto;\";/>\n</div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "6b923c4dd82bab7da7cad8fd6c0d20f0",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"understanding-the-yield-part-a\">Understanding the Yield \u2014 Part A</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "e4315fec129cebb1900842fe71df66fd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">Data validation is complete; now it's time to predict. To help farmers plan ahead, the Ministry needs models that forecast crop yield. In this project, you build the foundation of supervised machine learning using scikit-learn to fit simple linear regressions. You will calculate Pearson correlation coefficients, isolate rainfall drivers using Least Squares, implement an 80/20 train-test split, and run residual diagnostics to validate model assumptions. It is the exact predictive baseline that the rest of the regression work builds on.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "84ef88ea836553f4726a6d29aa8a4bdc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>This challenge is not graded.</strong> It is here to build your footing before the graded work begins.</span>\n<h3 id=\"instructions\">Instructions</h3>\n<ul>\n<li>Do not add or remove cells in this notebook.</li>\n<li>Answer the questions according to the specifications provided.</li>\n<li>Use the provided <strong>Expected output</strong> blocks and test cells to verify your work before continuing.</li>\n<li>Use the tools introduced in this course: pandas, NumPy, scikit-learn, statsmodels, and Matplotlib \u2014 for simple and multiple linear regression, model evaluation (R\u00b2, MAE, MSE, RMSE), regularisation, and model persistence.</li>\n<li>The use of StackOverflow, Google, Generative AI tools, and any other online resources is permitted. Use AI to help you understand \u2014 not to shortcut the thinking. <a href=\"https://drive.google.com/file/d/1atFOPUQRLz5slb4Q1ASXh8QQfKyXVqrw/preview\" rel=\"noopener noreferrer\" target=\"_blank\">Read the honor code here</a>.</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "8fac567032a415a6bb9dbe58f6a36b45",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The Ministry of Agriculture's audit concluded with a clear message: the field data is sound, the weather stations are calibrated, and the pipeline is production-ready. Now comes the harder question.</span>\n<span class=\"paragraph\">Sanaa drops a printout on your desk \u2014 a summary of the Maji Ndogo farm survey. \"We can validate the data all we like,\" she says. \"But what the farmers actually need is a prediction. If I can tell a maize farmer in Kilimani that his expected yield next season is 4.2 tonnes per hectare, he can plan accordingly. If I can tell the ministry which environmental factors drive yield the most, they can direct investment.\"</span>\n<span class=\"paragraph\">She taps the printout. \"We have weather readings, soil measurements, plot sizes, and three seasons of yield records. Build me a model.\"</span>\n<span class=\"paragraph\">This is where data science becomes machine learning. You are not just describing what happened \u2014 you are learning from it to predict what will happen next. In Part A, you will work with a single predictor at a time: the simplest possible model, but the essential foundation. By the end of this notebook you will have:</span>\n<ul>\n<li>Visualized and quantified linear relationships between individual farm features and crop yield.</li>\n<li>Fit your first regression model using the Least Squares method in scikit-learn.</li>\n<li>Evaluated model performance using R-squared, MAE, MSE, and RMSE.</li>\n<li>Used a train-test split to confirm that performance generalizes to unseen fields.</li>\n<li>Diagnosed model assumptions through residual analysis.</li>\n</ul>\n<blockquote>\n<span class=\"paragraph\"><strong>AI assist:</strong> This module introduces the full supervised learning workflow for the first time. Use an AI assistant as a thinking partner. Good prompts to try: <em>\"Explain the intuition behind R-squared in plain language \u2014 what does 0.03 actually mean?\"</em> <em>\"What is the difference between MAE and RMSE and when would you prefer one over the other?\"</em></span>\n</blockquote></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "b1e21515ac3a109804257f5a9b91d1c3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"data-setup\">Data Setup</h2>\n<h3 id=\"data-dictionary\">Data Dictionary</h3>\n<span class=\"paragraph\">The dataset is loaded directly from the Maji Ndogo farm survey database \u2014 the same source used throughout the programme. Each row represents one field.</span>\n<span class=\"paragraph\"><strong>Target variable</strong></span>\n<ul>\n<li><code>Standard_yield</code>: The normalized crop yield score for each field, ranging from 0 to 1. This is what we are predicting.</li>\n</ul>\n<span class=\"paragraph\"><strong>Environmental features</strong></span>\n<ul>\n<li><code>Rainfall</code>: Annual rainfall in mm (Float).</li>\n<li><code>Ave_temps</code>: Average temperature in degrees Celsius (Float).</li>\n<li><code>Elevation</code>: Field elevation above sea level in meters (Float).</li>\n<li><code>Slope</code>: Slope of the land in degrees (Float).</li>\n</ul>\n<span class=\"paragraph\"><strong>Soil features</strong></span>\n<ul>\n<li><code>Soil_fertility</code>: Normalized fertility index, 0\u20131 (Float).</li>\n<li><code>pH</code>: Soil pH level (Float).</li>\n<li><code>Pollution_level</code>: Normalized pollution index, 0\u20131 (Float).</li>\n</ul>\n<span class=\"paragraph\"><strong>Farm features</strong></span>\n<ul>\n<li><code>Plot_size</code>: Field area in hectares (Float).</li>\n<li><code>Crop_type</code>: Type of crop grown (String \u2014 categorical).</li>\n<li><code>Location</code>: Province where the field is located (String \u2014 categorical).</li>\n<li><code>Annual_yield</code>: Raw annual yield in tonnes (Float).</li>\n</ul>\n<span class=\"paragraph\"><strong>Setup:</strong> Run the cell below to load the data before attempting any challenge.</span>\n<span class=\"paragraph\"><strong>The database is bundled with this notebook</strong> as <code>Maji_Ndogo_farm_survey_small.db</code> \u2014 the setup cell below reads it directly, offline. You do not need to download anything.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "9eef9d24c0e64ad223b1920ed838abbd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\neste\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python312\\site-packages\\matplotlib\\projections\\__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.\n  warnings.warn(\"Unable to import Axes3D. This may be due to multiple versions of \"\nC:\\Users\\neste\\AppData\\Local\\Temp\\marimo_21784\\__marimo__cell_SFPL_.py:25: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.\n  df.rename(columns={'Annual_yield': 'Crop_type_Temp', 'Crop_type': 'Annual_yield'}, inplace=True)\nC:\\Users\\neste\\AppData\\Local\\Temp\\marimo_21784\\__marimo__cell_SFPL_.py:26: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).\nSee https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.\n  df.rename(columns={'Crop_type_Temp': 'Crop_type'}, inplace=True)\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Shape: (5654, 18)\n   Rainfall  Ave_temps  Standard_yield\n0    1125.2      15.00        0.577964\n1    1450.7      13.35        0.486302\n2    2208.9      13.30        0.649647\n3     328.8      13.20        0.532348\n4     785.2      14.25        0.555076\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "4ce981a28f8a6bfd69e02cbf92237923",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-1-visualizing-the-relationship\">Challenge 1: Visualizing the Relationship</h2>\n<span class=\"paragraph\">Every predictive model starts with a question: <em>Is there even a relationship to model?</em></span>\n<span class=\"paragraph\">Before fitting any line, we need to look at the data. We have many features, but let's begin with <code>Ave_temps</code> \u2014 average temperature across the field's growing season. Temperature directly affects crop growth rates, photosynthesis efficiency, and evapotranspiration. It's a logical first candidate.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>temp_yield_correlation</code> that:</span>\n<ul>\n<li>Takes a DataFrame and the names of the temperature column and the yield column as parameters.</li>\n<li>Generates a scatter plot visualizing the relationship between the two variables, with axis labels and a title.</li>\n<li>Calculates the Pearson correlation coefficient between them.</li>\n<li>Returns the Pearson correlation coefficient as a float.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong></span>\n<ul>\n<li>Use <code>matplotlib</code> for plotting.</li>\n<li>Use <code>scipy.stats.pearsonr</code> or <code>numpy.corrcoef</code> for the correlation coefficient.</li>\n<li>Ensure your function returns the Pearson correlation coefficient as a float.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Correlation: 0.006785950289020154\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "4c71e2bd96a811c88eb8bd663b8fbc8c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "f3cf763766ae6ea309fdce20b47adb11",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\neste\\AppData\\Local\\Temp\\marimo_21784\\__marimo__cell_RGSE_.py:9: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown\n  plt.show()\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Correlation: 0.006785950289020186\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "2d83f4db7a79aa14648e180eb9eb73cf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The near-zero correlation confirms that average temperature alone has almost no linear relationship with normalized yield in Maji Ndogo. This makes agronomic sense \u2014 temperature variation across the survey area is modest compared to the large variation in rainfall and soil conditions. The feature is not useless, but it will not anchor a simple linear model on its own.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "a7983bac8ada0362124c5394df6fd409",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-2-rainfall-as-a-predictor\">Challenge 2: Rainfall as a Predictor</h2>\n<span class=\"paragraph\">Let's shift focus to <code>Rainfall</code>. Annual rainfall is one of the most cited drivers of agricultural yield \u2014 too little and crops wither, too much and roots drown. If any single feature should predict yield, rainfall is the best candidate in this dataset.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>rainfall_yield_relationship</code> that:</span>\n<ul>\n<li>Takes a DataFrame and the names of the rainfall column and the yield column as parameters.</li>\n<li>Generates a scatter plot visualizing the relationship and overlays the fitted regression line.</li>\n<li>Fits a simple linear regression model using scikit-learn's <code>LinearRegression</code>.</li>\n<li>Returns the slope and intercept of the fitted model as a tuple <code>(slope, intercept)</code>.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong></span>\n<ul>\n<li>Use <code>matplotlib</code> for plotting.</li>\n<li>Use <code>sklearn.linear_model.LinearRegression</code> for modeling.</li>\n<li>Plot the regression line in red on top of the scatter plot.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Slope: 8.77309700148857e-06\nIntercept: 0.5238603528299144\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "7f20e467c4295aae374974399a6fc564",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "5ca0e90d213cdbeb211ee60d806f7d52",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\neste\\AppData\\Local\\Temp\\marimo_21784\\__marimo__cell_nWHF_.py:17: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown\n  plt.show()\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Slope: 8.773097001488566e-06\nIntercept: 0.5238603528299144\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "e5697dc48c278f0581297d6c8b179c48",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The slope is positive but very small \u2014 higher rainfall is weakly associated with higher yield, consistent with agricultural intuition. The shallow slope and wide scatter tell us that rainfall explains very little of the variation in yield on its own. That is the honest baseline: the signal is real, but single-predictor linear regression is too simple a lens for this data.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "956bfe678b7281d849a97b7b3fe3d19c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-3-evaluating-rainfalls-predictive-power\">Challenge 3: Evaluating Rainfall's Predictive Power</h2>\n<span class=\"paragraph\">A regression line can always be drawn through data. The question is whether that line is <em>useful</em>. Let's measure how well rainfall predicts yield using four performance metrics:</span>\n<ul>\n<li><strong>R-squared (R\u00b2)</strong>: The proportion of variance in yield explained by rainfall. Ranges from 0 (no explanatory power) to 1 (perfect).</li>\n<li><strong>MAE</strong>: Mean Absolute Error \u2014 average magnitude of prediction errors, in the same units as yield.</li>\n<li><strong>MSE</strong>: Mean Squared Error \u2014 penalizes large errors more heavily than MAE.</li>\n<li><strong>RMSE</strong>: Root Mean Squared Error \u2014 the square root of MSE, in the same units as yield.</li>\n</ul>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>evaluate_rainfall_model</code> that:</span>\n<ul>\n<li>Takes a DataFrame as input.</li>\n<li>Trains a simple linear regression model using <code>Rainfall</code> as the predictor and <code>Standard_yield</code> as the target, on the <strong>entire dataset</strong>.</li>\n<li>Calculates R-squared, MAE, MSE, and RMSE.</li>\n<li>Returns a tuple <code>(r2, mae, mse, rmse)</code>.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Evaluation Metrics:\nR-squared: 0.0015379401175150686\nMAE: 0.08766959364573583\nMSE: 0.012479116464950486\nRMSE: 0.11170996582646728\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "0711e6e14f1eccc3c161a3d1119d8f28",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "f16521359c344006527e7a441db8b3ed",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Evaluation Metrics:\nR-squared: 0.0015379401175148466\nMAE: 0.08766959364573582\nMSE: 0.012479116464950488\nRMSE: 0.11170996582646728\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "d6326a03fff750c234a9e970b4485742",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">An R-squared of 0.00154 means rainfall explains less than 0.2% of the variance in normalized yield \u2014 a very weak model. The RMSE of about 0.11 on a 0-to-1 scale means our predictions can be off by 11 percentage points of normalized yield on average. This is our honest starting baseline. The signal is detectable, but a single predictor is nowhere near enough for production use. Module 2 brings in the full feature set.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "e45dd0a083e4f48a9daf946db058cf74",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-4-the-train-test-split\">Challenge 4: The Train-Test Split</h2>\n<span class=\"paragraph\">So far we have trained and evaluated our model on the same data. That is like a teacher grading students on the questions they practiced \u2014 it tells us how well the model memorized the training data, not how well it will predict yields for fields it has never seen.</span>\n<span class=\"paragraph\">The <strong>train-test split</strong> fixes this. We hold out a random 20% of the data, train on the remaining 80%, and evaluate only on the held-out set. If performance is similar to the full-data evaluation, our model is generalizing \u2014 not just memorizing.</span>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>train_test_split_evaluate</code> that:</span>\n<ul>\n<li>Takes in the DataFrame.</li>\n<li>Separates it into features (<code>X</code>) using <code>Rainfall</code> and target (<code>y</code>) using <code>Standard_yield</code>.</li>\n<li>Splits the data into training and testing sets using <code>test_size=0.2</code> and <code>random_state=42</code>.</li>\n<li>Trains a simple linear regression model on the training set.</li>\n<li>Evaluates the model on the test set, calculating R-squared, MAE, MSE, and RMSE.</li>\n<li>Returns <code>(r2, mae, mse, rmse), (predictions, y_test)</code>.</li>\n</ul>\n<span class=\"paragraph\"><strong>Note:</strong> The second tuple <code>(predictions, y_test)</code> will be used in Challenge 5.</span>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Evaluation Metrics on Test Set:\nR-squared: 4.80629092007856e-05\nMAE: 0.08998991387920033\nMSE: 0.01332478573926128\nRMSE: 0.11543303573614132\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "51cb0b5c96cff8a7c2df3a04347bcd72",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "57a41a188245ac934c6346cf090bb185",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Evaluation Metrics on Test Set:\nR-squared: 4.80629092007856e-05\nMAE: 0.08998991387920033\nMSE: 0.01332478573926128\nRMSE: 0.11543303573614132\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "d9f1ef936c1b5b54a29f2c58521c1ca6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The test-set performance is very close to the full-dataset performance from Challenge 3 \u2014 a sign that our model is consistently weak rather than overfitting. When train and test performance are similar, the model is learning something genuine, even if what it has learned is of limited usefulness. This consistency also tells us that the 80% training sample is representative of the full population of fields.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "2ac1d4e420d0886c83214e08ab0b9614",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"challenge-5-diagnosing-model-fit-through-residual-analysis\">Challenge 5: Diagnosing Model Fit Through Residual Analysis</h2>\n<span class=\"paragraph\">Our metrics give us a high-level picture. Residual analysis gives us the X-ray. <strong>Residuals</strong> are the differences between actual yield values and our model's predictions:</span>\n<div class=\"language-scdoc codehilite\"><pre><span></span><code>residual = actual_yield - predicted_yield\n</code></pre></div>\n<span class=\"paragraph\">A well-specified linear regression model should produce residuals that:</span>\n<ol>\n<li>Are <strong>roughly normally distributed</strong> \u2014 a bell curve centered near zero.</li>\n<li>Have a <strong>mean close to zero</strong> \u2014 meaning the model is not systematically over- or under-predicting.</li>\n<li>Do not fan out or curve \u2014 no systematic pattern suggesting a non-linear relationship.</li>\n</ol>\n<h3 id=\"task\">Task</h3>\n<span class=\"paragraph\">Create a function named <code>analyze_model_residuals</code> that:</span>\n<ul>\n<li>Uses <code>predictions</code> and <code>y_test</code> from Challenge 4 to calculate residuals (<code>y_test - predictions</code>).</li>\n<li>Plots the residuals as a histogram with a vertical line at zero, axis labels, and a title.</li>\n<li>Calculates the mean and standard deviation of the residuals.</li>\n<li>Returns <code>(mean_residual, std_residual)</code>.</li>\n</ul>\n<h3 id=\"expected-output\">Expected Output</h3>\n<div class=\"language-text codehilite\"><pre><span></span><code>Mean residual: 0.007188033196518129\nStd of residuals: 0.11520901838843622\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": "866966332aef8e185890328254bf3c4b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "46b57bf1e96641ff02a9aa54195411c7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "C:\\Users\\neste\\AppData\\Local\\Temp\\marimo_21784\\__marimo__cell_aLJB_.py:13: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown\n  plt.show()\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Mean residual: 0.0071880331965181255\nStd of residuals: 0.11520901838843621\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "5006b82bbb788e1ac9a1752aaf4df3ec",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">The near-zero mean residual tells us the model has no systematic bias. The standard deviation is similar to the RMSE from Challenge 4 \u2014 as expected, since RMSE is the square root of mean squared residual. If the histogram is roughly bell-shaped and symmetric around zero, linear regression is a defensible framework for this data, even at this low R-squared. The scatter confirms that we need more predictors, but the <em>framework</em> is sound.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "c751531d5c8fb3fb4fbcc65a75c78a83",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><hr />\n<h2 id=\"wrapping-up\">Wrapping up</h2>\n<span class=\"paragraph\">You have built and evaluated your first machine learning model on the Maji Ndogo farm survey data. This is Part A of a three-part modeling arc:</span>\n<table>\n<thead>\n<tr>\n<th>Part</th>\n<th>Scope</th>\n<th>Status</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Part A (this notebook)</strong></td>\n<td>Single-predictor simple linear regression</td>\n<td>\u2705 Complete</td>\n</tr>\n<tr>\n<td><strong>Part B (Module 2)</strong></td>\n<td>Multiple linear regression with feature selection</td>\n<td>Upcoming</td>\n</tr>\n<tr>\n<td><strong>Part C (Module 3)</strong></td>\n<td>Regularization (Ridge &amp; LASSO) and model persistence</td>\n<td>Upcoming</td>\n</tr>\n</tbody>\n</table>\n<h3 id=\"what-you-learned-this-module\">What you learned this module</h3>\n<ul>\n<li><strong>Pearson correlation</strong> measures the <em>strength</em> and <em>direction</em> of a linear relationship \u2014 not causation.</li>\n<li><strong>Simple linear regression</strong> finds the line that minimizes the sum of squared residuals (Least Squares).</li>\n<li><strong>R-squared</strong> tells you how much variance your model explains. An R-squared near zero means the single predictor is not enough \u2014 but a detectable signal means it is worth keeping.</li>\n<li><strong>The train-test split</strong> simulates real-world generalization. Similar train and test performance means no overfitting.</li>\n<li><strong>Residual analysis</strong> is the X-ray: if residuals are symmetric around zero with no pattern, the linear framework is appropriate.</li>\n</ul>\n<span class=\"paragraph\">Sanaa's next question: \"Can we do better with more predictors?\" In Module 2, we will bring in the full feature set and use Multiple Linear Regression to close the gap.</span>\n<span class=\"paragraph\">\u2014 Sanaa \ud83c\udf3e</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "be2118dc0e5bf3ecb50d3c0b17fe70ed",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "Readiness check:\n  \u2713 `analyze_model_residuals` \u2014 defined with parameters ['predictions', 'y_test']\n  \u2713 `evaluate_rainfall_model` \u2014 defined with parameters ['df']\n  \u2713 `rainfall_yield_relationship` \u2014 defined with parameters ['df', 'rainfall_col', 'yield_col']\n  \u2713 `temp_yield_correlation` \u2014 defined with parameters ['df', 'temp_col', 'yield_col']\n  \u2713 `train_test_split_evaluate` \u2014 defined with parameters ['df']\n\nAll required functions are present and ready. You can submit.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Vnbr",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

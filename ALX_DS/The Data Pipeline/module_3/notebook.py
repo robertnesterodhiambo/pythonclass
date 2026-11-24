@@ -106,7 +106,7 @@ def _():
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
-    return
+    return (ttest_ind,)
 
 
 @app.cell(hide_code=True)
@@ -197,8 +197,8 @@ def _():
         'db_path': 'sqlite:///Maji_Ndogo_farm_survey_small.db',
         'columns_to_rename': {'Annual_yield': 'Crop_type', 'Crop_type': 'Annual_yield'},
         'values_to_rename': {'Corn': 'maize', 'Bean': 'beans', 'Sugarcane': 'cane'},
-        'weather_csv_path': 'weather_station_data.csv',
-        'weather_mapping_csv': 'weather_mapping.csv'
+        'weather_csv_path': 'https://raw.githubusercontent.com/robertnesterodhiambo/Datasets/refs/heads/main/Weather_station_data.csv',
+        'weather_mapping_csv': 'https://raw.githubusercontent.com/robertnesterodhiambo/Datasets/refs/heads/main/Weather_data_field_mapping.csv'
     }
 
     _config_params = config_params
@@ -248,7 +248,7 @@ def _(config_params):
 
     # Verify the shape of the resulting DataFrame
     print(f"Shape: {processor.df.shape}")
-    return
+    return (processor,)
 
 
 @app.cell(hide_code=True)
@@ -276,9 +276,18 @@ def _(mo):
 
 
 @app.cell
-def _():
-    _config_params = {'sql_query': ..., 'db_path': ..., 'columns_to_rename': ..., 'values_to_rename': ..., 'weather_csv_path': ..., 'weather_mapping_csv': ...}
-    return
+def _(config_params):
+    from weather_data_processor import WeatherDataProcessor
+
+    # Initialize the weather data processor with our configuration dictionary
+    weather_processor = WeatherDataProcessor(config_params, logging_level="INFO")
+
+    # Execute the weather processing pipeline
+    weather_processor.process()
+
+    # Verify the shape of the resulting weather DataFrame
+    print(f"Shape: {weather_processor.weather_df.shape}")
+    return (weather_processor,)
 
 
 @app.cell(hide_code=True)
@@ -319,7 +328,7 @@ def _(mo):
 
 
 @app.cell
-def _():
+def _(processor, ttest_ind, weather_processor):
     def filter_field_data(df, station_id, measurement):
         """Filter field data for a specific weather station and measurement.
 
@@ -337,7 +346,17 @@ def _():
         pandas.Series
             A Series of measurement values with NaN values dropped.
         """
-        pass
+        # Map weather measurement names to field DataFrame column names if necessary
+        mapping = {
+            'Temperature': 'Ave_temps',
+            'Rainfall': 'Rainfall',
+            'Pollution_level': 'Pollution_level'
+        }
+        col_name = mapping.get(measurement, measurement)
+    
+        # Filter by station ID, select column, and drop NaN values
+        filtered_series = df.loc[df['Weather_station'] == station_id, col_name].dropna()
+        return filtered_series
 
 
     def filter_weather_data(df, station_id, measurement):
@@ -358,7 +377,12 @@ def _():
         pandas.Series
             A Series of measurement values with NaN values dropped.
         """
-        pass
+        # Filter by station ID and measurement type, then return the 'Value' column
+        filtered_series = df.loc[
+            (df['Weather_station_ID'] == station_id) & (df['Measurement'] == measurement), 
+            'Value'
+        ].dropna()
+        return filtered_series
 
 
     def run_ttest(column_a, column_b):
@@ -376,7 +400,9 @@ def _():
         tuple
             A tuple of (t_statistic, p_value).
         """
-        pass
+        # Perform Welch's t-test (equal_var=False) for two-sided alternative
+        t_stat, p_val = ttest_ind(column_a, column_b, equal_var=False, alternative='two-sided')
+        return t_stat, p_val
 
 
     def print_ttest_results(station_id, measurement, p_val, alpha):
@@ -393,13 +419,26 @@ def _():
         alpha : float
             The significance level.
         """
-        pass
+        # Determine null hypothesis status based on p-value vs alpha
+        if p_val > alpha:
+            status = f"H₀ not rejected."
+        else:
+            status = f"H₀ is rejected."
+        
+        print(f"No significant difference in {measurement} at Station {station_id} (P-value: {p_val:.5f} > {alpha}). {status}")
 
+    # Expose the weather dataframe for the test loop
+    weather_df = weather_processor.weather_df
+
+    # Also make sure your field dataframe variable matches what the loop expects (`field_df`)
+    field_df = processor.df
     return (
+        field_df,
         filter_field_data,
         filter_weather_data,
         print_ttest_results,
         run_ttest,
+        weather_df,
     )
 
 
@@ -569,6 +608,11 @@ def cell_readiness():
         print(f"Some functions need fixing before submitting ({_stubs} stub(s), {_mismatches} signature mismatch(es)).")
     else:
         print("All required functions are present and ready. You can submit.")
+    return
+
+
+@app.cell
+def _():
     return
 
 
